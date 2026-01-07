@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TilemapDoorDirectionConfig" load_steps=2 format=3 uid="uid://dmhfnjqm6ww3d"]
+
+[ext_resource type="Script" uid="uid://dyg3ey1xq16y1" path="res://scripts/reps/tilemap_door_direction_config.gd" id="1_amnco"]
+
+[resource]
+script = ExtResource("1_amnco")
+_north = PackedInt32Array(3)
+_south = PackedInt32Array(1)
+_west = PackedInt32Array(2)
+_east = PackedInt32Array(0)
+metadata/_custom_type_script = "uid://dyg3ey1xq16y1"

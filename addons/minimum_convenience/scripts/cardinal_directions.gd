@@ -360,6 +360,18 @@ static func direction_to_vectori(direction: CardinalDirection) -> Vector3i:
             print_stack()
             return Vector3i.ZERO
 
+static func direction_to_vectori2d(direction: CardinalDirection) -> Vector2i:
+    match direction:
+        CardinalDirection.NONE: return Vector2i.ZERO
+        CardinalDirection.NORTH: return Vector2i.UP
+        CardinalDirection.SOUTH: return Vector2i.DOWN
+        CardinalDirection.WEST: return Vector2i.LEFT
+        CardinalDirection.EAST: return Vector2i.RIGHT
+        _:
+            push_error("Invalid direction: %s" % direction)
+            print_stack()
+            return Vector2i.ZERO
+                
 static func direction_to_vector(direction: CardinalDirection) -> Vector3:
     match direction:
         CardinalDirection.NONE: return Vector3.ZERO
@@ -576,6 +588,11 @@ static func name(direction: CardinalDirection, localized: bool = false) -> Strin
 
 static func translate(coordinates: Vector3i, direction: CardinalDirection, repeats: int = 1) -> Vector3i:
     return coordinates + direction_to_vectori(direction) * repeats
+
+
+static func translate2d(coordinates: Vector2i, direction: CardinalDirection, repeats: int = 1) -> Vector2i:
+    return coordinates + direction_to_vectori2d(direction) * repeats
+
 
 static func scale_axis(vector: Vector3, axis: CardinalDirection, scale: float) -> Vector3:
     match axis:

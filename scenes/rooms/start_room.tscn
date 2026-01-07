@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=4 uid="uid://ctcvff10ujxfr"]
+[gd_scene load_steps=4 format=4 uid="uid://ctcvff10ujxfr"]
 
-[ext_resource type="TileSet" uid="uid://b3kjmbfkqhmld" path="res://scenes/rooms/room_tile_set.tres" id="1_f8a4q"]
+[ext_resource type="TileSet" uid="uid://b3kjmbfkqhmld" path="res://scenes/rooms/room_tileset.tres" id="1_f8a4q"]
 [ext_resource type="Script" uid="uid://7ob51r0hj6yw" path="res://scripts/reps/blueprint_room.gd" id="1_kbl62"]
+[ext_resource type="Resource" uid="uid://dmhfnjqm6ww3d" path="res://scenes/rooms/room_tileset_doors_directions.tres" id="2_qr66m"]
 
 [node name="Room" type="Node2D" node_paths=PackedStringArray("outline", "doors")]
 script = ExtResource("1_kbl62")
 outline = NodePath("Outline")
 doors = NodePath("Doors")
+doors_directions = ExtResource("2_qr66m")
 
 [node name="Outline" type="TileMapLayer" parent="."]
 texture_filter = 1
