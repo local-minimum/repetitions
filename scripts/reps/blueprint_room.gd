@@ -4,7 +4,11 @@ class_name BlueprintRoom
 @export var outline: TileMapLayer
 @export var doors: TileMapLayer
 
-
+var connected_doors: Array[Vector2i]
+var unconnected_doors: Array[Vector2i]:
+    get():
+        return [] if doors == null else doors.get_used_cells().filter(func (c: Vector2i) -> bool: return !connected_doors.has(c))
+        
 var tile_size: Vector2i:
     get():
         if outline == null:
@@ -56,30 +60,44 @@ func _translate_coords_to_global(coords: Array[Vector2i]) -> Array[Vector2i]:
              
     return res.map(func (c: Vector2i) -> Vector2i: return c + origin)  
 
+const OVERLAP_NONE: int = 0
+const OVERLAP_TOUCH: int = 1
+const OVERLAP_ONTOP: int = 2
+
 ## If two rooms overlaps
-func overlaps(other: BlueprintRoom) -> bool:
+func overlaps(other: BlueprintRoom) -> int:
     # Quick test bounding boxes
     var other_bb: Rect2 = other.bounding_box()
-    var bb: Rect2 = bounding_box()
+    var bb: Rect2 = bounding_box().grow(2.0) 
     var other_bb_localized: Rect2 = transform * (other.global_transform.affine_inverse() * other_bb)  
     if !bb.intersects(other_bb_localized):
-        return false
+        return OVERLAP_NONE
     
     # Extended tile check
     var other_coords: Array[Vector2i] = other.get_global_used_tiles()
-    return get_global_used_tiles().any(func (c: Vector2i) -> bool: return other_coords.has(c))    
+    if get_global_used_tiles().any(func (c: Vector2i) -> bool: return other_coords.has(c)):
+        return OVERLAP_ONTOP
+    
+    return OVERLAP_ONTOP    
 
 class DoorData:
     var valid: bool
     var room: BlueprintRoom
-    var coordinates: Vector2i
+    var global_coordinates: Vector2i
     var direction: CardinalDirections.CardinalDirection
     
 ## If two rooms have doors that are connected and the door data
-func connecting_doors(other: BlueprintRoom, doors: Array[DoorData]) -> bool:
-    doors.clear()
-
-    if other.doors == null || doors == null:
-        return false
-
+func has_connecting_doors(other: BlueprintRoom, connecting_doors: Array[DoorData]) -> bool:
+    connecting_doors.clear()
+    
+    # Check doors
+    var my_doors_local: Array[Vector2i] = unconnected_doors
+    var my_doors: Array[Vector2i] = _translate_coords_to_global(my_doors_local)
+    var other_doors_local: Array[Vector2i] = other.unconnected_doors
+    var other_doors: Array[Vector2i] = other._translate_coords_to_global(other_doors_local)
+    
+    # TODO: Loop through all doors and see which lead into other through door and through wall
+    # TODO: Add resolving door direction
+    # TODO: Add Function to check if global coordinates is inside me
+    
     return false
