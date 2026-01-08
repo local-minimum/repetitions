@@ -1,5 +1,5 @@
 @tool
-extends Node2D
+extends CollisionObject2D
 class_name BlueprintRoom
 
 @export var outline: TileMapLayer
@@ -122,11 +122,13 @@ func perimeter() -> PackedVector2Array:
         # Add point
         var tile_bbox: Rect2 = _get_tile_bbox(current_coords)
         if updated_direction:
-            print_debug("Going %s to %s" % [CardinalDirections.name(direction), current_coords])
-            points.append(Vector2(
+            # print_debug("Going %s to %s" % [CardinalDirections.name(direction), current_coords])
+            
+            if !points.append(Vector2(
                 tile_bbox.position.x if pos_x else tile_bbox.end.x,
                 tile_bbox.position.y if pos_y else tile_bbox.end.y,
-            ))
+            )):
+                push_warning("Failed to append outline points!")
         
         visited_coords.append(current_coords)                        
         current_coords = CardinalDirections.translate2d(current_coords, direction) 
@@ -439,7 +441,75 @@ func _draw() -> void:
                     draw_line(tip - rotated_delta * 0.6, tip + rotated_delta * 0.6, Color.DARK_RED, 2)
                 
     _debugged = true
+
+func _enter_tree() -> void:
+    if !mouse_entered.is_connected(_handle_mouse_enter) && mouse_entered.connect(_handle_mouse_enter) != OK:
+        push_error("Failed to connect mouse enter")
+    if !mouse_exited.is_connected(_handle_mouse_exit) && mouse_exited.connect(_handle_mouse_exit) != OK:
+        push_error("Failed to connect mouse exit")
+    if !input_event.is_connected(_handle_input_event) && input_event.connect(_handle_input_event) != OK:
+        push_error("Failed to connect input event")
+        
+func _exit_tree() -> void:
+    mouse_entered.disconnect(_handle_mouse_enter)
+    mouse_exited.disconnect(_handle_mouse_exit)
+    input_event.disconnect(_handle_input_event)
+
+var hovered: bool
+    
+func _handle_mouse_enter() -> void:
+    hovered = true
+    __SignalBus.on_hover_blueprint_room_enter.emit(self)
+
+func _handle_mouse_exit() -> void:
+    hovered = false
+    __SignalBus.on_hover_blueprint_room_exit.emit(self)
+
+var _rotating: bool = false    
+func _handle_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+    if !hovered || placed:
+        return
+        
+    if event.is_action_pressed("blueprint_rotate_ccw"):
+        _rotate_step(1)
+        
+    elif event.is_action_pressed("blueprint_rotate_cw"):
+        _rotate_step(-1)
+        
+func _rotate_step(step: int) -> void:
+    if _rotating:
+        return
+    _rotating = true
+    var target_rotation_direction: int = posmod(_get_rotation_direction() + step, 4)
+    var target_angle: float = 0
+    match target_rotation_direction:
+        DIR_NORTH:
+            pass
+        DIR_WEST:
+            target_angle = PI * 0.5
+        DIR_SOUTH:
+            target_angle = PI
+        DIR_EAST:
+            target_angle = PI * 1.5
+    
+    if (target_angle - global_rotation) > PI:
+        target_angle -= 2 * PI
+    elif target_angle - global_rotation < -PI:
+        target_angle += 2 * PI
+        
+    var tween: Tween = create_tween()
+    
+    @warning_ignore_start("return_value_discarded")
+    tween.tween_property(self, "global_rotation", target_angle, 0.5).set_trans(Tween.TRANS_SINE)
+    @warning_ignore_restore("return_value_discarded")
+    
+    if tween.finished.connect(
+        func () -> void:
+            _rotating = false
+    ) != OK:
+        push_warning("Could not listen to end of rotation tween")
+        _rotating = false
     
 func _process(_delta: float) -> void:
-    if debug:
+    if debug && !_rotating:
         queue_redraw()
