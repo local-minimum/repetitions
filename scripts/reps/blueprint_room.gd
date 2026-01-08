@@ -165,9 +165,9 @@ func _get_rotated_direction(local_direction: CardinalDirections.CardinalDirectio
         DIR_SOUTH:
             return CardinalDirections.invert(local_direction)
         DIR_WEST:
-            return CardinalDirections.yaw_ccw(local_direction, CardinalDirections.CardinalDirection.DOWN)[0]
+            return CardinalDirections.yaw_ccw(local_direction)[0]
         DIR_EAST:
-            return CardinalDirections.yaw_cw(local_direction, CardinalDirections.CardinalDirection.DOWN)[0]
+            return CardinalDirections.yaw_cw(local_direction)[0]
         _:
             return local_direction     
  
@@ -178,9 +178,9 @@ func _get_local_direction(global_direction: CardinalDirections.CardinalDirection
         DIR_SOUTH:
             return CardinalDirections.invert(global_direction)
         DIR_WEST:
-            return CardinalDirections.yaw_cw(global_direction, CardinalDirections.CardinalDirection.DOWN)[0]
+            return CardinalDirections.yaw_cw(global_direction)[0]
         DIR_EAST:
-            return CardinalDirections.yaw_ccw(global_direction, CardinalDirections.CardinalDirection.DOWN)[0]
+            return CardinalDirections.yaw_ccw(global_direction)[0]
         _:
             return global_direction 
               
@@ -327,6 +327,13 @@ func _draw() -> void:
                 if !used:              
                     draw_line(center, tip, Color.GREEN_YELLOW, 2)
                     draw_circle(tip, 2, Color.GREEN_YELLOW)
+                elif connected:
+                    draw_line(center, tip, Color.GREEN, 2)
+                    draw_rect(Rect2(center, Vector2.ZERO).grow(2), Color.GREEN)
+                else:
+                    draw_line(center, tip, Color.DARK_RED, 2)
+                    var rotated_delta: Vector2 = tile_bbox.size * CardinalDirections.direction_to_vector2d(CardinalDirections.yaw_cw(local_direction)[0]) * 0.5
+                    draw_line(tip - rotated_delta * 0.6, tip + rotated_delta * 0.6, Color.DARK_RED, 2)
                 
     _debugged = true   
 func _process(_delta: float) -> void:

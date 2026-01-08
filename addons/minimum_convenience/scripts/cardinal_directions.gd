@@ -196,7 +196,7 @@ static func invert(direction: CardinalDirection) -> CardinalDirection:
             print_stack()
             return CardinalDirection.NONE
 
-static func yaw_ccw(look_direction: CardinalDirection, down: CardinalDirection) -> Array[CardinalDirection]:
+static func yaw_ccw(look_direction: CardinalDirection, down: CardinalDirection = CardinalDirection.DOWN) -> Array[CardinalDirection]:
     if is_parallell(look_direction, down):
         push_error("Attempting to yaw %s with %s as down" % [name(look_direction), name(down)])
         print_stack()
@@ -207,7 +207,7 @@ static func yaw_ccw(look_direction: CardinalDirection, down: CardinalDirection) 
     var result: Vector3i = VectorUtils.rotate_ccw(v_direction, v_up)
     return [vector_to_direction(result), down]
 
-static func yaw_cw(look_direction: CardinalDirection, down: CardinalDirection) -> Array[CardinalDirection]:
+static func yaw_cw(look_direction: CardinalDirection, down: CardinalDirection = CardinalDirection.DOWN) -> Array[CardinalDirection]:
     if is_parallell(look_direction, down):
         push_error("Attempting to yaw %s with %s as down" % [name(look_direction), name(down)])
         print_stack()
