@@ -12,6 +12,7 @@ config_version=5
 
 config/name="repetitions"
 config/version="0.0.0"
+run/main_scene="uid://dh68rjdc2w0vf"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 

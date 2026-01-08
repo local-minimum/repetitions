@@ -385,7 +385,19 @@ static func direction_to_vector(direction: CardinalDirection) -> Vector3:
             push_error("Invalid direction: %s" % direction)
             print_stack()
             return Vector3.ZERO
-
+            
+static func direction_to_vector2d(direction: CardinalDirection) -> Vector2:
+    match direction:
+        CardinalDirection.NONE: return Vector2.ZERO
+        CardinalDirection.NORTH: return Vector2.UP
+        CardinalDirection.SOUTH: return Vector2.DOWN
+        CardinalDirection.WEST: return Vector2.LEFT
+        CardinalDirection.EAST: return Vector2.RIGHT
+        _:
+            push_error("Invalid direction: %s" % direction)
+            print_stack()
+            return Vector2.ZERO
+            
 static func direction_to_ortho_plane(direction: CardinalDirection) -> Vector3i:
     match direction:
         CardinalDirection.NONE: return Vector3i.ZERO

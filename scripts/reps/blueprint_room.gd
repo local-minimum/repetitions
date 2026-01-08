@@ -4,11 +4,20 @@ class_name BlueprintRoom
 @export var outline: TileMapLayer
 @export var doors: TileMapLayer
 @export var doors_directions: TilemapDoorDirectionConfig
+@export var debug: bool
 
-var connected_doors: Array[Vector2i]
-var unconnected_doors: Array[Vector2i]:
+var _door_data: Array[DoorData]
+
+## Local coordinates of connected doors (valids)
+var connected_doors: Array[DoorData]:
     get():
-        return [] if doors == null else doors.get_used_cells().filter(func (c: Vector2i) -> bool: return !connected_doors.has(c))
+        return _door_data.filter(func (ddata: DoorData) -> bool: return ddata.valid)
+         
+
+## Local coordinates of doors leading to nothing (not counting into walls)
+var door_local_coordinates: Array[Vector2i]:
+    get():      
+        return [] if doors == null else doors.get_used_cells()
         
 var tile_size: Vector2i:
     get():
@@ -62,7 +71,7 @@ func _translate_coords_to_global(coords: Array[Vector2i]) -> Array[Vector2i]:
         DIR_EAST:
             res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(c.y, -c.x)))
              
-    return res.map(func (c: Vector2i) -> Vector2i: return c + origin)
+    return Array(res.map(func (c: Vector2i) -> Vector2i: return c + origin), TYPE_VECTOR2I, "", null)
 
 func _translate_coord_to_local(coords: Vector2i) -> Vector2i:
     var origin: Vector2i = get_origin()
@@ -113,7 +122,7 @@ class DoorData:
     var valid: bool
     var room: BlueprintRoom
     var global_coordinates: Vector2i
-    var direction: CardinalDirections.CardinalDirection
+    var global_direction: CardinalDirections.CardinalDirection
     var other_room: BlueprintRoom
     
     @warning_ignore_start("shadowed_variable")
@@ -121,30 +130,80 @@ class DoorData:
         valid: bool, 
         room: BlueprintRoom, 
         global_coordinates: Vector2i, 
-        direction: CardinalDirections.CardinalDirection, 
+        global_direction: CardinalDirections.CardinalDirection, 
         other_room: BlueprintRoom,
     ) -> void:
         @warning_ignore_restore("shadowed_variable")
         self.valid = valid
         self.room = room
         self.global_coordinates = global_coordinates
-        self.direction = direction
+        self.global_direction = global_direction
         self.other_room = other_room
     
     @warning_ignore_start("shadowed_variable")
     func is_inverse_connection(
         room: BlueprintRoom, 
         global_coordinates: Vector2i, 
-        direction: CardinalDirections.CardinalDirection, 
+        global_direction: CardinalDirections.CardinalDirection, 
         other_room: BlueprintRoom,        
     ) -> bool:
         @warning_ignore_restore("shadowed_variable")
         return (
             self.room == other_room && 
             self.other_room == room && 
-            CardinalDirections.translate2d(global_coordinates, direction) == self.global_coordinates
+            CardinalDirections.translate2d(global_coordinates, global_direction) == self.global_coordinates &&
+            CardinalDirections.invert(global_direction) == self.global_direction
         )
     
+    func reflect() -> DoorData:
+        return DoorData.new(valid, other_room, CardinalDirections.translate2d(global_coordinates, global_direction), CardinalDirections.invert(global_direction), room)
+
+func _get_rotated_direction(local_direction: CardinalDirections.CardinalDirection) -> CardinalDirections.CardinalDirection:
+    match _get_rotation_direction():
+        DIR_NORTH:
+            return local_direction
+        DIR_SOUTH:
+            return CardinalDirections.invert(local_direction)
+        DIR_WEST:
+            return CardinalDirections.yaw_ccw(local_direction, CardinalDirections.CardinalDirection.DOWN)[0]
+        DIR_EAST:
+            return CardinalDirections.yaw_cw(local_direction, CardinalDirections.CardinalDirection.DOWN)[0]
+        _:
+            return local_direction     
+ 
+func _get_local_direction(global_direction: CardinalDirections.CardinalDirection) -> CardinalDirections.CardinalDirection:
+     match _get_rotation_direction():
+        DIR_NORTH:
+            return global_direction
+        DIR_SOUTH:
+            return CardinalDirections.invert(global_direction)
+        DIR_WEST:
+            return CardinalDirections.yaw_cw(global_direction, CardinalDirections.CardinalDirection.DOWN)[0]
+        DIR_EAST:
+            return CardinalDirections.yaw_ccw(global_direction, CardinalDirections.CardinalDirection.DOWN)[0]
+        _:
+            return global_direction 
+              
+func get_global_door_directions(atlas_coords: Vector2i) -> Array[CardinalDirections.CardinalDirection]:
+    return Array(doors_directions.get_directions(atlas_coords).map(_get_rotated_direction), TYPE_INT, "", null)
+
+func has_door_global_direction(global_coords: Vector2i, global_direction: CardinalDirections.CardinalDirection) -> bool:
+    if doors == null || doors_directions == null:
+        return false
+        
+    var atlas_coords: Vector2i = doors.get_cell_atlas_coords(global_coords)
+    return doors_directions.has_door(atlas_coords, _get_local_direction(global_direction))  
+
+func has_registered_door(global_coords: Vector2i, global_direction: CardinalDirections.CardinalDirection) -> bool:
+    return _door_data.any(func (ddata: DoorData) -> bool: return ddata.room == self && ddata.global_coordinates == global_coords && ddata.global_direction == global_direction)
+
+func get_connected_room(global_coords: Vector2i, global_direction: CardinalDirections.CardinalDirection) -> BlueprintRoom:
+    var idx: int = _door_data.find(func (ddata: DoorData) -> bool: return ddata.valid && ddata.room == self && ddata.global_coordinates == global_coords && ddata.global_direction == global_direction)
+    if idx < 0:
+        return null
+    
+    return _door_data[idx].other_room
+                
 ## If two rooms have doors that are connected and the door data
 ## The `connecting_doors` variable will contain all affected doors
 ## Returns true as soon as any door coonnects
@@ -155,29 +214,32 @@ func has_connecting_doors(
     connecting_doors.clear()
     
     # Check doors
-    var my_doors_local: Array[Vector2i] = unconnected_doors
+    var my_doors_local: Array[Vector2i] = door_local_coordinates
     var my_doors: Array[Vector2i] = _translate_coords_to_global(my_doors_local)
-    var other_doors_local: Array[Vector2i] = other.unconnected_doors
+    var other_doors_local: Array[Vector2i] = other.door_local_coordinates
     var other_doors: Array[Vector2i] = other._translate_coords_to_global(other_doors_local)
     
     for my_idx: int in range(my_doors_local.size()):
         var local_coords: Vector2i = my_doors_local[my_idx]
-        var id: int = doors.get_cell_source_id(local_coords)
-        if !doors_directions.is_door(id):
-            push_error("[Blueprint Room %s] Has a door at %s with id %s but it isn't configured as a door in %s" % [
+        var atlas_coords: Vector2i = doors.get_cell_atlas_coords(local_coords)
+        if !doors_directions.is_door(atlas_coords):
+            push_error("[Blueprint Room %s] Has a door at %s with atlas coords %s but it isn't configured as a door in %s" % [
                 name,
                 local_coords,
-                id,
+                atlas_coords,
                 doors_directions.resource_path,
             ])
             continue
         
-        for direction: CardinalDirections.CardinalDirection in doors_directions.get_directions(id):
+        for direction: CardinalDirections.CardinalDirection in get_global_door_directions(atlas_coords):
+            if has_registered_door(my_doors[my_idx], direction):
+                continue
+                
             var leading_to_coords: Vector2i = CardinalDirections.translate2d(my_doors[my_idx], direction)
             if other_doors.has(leading_to_coords):
                 var other_idx: int = other_doors.find(leading_to_coords)
-                var other_id: int = other.doors.get_cell_source_id(other_doors_local[other_idx])
-                if other.doors_directions.has_door(other_id, CardinalDirections.invert(direction)):
+
+                if other.has_door_global_direction(other_doors_local[other_idx], CardinalDirections.invert(direction)):
                     connected_doors.append(DoorData.new(true, self, my_doors[my_idx], direction, other))              
                     continue
                     
@@ -186,16 +248,19 @@ func has_connecting_doors(
     
     for other_idx: int in range(other_doors_local.size()):
         var other_local_coords: Vector2i = other_doors_local[other_idx]
-        var other_id: int = other.doors.get_cell_source_id(other_local_coords)
-        if !other.doors_directions.is_door(other_id):
-            push_error("[Blueprint Room %s] Has a door at %s with id %s but it isn't configured as a door in %s" % [
+        var other_atlas_coords: Vector2i = other.doors.get_cell_atlas_coords(other_local_coords)
+        if !other.doors_directions.is_door(other_atlas_coords):
+            push_error("[Blueprint Room %s] Has a door at %s with atlas coords %s but it isn't configured as a door in %s" % [
                 other.name,
                 other_local_coords,
-                other_id,
+                other_atlas_coords,
                 other.doors_directions.resource_path,
             ])
         
-        for direction: CardinalDirections.CardinalDirection in other.doors_directions.get_directions(other_id):
+        for direction: CardinalDirections.CardinalDirection in other.get_global_door_directions(other_atlas_coords):
+            if other.has_registered_door(other_doors[other_idx], direction):
+                continue
+                
             if connected_doors.any(func (ddata: DoorData) -> bool: return ddata.is_inverse_connection(other, other_doors[other_idx], direction, self)):
                 # We don't need a dupe
                 continue
@@ -209,5 +274,61 @@ func has_connecting_doors(
 
 func register_connection(data: Array[DoorData]) -> void:
     for ddata: DoorData in data:
-        # TODO: Pass
-        pass
+        if ddata.room != self && ddata.other_room != self:
+            continue
+        
+        if ddata.room == self:
+            if has_registered_door(ddata.global_coordinates, ddata.global_direction):
+                continue
+            _door_data.append(ddata)
+            
+        elif ddata.other_room == self:
+            var reflected: DoorData = ddata.reflect()
+            if has_registered_door(reflected.global_coordinates, reflected.global_direction):
+                continue
+                
+            _door_data.append(reflected)
+            
+## Local space bounding box
+func _get_tile_bbox(local_coords: Vector2i) -> Rect2:
+    var tsize: Vector2 = tile_size
+    return Rect2(Vector2(tsize.x * local_coords.x, tsize.y * local_coords.y), tsize)
+
+var _debugged: bool
+func _draw() -> void:
+    var bbox: Rect2 = bounding_box()
+    draw_rect(bbox, Color.MEDIUM_ORCHID, false, 1)
+    
+    if outline != null:
+        for tile_coords: Vector2i in outline.get_used_cells():
+            draw_rect(_get_tile_bbox(tile_coords), Color.AQUA, false, 1)
+    
+    if doors != null:
+        for door_coords: Vector2i in doors.get_used_cells():
+            var atlas_coords: Vector2i = doors.get_cell_atlas_coords(door_coords)
+            var tile_bbox: Rect2 = _get_tile_bbox(door_coords)
+            var door_global_coords: Vector2i = _translate_coords_to_global([door_coords])[0]
+            var center: Vector2 = tile_bbox.get_center()
+            
+            if !doors_directions.is_door(atlas_coords):
+                if !_debugged:
+                    print_debug("[Blueprint Room %s] Has unregistered door at atlas coords %s in %s" % [
+                        name, atlas_coords, doors_directions.resource_path
+                    ])
+            for local_direction: CardinalDirections.CardinalDirection in doors_directions.get_directions(atlas_coords):
+                if !_debugged:
+                    print_debug("[Blueprint Room %s] Door at %s has atlas coords %s giving local direction %s" % [name, door_coords, atlas_coords, CardinalDirections.name(local_direction)])
+                    
+                var delta: Vector2 = tile_bbox.size * CardinalDirections.direction_to_vector2d(local_direction) * 0.5
+                var direction: CardinalDirections.CardinalDirection = _get_rotated_direction(local_direction)
+                var used: bool = has_registered_door(door_global_coords, direction)
+                var connected: bool = used && get_connected_room(door_global_coords, direction) != null
+                var tip: Vector2 = center + delta * 0.8
+                if !used:              
+                    draw_line(center, tip, Color.GREEN_YELLOW, 2)
+                    draw_circle(tip, 2, Color.GREEN_YELLOW)
+                
+    _debugged = true   
+func _process(_delta: float) -> void:
+    if debug:
+        queue_redraw()
