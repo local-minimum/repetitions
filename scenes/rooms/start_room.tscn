@@ -4,12 +4,13 @@
 [ext_resource type="Script" uid="uid://7ob51r0hj6yw" path="res://scripts/reps/blueprint_room.gd" id="1_kbl62"]
 [ext_resource type="Resource" uid="uid://dmhfnjqm6ww3d" path="res://scenes/rooms/room_tileset_doors_directions.tres" id="2_qr66m"]
 
-[node name="Room" type="Node2D" node_paths=PackedStringArray("outline", "doors")]
+[node name="Room" type="Area2D" node_paths=PackedStringArray("outline", "doors", "collision")]
 z_index = 3
 script = ExtResource("1_kbl62")
 outline = NodePath("Outline")
 doors = NodePath("Doors")
 doors_directions = ExtResource("2_qr66m")
+collision = NodePath("CollisionPolygon2D")
 
 [node name="Outline" type="TileMapLayer" parent="."]
 z_index = -1
@@ -28,3 +29,7 @@ tile_map_data = PackedByteArray("AAABAP3/AAAFAAcAAAADAP7/AAAEAAcAAAABAAEAAAADAAc
 tile_set = ExtResource("1_f8a4q")
 collision_enabled = false
 navigation_enabled = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+build_mode = 1
+polygon = PackedVector2Array(0, -48, 64, -48, 64, 0, 32, -16, 48, 32, -32, 32, -16, 0, -48, 16, -48, -16, -16, 0, -32, -32, 16, -16)

@@ -2,7 +2,7 @@ class_name RectUtils
 
 static func corners(rect: Rect2, end_padding: float = 0) -> Array[Vector2]:
     var size: Vector2 = rect.size
-    print_debug(size)
+    # print_debug(size)
     size.x -= sign(size.x) * end_padding
     size.y -= sign(size.y) * end_padding
 

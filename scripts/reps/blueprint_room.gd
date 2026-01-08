@@ -1,10 +1,15 @@
+@tool
 extends Node2D
 class_name BlueprintRoom
 
 @export var outline: TileMapLayer
 @export var doors: TileMapLayer
 @export var doors_directions: TilemapDoorDirectionConfig
+
+@export var collision: CollisionPolygon2D
+
 @export var debug: bool
+@export var placed: bool
 
 var _door_data: Array[DoorData]
 
@@ -13,7 +18,6 @@ var connected_doors: Array[DoorData]:
     get():
         return _door_data.filter(func (ddata: DoorData) -> bool: return ddata.valid)
          
-
 ## Local coordinates of doors leading to nothing (not counting into walls)
 var door_local_coordinates: Array[Vector2i]:
     get():      
@@ -26,12 +30,108 @@ var tile_size: Vector2i:
             
         return outline.tile_set.tile_size
 
+@warning_ignore_start("unused_private_class_variable")
+@export_tool_button("Recalculate Collsion") var _recalc_col: Callable = recalculate_collision
+@warning_ignore_restore("unused_private_class_variable")
+
+func recalculate_collision() -> void:
+    if collision == null:
+        push_warning("[Blueprint Room %s] Does not have any collsion configured" % name)
+        return
+        
+    collision.polygon = perimeter()
+    
 ## Local space float precision bounding box, only reliable to say that things don't overlap
 func bounding_box() -> Rect2:
     var size: Vector2i = tile_size
     var local_logical_rect: Rect2i = outline.get_used_rect() if outline != null else Rect2i()
     return Rect2(local_logical_rect.position * size, local_logical_rect.size * size)
 
+func perimeter() -> PackedVector2Array:
+    if outline == null:
+        return []
+        
+    var local_coords: Array[Vector2i] = outline.get_used_cells()
+    if local_coords.is_empty():
+        return []
+    
+    if local_coords.size() == 1:
+        return PackedVector2Array(RectUtils.corners(bounding_box()))
+        
+    local_coords.sort_custom(func (a: Vector2i, b: Vector2i) -> bool: return a.y < b.y || a.y == b.y && a.x < b.y)
+    var direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.EAST
+    var current_coords: Vector2i = local_coords[0]
+    var visited_coords: Array[Vector2i] = []
+    var points: PackedVector2Array = [_get_tile_bbox(current_coords).position]
+    var pos_x: bool = true
+    var pos_y: bool = true
+    
+    while !visited_coords.has(current_coords): 
+        # Update direction
+        var updated_direction: bool = false
+        var yaw_ccw: CardinalDirections.CardinalDirection = CardinalDirections.yaw_ccw(direction)[0]
+        if local_coords.has(CardinalDirections.translate2d(current_coords, yaw_ccw)):
+            direction = yaw_ccw
+            updated_direction = true
+            match direction:
+                CardinalDirections.CardinalDirection.EAST:
+                    pos_x = false
+                    pos_y = true
+                CardinalDirections.CardinalDirection.NORTH:
+                    pos_x = true
+                    pos_y = true
+                CardinalDirections.CardinalDirection.WEST:
+                    pos_x = true
+                    pos_y = false
+                CardinalDirections.CardinalDirection.SOUTH:
+                    pos_x = false
+                    pos_y = false
+            
+        elif local_coords.has(CardinalDirections.translate2d(current_coords, direction)):
+            # We are just continuing on a straight line
+            pass
+            
+        else:
+            var yaw_cw: CardinalDirections.CardinalDirection = CardinalDirections.yaw_cw(direction)[0]
+            if local_coords.has(CardinalDirections.translate2d(current_coords, yaw_cw)):
+                direction = yaw_cw
+                updated_direction = true
+                match direction:
+                    CardinalDirections.CardinalDirection.EAST:
+                        pos_x = true
+                        pos_y = true
+                    CardinalDirections.CardinalDirection.NORTH:
+                        pos_x = true
+                        pos_y = false
+                    CardinalDirections.CardinalDirection.WEST:
+                        pos_x = false
+                        pos_y = false
+                    CardinalDirections.CardinalDirection.SOUTH:
+                        pos_x = false
+                        pos_y = true
+                                     
+            else:
+                push_error("[Blueprint Room %s] Constructing the outline accidentally ended up on %s when going %s from %s which is outside the room" % [
+                    name,
+                    CardinalDirections.translate2d(current_coords, yaw_cw),
+                    CardinalDirections.name(yaw_cw),
+                    points,
+                ])
+                return []    
+                     
+        # Add point
+        var tile_bbox: Rect2 = _get_tile_bbox(current_coords)
+        if updated_direction:
+            print_debug("Going %s to %s" % [CardinalDirections.name(direction), current_coords])
+            points.append(Vector2(
+                tile_bbox.position.x if pos_x else tile_bbox.end.x,
+                tile_bbox.position.y if pos_y else tile_bbox.end.y,
+            ))
+        
+        visited_coords.append(current_coords)                        
+        current_coords = CardinalDirections.translate2d(current_coords, direction) 
+    return points
+    
 ## Logical world coordinates of room origin / what it rotates around
 func get_origin() -> Vector2i:
     var size: Vector2i = tile_size
@@ -294,8 +394,11 @@ func _get_tile_bbox(local_coords: Vector2i) -> Rect2:
     var tsize: Vector2 = tile_size
     return Rect2(Vector2(tsize.x * local_coords.x, tsize.y * local_coords.y), tsize)
 
-var _debugged: bool
+var _debugged: bool = true
 func _draw() -> void:
+    if Engine.is_editor_hint():
+        return
+        
     var bbox: Rect2 = bounding_box()
     draw_rect(bbox, Color.MEDIUM_ORCHID, false, 1)
     
@@ -335,7 +438,8 @@ func _draw() -> void:
                     var rotated_delta: Vector2 = tile_bbox.size * CardinalDirections.direction_to_vector2d(CardinalDirections.yaw_cw(local_direction)[0]) * 0.5
                     draw_line(tip - rotated_delta * 0.6, tip + rotated_delta * 0.6, Color.DARK_RED, 2)
                 
-    _debugged = true   
+    _debugged = true
+    
 func _process(_delta: float) -> void:
     if debug:
         queue_redraw()
