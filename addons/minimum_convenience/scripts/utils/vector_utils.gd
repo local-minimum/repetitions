@@ -161,3 +161,15 @@ static func apply_random_rotation_to_direction(direction: Vector3, axis_rng_angl
     direction = Transform3D.IDENTITY.rotated(Vector3.LEFT, randf_range(-axis_rng_angle_amount, axis_rng_angle_amount)) * direction
     direction = Transform3D.IDENTITY.rotated(Vector3.FORWARD, randf_range(-axis_rng_angle_amount, axis_rng_angle_amount)) * direction
     return direction
+
+static func is_scaled2di(v: Vector2i, other: Variant, float_tolerance: float = 0.0000001) -> bool:
+    if other is Vector2i:
+        var v2: Vector2i = other
+        return posmod(v2.x, v.x) == 0 && posmod(v2.y, v.y) == 0
+    
+    elif other is Vector2:
+        var v2: Vector2 = other
+        return fposmod((v2.x - v.x) / v.x, 1.0) < float_tolerance && fposmod((v2.y - v.y) / v.y, 1.0) < float_tolerance
+        
+    push_error("Is scaled2di does not know how to handle %s" % other)
+    return false

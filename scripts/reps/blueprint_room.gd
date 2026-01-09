@@ -10,6 +10,15 @@ class_name BlueprintRoom
 
 @export var debug: bool
 @export var placed: bool
+@export var grid: Grid2D:
+    set(value):
+        grid = value
+        if value != null && !VectorUtils.is_scaled2di(tile_size, value.tile_size):
+            push_warning("[Blueprint Room %s] The new grid %s has a tile size of %s which doesn't line up with our internal size of %s" % [
+                value,
+                value.tile_size,
+                tile_size,
+            ])
 
 var _door_data: Array[DoorData]
 
@@ -42,100 +51,18 @@ func recalculate_collision() -> void:
     collision.polygon = perimeter()
     
 ## Local space float precision bounding box, only reliable to say that things don't overlap
-func bounding_box() -> Rect2:
-    var size: Vector2i = tile_size
-    var local_logical_rect: Rect2i = outline.get_used_rect() if outline != null else Rect2i()
-    return Rect2(local_logical_rect.position * size, local_logical_rect.size * size)
+func bounding_box() -> Rect2: 
+    return TileMapLayerUtils.bounding_box(outline)
 
+## Local space perimeter points
 func perimeter() -> PackedVector2Array:
-    if outline == null:
-        return []
-        
-    var local_coords: Array[Vector2i] = outline.get_used_cells()
-    if local_coords.is_empty():
-        return []
-    
-    if local_coords.size() == 1:
-        return PackedVector2Array(RectUtils.corners(bounding_box()))
-        
-    local_coords.sort_custom(func (a: Vector2i, b: Vector2i) -> bool: return a.y < b.y || a.y == b.y && a.x < b.y)
-    var direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.EAST
-    var current_coords: Vector2i = local_coords[0]
-    var visited_coords: Array[Vector2i] = []
-    var points: PackedVector2Array = [_get_tile_bbox(current_coords).position]
-    var pos_x: bool = true
-    var pos_y: bool = true
-    
-    while !visited_coords.has(current_coords): 
-        # Update direction
-        var updated_direction: bool = false
-        var yaw_ccw: CardinalDirections.CardinalDirection = CardinalDirections.yaw_ccw(direction)[0]
-        if local_coords.has(CardinalDirections.translate2d(current_coords, yaw_ccw)):
-            direction = yaw_ccw
-            updated_direction = true
-            match direction:
-                CardinalDirections.CardinalDirection.EAST:
-                    pos_x = false
-                    pos_y = true
-                CardinalDirections.CardinalDirection.NORTH:
-                    pos_x = true
-                    pos_y = true
-                CardinalDirections.CardinalDirection.WEST:
-                    pos_x = true
-                    pos_y = false
-                CardinalDirections.CardinalDirection.SOUTH:
-                    pos_x = false
-                    pos_y = false
-            
-        elif local_coords.has(CardinalDirections.translate2d(current_coords, direction)):
-            # We are just continuing on a straight line
-            pass
-            
-        else:
-            var yaw_cw: CardinalDirections.CardinalDirection = CardinalDirections.yaw_cw(direction)[0]
-            if local_coords.has(CardinalDirections.translate2d(current_coords, yaw_cw)):
-                direction = yaw_cw
-                updated_direction = true
-                match direction:
-                    CardinalDirections.CardinalDirection.EAST:
-                        pos_x = true
-                        pos_y = true
-                    CardinalDirections.CardinalDirection.NORTH:
-                        pos_x = true
-                        pos_y = false
-                    CardinalDirections.CardinalDirection.WEST:
-                        pos_x = false
-                        pos_y = false
-                    CardinalDirections.CardinalDirection.SOUTH:
-                        pos_x = false
-                        pos_y = true
-                                     
-            else:
-                push_error("[Blueprint Room %s] Constructing the outline accidentally ended up on %s when going %s from %s which is outside the room" % [
-                    name,
-                    CardinalDirections.translate2d(current_coords, yaw_cw),
-                    CardinalDirections.name(yaw_cw),
-                    points,
-                ])
-                return []    
-                     
-        # Add point
-        var tile_bbox: Rect2 = _get_tile_bbox(current_coords)
-        if updated_direction:
-            # print_debug("Going %s to %s" % [CardinalDirections.name(direction), current_coords])
-            
-            if !points.append(Vector2(
-                tile_bbox.position.x if pos_x else tile_bbox.end.x,
-                tile_bbox.position.y if pos_y else tile_bbox.end.y,
-            )):
-                push_warning("Failed to append outline points!")
-        
-        visited_coords.append(current_coords)                        
-        current_coords = CardinalDirections.translate2d(current_coords, direction) 
-    return points
+    return TileMapLayerUtils.perimeter(outline)
     
 ## Logical world coordinates of room origin / what it rotates around
 func get_origin() -> Vector2i:
+    if grid != null:
+        return grid.get_closest_coordinates(global_position)
+        
     var size: Vector2i = tile_size
     return Vector2i(floori(global_position.x / size.x), floori(global_position.y / size.y))
     
@@ -219,46 +146,6 @@ func overlaps(other: BlueprintRoom) -> int:
         return OVERLAP_ONTOP
     
     return OVERLAP_TOUCH
-
-class DoorData:
-    var valid: bool
-    var room: BlueprintRoom
-    var global_coordinates: Vector2i
-    var global_direction: CardinalDirections.CardinalDirection
-    var other_room: BlueprintRoom
-    
-    @warning_ignore_start("shadowed_variable")
-    func _init(
-        valid: bool, 
-        room: BlueprintRoom, 
-        global_coordinates: Vector2i, 
-        global_direction: CardinalDirections.CardinalDirection, 
-        other_room: BlueprintRoom,
-    ) -> void:
-        @warning_ignore_restore("shadowed_variable")
-        self.valid = valid
-        self.room = room
-        self.global_coordinates = global_coordinates
-        self.global_direction = global_direction
-        self.other_room = other_room
-    
-    @warning_ignore_start("shadowed_variable")
-    func is_inverse_connection(
-        room: BlueprintRoom, 
-        global_coordinates: Vector2i, 
-        global_direction: CardinalDirections.CardinalDirection, 
-        other_room: BlueprintRoom,        
-    ) -> bool:
-        @warning_ignore_restore("shadowed_variable")
-        return (
-            self.room == other_room && 
-            self.other_room == room && 
-            CardinalDirections.translate2d(global_coordinates, global_direction) == self.global_coordinates &&
-            CardinalDirections.invert(global_direction) == self.global_direction
-        )
-    
-    func reflect() -> DoorData:
-        return DoorData.new(valid, other_room, CardinalDirections.translate2d(global_coordinates, global_direction), CardinalDirections.invert(global_direction), room)
 
 func _get_rotated_direction(local_direction: CardinalDirections.CardinalDirection) -> CardinalDirections.CardinalDirection:
     match _get_rotation_direction():

@@ -1,8 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://dh68rjdc2w0vf"]
+[gd_scene load_steps=3 format=3 uid="uid://dh68rjdc2w0vf"]
 
 [ext_resource type="PackedScene" uid="uid://ctcvff10ujxfr" path="res://scenes/rooms/start_room.tscn" id="1_ldlxd"]
+[ext_resource type="Script" uid="uid://73wn6oety2kg" path="res://scripts/2d/grid2d.gd" id="1_n4crp"]
 
 [node name="Dungeon Plan" type="Node2D"]
+script = ExtResource("1_n4crp")
+tile_size = Vector2(16, 16)
+extent = Rect2i(0, 0, 60, 40)
 
 [node name="Room" parent="." instance=ExtResource("1_ldlxd")]
 position = Vector2(720, 208)

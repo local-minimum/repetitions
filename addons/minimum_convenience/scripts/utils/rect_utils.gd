@@ -25,3 +25,8 @@ static func shrink(rect: Rect2, x_amount: float, y_amount: float, keep_center: b
         @warning_ignore_restore("unsafe_call_argument")
 
     return Rect2(rect.position, size)
+
+static func clamp_pointi(rect: Rect2i, pt: Vector2i) -> Vector2i:
+    if rect.has_point(pt):
+        return pt
+    return pt.clamp(rect.position, rect.end - Vector2i.ONE)
