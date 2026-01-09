@@ -1,8 +1,14 @@
 class_name TileMapLayerUtils
-
+    
 ## Local space bounding box
-static func _get_tile_bbox(local_coords: Vector2i, tile_size: Vector2) -> Rect2:
-    return Rect2(Vector2(tile_size.x * local_coords.x, tile_size.y * local_coords.y), tile_size)
+static func get_tile_bbox(layer: TileMapLayer, local_coords: Vector2i) -> Rect2:
+    if layer == null:
+        return Rect2()
+        
+    return Rect2(
+        Vector2(layer.tile_set.tile_size.x * local_coords.x, layer.tile_set.tile_size.y * local_coords.y), 
+        layer.tile_set.tile_size,
+    )
 
 ## Local space bounding box for content of tile map layer    
 static func bounding_box(layer: TileMapLayer) -> Rect2:
@@ -29,7 +35,7 @@ static func perimeter(layer: TileMapLayer) -> PackedVector2Array:
     var direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.EAST
     var current_coords: Vector2i = local_coords[0]
     var visited_coords: Array[Vector2i] = []
-    var points: PackedVector2Array = [_get_tile_bbox(current_coords, layer.tile_set.tile_size).position]
+    var points: PackedVector2Array = [get_tile_bbox(layer, current_coords).position]
     var pos_x: bool = true
     var pos_y: bool = true
     
@@ -86,7 +92,7 @@ static func perimeter(layer: TileMapLayer) -> PackedVector2Array:
                 return []    
                      
         # Add point
-        var tile_bbox: Rect2 = _get_tile_bbox(current_coords, layer.tile_set.tile_size)
+        var tile_bbox: Rect2 = get_tile_bbox(layer, current_coords)
         if updated_direction:
             # print_debug("Going %s to %s" % [CardinalDirections.name(direction), current_coords])
             

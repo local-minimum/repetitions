@@ -9,16 +9,27 @@ class_name BlueprintRoom
 @export var collision: CollisionPolygon2D
 
 @export var debug: bool
-@export var placed: bool
-@export var grid: Grid2D:
+@export var placed: bool:
     set(value):
-        grid = value
+        if value:
+            draggable.enable(self)
+        else:
+            draggable.disable(self)
+        placed = value
+        
+var grid: Grid2D:
+    set(value):
+        draggable.grid = value
         if value != null && !VectorUtils.is_scaled2di(tile_size, value.tile_size):
             push_warning("[Blueprint Room %s] The new grid %s has a tile size of %s which doesn't line up with our internal size of %s" % [
                 value,
                 value.tile_size,
                 tile_size,
             ])
+    get():
+        return draggable.grid
+
+@export var draggable: Draggable
 
 var _door_data: Array[DoorData]
 
@@ -60,70 +71,22 @@ func perimeter() -> PackedVector2Array:
     
 ## Logical world coordinates of room origin / what it rotates around
 func get_origin() -> Vector2i:
-    if grid != null:
-        return grid.get_closest_coordinates(global_position)
-        
-    var size: Vector2i = tile_size
-    return Vector2i(floori(global_position.x / size.x), floori(global_position.y / size.y))
-    
-const DIR_NORTH: int = 0
-const DIR_WEST: int = 1
-const DIR_SOUTH: int = 2
-const DIR_EAST: int = 3
+    return draggable.calculate_coordinates(self)
 
 ## Global coordinates of all pieces of the room
 func get_global_used_tiles() -> Array[Vector2i]:
     if outline == null:
         return []
 
-    return _translate_coords_to_global(outline.get_used_cells())
-
-func _get_rotation_direction() -> int:
-    var dir: float = global_transform.get_rotation() / (0.5 * PI)
-    var diri: int = roundi(dir)
-    if abs(dir - diri) > 0.01:
-        push_error("[Blueprint Room %s] Has global rotation %s, expected to follow a cardinal" % [name, global_transform.get_rotation()])
-
-    return posmod(diri, 4)       
-        
-func _translate_coords_to_global(coords: Array[Vector2i]) -> Array[Vector2i]:
-    var origin: Vector2i = get_origin()
-    var res: Array[Vector2i]
-
-    match _get_rotation_direction():
-        DIR_NORTH:
-            res.append_array(coords)
-        DIR_WEST:
-            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(-c.y, c.x)))
-        DIR_SOUTH:
-            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(-c.x, -c.x)))   
-        DIR_EAST:
-            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(c.y, -c.x)))
-             
-    return Array(res.map(func (c: Vector2i) -> Vector2i: return c + origin), TYPE_VECTOR2I, "", null)
-
-func _translate_coord_to_local(coords: Vector2i) -> Vector2i:
-    var origin: Vector2i = get_origin()
-    coords -= origin
+    return draggable.translate_coords_array_to_global(self, outline.get_used_cells())
     
-    match _get_rotation_direction():
-        DIR_NORTH:
-            return coords
-        DIR_SOUTH:
-            return Vector2i(-coords.x, -coords.y)
-        DIR_WEST:
-            return Vector2i(coords.y, -coords.x)
-        DIR_EAST:
-            return Vector2i(-coords.y, coords.x)
-        _:
-            return coords
     
 ## Checks if global coordinates are inside the room  
 func is_inside(coords: Vector2i) -> bool:
     if outline == null:
         return false
         
-    var local: Vector2i = _translate_coord_to_local(coords)
+    var local: Vector2i = draggable.translate_coord_to_local(self, coords)
     return outline.get_used_cells().has(local)
 
 const OVERLAP_NONE: int = 0
@@ -146,42 +109,24 @@ func overlaps(other: BlueprintRoom) -> int:
         return OVERLAP_ONTOP
     
     return OVERLAP_TOUCH
-
-func _get_rotated_direction(local_direction: CardinalDirections.CardinalDirection) -> CardinalDirections.CardinalDirection:
-    match _get_rotation_direction():
-        DIR_NORTH:
-            return local_direction
-        DIR_SOUTH:
-            return CardinalDirections.invert(local_direction)
-        DIR_WEST:
-            return CardinalDirections.yaw_ccw(local_direction)[0]
-        DIR_EAST:
-            return CardinalDirections.yaw_cw(local_direction)[0]
-        _:
-            return local_direction     
- 
-func _get_local_direction(global_direction: CardinalDirections.CardinalDirection) -> CardinalDirections.CardinalDirection:
-     match _get_rotation_direction():
-        DIR_NORTH:
-            return global_direction
-        DIR_SOUTH:
-            return CardinalDirections.invert(global_direction)
-        DIR_WEST:
-            return CardinalDirections.yaw_cw(global_direction)[0]
-        DIR_EAST:
-            return CardinalDirections.yaw_ccw(global_direction)[0]
-        _:
-            return global_direction 
               
 func get_global_door_directions(atlas_coords: Vector2i) -> Array[CardinalDirections.CardinalDirection]:
-    return Array(doors_directions.get_directions(atlas_coords).map(_get_rotated_direction), TYPE_INT, "", null)
+    return Array(
+        doors_directions.get_directions(atlas_coords).map(
+            func (d: CardinalDirections.CardinalDirection) -> CardinalDirections.CardinalDirection: 
+                return draggable.get_global_direction(self, d),
+        ), 
+        TYPE_INT, 
+        "", 
+        null,
+    )
 
 func has_door_global_direction(global_coords: Vector2i, global_direction: CardinalDirections.CardinalDirection) -> bool:
     if doors == null || doors_directions == null:
         return false
         
     var atlas_coords: Vector2i = doors.get_cell_atlas_coords(global_coords)
-    return doors_directions.has_door(atlas_coords, _get_local_direction(global_direction))  
+    return doors_directions.has_door(atlas_coords, draggable.get_local_direction(self, global_direction))  
 
 func has_registered_door(global_coords: Vector2i, global_direction: CardinalDirections.CardinalDirection) -> bool:
     return _door_data.any(func (ddata: DoorData) -> bool: return ddata.room == self && ddata.global_coordinates == global_coords && ddata.global_direction == global_direction)
@@ -204,9 +149,9 @@ func has_connecting_doors(
     
     # Check doors
     var my_doors_local: Array[Vector2i] = door_local_coordinates
-    var my_doors: Array[Vector2i] = _translate_coords_to_global(my_doors_local)
+    var my_doors: Array[Vector2i] = draggable.translate_coords_array_to_global(self, my_doors_local)
     var other_doors_local: Array[Vector2i] = other.door_local_coordinates
-    var other_doors: Array[Vector2i] = other._translate_coords_to_global(other_doors_local)
+    var other_doors: Array[Vector2i] = other.draggable.translate_coords_array_to_global(other, other_doors_local)
     
     for my_idx: int in range(my_doors_local.size()):
         var local_coords: Vector2i = my_doors_local[my_idx]
@@ -277,11 +222,6 @@ func register_connection(data: Array[DoorData]) -> void:
                 continue
                 
             _door_data.append(reflected)
-            
-## Local space bounding box
-func _get_tile_bbox(local_coords: Vector2i) -> Rect2:
-    var tsize: Vector2 = tile_size
-    return Rect2(Vector2(tsize.x * local_coords.x, tsize.y * local_coords.y), tsize)
 
 var _debugged: bool = true
 func _draw() -> void:
@@ -293,13 +233,13 @@ func _draw() -> void:
     
     if outline != null:
         for tile_coords: Vector2i in outline.get_used_cells():
-            draw_rect(_get_tile_bbox(tile_coords), Color.AQUA, false, 1)
+            draw_rect(TileMapLayerUtils.get_tile_bbox(outline, tile_coords), Color.AQUA, false, 1)
     
     if doors != null:
         for door_coords: Vector2i in doors.get_used_cells():
             var atlas_coords: Vector2i = doors.get_cell_atlas_coords(door_coords)
-            var tile_bbox: Rect2 = _get_tile_bbox(door_coords)
-            var door_global_coords: Vector2i = _translate_coords_to_global([door_coords])[0]
+            var tile_bbox: Rect2 = TileMapLayerUtils.get_tile_bbox(doors, door_coords)
+            var door_global_coords: Vector2i = draggable.translate_coords_array_to_global(self, [door_coords])[0]
             var center: Vector2 = tile_bbox.get_center()
             
             if !doors_directions.is_door(atlas_coords):
@@ -312,7 +252,7 @@ func _draw() -> void:
                     print_debug("[Blueprint Room %s] Door at %s has atlas coords %s giving local direction %s" % [name, door_coords, atlas_coords, CardinalDirections.name(local_direction)])
                     
                 var delta: Vector2 = tile_bbox.size * CardinalDirections.direction_to_vector2d(local_direction) * 0.5
-                var direction: CardinalDirections.CardinalDirection = _get_rotated_direction(local_direction)
+                var direction: CardinalDirections.CardinalDirection = draggable.get_global_direction(self, local_direction)
                 var used: bool = has_registered_door(door_global_coords, direction)
                 var connected: bool = used && get_connected_room(door_global_coords, direction) != null
                 var tip: Vector2 = center + delta * 0.8
@@ -341,114 +281,23 @@ func _exit_tree() -> void:
     mouse_entered.disconnect(_handle_mouse_enter)
     mouse_exited.disconnect(_handle_mouse_exit)
     input_event.disconnect(_handle_input_event)
-
-var hovered: bool
     
 func _handle_mouse_enter() -> void:
-    hovered = true
-    if !placed:
-        InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
+    draggable.handle_mouse_enter(self)
     __SignalBus.on_hover_blueprint_room_enter.emit(self)
 
 func _handle_mouse_exit() -> void:
-    hovered = false
-    InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
+    draggable.handle_mouse_exit(self)
     __SignalBus.on_hover_blueprint_room_exit.emit(self)
 
-var _drag_origin: Vector2i
-var _rotating: bool = false
-var _dragging: bool = false
- 
 func _handle_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-    if !_dragging && (!hovered || placed):
+    if !draggable.dragging(self) && placed:
         return
-        
-    if event.is_action_pressed("blueprint_rotate_ccw"):
-        _rotate_step(1)
-        
-    elif event.is_action_pressed("blueprint_rotate_cw"):
-        _rotate_step(-1)
-    
-    if event.is_echo():
-        return
-        
-    if event is InputEventMouseButton:
-        var mbtn: InputEventMouseButton = event
-        if mbtn.button_index == MOUSE_BUTTON_LEFT:
-            print_debug("[Blueprint Room %s] Left mouse %s" % [name, mbtn])
-            if mbtn.pressed:
-                _handle_drag_start()
-            else:
-                _handle_drag_end()
-    elif _dragging && event is InputEventMouseMotion:
-        # print_debug("[Blueprint Room %s] Handled drag event %s" % [name, event])
-        _handle_drag(event as InputEventMouseMotion)
+    draggable.handle_input_event(self, event)  
                     
 func _unhandled_input(event: InputEvent) -> void:
-    if !_dragging:
-        return
-    
-    if event is InputEventMouseButton:
-        var mbtn: InputEventMouseButton = event
-        if mbtn.button_index == MOUSE_BUTTON_LEFT && !mbtn.pressed && !mbtn.is_echo():
-            _handle_drag_end()
-            
-    elif event is InputEventMouseMotion:
-        # print_debug("[Blueprint Room %s] Unhandled drag event %s" % [name, event])
-        _handle_drag(event as InputEventMouseMotion)
-
-func _handle_drag(event: InputEventMouseMotion) -> void:
-    global_position += event.relative
-    get_viewport().set_input_as_handled()
-       
-func _handle_drag_start() -> void:
-    _dragging = true
-    _drag_origin = get_origin()
-    InputCursorHelper.remove_node(self)
-    InputCursorHelper.add_state(self, InputCursorHelper.State.DRAG)              
-    
-func _handle_drag_end() -> void:
-    _dragging = false
-    InputCursorHelper.remove_node(self)
-    if hovered:
-        InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
-    
-    __SignalBus.on_blueprint_room_dropped.emit(self, _drag_origin)
-    
-func _rotate_step(step: int) -> void:
-    if _rotating:
-        return
-    _rotating = true
-    var target_rotation_direction: int = posmod(_get_rotation_direction() + step, 4)
-    var target_angle: float = 0
-    match target_rotation_direction:
-        DIR_NORTH:
-            pass
-        DIR_WEST:
-            target_angle = PI * 0.5
-        DIR_SOUTH:
-            target_angle = PI
-        DIR_EAST:
-            target_angle = PI * 1.5
-    
-    if (target_angle - global_rotation) > PI:
-        target_angle -= 2 * PI
-    elif target_angle - global_rotation < -PI:
-        target_angle += 2 * PI
-        
-    var tween: Tween = create_tween()
-    
-    @warning_ignore_start("return_value_discarded")
-    tween.tween_property(self, "global_rotation", target_angle, 0.5).set_trans(Tween.TRANS_SINE)
-    @warning_ignore_restore("return_value_discarded")
-    
-    if tween.finished.connect(
-        func () -> void:
-            _rotating = false
-    ) != OK:
-        push_warning("Could not listen to end of rotation tween")
-        _rotating = false
+    draggable.unhandled_input(self, event)  
     
 func _process(_delta: float) -> void:
-    if debug && !_rotating:
+    if debug && !draggable.rotating:
         queue_redraw()
