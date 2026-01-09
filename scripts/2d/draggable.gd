@@ -25,6 +25,7 @@ var _hovered: Node2D
 var _dragging: Node2D
 
 var _drag_start: Vector2
+var _drag_delta: Vector2
 var _drag_origin: Vector2i
 var _drag_origin_valid: bool
 
@@ -195,8 +196,18 @@ func unhandled_input(node: Node2D, event: InputEvent) -> void:
 func _handle_drag(node: Node2D, event: InputEventMouseMotion) -> void:
     if node == null || node != _dragging:
         return
-        
-    node.global_position += event.relative
+    
+    _drag_delta += event.relative
+    var target: Vector2 = _drag_start + _drag_delta    
+
+    if grid != null && grid.is_inside_grid(node.global_position):
+        var grid_pos: Vector2 = grid.get_global_point(grid.get_closest_coordinates(target))
+        var err: float = (target - grid_pos).abs().length()
+        if err / grid.tile_size.length() < snap_distance_fraction:
+            # print_debug("[] Err %s vs %s" % [err, grid.tile_size])
+            target = grid_pos
+
+    node.global_position = target       
     node.get_viewport().set_input_as_handled()
        
 func _handle_drag_start(node: Node2D) -> void:
@@ -211,6 +222,7 @@ func _handle_drag_start(node: Node2D) -> void:
     _dragging = node
     
     _drag_start = node.global_position
+    _drag_delta = Vector2.ZERO
     _drag_origin = calculate_coordinates(node)
     _drag_origin_valid = grid != null && grid.is_inside_grid(node.global_position)
     

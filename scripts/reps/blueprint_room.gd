@@ -70,6 +70,7 @@ func snap_to_grid() -> void:
     if grid.is_inside_grid(global_position):
         var r: Rect2i = outline.get_used_rect()
         var origin: Vector2i = grid.get_closest_coordinates(global_position)
+        # TODO: This assumes equal grid size...
         r.position += origin
         
         if grid.extent.encloses(r):
@@ -317,7 +318,7 @@ func _handle_grid_drag_end(node: Node2D, start_point: Vector2, _from: Vector2i, 
     if !to_valid:
         global_position = start_point
     
-    # TODO: Check for valid placement
+    # TODO: Check for valid placement with door logic
     snap_to_grid()
       
 func _handle_mouse_enter() -> void:
