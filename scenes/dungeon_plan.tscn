@@ -1,28 +1,38 @@
-[gd_scene load_steps=3 format=3 uid="uid://dh68rjdc2w0vf"]
+[gd_scene load_steps=4 format=3 uid="uid://dh68rjdc2w0vf"]
 
 [ext_resource type="PackedScene" uid="uid://ctcvff10ujxfr" path="res://scenes/rooms/start_room.tscn" id="1_ldlxd"]
 [ext_resource type="Script" uid="uid://73wn6oety2kg" path="res://scripts/2d/grid2d.gd" id="1_n4crp"]
+[ext_resource type="Script" uid="uid://dpu4cq0swyq2p" path="res://scripts/reps/dungeon_planner.gd" id="1_ou8db"]
 
-[node name="Dungeon Plan" type="Node2D"]
+[node name="Dungeon Planner" type="Node2D" node_paths=PackedStringArray("grid", "rooms")]
+script = ExtResource("1_ou8db")
+grid = NodePath("Grid2D")
+rooms = [NodePath("Rooms/Room"), NodePath("Rooms/Room2"), NodePath("Rooms/Room3"), NodePath("Rooms/Room4"), NodePath("Rooms/Room5")]
+
+[node name="Grid2D" type="Node2D" parent="."]
 script = ExtResource("1_n4crp")
 tile_size = Vector2(16, 16)
 extent = Rect2i(0, 0, 60, 40)
 show_grid = true
+metadata/_custom_type_script = "uid://73wn6oety2kg"
 
-[node name="Room" parent="." instance=ExtResource("1_ldlxd")]
-position = Vector2(720, 208)
+[node name="Rooms" type="Node2D" parent="."]
 
-[node name="Room2" parent="." instance=ExtResource("1_ldlxd")]
+[node name="Room" parent="Rooms" instance=ExtResource("1_ldlxd")]
+position = Vector2(1073, 284)
+
+[node name="Room2" parent="Rooms" instance=ExtResource("1_ldlxd")]
 position = Vector2(467, 350)
 
-[node name="Room3" parent="." instance=ExtResource("1_ldlxd")]
-position = Vector2(864, 400)
+[node name="Room3" parent="Rooms" instance=ExtResource("1_ldlxd")]
+position = Vector2(836, 394)
 rotation = 1.5707964
+placed = true
 
-[node name="Room4" parent="." instance=ExtResource("1_ldlxd")]
+[node name="Room4" parent="Rooms" instance=ExtResource("1_ldlxd")]
 position = Vector2(672, 400)
-rotation = 3.1415927
+rotation = -3.1415925
 
-[node name="Room5" parent="." instance=ExtResource("1_ldlxd")]
+[node name="Room5" parent="Rooms" instance=ExtResource("1_ldlxd")]
 position = Vector2(784, 496)
-rotation = 4.712389
+rotation = -1.5707964

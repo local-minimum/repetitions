@@ -11,10 +11,11 @@ class_name BlueprintRoom
 @export var debug: bool
 @export var placed: bool:
     set(value):
-        if value:
-            draggable.enable(self)
-        else:
-            draggable.disable(self)
+        if !Engine.is_editor_hint():
+            if value:
+                draggable.enable(self)
+            else:
+                draggable.disable(self)
         placed = value
         
 var grid: Grid2D:
@@ -60,7 +61,25 @@ func recalculate_collision() -> void:
         return
         
     collision.polygon = perimeter()
+
+func snap_to_grid() -> void:
+    if grid == null:
+        print_debug("[Blueprint Room %s] Cannot snap to nothing" % name)
+        return
     
+    if grid.is_inside_grid(global_position):
+        var r: Rect2i = outline.get_used_rect()
+        var origin: Vector2i = grid.get_closest_coordinates(global_position)
+        r.position += origin
+        
+        if grid.extent.encloses(r):
+            global_position = grid.get_global_point(origin)
+        
+        # else:
+            # print_debug("[Blueprint Room %s] I'm outside the grid: %s encloses %s = %s" % [name, grid.extent, r, grid.extent.encloses(r)])
+
+    # else:
+        # print_debug("[Blueprint Room %s] Origin outside grid" % name)            
 ## Local space float precision bounding box, only reliable to say that things don't overlap
 func bounding_box() -> Rect2: 
     return TileMapLayerUtils.bounding_box(outline)
@@ -276,12 +295,31 @@ func _enter_tree() -> void:
         push_error("Failed to connect mouse exit")
     if !input_event.is_connected(_handle_input_event) && input_event.connect(_handle_input_event) != OK:
         push_error("Failed to connect input event")
+    if draggable.on_grid_drag_end.connect(_handle_grid_drag_end) != OK:
+        push_error("Failed to connect grid drag end")
         
 func _exit_tree() -> void:
     mouse_entered.disconnect(_handle_mouse_enter)
     mouse_exited.disconnect(_handle_mouse_exit)
     input_event.disconnect(_handle_input_event)
+    draggable.on_grid_drag_end.disconnect(_handle_grid_drag_end)
+
+func _ready() -> void:
+    if placed:
+        draggable.disable(self)
+    else:
+        draggable.enable(self)
+
+func _handle_grid_drag_end(node: Node2D, start_point: Vector2, _from: Vector2i, _from_valid: bool, _to: Vector2i, to_valid: bool) -> void:
+    if node != self:
+        return
     
+    if !to_valid:
+        global_position = start_point
+    
+    # TODO: Check for valid placement
+    snap_to_grid()
+      
 func _handle_mouse_enter() -> void:
     draggable.handle_mouse_enter(self)
     __SignalBus.on_hover_blueprint_room_enter.emit(self)
