@@ -20,6 +20,7 @@ static func add_state(node: Node, state: State) -> void:
 
     _sync_cursor(node)
 
+## Removes all states for node
 static func remove_node(node: Node) -> void:
     _hovered.erase(node)
     _dragged.erase(node)
@@ -34,21 +35,25 @@ static func remove_state(node: Node, state: State) -> void:
             _dragged.erase(node)
         State.FORBIDDEN:
             _forbidden.erase(node)
-
+            
     _sync_cursor(node)
 
 
 static func _sync_cursor(node: Node) -> void:
     if !_forbidden.is_empty():
+        # print_debug("[Input Cursor Helper] -> Forbidden")
         _sync_node_cursor(node, Control.CURSOR_FORBIDDEN)
         Input.set_default_cursor_shape(Input.CURSOR_FORBIDDEN)
     elif !_dragged.is_empty():
+        # print_debug("[Input Cursor Helper] -> Drag")
         _sync_node_cursor(node, Control.CURSOR_DRAG)
         Input.set_default_cursor_shape(Input.CURSOR_DRAG)
     elif !_hovered.is_empty():
+        # print_debug("[Input Cursor Helper] -> Hover")
         _sync_node_cursor(node, Control.CURSOR_POINTING_HAND)
         Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
     else:
+        # print_debug("[Input Cursor Helper] -> Default")
         _sync_node_cursor(node, Control.CURSOR_ARROW)
         Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 

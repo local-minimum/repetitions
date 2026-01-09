@@ -21,6 +21,7 @@ debug = true
 position = Vector2(672, 400)
 rotation = 3.1415927
 debug = true
+placed = true
 
 [node name="Room5" parent="." instance=ExtResource("1_ldlxd")]
 position = Vector2(784, 496)

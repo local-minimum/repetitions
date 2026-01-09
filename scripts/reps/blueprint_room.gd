@@ -459,15 +459,21 @@ var hovered: bool
     
 func _handle_mouse_enter() -> void:
     hovered = true
+    if !placed:
+        InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
     __SignalBus.on_hover_blueprint_room_enter.emit(self)
 
 func _handle_mouse_exit() -> void:
     hovered = false
+    InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
     __SignalBus.on_hover_blueprint_room_exit.emit(self)
 
-var _rotating: bool = false    
+var _drag_origin: Vector2i
+var _rotating: bool = false
+var _dragging: bool = false
+ 
 func _handle_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-    if !hovered || placed:
+    if !_dragging && (!hovered || placed):
         return
         
     if event.is_action_pressed("blueprint_rotate_ccw"):
@@ -475,7 +481,53 @@ func _handle_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) ->
         
     elif event.is_action_pressed("blueprint_rotate_cw"):
         _rotate_step(-1)
+    
+    if event.is_echo():
+        return
         
+    if event is InputEventMouseButton:
+        var mbtn: InputEventMouseButton = event
+        if mbtn.button_index == MOUSE_BUTTON_LEFT:
+            print_debug("[Blueprint Room %s] Left mouse %s" % [name, mbtn])
+            if mbtn.pressed:
+                _handle_drag_start()
+            else:
+                _handle_drag_end()
+    elif _dragging && event is InputEventMouseMotion:
+        # print_debug("[Blueprint Room %s] Handled drag event %s" % [name, event])
+        _handle_drag(event as InputEventMouseMotion)
+                    
+func _unhandled_input(event: InputEvent) -> void:
+    if !_dragging:
+        return
+    
+    if event is InputEventMouseButton:
+        var mbtn: InputEventMouseButton = event
+        if mbtn.button_index == MOUSE_BUTTON_LEFT && !mbtn.pressed && !mbtn.is_echo():
+            _handle_drag_end()
+            
+    elif event is InputEventMouseMotion:
+        # print_debug("[Blueprint Room %s] Unhandled drag event %s" % [name, event])
+        _handle_drag(event as InputEventMouseMotion)
+
+func _handle_drag(event: InputEventMouseMotion) -> void:
+    global_position += event.relative
+    get_viewport().set_input_as_handled()
+       
+func _handle_drag_start() -> void:
+    _dragging = true
+    _drag_origin = get_origin()
+    InputCursorHelper.remove_node(self)
+    InputCursorHelper.add_state(self, InputCursorHelper.State.DRAG)              
+    
+func _handle_drag_end() -> void:
+    _dragging = false
+    InputCursorHelper.remove_node(self)
+    if hovered:
+        InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
+    
+    __SignalBus.on_blueprint_room_dropped.emit(self, _drag_origin)
+    
 func _rotate_step(step: int) -> void:
     if _rotating:
         return
