@@ -257,7 +257,8 @@ func _handle_drag_start(node: Node2D) -> void:
     _drag_origin_valid = grid != null && grid.is_inside_grid(node.global_position)
     _drag_current_grid_coords_valid = _drag_origin_valid
 
-    _drag_origin_angle = node.global_rotation
+    if !_rotating_nodes.has(node):
+        _drag_origin_angle = node.global_rotation
     
     InputCursorHelper.remove_node(node)
     InputCursorHelper.add_state(node, InputCursorHelper.State.DRAG)

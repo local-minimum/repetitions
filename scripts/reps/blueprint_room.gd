@@ -33,6 +33,13 @@ var grid: Grid2D:
 @export var draggable: Draggable
 
 var _door_data: Array[DoorData]
+var tweening: bool:
+    set(value):
+        if value:
+            draggable.disable(self)
+        elif !placed:
+            draggable.enable(self)
+        tweening = value
 
 ## Local coordinates of connected doors (valids)
 var connected_doors: Array[DoorData]:
@@ -254,7 +261,7 @@ func register_connection(data: Array[DoorData]) -> void:
 
 var _debugged: bool = true
 func _draw() -> void:
-    if Engine.is_editor_hint() || !debug:
+    if Engine.is_editor_hint() || !debug || tweening:
         return
         
     var bbox: Rect2 = bounding_box()

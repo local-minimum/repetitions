@@ -45,7 +45,7 @@ func _handle_room_dropped(room: BlueprintRoom, origin: Vector2, origin_angle: fl
     else:
         
         print_debug("Invalid drop location for %s" % room)
-        room.placed = true
+        room.tweening = true
         var tween: Tween = create_tween()
         
         @warning_ignore_start("return_value_discarded")
@@ -55,12 +55,12 @@ func _handle_room_dropped(room: BlueprintRoom, origin: Vector2, origin_angle: fl
         
         if tween.finished.connect(
             func () -> void:
-                room.placed = false
+                room.tweening = false
                 room.modulate = Color.WHITE
                 queue_redraw()
         ) != OK:
             push_warning("Failed to connect ease back complete")
-            room.placed = false
+            room.tweening = false
             room.modulate = Color.WHITE
             queue_redraw()
             
@@ -124,7 +124,6 @@ func _draw() -> void:
         
         if show_logical_tiles:
             var coords: Array[Vector2i] = room.get_global_used_tiles()
-            print_debug("Room %s has coords %s" % [room, coords])
             for c: Vector2i in coords:
                 var cell_rect: Rect2 = grid.get_local_cell_rect(c, true)
                 cell_rect = RectUtils.translate_local(cell_rect, grid, self)
