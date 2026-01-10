@@ -66,15 +66,15 @@ func translate_coords_array_to_global(node: Node2D, coords: Array[Vector2i]) -> 
 
     match _get_rotation_direction(node):
         DIR_NORTH:
-            res.append_array(coords)
+            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return c + origin))
         DIR_WEST:
-            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(-c.y, c.x)))
+            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(-c.y + origin.x, c.x + origin.y)))
         DIR_SOUTH:
-            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(-c.x, -c.x)))   
+            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(-c.x + origin.x, -c.y + origin.y))) 
         DIR_EAST:
-            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(c.y, -c.x)))
+            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(c.y + origin.x, -c.x + origin.y)))
              
-    return Array(res.map(func (c: Vector2i) -> Vector2i: return c + origin), TYPE_VECTOR2I, "", null)
+    return res
 
 func translate_coord_to_local(node: Node2D, coords: Vector2i) -> Vector2i:
     var origin: Vector2i = calculate_coordinates(node)

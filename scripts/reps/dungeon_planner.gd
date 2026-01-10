@@ -27,15 +27,16 @@ func _handle_room_move_start(room: BlueprintRoom) -> void:
     room.modulate = Color.GRAY
     
 func _handle_room_move(room: BlueprintRoom, _coords: Vector2i, valid: bool) -> void:
-    var t0: int = Time.get_ticks_usec() 
+    # var t0: int = Time.get_ticks_usec() 
     if !valid:
         room.modulate = Color.WEB_GRAY
      
     elif _check_valid_room_placement(room, false):
         room.modulate = Color.SKY_BLUE
 
-    var end: int = Time.get_ticks_usec()
-    print_debug("Room placement check %sus" % (end - t0))
+    queue_redraw()
+    # var end: int = Time.get_ticks_usec()
+    # print_debug("Room placement check %sus" % (end - t0))
     
 func _handle_room_dropped(room: BlueprintRoom, origin: Vector2, origin_angle: float) -> void:
     if _check_valid_room_placement(room, true):
@@ -56,11 +57,13 @@ func _handle_room_dropped(room: BlueprintRoom, origin: Vector2, origin_angle: fl
             func () -> void:
                 room.placed = false
                 room.modulate = Color.WHITE
+                queue_redraw()
         ) != OK:
             push_warning("Failed to connect ease back complete")
             room.placed = false
             room.modulate = Color.WHITE
-    
+            queue_redraw()
+            
 func _check_valid_room_placement(room: BlueprintRoom, finalize: bool) -> bool:
     if !room.contained_in_grid:
         room.modulate = Color.WEB_GRAY
@@ -80,6 +83,7 @@ func _check_valid_room_placement(room: BlueprintRoom, finalize: bool) -> bool:
                     room.modulate = Color.RED
                 return false
             BlueprintRoom.OVERLAP_TOUCH:
+                print_debug("%s touches %s" % [room, other])
                 touching_rooms.append(other)
     
     if touching_rooms.is_empty():
@@ -102,3 +106,14 @@ func _check_valid_room_placement(room: BlueprintRoom, finalize: bool) -> bool:
         room.modulate = Color.GRAY
                     
     return valid
+
+func _draw() -> void:
+    for room: BlueprintRoom in rooms:
+        var r: Rect2 = RectUtils.translate_local(room.bounding_box(), room, self).grow(9)
+        draw_rect(r, Color.ORANGE, false, 2)
+        
+        var points: PackedVector2Array = room.perimeter()
+        for idx: int in range(points.size()):
+            points[idx] = to_local(room.to_global(points[idx]))
+
+        draw_polygon(points, [Color.ORANGE])

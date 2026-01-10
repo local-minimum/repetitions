@@ -30,3 +30,8 @@ static func clamp_pointi(rect: Rect2i, pt: Vector2i) -> Vector2i:
     if rect.has_point(pt):
         return pt
     return pt.clamp(rect.position, rect.end - Vector2i.ONE)
+    
+static func translate_local(r: Rect2, from: Node2D, to: Node2D) -> Rect2:
+    var p: Vector2 = to.to_local(from.to_global(r.position))
+    var e: Vector2 = to.to_local(from.to_global(r.end))
+    return Rect2(p.min(e), (e - p).abs())

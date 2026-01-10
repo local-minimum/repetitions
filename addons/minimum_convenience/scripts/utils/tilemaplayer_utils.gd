@@ -36,6 +36,9 @@ static func perimeter(layer: TileMapLayer) -> PackedVector2Array:
     var current_coords: Vector2i = local_coords[0]
     var visited_coords: Array[Vector2i] = []
     var points: PackedVector2Array = [get_tile_bbox(layer, current_coords).position]
+    if points.resize(local_coords.size()) != OK:
+        push_warning("Perimeter points array could not be set to useful size")
+    var pt_idx: int = 0
     var pos_x: bool = true
     var pos_y: bool = true
     
@@ -59,9 +62,11 @@ static func perimeter(layer: TileMapLayer) -> PackedVector2Array:
                 CardinalDirections.CardinalDirection.SOUTH:
                     pos_x = false
                     pos_y = false
+            print_debug("%s has a %s neighbour by ccw rotation" % [current_coords, CardinalDirections.name(direction)])
             
         elif local_coords.has(CardinalDirections.translate2d(current_coords, direction)):
             # We are just continuing on a straight line
+            print_debug("%s has a %s neighbour by straight line" % [current_coords, CardinalDirections.name(direction)])
             pass
             
         else:
@@ -82,7 +87,7 @@ static func perimeter(layer: TileMapLayer) -> PackedVector2Array:
                     CardinalDirections.CardinalDirection.SOUTH:
                         pos_x = false
                         pos_y = true
-                                     
+                print_debug("%s has a %s neighbour by cw rotation" % [current_coords, CardinalDirections.name(direction)])                    
             else:
                 push_error("[TileMapLayer Utils] Constructing the perimeter accidentally ended up on %s when going %s from %s which is outside the tilemap" % [
                     CardinalDirections.translate2d(current_coords, yaw_cw),
@@ -92,16 +97,20 @@ static func perimeter(layer: TileMapLayer) -> PackedVector2Array:
                 return []    
                      
         # Add point
-        var tile_bbox: Rect2 = get_tile_bbox(layer, current_coords)
         if updated_direction:
-            # print_debug("Going %s to %s" % [CardinalDirections.name(direction), current_coords])
-            
-            if !points.append(Vector2(
+            var tile_bbox: Rect2 = get_tile_bbox(layer, current_coords)
+            print_debug("Going %s to %s has rect %s" % [CardinalDirections.name(direction), current_coords, tile_bbox])
+            pt_idx += 1
+            var pt: Vector2 = Vector2(
                 tile_bbox.position.x if pos_x else tile_bbox.end.x,
                 tile_bbox.position.y if pos_y else tile_bbox.end.y,
-            )):
-                push_warning("Failed to append outline points!")
+            )
+            points[pt_idx] = pt
+            # if !points.append(pt):
+            #    push_warning("Failed to append %s at %s from %s to outline points %s!" % [pt, current_coords, tile_bbox, points])
         
         visited_coords.append(current_coords)                        
-        current_coords = CardinalDirections.translate2d(current_coords, direction) 
+        current_coords = CardinalDirections.translate2d(current_coords, direction)
+    
+    points.resize(pt_idx + 1)
     return points

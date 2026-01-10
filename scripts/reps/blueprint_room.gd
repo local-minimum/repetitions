@@ -86,7 +86,8 @@ func snap_to_grid() -> void:
             # print_debug("[Blueprint Room %s] I'm outside the grid: %s encloses %s = %s" % [name, grid.extent, r, grid.extent.encloses(r)])
 
     # else:
-        # print_debug("[Blueprint Room %s] Origin outside grid" % name)            
+        # print_debug("[Blueprint Room %s] Origin outside grid" % name)
+           
 ## Local space float precision bounding box, only reliable to say that things don't overlap
 func bounding_box() -> Rect2: 
     return TileMapLayerUtils.bounding_box(outline)
@@ -121,11 +122,13 @@ const OVERLAP_ONTOP: int = 2
 
 ## If two rooms overlaps
 func overlaps(other: BlueprintRoom) -> int:
+    var touch_margin: float = maxf(tile_size.x, tile_size.y) * 0.5 + 1.0
     # Quick test bounding boxes
-    var other_bb: Rect2 = other.bounding_box()
+    var other_bb: Rect2 = other.bounding_box().grow(touch_margin)
     # This grows slightly to ensure they aren't next to each other even 
-    var bb: Rect2 = bounding_box().grow(0.5) 
-    var other_bb_localized: Rect2 = transform * (other.global_transform.affine_inverse() * other_bb)  
+    var bb: Rect2 = bounding_box().grow(touch_margin) 
+    var other_bb_localized: Rect2 = RectUtils.translate_local(other_bb, other, self)
+    
     if !bb.intersects(other_bb_localized):
         return OVERLAP_NONE
     
@@ -251,7 +254,7 @@ func register_connection(data: Array[DoorData]) -> void:
 
 var _debugged: bool = true
 func _draw() -> void:
-    if Engine.is_editor_hint():
+    if Engine.is_editor_hint() || !debug:
         return
         
     var bbox: Rect2 = bounding_box()
@@ -390,5 +393,5 @@ func _unhandled_input(event: InputEvent) -> void:
     draggable.unhandled_input(self, event)  
     
 func _process(_delta: float) -> void:
-    if debug && !draggable.rotating:
+    if debug:
         queue_redraw()
