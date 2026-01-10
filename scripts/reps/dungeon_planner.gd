@@ -7,3 +7,98 @@ func _ready() -> void:
     for room: BlueprintRoom in rooms:
         room.grid = grid
         room.snap_to_grid()
+        
+func _enter_tree() -> void:
+    if __SignalBus.on_blueprint_room_move_start.connect(_handle_room_move_start) != OK:
+        push_error("Failed to connect room move start")
+        
+    if __SignalBus.on_blueprint_room_position_updated.connect(_handle_room_move) != OK:
+        push_error("Failed to connect room position updated")
+        
+    if __SignalBus.on_blueprint_room_dropped.connect(_handle_room_dropped) != OK:
+        push_error("Failed to connect room dropped")
+        
+func _exit_tree() -> void:
+    __SignalBus.on_blueprint_room_move_start.disconnect(_handle_room_move_start)
+    __SignalBus.on_blueprint_room_position_updated.disconnect(_handle_room_move)
+    __SignalBus.on_blueprint_room_dropped.disconnect(_handle_room_dropped)
+
+func _handle_room_move_start(room: BlueprintRoom) -> void:
+    room.modulate = Color.GRAY
+    
+func _handle_room_move(room: BlueprintRoom, _coords: Vector2i, valid: bool) -> void:
+    var t0: int = Time.get_ticks_usec() 
+    if !valid:
+        room.modulate = Color.WEB_GRAY
+     
+    elif _check_valid_room_placement(room, false):
+        room.modulate = Color.SKY_BLUE
+
+    var end: int = Time.get_ticks_usec()
+    print_debug("Room placement check %sus" % (end - t0))
+    
+func _handle_room_dropped(room: BlueprintRoom, origin: Vector2, origin_angle: float) -> void:
+    if _check_valid_room_placement(room, true):
+        room.placed = true
+        room.modulate = Color.WHITE
+    else:
+        
+        print_debug("Invalid drop location for %s" % room)
+        room.placed = true
+        var tween: Tween = create_tween()
+        
+        @warning_ignore_start("return_value_discarded")
+        tween.tween_property(room, "global_position", origin, 0.2).set_trans(Tween.TRANS_SINE)
+        tween.tween_property(room, "rotation", origin_angle, 0.2)
+        @warning_ignore_restore("return_value_discarded")
+        
+        if tween.finished.connect(
+            func () -> void:
+                room.placed = false
+                room.modulate = Color.WHITE
+        ) != OK:
+            push_warning("Failed to connect ease back complete")
+            room.placed = false
+            room.modulate = Color.WHITE
+    
+func _check_valid_room_placement(room: BlueprintRoom, finalize: bool) -> bool:
+    if !room.contained_in_grid:
+        room.modulate = Color.WEB_GRAY
+        return false
+     
+    var touching_rooms: Array[BlueprintRoom] = []
+       
+    for other: BlueprintRoom in rooms:
+        if other == room:
+            continue
+            
+        match room.overlaps(other):
+            BlueprintRoom.OVERLAP_NONE:
+                continue
+            BlueprintRoom.OVERLAP_ONTOP:
+                if !finalize:
+                    room.modulate = Color.RED
+                return false
+            BlueprintRoom.OVERLAP_TOUCH:
+                touching_rooms.append(other)
+    
+    if touching_rooms.is_empty():
+        if !finalize:
+            room.modulate = Color.GRAY
+        return false
+    
+    var valid: bool = false
+             
+    for other: BlueprintRoom in touching_rooms:            
+        var connected_doors: Array[DoorData]
+        if room.has_connecting_doors(other, connected_doors):
+            if connected_doors.any(func (door: DoorData) -> bool: return door.valid):
+                valid = true
+                if finalize:
+                    room.register_connection(connected_doors)
+                    other.register_connection(connected_doors)
+                    
+    if !valid && !finalize:
+        room.modulate = Color.GRAY
+                    
+    return valid

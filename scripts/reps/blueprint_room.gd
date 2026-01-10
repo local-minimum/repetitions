@@ -13,9 +13,9 @@ class_name BlueprintRoom
     set(value):
         if !Engine.is_editor_hint():
             if value:
-                draggable.enable(self)
-            else:
                 draggable.disable(self)
+            else:
+                draggable.enable(self)
         placed = value
         
 var grid: Grid2D:
@@ -62,19 +62,25 @@ func recalculate_collision() -> void:
         
     collision.polygon = perimeter()
 
+var contained_in_grid: bool:
+    get():
+        if grid != null && grid.is_inside_grid(global_position):
+            var r: Rect2i = outline.get_used_rect()
+            var origin: Vector2i = grid.get_closest_coordinates(global_position)
+            # TODO: This assumes equal grid size...
+            r.position += origin
+            
+            if grid.extent.encloses(r):
+                return true
+        return false
+                
 func snap_to_grid() -> void:
     if grid == null:
         print_debug("[Blueprint Room %s] Cannot snap to nothing" % name)
         return
     
-    if grid.is_inside_grid(global_position):
-        var r: Rect2i = outline.get_used_rect()
-        var origin: Vector2i = grid.get_closest_coordinates(global_position)
-        # TODO: This assumes equal grid size...
-        r.position += origin
-        
-        if grid.extent.encloses(r):
-            global_position = grid.get_global_point(origin)
+    if contained_in_grid:
+        global_position = grid.get_global_point(grid.get_closest_coordinates(global_position))
         
         # else:
             # print_debug("[Blueprint Room %s] I'm outside the grid: %s encloses %s = %s" % [name, grid.extent, r, grid.extent.encloses(r)])
@@ -296,14 +302,31 @@ func _enter_tree() -> void:
         push_error("Failed to connect mouse exit")
     if !input_event.is_connected(_handle_input_event) && input_event.connect(_handle_input_event) != OK:
         push_error("Failed to connect input event")
-    if draggable.on_grid_drag_end.connect(_handle_grid_drag_end) != OK:
-        push_error("Failed to connect grid drag end")
+    
+    if draggable != null:
+        if draggable.on_grid_drag_end.connect(_handle_grid_drag_end) != OK:
+            push_error("Failed to connect grid drag end")
+        if draggable.on_rotation_start.connect(_handle_rotation_start) != OK:
+            push_error("Failed to connect rotation start")
+        if draggable.on_rotation_end.connect(_handle_rotation_end) != OK:
+            push_error("Failed to connect rotation end")
+        if draggable.on_grid_drag_change.connect(_handle_grid_drag_change) != OK:
+            push_error("Failed to connect grid drag change")
+        if draggable.on_grid_drag_start.connect(_handle_drag_start) != OK:
+            push_error("Failed to connect drag start")
+        
         
 func _exit_tree() -> void:
     mouse_entered.disconnect(_handle_mouse_enter)
     mouse_exited.disconnect(_handle_mouse_exit)
     input_event.disconnect(_handle_input_event)
-    draggable.on_grid_drag_end.disconnect(_handle_grid_drag_end)
+    
+    if draggable != null:
+        draggable.on_grid_drag_start.disconnect(_handle_drag_start)
+        draggable.on_grid_drag_end.disconnect(_handle_grid_drag_end)
+        draggable.on_rotation_start.disconnect(_handle_rotation_start)
+        draggable.on_rotation_end.disconnect(_handle_rotation_end)
+        draggable.on_grid_drag_change.disconnect(_handle_grid_drag_change)
 
 func _ready() -> void:
     if placed:
@@ -311,15 +334,44 @@ func _ready() -> void:
     else:
         draggable.enable(self)
 
-func _handle_grid_drag_end(node: Node2D, start_point: Vector2, _from: Vector2i, _from_valid: bool, _to: Vector2i, to_valid: bool) -> void:
+func _handle_grid_drag_change(node: Node2D, valid: bool, coordinates: Vector2i) -> void:
+    if node != self:
+        return
+    __SignalBus.on_blueprint_room_position_updated.emit(self, coordinates, valid)
+
+var _being_dragged: bool = false
+
+func _handle_drag_start(node: Node2D) -> void:
+    if node != self:
+        return
+
+    _being_dragged = true
+    __SignalBus.on_blueprint_room_move_start.emit(self)
+
+func _handle_rotation_start(node: Node2D) -> void:
+    if node != self || _being_dragged:
+        return
+    __SignalBus.on_blueprint_room_move_start.emit(self)
+                    
+func _handle_rotation_end(node: Node2D, start_angle: float) -> void:
     if node != self:
         return
     
-    if !to_valid:
-        global_position = start_point
+    if grid != null:
+        __SignalBus.on_blueprint_room_position_updated.emit(
+            self,
+            grid.get_closest_coordinates(global_position),
+            grid.is_inside_grid(global_position),
+        )
     
-    # TODO: Check for valid placement with door logic
-    snap_to_grid()
+    if !_being_dragged:
+        __SignalBus.on_blueprint_room_dropped.emit(self, global_position, start_angle)
+    
+func _handle_grid_drag_end(node: Node2D, start_point: Vector2, start_angle: float, _from: Vector2i, _from_valid: bool, _to: Vector2i, _to_valid: bool) -> void:
+    if node != self:
+        return
+    _being_dragged = false
+    __SignalBus.on_blueprint_room_dropped.emit(self, start_point, start_angle)
       
 func _handle_mouse_enter() -> void:
     draggable.handle_mouse_enter(self)

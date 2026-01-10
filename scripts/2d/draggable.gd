@@ -1,6 +1,16 @@
 extends Resource
 class_name Draggable
 
+signal on_grid_drag_start(node: Node2D)
+signal on_grid_drag_change(node: Node2D, valid: bool, coordinates: Vector2i)
+signal on_grid_drag_end(node: Node2D, start_point: Vector2, start_angle: float, from: Vector2i, from_valid: bool, to: Vector2i, to_valid: bool)
+signal on_rotation_start(node: Node2D)
+signal on_rotation_end(node: Node2D, start_angle: float)
+
+const DIR_NORTH: int = 0
+const DIR_WEST: int = 1
+const DIR_SOUTH: int = 2
+const DIR_EAST: int = 3
 @export var no_drag_zone_sq: float = 4
  
 @export var snap_to_grid: bool = true
@@ -15,12 +25,12 @@ func dragging(node: Node2D) -> bool:
 
 var rotating: bool:
     get():
-        return _rotating
+        return _rotating_nodes.is_empty()
 
 var _disabled: Array[Node2D]
             
 var grid: Grid2D
-var _rotating: bool
+var _rotating_nodes: Dictionary[Node2D, float]
 var _hovered: Node2D
 var _dragging: Node2D
 
@@ -28,13 +38,9 @@ var _drag_start: Vector2
 var _drag_delta: Vector2
 var _drag_origin: Vector2i
 var _drag_origin_valid: bool
-
-signal on_grid_drag_end(node: Node2D, start_point: Vector2, from: Vector2i, from_valid: bool, to: Vector2i, to_valid: bool)
-    
-const DIR_NORTH: int = 0
-const DIR_WEST: int = 1
-const DIR_SOUTH: int = 2
-const DIR_EAST: int = 3
+var _drag_origin_angle: float
+var _drag_current_grid_coords: Vector2i
+var _drag_current_grid_coords_valid: bool
 
 func enable(node: Node2D) -> void:
     _disabled.erase(node)
@@ -113,7 +119,8 @@ func handle_input_event(node: Node2D, event: InputEvent) -> void:
         _handle_drag(node, event as InputEventMouseMotion)
         
 func _get_rotation_direction(node: Node2D) -> int:
-    var dir: float = node.global_transform.get_rotation() / (0.5 * PI)
+    var angle: float = _rotating_nodes.get(node, node.global_transform.get_rotation())
+    var dir: float = angle / (0.5 * PI)
     var diri: int = roundi(dir)
     if abs(dir - diri) > 0.01:
         push_error("[Draggable %s] Has global rotation %s, expected to follow a cardinal" % [node.name, node.global_transform.get_rotation()])
@@ -147,9 +154,9 @@ func get_local_direction(node: Node2D, global_direction: CardinalDirections.Card
             return global_direction     
        
 func _rotate_right_angle(node: Node2D, step: int) -> void:
-    if _rotating:
+    if _rotating_nodes.has(node):
         return
-    _rotating = true
+    _rotating_nodes[node] = node.rotation
     var target_rotation_direction: int = posmod(_get_rotation_direction(node) + step, 4)
     var target_angle: float = 0
     match target_rotation_direction:
@@ -166,7 +173,10 @@ func _rotate_right_angle(node: Node2D, step: int) -> void:
         target_angle -= 2 * PI
     elif target_angle - node.global_rotation < -PI:
         target_angle += 2 * PI
+    
+    var start_angle: float = node.global_rotation
         
+    on_rotation_start.emit(node)
     var tween: Tween = node.create_tween()
     
     @warning_ignore_start("return_value_discarded")
@@ -175,10 +185,16 @@ func _rotate_right_angle(node: Node2D, step: int) -> void:
     
     if tween.finished.connect(
         func () -> void:
-            _rotating = false
+            @warning_ignore_start("return_value_discarded")
+            _rotating_nodes.erase(node)
+            @warning_ignore_restore("return_value_discarded")
+            on_rotation_end.emit(node, start_angle)
     ) != OK:
         push_warning("Could not listen to end of rotation tween")
-        _rotating = false
+        @warning_ignore_start("return_value_discarded")
+        _rotating_nodes.erase(node)
+        @warning_ignore_restore("return_value_discarded")
+        on_rotation_end.emit(node, start_angle)
 
 func unhandled_input(node: Node2D, event: InputEvent) -> void:
     if _dragging == null || _dragging != node:
@@ -201,12 +217,23 @@ func _handle_drag(node: Node2D, event: InputEventMouseMotion) -> void:
     var target: Vector2 = _drag_start + _drag_delta    
 
     if grid != null && grid.is_inside_grid(node.global_position):
-        var grid_pos: Vector2 = grid.get_global_point(grid.get_closest_coordinates(target))
+        var coords: Vector2i = grid.get_closest_coordinates(target)
+        var grid_pos: Vector2 = grid.get_global_point(coords)
         var err: float = (target - grid_pos).abs().length()
         if err / grid.tile_size.length() < snap_distance_fraction:
             # print_debug("[] Err %s vs %s" % [err, grid.tile_size])
             target = grid_pos
-
+        
+        if !_drag_current_grid_coords_valid || coords != _drag_current_grid_coords:
+            _drag_current_grid_coords = coords
+            _drag_current_grid_coords_valid = true
+            on_grid_drag_change.emit(node, _drag_current_grid_coords_valid, _drag_current_grid_coords) 
+        
+    elif _drag_current_grid_coords_valid:
+        _drag_current_grid_coords_valid = false
+        _drag_current_grid_coords = grid.get_closest_coordinates(target) if grid != null else Vector2i.ZERO
+        on_grid_drag_change.emit(node, _drag_current_grid_coords_valid, _drag_current_grid_coords)        
+        
     node.global_position = target       
     node.get_viewport().set_input_as_handled()
        
@@ -223,11 +250,19 @@ func _handle_drag_start(node: Node2D) -> void:
     
     _drag_start = node.global_position
     _drag_delta = Vector2.ZERO
+    
     _drag_origin = calculate_coordinates(node)
+    _drag_current_grid_coords = _drag_origin
+    
     _drag_origin_valid = grid != null && grid.is_inside_grid(node.global_position)
+    _drag_current_grid_coords_valid = _drag_origin_valid
+
+    _drag_origin_angle = node.global_rotation
     
     InputCursorHelper.remove_node(node)
-    InputCursorHelper.add_state(node, InputCursorHelper.State.DRAG)              
+    InputCursorHelper.add_state(node, InputCursorHelper.State.DRAG)
+    
+    on_grid_drag_start.emit(node)          
     
 func _handle_drag_end(node: Node2D) -> void:
     # print_debug("[Draggable %s] End dragging while %s is dragged" % [node.name, _dragging])
@@ -251,6 +286,7 @@ func _emit_drag_end(node: Node2D) -> void:
     on_grid_drag_end.emit(
         node,
         _drag_start,
+        _drag_origin_angle,
         _drag_origin,
         _drag_origin_valid,
         calculate_coordinates(node),
