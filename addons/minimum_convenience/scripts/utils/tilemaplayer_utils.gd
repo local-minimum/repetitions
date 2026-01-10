@@ -62,11 +62,11 @@ static func perimeter(layer: TileMapLayer) -> PackedVector2Array:
                 CardinalDirections.CardinalDirection.SOUTH:
                     pos_x = false
                     pos_y = false
-            print_debug("%s has a %s neighbour by ccw rotation" % [current_coords, CardinalDirections.name(direction)])
+            # print_debug("%s has a %s neighbour by ccw rotation" % [current_coords, CardinalDirections.name(direction)])
             
         elif local_coords.has(CardinalDirections.translate2d(current_coords, direction)):
             # We are just continuing on a straight line
-            print_debug("%s has a %s neighbour by straight line" % [current_coords, CardinalDirections.name(direction)])
+            # print_debug("%s has a %s neighbour by straight line" % [current_coords, CardinalDirections.name(direction)])
             pass
             
         else:
@@ -87,7 +87,7 @@ static func perimeter(layer: TileMapLayer) -> PackedVector2Array:
                     CardinalDirections.CardinalDirection.SOUTH:
                         pos_x = false
                         pos_y = true
-                print_debug("%s has a %s neighbour by cw rotation" % [current_coords, CardinalDirections.name(direction)])                    
+                # print_debug("%s has a %s neighbour by cw rotation" % [current_coords, CardinalDirections.name(direction)])                    
             else:
                 push_error("[TileMapLayer Utils] Constructing the perimeter accidentally ended up on %s when going %s from %s which is outside the tilemap" % [
                     CardinalDirections.translate2d(current_coords, yaw_cw),
@@ -99,7 +99,7 @@ static func perimeter(layer: TileMapLayer) -> PackedVector2Array:
         # Add point
         if updated_direction:
             var tile_bbox: Rect2 = get_tile_bbox(layer, current_coords)
-            print_debug("Going %s to %s has rect %s" % [CardinalDirections.name(direction), current_coords, tile_bbox])
+            # print_debug("Going %s to %s has rect %s" % [CardinalDirections.name(direction), current_coords, tile_bbox])
             pt_idx += 1
             var pt: Vector2 = Vector2(
                 tile_bbox.position.x if pos_x else tile_bbox.end.x,

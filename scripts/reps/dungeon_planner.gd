@@ -108,12 +108,25 @@ func _check_valid_room_placement(room: BlueprintRoom, finalize: bool) -> bool:
     return valid
 
 func _draw() -> void:
+    var show_area: bool = true
+    var show_logical_tiles: bool = true
+    
     for room: BlueprintRoom in rooms:
         var r: Rect2 = RectUtils.translate_local(room.bounding_box(), room, self).grow(9)
         draw_rect(r, Color.ORANGE, false, 2)
         
-        var points: PackedVector2Array = room.perimeter()
-        for idx: int in range(points.size()):
-            points[idx] = to_local(room.to_global(points[idx]))
+        if show_area:
+            var points: PackedVector2Array = room.perimeter()
+            for idx: int in range(points.size()):
+                points[idx] = to_local(room.to_global(points[idx]))
 
-        draw_polygon(points, [Color.ORANGE])
+            draw_polygon(points, [Color.ORANGE])
+        
+        if show_logical_tiles:
+            var coords: Array[Vector2i] = room.get_global_used_tiles()
+            print_debug("Room %s has coords %s" % [room, coords])
+            for c: Vector2i in coords:
+                var cell_rect: Rect2 = grid.get_local_cell_rect(c, true)
+                cell_rect = RectUtils.translate_local(cell_rect, grid, self)
+                draw_rect(cell_rect, Color.DEEP_PINK, false, 2)
+                

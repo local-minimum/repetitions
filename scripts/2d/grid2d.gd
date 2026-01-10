@@ -46,7 +46,7 @@ func get_closest_coordinates(global_point: Vector2) -> Vector2i:
     
     return RectUtils.clamp_pointi(extent, coords)
 
-func get_global_point(coordinates: Vector2i, overflow: bool = true) -> Vector2:
+func get_global_point(coordinates: Vector2i, overflow: bool = false) -> Vector2:
     if !overflow:
         coordinates = RectUtils.clamp_pointi(extent, coordinates)
     
@@ -55,6 +55,18 @@ func get_global_point(coordinates: Vector2i, overflow: bool = true) -> Vector2:
             coordinates.x * tile_size.x,
             coordinates.y * tile_size.y,
         )
+    )
+    
+func get_local_cell_rect(coordinates: Vector2i, overflow: bool = false) -> Rect2:
+    if !overflow:
+        coordinates = RectUtils.clamp_pointi(extent, coordinates)
+    
+    return Rect2(
+        Vector2(
+            coordinates.x * tile_size.x,
+            coordinates.y * tile_size.y,
+        ),
+        tile_size,
     )
     
 func _ready() -> void:
