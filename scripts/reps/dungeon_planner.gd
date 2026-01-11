@@ -2,6 +2,7 @@ extends Node2D
 
 @export var grid: Grid2D
 @export var rooms: Array[BlueprintRoom]
+@export var debug: bool
 
 func _ready() -> void:
     for room: BlueprintRoom in rooms:
@@ -33,8 +34,9 @@ func _handle_room_move(room: BlueprintRoom, _coords: Vector2i, valid: bool) -> v
      
     elif _check_valid_room_placement(room, false):
         room.modulate = Color.SKY_BLUE
-
-    queue_redraw()
+    
+    if debug:
+        queue_redraw()
     # var end: int = Time.get_ticks_usec()
     # print_debug("Room placement check %sus" % (end - t0))
     
@@ -57,12 +59,14 @@ func _handle_room_dropped(room: BlueprintRoom, origin: Vector2, origin_angle: fl
             func () -> void:
                 room.tweening = false
                 room.modulate = Color.WHITE
-                queue_redraw()
+                if debug:
+                    queue_redraw()
         ) != OK:
             push_warning("Failed to connect ease back complete")
             room.tweening = false
             room.modulate = Color.WHITE
-            queue_redraw()
+            if debug:
+                queue_redraw()
             
 func _check_valid_room_placement(room: BlueprintRoom, finalize: bool) -> bool:
     if !room.contained_in_grid:
@@ -96,6 +100,7 @@ func _check_valid_room_placement(room: BlueprintRoom, finalize: bool) -> bool:
     for other: BlueprintRoom in touching_rooms:            
         var connected_doors: Array[DoorData]
         if room.has_connecting_doors(other, connected_doors):
+            print_debug("%s touches %s with doors %s" % [room, other, connected_doors])
             if connected_doors.any(func (door: DoorData) -> bool: return door.valid):
                 valid = true
                 if finalize:
@@ -108,6 +113,8 @@ func _check_valid_room_placement(room: BlueprintRoom, finalize: bool) -> bool:
     return valid
 
 func _draw() -> void:
+    if !debug:
+        return
     var show_area: bool = true
     var show_logical_tiles: bool = true
     

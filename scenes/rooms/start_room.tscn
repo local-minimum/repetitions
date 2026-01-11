@@ -19,11 +19,9 @@ outline = NodePath("Outline")
 doors = NodePath("Doors")
 doors_directions = ExtResource("2_qr66m")
 collision = NodePath("CollisionPolygon2D")
-debug = true
 draggable = SubResource("Resource_6afpx")
 
 [node name="Outline" type="TileMapLayer" parent="."]
-visible = false
 z_index = -1
 texture_filter = 1
 texture_repeat = 1
@@ -33,7 +31,6 @@ collision_enabled = false
 navigation_enabled = false
 
 [node name="Doors" type="TileMapLayer" parent="."]
-visible = false
 z_index = -1
 texture_filter = 1
 texture_repeat = 1
