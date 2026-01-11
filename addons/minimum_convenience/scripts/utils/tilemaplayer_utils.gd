@@ -125,11 +125,7 @@ static func perimeter(layer: TileMapLayer, allow_truncated: bool = false) -> Pac
                 tile_bbox.position.x if pos_x else tile_bbox.end.x,
                 tile_bbox.position.y if pos_y else tile_bbox.end.y,
             )
-            if points.slice(0, pt_idx).has(pt) && false:
-                # print_debug("Repeated point %s in %s" % [pt, points.slice(0, pt_idx)])
-                points.resize(pt_idx)
-                return points
-                
+
             points[pt_idx] = pt
         
         if shift_coordinates:
@@ -137,6 +133,8 @@ static func perimeter(layer: TileMapLayer, allow_truncated: bool = false) -> Pac
             current_coords = CardinalDirections.translate2d(current_coords, direction)
             
 
+    if pt_idx > 0 && points[pt_idx] == points[0]:
+        pt_idx -= 1
         
     # print_debug("Completed lap %s at %s" % [visited_coords, current_coords])
     points.resize(pt_idx + 1)

@@ -1,14 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://dh68rjdc2w0vf"]
+[gd_scene load_steps=9 format=3 uid="uid://dh68rjdc2w0vf"]
 
 [ext_resource type="PackedScene" uid="uid://ctcvff10ujxfr" path="res://scenes/rooms/start_room.tscn" id="1_ldlxd"]
 [ext_resource type="Script" uid="uid://73wn6oety2kg" path="res://scripts/2d/grid2d.gd" id="1_n4crp"]
 [ext_resource type="Script" uid="uid://dpu4cq0swyq2p" path="res://scripts/reps/dungeon_planner.gd" id="1_ou8db"]
+[ext_resource type="PackedScene" uid="uid://002ygucs70r6" path="res://scenes/rooms/hall_1.tscn" id="4_456hi"]
 [ext_resource type="Script" uid="uid://cuu7qpjrfbuhe" path="res://scripts/reps/planner_options.gd" id="4_o3k1y"]
+[ext_resource type="PackedScene" uid="uid://d3nsed3fmdpi1" path="res://scenes/rooms/hall_3.tscn" id="5_ja8n5"]
+[ext_resource type="PackedScene" uid="uid://ddnef2k77r5t4" path="res://scenes/rooms/broom_closet.tscn" id="6_kdmlh"]
+[ext_resource type="PackedScene" uid="uid://w5v1tdmr0s7d" path="res://scenes/rooms/room_corner.tscn" id="7_d3nvm"]
 
 [node name="Dungeon Planner" type="Node2D" node_paths=PackedStringArray("grid", "rooms", "options")]
 script = ExtResource("1_ou8db")
 grid = NodePath("Grid2D")
-rooms = [NodePath("Rooms/Room3")]
+rooms = [NodePath("Rooms/Start Room")]
 options = NodePath("OptionsCatalogue")
 
 [node name="Grid2D" type="Node2D" parent="."]
@@ -20,27 +24,20 @@ metadata/_custom_type_script = "uid://73wn6oety2kg"
 
 [node name="Rooms" type="Node2D" parent="."]
 
-[node name="Room" parent="Rooms" instance=ExtResource("1_ldlxd")]
-position = Vector2(1073, 284)
-rotation = 1.5707964
-
-[node name="Room2" parent="Rooms" instance=ExtResource("1_ldlxd")]
-position = Vector2(1072, 143)
-
-[node name="Room3" parent="Rooms" instance=ExtResource("1_ldlxd")]
+[node name="Start Room" parent="Rooms" instance=ExtResource("1_ldlxd")]
 position = Vector2(836, 394)
 rotation = 1.5707964
 placed = true
 
-[node name="Room4" parent="Rooms" instance=ExtResource("1_ldlxd")]
-position = Vector2(1090, 383)
-rotation = -3.1415925
+[node name="Hall 1" parent="Rooms" instance=ExtResource("4_456hi")]
 
-[node name="Room5" parent="Rooms" instance=ExtResource("1_ldlxd")]
-position = Vector2(1089, 539)
-rotation = -1.5707964
+[node name="Hall 3" parent="Rooms" instance=ExtResource("5_ja8n5")]
+
+[node name="Broom Closet" parent="Rooms" instance=ExtResource("6_kdmlh")]
+
+[node name="Corner Room" parent="Rooms" instance=ExtResource("7_d3nvm")]
 
 [node name="OptionsCatalogue" type="Node2D" parent="." node_paths=PackedStringArray("_rooms")]
 position = Vector2(1040, 0)
 script = ExtResource("4_o3k1y")
-_rooms = [NodePath("../Rooms/Room"), NodePath("../Rooms/Room2"), NodePath("../Rooms/Room4"), NodePath("../Rooms/Room5")]
+_rooms = [NodePath("../Rooms/Hall 1"), NodePath("../Rooms/Broom Closet"), NodePath("../Rooms/Hall 3"), NodePath("../Rooms/Corner Room")]

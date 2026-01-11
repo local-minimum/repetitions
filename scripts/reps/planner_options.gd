@@ -69,6 +69,10 @@ func add_room(room: BlueprintRoom) -> void:
         _rooms.append(room)
     _sync_placements()
 
+func assign_grid(grid: Grid2D) -> void:
+    for room: BlueprintRoom in _rooms:
+        room.grid = grid
+        
 func _draw() -> void:
     if !_debug:
         return

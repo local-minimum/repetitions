@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=4 uid="uid://w5v1tdmr0s7d"]
+
+[ext_resource type="Script" uid="uid://7ob51r0hj6yw" path="res://scripts/reps/blueprint_room.gd" id="1_2q24p"]
+[ext_resource type="Resource" uid="uid://dmhfnjqm6ww3d" path="res://scenes/rooms/room_tileset_doors_directions.tres" id="2_bf5r6"]
+[ext_resource type="Script" uid="uid://8gfxxyx4bmsv" path="res://scripts/2d/draggable.gd" id="3_ybafc"]
+[ext_resource type="TileSet" uid="uid://b3kjmbfkqhmld" path="res://scenes/rooms/room_tileset.tres" id="4_qia4h"]
+
+[sub_resource type="Resource" id="Resource_6afpx"]
+script = ExtResource("3_ybafc")
+rotate_clockwise_action = "blueprint_rotate_cw"
+rotate_counter_clockwise_action = "blueprint_rotate_ccw"
+metadata/_custom_type_script = "uid://8gfxxyx4bmsv"
+
+[node name="Corner Room" type="Area2D" node_paths=PackedStringArray("outline", "doors", "collision")]
+z_index = 3
+script = ExtResource("1_2q24p")
+outline = NodePath("Outline")
+doors = NodePath("Doors")
+doors_directions = ExtResource("2_bf5r6")
+collision = NodePath("CollisionPolygon2D")
+draggable = SubResource("Resource_6afpx")
+
+[node name="Outline" type="TileMapLayer" parent="."]
+z_index = -1
+texture_filter = 1
+texture_repeat = 1
+tile_map_data = PackedByteArray("AAABAAAAAAAIAAAAAAABAP//AAAIAAAAAAABAP7/AAAEAAAAAAAAAAAAAAAJAAIAAAAAAP//AAACAAEAAAAAAP7/AAAJAAAAAAD//wAAAAADAAEAAAD/////AAAJAAIAAAD///7/AAAJAAAAAAABAAEAAAAEAAEAAAAAAAEAAAADAAEAAAD+////AAADAAEAAAD+//7/AAADAAAAAAA=")
+tile_set = ExtResource("4_qia4h")
+collision_enabled = false
+navigation_enabled = false
+
+[node name="Doors" type="TileMapLayer" parent="."]
+z_index = -1
+texture_filter = 1
+texture_repeat = 1
+tile_map_data = PackedByteArray("AAAAAAEAAAADAAcAAAD+//7/AAACAAcAAAA=")
+tile_set = ExtResource("4_qia4h")
+collision_enabled = false
+navigation_enabled = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-32, -32, 32, -32, 32, 32, 0, 32, 0, 16, -16, 16, -16, 0, -32, 0)

@@ -6,6 +6,8 @@ extends Node2D
 @export var debug: bool
 
 func _ready() -> void:
+    options.assign_grid(grid)
+    
     for room: BlueprintRoom in rooms:
         room.grid = grid
         room.snap_to_grid()

@@ -11,7 +11,7 @@ rotate_clockwise_action = "blueprint_rotate_cw"
 rotate_counter_clockwise_action = "blueprint_rotate_ccw"
 metadata/_custom_type_script = "uid://8gfxxyx4bmsv"
 
-[node name="Hall 2" type="Area2D" node_paths=PackedStringArray("outline", "doors", "collision")]
+[node name="Hall 3" type="Area2D" node_paths=PackedStringArray("outline", "doors", "collision")]
 z_index = 3
 script = ExtResource("1_y1g3u")
 outline = NodePath("Outline")
@@ -33,9 +33,10 @@ navigation_enabled = false
 z_index = -1
 texture_filter = 1
 texture_repeat = 1
+tile_map_data = PackedByteArray("AAD//wAAAAAEAAcAAAD9//3/AAAFAAcAAAA=")
 tile_set = ExtResource("4_giqj8")
 collision_enabled = false
 navigation_enabled = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-64, -48, -16, -48, -16, -32, -32, -32, -32, -16, -16, -16)
+polygon = PackedVector2Array(-64, -48, -16, -48, -16, -32, -32, -32, -32, -16, -16, -16, -16, -32, 0, -32, 0, 16, -16, 16, -16, 0, -32, 0, -32, 16, -16, 16, -16, 32, -64, 32, -64, 16, -48, 16, -48, 0, -64, 0, -64, 16, -80, 16, -80, -32, -64, -32, -64, -16, -48, -16, -48, -32, -64, -32)
