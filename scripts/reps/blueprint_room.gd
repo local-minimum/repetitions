@@ -83,7 +83,7 @@ var contained_in_grid: bool:
                 
 func snap_to_grid() -> void:
     if grid == null:
-        print_debug("[Blueprint Room %s] Cannot snap to nothing" % name)
+        push_warning("[Blueprint Room %s] Cannot snap to nothing" % name)
         return
     
     if contained_in_grid:
@@ -150,7 +150,7 @@ func get_global_door_directions(atlas_coords: Vector2i) -> Array[CardinalDirecti
     return Array(
         doors_directions.get_directions(atlas_coords).map(
             func (d: CardinalDirections.CardinalDirection) -> CardinalDirections.CardinalDirection:
-                print_debug("!! %s oriented %s Translates direction %s to %s" % [name, draggable.get_rotation_name(self), CardinalDirections.name(d), CardinalDirections.name(draggable.get_global_direction(self, d))]) 
+                # print_debug("!! %s oriented %s Translates direction %s to %s" % [name, draggable.get_rotation_name(self), CardinalDirections.name(d), CardinalDirections.name(draggable.get_global_direction(self, d))]) 
                 return draggable.get_global_direction(self, d),
         ), 
         TYPE_INT, 
@@ -158,19 +158,34 @@ func get_global_door_directions(atlas_coords: Vector2i) -> Array[CardinalDirecti
         null,
     )
 
-func has_door_global_direction(global_coords: Vector2i, global_direction: CardinalDirections.CardinalDirection) -> bool:
+func has_local_door_global_direction(local_coords: Vector2i, global_direction: CardinalDirections.CardinalDirection) -> bool:
     if doors == null || doors_directions == null:
         print_debug("[Blueprint Door %s] I have no doors..." % [name])
         return false
+    
+    var atlas_coords: Vector2i = doors.get_cell_atlas_coords(local_coords)
+    var local_direction: CardinalDirections.CardinalDirection = draggable.get_local_direction(self, global_direction)
+    # print_debug(doors.get_used_cells())
+    # print_debug("### Room %s (%s)'s door at %s (atlas %s) check door direction %s (local %s) -> %s" % [
+    #    name,
+    #    draggable.get_rotation_name(self),
+    #    local_coords,
+    #    atlas_coords,
+    #    CardinalDirections.name(global_direction),
+    #    CardinalDirections.name(local_direction),
+    #    doors_directions.has_door(atlas_coords, local_direction),
+    #])
+    
+    if atlas_coords.x < 0 || atlas_coords.y < 0:
+        return false
         
-    var atlas_coords: Vector2i = doors.get_cell_atlas_coords(draggable.translate_coord_to_local(self, global_coords))
-    return doors_directions.has_door(atlas_coords, draggable.get_local_direction(self, global_direction))  
+    return doors_directions.has_door(atlas_coords, local_direction)  
 
 func has_registered_door(global_coords: Vector2i, global_direction: CardinalDirections.CardinalDirection) -> bool:
     return _door_data.any(func (ddata: DoorData) -> bool: return ddata.room == self && ddata.global_coordinates == global_coords && ddata.global_direction == global_direction)
 
 func get_connected_room(global_coords: Vector2i, global_direction: CardinalDirections.CardinalDirection) -> BlueprintRoom:
-    var idx: int = _door_data.find(func (ddata: DoorData) -> bool: return ddata.valid && ddata.room == self && ddata.global_coordinates == global_coords && ddata.global_direction == global_direction)
+    var idx: int = _door_data.find_custom(func (ddata: DoorData) -> bool: return ddata.valid && ddata.room == self && ddata.global_coordinates == global_coords && ddata.global_direction == global_direction)
     if idx < 0:
         return null
     
@@ -191,7 +206,7 @@ func has_connecting_doors(
     var other_doors_local: Array[Vector2i] = other.door_local_coordinates
     var other_doors: Array[Vector2i] = other.draggable.translate_coords_array_to_global(other, other_doors_local)
     
-    print_debug("%s @ %s: my doors %s and %s has %s" % [self, get_origin(), my_doors, other, other_doors])
+    # print_debug("%s @ %s: my doors %s and %s has %s" % [self, get_origin(), my_doors, other, other_doors])
     for my_idx: int in range(my_doors_local.size()):
         var local_coords: Vector2i = my_doors_local[my_idx]
         var atlas_coords: Vector2i = doors.get_cell_atlas_coords(local_coords)
@@ -205,21 +220,21 @@ func has_connecting_doors(
             continue
         
         for direction: CardinalDirections.CardinalDirection in get_global_door_directions(atlas_coords):
-            print_debug("--- %s door at %s is in direction %s" % [name, my_doors[my_idx], CardinalDirections.name(direction)])
+            # print_debug("--- %s door at %s is in direction %s" % [name, my_doors[my_idx], CardinalDirections.name(direction)])
             if has_registered_door(my_doors[my_idx], direction):
-                print_debug("%s: Already has regestered door %s with direction %s" % [self, my_doors[my_idx], CardinalDirections.name(direction)])
+                # print_debug("%s: Already has regestered door %s with direction %s" % [self, my_doors[my_idx], CardinalDirections.name(direction)])
                 continue
                 
             var leading_to_coords: Vector2i = CardinalDirections.translate2d(my_doors[my_idx], direction)
             # print_debug("%s: Door %s leads %s to %s" % [self, my_doors[my_idx], CardinalDirections.name(direction), leading_to_coords])
             if other_doors.has(leading_to_coords):
                 var other_idx: int = other_doors.find(leading_to_coords)
-                print_debug("%s: My door leads from %s leads to %s and Other has door %s there!" % [self, my_doors[my_idx], leading_to_coords, other_idx])
-                if other.has_door_global_direction(other_doors[other_idx], CardinalDirections.invert(direction)):
+                # print_debug("%s: My door leads from %s leads to %s and Other has door %s there!" % [self, my_doors[my_idx], leading_to_coords, other_idx])
+                if other.has_local_door_global_direction(other_doors_local[other_idx], CardinalDirections.invert(direction)):
                     connecting_doors.append(DoorData.new(true, self, my_doors[my_idx], direction, other))              
                     continue
-                else:
-                    print_debug("%s: But it was in the wrong direction" % [self])
+                # else:
+                    # print_debug("%s: But it was in the wrong direction" % [self])
                     
             if other.is_inside(leading_to_coords):
                 print_debug("%s: My door %s leads to %s which is inside %s, but not via doors!" % [self, my_doors[my_idx], leading_to_coords, other])
@@ -249,7 +264,7 @@ func has_connecting_doors(
             if is_inside(leading_to_coords):
                 connecting_doors.append(DoorData.new(false, other, other_doors[other_idx], direction, self))
                 
-    print_debug(">>> Found doors %s" % [connecting_doors])            
+    # print_debug(">>> Found doors %s" % [connecting_doors])            
     return connecting_doors.any(func (ddata: DoorData) -> bool: return ddata.valid)
 
 func register_connection(data: Array[DoorData]) -> void:
@@ -278,8 +293,9 @@ func _draw() -> void:
     draw_rect(bbox, Color.MEDIUM_ORCHID, false, 1)
     
     if outline != null:
+        var o: Vector2i = draggable.translate_coord_to_local(self, get_origin())
         for tile_coords: Vector2i in outline.get_used_cells():
-            draw_rect(TileMapLayerUtils.get_tile_bbox(outline, tile_coords), Color.AQUA, false, 1)
+            draw_rect(TileMapLayerUtils.get_tile_bbox(outline, tile_coords), Color.AQUA, o == tile_coords, 1 if o != tile_coords else -1)
     
     if doors != null:
         for door_coords: Vector2i in doors.get_used_cells():

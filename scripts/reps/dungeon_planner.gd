@@ -48,7 +48,7 @@ func _handle_room_dropped(room: BlueprintRoom, origin: Vector2, origin_angle: fl
         room.modulate = Color.WHITE
     else:
         
-        print_debug("Invalid drop location for %s" % room)
+        # print_debug("Invalid drop location for %s" % room)
         room.tweening = true
         var tween: Tween = create_tween()
         
@@ -89,7 +89,7 @@ func _check_valid_room_placement(room: BlueprintRoom, finalize: bool) -> bool:
                     room.modulate = Color.RED
                 return false
             BlueprintRoom.OVERLAP_TOUCH:
-                print_debug("%s touches %s" % [room, other])
+                # print_debug("%s touches %s" % [room, other])
                 touching_rooms.append(other)
     
     if touching_rooms.is_empty():
@@ -102,7 +102,7 @@ func _check_valid_room_placement(room: BlueprintRoom, finalize: bool) -> bool:
     for other: BlueprintRoom in touching_rooms:            
         var connected_doors: Array[DoorData]
         if room.has_connecting_doors(other, connected_doors):
-            print_debug("%s touches %s with doors %s" % [room, other, connected_doors])
+            # print_debug("%s touches %s with doors %s" % [room, other, connected_doors])
             if connected_doors.any(func (door: DoorData) -> bool: return door.valid):
                 valid = true
                 if finalize:
