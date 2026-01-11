@@ -2,6 +2,7 @@ extends Node2D
 
 @export var grid: Grid2D
 @export var rooms: Array[BlueprintRoom]
+@export var options: PlannerOptions
 @export var debug: bool
 
 func _ready() -> void:
@@ -26,6 +27,7 @@ func _exit_tree() -> void:
 
 func _handle_room_move_start(room: BlueprintRoom) -> void:
     room.modulate = Color.GRAY
+    options.remove_room(room)
     
 func _handle_room_move(room: BlueprintRoom, _coords: Vector2i, valid: bool) -> void:
     # var t0: int = Time.get_ticks_usec() 
@@ -42,12 +44,16 @@ func _handle_room_move(room: BlueprintRoom, _coords: Vector2i, valid: bool) -> v
     # print_debug("Room placement check %sus" % (end - t0))
 
         
-func _handle_room_dropped(room: BlueprintRoom, origin: Vector2, origin_angle: float) -> void:
+func _handle_room_dropped(room: BlueprintRoom, _origin: Vector2, _origin_angle: float) -> void:
     if _check_valid_room_placement(room, true):
         room.placed = true
         room.modulate = Color.WHITE
+        rooms.append(room)
     else:
-        
+        room.modulate = Color.WHITE
+        options.add_room(room)
+
+func _tween_return(room: BlueprintRoom, origin: Vector2, origin_angle: float) -> void:
         # print_debug("Invalid drop location for %s" % room)
         room.tweening = true
         var tween: Tween = create_tween()
