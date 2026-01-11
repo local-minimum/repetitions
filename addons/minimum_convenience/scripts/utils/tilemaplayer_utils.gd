@@ -20,7 +20,7 @@ static func bounding_box(layer: TileMapLayer) -> Rect2:
     return Rect2(local_logical_rect.position * size, local_logical_rect.size * size)
 
 ## Perimeter of tile map layer, assuming one contigious mass
-static func perimeter(layer: TileMapLayer) -> PackedVector2Array:
+static func perimeter(layer: TileMapLayer, allow_truncated: bool = false) -> PackedVector2Array:
     if layer == null:
         return []
         
@@ -31,19 +31,39 @@ static func perimeter(layer: TileMapLayer) -> PackedVector2Array:
     if local_coords.size() == 1:
         return PackedVector2Array(RectUtils.corners(bounding_box(layer)))
         
-    local_coords.sort_custom(func (a: Vector2i, b: Vector2i) -> bool: return a.y < b.y || a.y == b.y && a.x < b.y)
+    local_coords.sort_custom(func (a: Vector2i, b: Vector2i) -> bool: return a.y < b.y || a.y == b.y && a.x < b.x)
+   
     var direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.EAST
     var current_coords: Vector2i = local_coords[0]
     var visited_coords: Array[Vector2i] = []
+    var visited_sides: Array[CardinalDirections.CardinalDirection] = []
     var points: PackedVector2Array = [get_tile_bbox(layer, current_coords).position]
-    if points.resize(local_coords.size()) != OK:
+    if points.resize(local_coords.size() * 4) != OK:
         push_warning("Perimeter points array could not be set to useful size")
     var pt_idx: int = 0
     var pos_x: bool = true
     var pos_y: bool = true
     
-    while !visited_coords.has(current_coords): 
+    var lap_done: Callable = func (c: Vector2i, s: CardinalDirections.CardinalDirection) -> bool:
+        var start: int = 0
+        var i: int = 0
+        while i < 10:
+            var idx: int = visited_coords.find(c, start)
+            if idx < 0:
+                return false
+            if visited_sides[idx] == s:
+                return true
+            start = idx + 1
+            i += 1
+            
+        return false
+            
+    while !lap_done.call(current_coords, direction): 
+        visited_coords.append(current_coords)                        
+        visited_sides.append(direction)        
+        
         # Update direction
+        var shift_coordinates: bool = false
         var updated_direction: bool = false
         var yaw_ccw: CardinalDirections.CardinalDirection = CardinalDirections.yaw_ccw(direction)[0]
         if local_coords.has(CardinalDirections.translate2d(current_coords, yaw_ccw)):
@@ -63,39 +83,39 @@ static func perimeter(layer: TileMapLayer) -> PackedVector2Array:
                     pos_x = false
                     pos_y = false
             # print_debug("%s has a %s neighbour by ccw rotation" % [current_coords, CardinalDirections.name(direction)])
-            
+            shift_coordinates = true
         elif local_coords.has(CardinalDirections.translate2d(current_coords, direction)):
             # We are just continuing on a straight line
             # print_debug("%s has a %s neighbour by straight line" % [current_coords, CardinalDirections.name(direction)])
-            pass
+            shift_coordinates = true
             
         else:
             var yaw_cw: CardinalDirections.CardinalDirection = CardinalDirections.yaw_cw(direction)[0]
+            direction = yaw_cw
+            updated_direction = true
+            match direction:
+                CardinalDirections.CardinalDirection.EAST:
+                    pos_x = true
+                    pos_y = true
+                CardinalDirections.CardinalDirection.NORTH:
+                    pos_x = true
+                    pos_y = false
+                CardinalDirections.CardinalDirection.WEST:
+                    pos_x = false
+                    pos_y = false
+                CardinalDirections.CardinalDirection.SOUTH:
+                    pos_x = false
+                    pos_y = true
             if local_coords.has(CardinalDirections.translate2d(current_coords, yaw_cw)):
-                direction = yaw_cw
-                updated_direction = true
-                match direction:
-                    CardinalDirections.CardinalDirection.EAST:
-                        pos_x = true
-                        pos_y = true
-                    CardinalDirections.CardinalDirection.NORTH:
-                        pos_x = true
-                        pos_y = false
-                    CardinalDirections.CardinalDirection.WEST:
-                        pos_x = false
-                        pos_y = false
-                    CardinalDirections.CardinalDirection.SOUTH:
-                        pos_x = false
-                        pos_y = true
-                # print_debug("%s has a %s neighbour by cw rotation" % [current_coords, CardinalDirections.name(direction)])                    
-            else:
-                push_error("[TileMapLayer Utils] Constructing the perimeter accidentally ended up on %s when going %s from %s which is outside the tilemap" % [
-                    CardinalDirections.translate2d(current_coords, yaw_cw),
-                    CardinalDirections.name(yaw_cw),
-                    points,
-                ])
-                return []    
-                     
+                # print_debug("%s has a %s neighbour by cw rotation" % [current_coords, CardinalDirections.name(direction)])
+                shift_coordinates = true            
+        
+        if pt_idx + 1 >= points.size():
+            push_error("[TileMapLayer Utils] Constructing the perimeter for %s we ran out of allocated corners %s" % [layer, points])
+            if allow_truncated:
+                return points
+            return []
+                         
         # Add point
         if updated_direction:
             var tile_bbox: Rect2 = get_tile_bbox(layer, current_coords)
@@ -105,12 +125,19 @@ static func perimeter(layer: TileMapLayer) -> PackedVector2Array:
                 tile_bbox.position.x if pos_x else tile_bbox.end.x,
                 tile_bbox.position.y if pos_y else tile_bbox.end.y,
             )
+            if points.slice(0, pt_idx).has(pt) && false:
+                # print_debug("Repeated point %s in %s" % [pt, points.slice(0, pt_idx)])
+                points.resize(pt_idx)
+                return points
+                
             points[pt_idx] = pt
-            # if !points.append(pt):
-            #    push_warning("Failed to append %s at %s from %s to outline points %s!" % [pt, current_coords, tile_bbox, points])
         
-        visited_coords.append(current_coords)                        
-        current_coords = CardinalDirections.translate2d(current_coords, direction)
-    
+        if shift_coordinates:
+            # print_debug("Shift coords %s %s" % [current_coords, CardinalDirections.name(direction)])
+            current_coords = CardinalDirections.translate2d(current_coords, direction)
+            
+
+        
+    # print_debug("Completed lap %s at %s" % [visited_coords, current_coords])
     points.resize(pt_idx + 1)
     return points

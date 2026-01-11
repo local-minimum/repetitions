@@ -101,7 +101,7 @@ func bounding_box() -> Rect2:
 
 ## Local space perimeter points
 func perimeter() -> PackedVector2Array:
-    return TileMapLayerUtils.perimeter(outline)
+    return TileMapLayerUtils.perimeter(outline, true)
     
 ## Logical world coordinates of room origin / what it rotates around
 func get_origin() -> Vector2i:
