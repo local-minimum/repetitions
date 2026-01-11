@@ -38,3 +38,11 @@ func is_inverse_connection(
 
 func reflect() -> DoorData:
     return DoorData.new(valid, other_room, CardinalDirections.translate2d(global_coordinates, global_direction), CardinalDirections.invert(global_direction), room)
+
+func _to_string() -> String:
+    if valid && room != null && other_room != null:      
+        return "<DoorData: %s->%s @ %s %s>" % [room.name, other_room.name, global_coordinates, CardinalDirections.name(global_direction)]
+    elif !valid && room != null && other_room != null:
+        return "<DoorData: %s->%s[WALL] @ %s %s>" % [room.name, other_room.name, global_coordinates, CardinalDirections.name(global_direction)]
+    
+    return "<DoorData CORRUPTED: %s->%s @ %s %s as %s>" % [room, other_room, global_coordinates, CardinalDirections.name(global_direction), "valid" if valid else "invalid"]

@@ -7,7 +7,6 @@
 
 [sub_resource type="Resource" id="Resource_6afpx"]
 script = ExtResource("3_86g8l")
-snap_distance_fraction = 0.29
 rotate_clockwise_action = "blueprint_rotate_cw"
 rotate_counter_clockwise_action = "blueprint_rotate_ccw"
 metadata/_custom_type_script = "uid://8gfxxyx4bmsv"

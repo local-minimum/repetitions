@@ -127,6 +127,19 @@ func _get_rotation_direction(node: Node2D) -> int:
 
     return posmod(diri, 4)
 
+func get_rotation_name(node: Node2D) -> String:
+    match _get_rotation_direction(node):
+        DIR_NORTH:
+            return "North"
+        DIR_SOUTH:
+            return "South"
+        DIR_WEST:
+            return "West"
+        DIR_EAST:
+            return "East"
+        _:
+            return "Free Angle"
+
 func get_global_direction(node: Node2D, local_direction: CardinalDirections.CardinalDirection) -> CardinalDirections.CardinalDirection:
     match _get_rotation_direction(node):
         DIR_NORTH:
@@ -215,7 +228,8 @@ func _handle_drag(node: Node2D, event: InputEventMouseMotion) -> void:
     
     _drag_delta += event.relative
     var target: Vector2 = _drag_start + _drag_delta    
-
+    var emit: bool = false
+    
     if grid != null && grid.is_inside_grid(node.global_position):
         var coords: Vector2i = grid.get_closest_coordinates(target)
         var grid_pos: Vector2 = grid.get_global_point(coords)
@@ -227,16 +241,18 @@ func _handle_drag(node: Node2D, event: InputEventMouseMotion) -> void:
         if !_drag_current_grid_coords_valid || coords != _drag_current_grid_coords:
             _drag_current_grid_coords = coords
             _drag_current_grid_coords_valid = true
-            on_grid_drag_change.emit(node, _drag_current_grid_coords_valid, _drag_current_grid_coords) 
+            emit = true
         
     elif _drag_current_grid_coords_valid:
         _drag_current_grid_coords_valid = false
         _drag_current_grid_coords = grid.get_closest_coordinates(target) if grid != null else Vector2i.ZERO
-        on_grid_drag_change.emit(node, _drag_current_grid_coords_valid, _drag_current_grid_coords)        
-        
+        emit = true        
+                
     node.global_position = target       
     node.get_viewport().set_input_as_handled()
-       
+    if emit:
+        on_grid_drag_change.emit(node, _drag_current_grid_coords_valid, _drag_current_grid_coords) 
+          
 func _handle_drag_start(node: Node2D) -> void:
     # print_debug("[Draggable %s] Start draggin while %s hovered" % [node.name, _hovered])
     

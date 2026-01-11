@@ -190,7 +190,7 @@ func has_connecting_doors(
     var other_doors_local: Array[Vector2i] = other.door_local_coordinates
     var other_doors: Array[Vector2i] = other.draggable.translate_coords_array_to_global(other, other_doors_local)
     
-    print_debug("%s: my doors %s and %s has %s" % [self, my_doors, other, other_doors])
+    print_debug("%s @ %s: my doors %s and %s has %s" % [self, get_origin(), my_doors, other, other_doors])
     for my_idx: int in range(my_doors_local.size()):
         var local_coords: Vector2i = my_doors_local[my_idx]
         var atlas_coords: Vector2i = doors.get_cell_atlas_coords(local_coords)
@@ -209,10 +209,10 @@ func has_connecting_doors(
                 continue
                 
             var leading_to_coords: Vector2i = CardinalDirections.translate2d(my_doors[my_idx], direction)
-            print_debug("%s: Door %s leads %s to %s" % [self, my_doors[my_idx], CardinalDirections.name(direction), leading_to_coords])
+            # print_debug("%s: Door %s leads %s to %s" % [self, my_doors[my_idx], CardinalDirections.name(direction), leading_to_coords])
             if other_doors.has(leading_to_coords):
                 var other_idx: int = other_doors.find(leading_to_coords)
-                print_debug("%s: Other has door #%s in this place!" % [self, other_idx])
+                print_debug("%s: My door leads from %s leads to %s and Other has door %s there!" % [self, my_doors[my_idx], leading_to_coords, other_idx])
                 if other.has_door_global_direction(other_doors[other_idx], CardinalDirections.invert(direction)):
                     connecting_doors.append(DoorData.new(true, self, my_doors[my_idx], direction, other))              
                     continue
@@ -220,7 +220,7 @@ func has_connecting_doors(
                     print_debug("%s: But it was in the wrong direction" % [self])
                     
             if other.is_inside(leading_to_coords):
-                print_debug("%s: We are inside at %s but not via doors!" % [self, leading_to_coords])
+                print_debug("%s: My door %s leads to %s which is inside %s, but not via doors!" % [self, my_doors[my_idx], leading_to_coords, other])
                 connecting_doors.append(DoorData.new(false, self, my_doors[my_idx], direction, other))
     
     for other_idx: int in range(other_doors_local.size()):
@@ -246,7 +246,8 @@ func has_connecting_doors(
             
             if is_inside(leading_to_coords):
                 connecting_doors.append(DoorData.new(false, other, other_doors[other_idx], direction, self))
-    print_debug("Found doors %s" % [connecting_doors])            
+                
+    print_debug(">>> Found doors %s" % [connecting_doors])            
     return connecting_doors.any(func (ddata: DoorData) -> bool: return ddata.valid)
 
 func register_connection(data: Array[DoorData]) -> void:
@@ -363,6 +364,7 @@ func _ready() -> void:
 func _handle_grid_drag_change(node: Node2D, valid: bool, coordinates: Vector2i) -> void:
     if node != self:
         return
+
     __SignalBus.on_blueprint_room_position_updated.emit(self, coordinates, valid)
 
 var _being_dragged: bool = false
@@ -393,7 +395,15 @@ func _handle_rotation_end(node: Node2D, start_angle: float) -> void:
     if !_being_dragged:
         __SignalBus.on_blueprint_room_dropped.emit(self, global_position, start_angle)
     
-func _handle_grid_drag_end(node: Node2D, start_point: Vector2, start_angle: float, _from: Vector2i, _from_valid: bool, _to: Vector2i, _to_valid: bool) -> void:
+func _handle_grid_drag_end(
+    node: Node2D, 
+    start_point: Vector2, 
+    start_angle: float, 
+    _from: Vector2i, 
+    _from_valid: bool, 
+    _to: Vector2i, 
+    _to_valid: bool,
+) -> void:
     if node != self:
         return
     _being_dragged = false
@@ -418,3 +428,12 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(_delta: float) -> void:
     if debug:
         queue_redraw()
+
+func summary() -> String:
+    return "<Room %s: %s @ %s %s with doors %s>" % [
+        name,
+        "placed" if placed else "unplaced",
+        get_origin(),
+        draggable.get_rotation_name(self),
+        _door_data,   
+    ]
