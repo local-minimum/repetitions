@@ -149,7 +149,8 @@ func overlaps(other: BlueprintRoom) -> int:
 func get_global_door_directions(atlas_coords: Vector2i) -> Array[CardinalDirections.CardinalDirection]:
     return Array(
         doors_directions.get_directions(atlas_coords).map(
-            func (d: CardinalDirections.CardinalDirection) -> CardinalDirections.CardinalDirection: 
+            func (d: CardinalDirections.CardinalDirection) -> CardinalDirections.CardinalDirection:
+                print_debug("!! %s oriented %s Translates direction %s to %s" % [name, draggable.get_rotation_name(self), CardinalDirections.name(d), CardinalDirections.name(draggable.get_global_direction(self, d))]) 
                 return draggable.get_global_direction(self, d),
         ), 
         TYPE_INT, 
@@ -204,6 +205,7 @@ func has_connecting_doors(
             continue
         
         for direction: CardinalDirections.CardinalDirection in get_global_door_directions(atlas_coords):
+            print_debug("--- %s door at %s is in direction %s" % [name, my_doors[my_idx], CardinalDirections.name(direction)])
             if has_registered_door(my_doors[my_idx], direction):
                 print_debug("%s: Already has regestered door %s with direction %s" % [self, my_doors[my_idx], CardinalDirections.name(direction)])
                 continue

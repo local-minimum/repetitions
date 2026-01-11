@@ -40,13 +40,7 @@ func _handle_room_move(room: BlueprintRoom, _coords: Vector2i, valid: bool) -> v
         queue_redraw()
     # var end: int = Time.get_ticks_usec()
     # print_debug("Room placement check %sus" % (end - t0))
-    
-    print_debug("<< %s is %s" % [room.summary(), _coords])
-    
-    var x: Callable = func () -> void:
-        print_debug("!! %s was %s" % [room.summary(), _coords])
 
-    x.call_deferred()
         
 func _handle_room_dropped(room: BlueprintRoom, origin: Vector2, origin_angle: float) -> void:
     if _check_valid_room_placement(room, true):

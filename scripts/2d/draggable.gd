@@ -8,9 +8,9 @@ signal on_rotation_start(node: Node2D)
 signal on_rotation_end(node: Node2D, start_angle: float)
 
 const DIR_NORTH: int = 0
-const DIR_WEST: int = 1
+const DIR_EAST: int = 1
 const DIR_SOUTH: int = 2
-const DIR_EAST: int = 3
+const DIR_WEST: int = 3
 @export var no_drag_zone_sq: float = 4
  
 @export var snap_to_grid: bool = true
@@ -67,11 +67,11 @@ func translate_coords_array_to_global(node: Node2D, coords: Array[Vector2i]) -> 
     match _get_rotation_direction(node):
         DIR_NORTH:
             res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return c + origin))
-        DIR_WEST:
+        DIR_EAST:
             res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(-c.y + origin.x - 1, c.x + origin.y )))
         DIR_SOUTH:
             res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(-c.x + origin.x - 1, -c.y + origin.y - 1))) 
-        DIR_EAST:
+        DIR_WEST:
             res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(c.y + origin.x, -c.x + origin.y - 1)))
              
     return res
@@ -85,9 +85,9 @@ func translate_coord_to_local(node: Node2D, coords: Vector2i) -> Vector2i:
             return coords
         DIR_SOUTH:
             return Vector2i(-coords.x, -coords.y)
-        DIR_WEST:
-            return Vector2i(coords.y, -coords.x)
         DIR_EAST:
+            return Vector2i(coords.y, -coords.x)
+        DIR_WEST:
             return Vector2i(-coords.y, coords.x)
         _:
             return coords
@@ -133,10 +133,10 @@ func get_rotation_name(node: Node2D) -> String:
             return "North"
         DIR_SOUTH:
             return "South"
-        DIR_WEST:
-            return "West"
         DIR_EAST:
             return "East"
+        DIR_WEST:
+            return "West"
         _:
             return "Free Angle"
 
@@ -146,10 +146,10 @@ func get_global_direction(node: Node2D, local_direction: CardinalDirections.Card
             return local_direction
         DIR_SOUTH:
             return CardinalDirections.invert(local_direction)
-        DIR_WEST:
-            return CardinalDirections.yaw_ccw(local_direction)[0]
         DIR_EAST:
             return CardinalDirections.yaw_cw(local_direction)[0]
+        DIR_WEST:
+            return CardinalDirections.yaw_ccw(local_direction)[0]
         _:
             return local_direction     
  
@@ -159,10 +159,10 @@ func get_local_direction(node: Node2D, global_direction: CardinalDirections.Card
             return global_direction
         DIR_SOUTH:
             return CardinalDirections.invert(global_direction)
-        DIR_WEST:
-            return CardinalDirections.yaw_cw(global_direction)[0]
         DIR_EAST:
             return CardinalDirections.yaw_ccw(global_direction)[0]
+        DIR_WEST:
+            return CardinalDirections.yaw_cw(global_direction)[0]
         _:
             return global_direction     
        
@@ -175,11 +175,11 @@ func _rotate_right_angle(node: Node2D, step: int) -> void:
     match target_rotation_direction:
         DIR_NORTH:
             pass
-        DIR_WEST:
+        DIR_EAST:
             target_angle = PI * 0.5
         DIR_SOUTH:
             target_angle = PI
-        DIR_EAST:
+        DIR_WEST:
             target_angle = PI * 1.5
     
     if (target_angle - node.global_rotation) > PI:
