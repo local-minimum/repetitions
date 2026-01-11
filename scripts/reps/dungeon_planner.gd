@@ -54,7 +54,8 @@ func _handle_room_dropped(room: BlueprintRoom, origin: Vector2, origin_angle: fl
         
         @warning_ignore_start("return_value_discarded")
         tween.tween_property(room, "global_position", origin, 0.2).set_trans(Tween.TRANS_SINE)
-        tween.tween_property(room, "rotation", origin_angle, 0.2)
+        if room.contained_in_grid:
+            tween.tween_property(room, "rotation", origin_angle, 0.2)
         @warning_ignore_restore("return_value_discarded")
         
         if tween.finished.connect(
