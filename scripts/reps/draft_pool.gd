@@ -15,7 +15,8 @@ func draft(count: int = 1) -> Array[DraftOption]:
         push_warning("Out of options in draft pool / all consumed")
         return []
     elif available.size() <= count:
-        push_warning("Not enough options, returning everything %s" % [available])
+        if available.size() < count:
+            push_warning("Not enough options, returning everything %s" % [available])
         return available
         
     print_debug("[Draft Pool] options: %s" % [available])    
