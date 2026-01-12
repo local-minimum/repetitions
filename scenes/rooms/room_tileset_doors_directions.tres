@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_amnco")
-_north = Array[Vector2i]([Vector2i(5, 7)])
-_south = Array[Vector2i]([Vector2i(3, 7)])
-_west = Array[Vector2i]([Vector2i(2, 7)])
-_east = Array[Vector2i]([Vector2i(4, 7)])
+_north = Array[Vector2i]([Vector2i(5, 7), Vector2i(3, 8)])
+_south = Array[Vector2i]([Vector2i(3, 7), Vector2i(3, 8)])
+_west = Array[Vector2i]([Vector2i(2, 7), Vector2i(2, 8)])
+_east = Array[Vector2i]([Vector2i(4, 7), Vector2i(2, 8)])
 metadata/_custom_type_script = "uid://dyg3ey1xq16y1"
