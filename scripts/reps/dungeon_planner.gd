@@ -11,18 +11,12 @@ extends Node2D
 var _options: Dictionary[BlueprintRoom, DraftOption]
 
 func _ready() -> void:  
-    for room_option: DraftOption in pool.draft(draft_count):
-        var room: BlueprintRoom = room_option.instantiate_blueprint_room()
-        _options[room] = room_option
-        rooms_root.add_child(room)
-        options.add_room(room)
-        
-    options.assign_grid(grid)
-            
+    _draw_options()
+              
     for room: BlueprintRoom in rooms:
         room.grid = grid
         room.snap_to_grid()
-        
+     
 func _enter_tree() -> void:
     if __SignalBus.on_blueprint_room_move_start.connect(_handle_room_move_start) != OK:
         push_error("Failed to connect room move start")
@@ -38,6 +32,15 @@ func _exit_tree() -> void:
     __SignalBus.on_blueprint_room_position_updated.disconnect(_handle_room_move)
     __SignalBus.on_blueprint_room_dropped.disconnect(_handle_room_dropped)
 
+func _draw_options() -> void:
+    for room_option: DraftOption in pool.draft(draft_count):
+        var room: BlueprintRoom = room_option.instantiate_blueprint_room()
+        _options[room] = room_option
+        rooms_root.add_child(room)
+        options.add_room(room)
+        
+    options.assign_grid(grid)
+     
 func _handle_room_move_start(room: BlueprintRoom) -> void:
     room.modulate = Color.GRAY
     options.remove_room(room)
@@ -62,6 +65,13 @@ func _handle_room_dropped(room: BlueprintRoom, _origin: Vector2, _origin_angle: 
         room.placed = true
         room.modulate = Color.WHITE
         rooms.append(room)
+        if _options.has(room):
+            _options[room].drafted_count += 1
+            if !_options.erase(room):
+                pass
+        
+        if options.is_empty():
+            _draw_options()
     else:
         room.modulate = Color.WHITE
         options.add_room(room)

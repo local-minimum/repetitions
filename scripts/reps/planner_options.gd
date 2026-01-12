@@ -6,6 +6,9 @@ class_name PlannerOptions
 @export var _debug: bool
 @export var _noease_dist_sq: float = 4
 
+func is_empty() -> bool:
+    return _rooms.is_empty()
+    
 func _ready() -> void:
     _sync_placements()
     
@@ -24,7 +27,8 @@ func _sync_placements() -> void:
 
     var y_anchor: float =  (available_height - total_height) / 2.0
     var y_used: float = 0.0
-    print_debug("Using %s out of %s height" % [total_height, available_height])
+    
+    # print_debug("Using %s out of %s height" % [total_height, available_height])
     for room: BlueprintRoom in _rooms:
         var d: Vector2 = shapes[room].get_center() - origins[room]
         var pt: Vector2 = Vector2(0.0, y_anchor + y_used + shapes[room].size.y / 2) - d

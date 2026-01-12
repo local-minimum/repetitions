@@ -14,7 +14,11 @@ func draft(count: int = 1) -> Array[DraftOption]:
     if available.is_empty():
         push_warning("Out of options in draft pool / all consumed")
         return []
+    elif available.size() <= count:
+        push_warning("Not enough options, returning everything %s" % [available])
+        return available
         
+    print_debug("[Draft Pool] options: %s" % [available])    
     var total_prob: float = 0.0
     var probs: Array[float] = []
     var idx: int = 0
@@ -31,6 +35,10 @@ func draft(count: int = 1) -> Array[DraftOption]:
     
     var drafts: Array[DraftOption] = []
     for _idx: int in range(count):
+        if available_count < 1:
+            push_error("No more rooms available %s we should have known this" % [available])
+            return drafts
+            
         var p: float = randf_range(0, probs[available_count - 1])
         var opt_idx: int = probs.find_custom(func (v: float) -> bool: return p <= v)
         
@@ -45,6 +53,6 @@ func draft(count: int = 1) -> Array[DraftOption]:
         available_count -= 1
         for idx2: int in range(opt_idx, available_count):
             probs[opt_idx] -= diff
-
+        
     return drafts    
     

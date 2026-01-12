@@ -25,7 +25,7 @@ var drafted_count: int = 0
 
 var consumed: bool:
     get():
-        return draftable_count < draftable_count
+        return drafted_count >= draftable_count
 
 var _blueprint_scene: PackedScene:
     get():
