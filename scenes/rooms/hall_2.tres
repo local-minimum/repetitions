@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DraftOption" load_steps=2 format=3 uid="uid://jleov4nw26by"]
+
+[ext_resource type="Script" uid="uid://dgfi04hnjvm2r" path="res://scripts/reps/draft_option.gd" id="1_3l284"]
+
+[resource]
+script = ExtResource("1_3l284")
+_blueprint_room_path = "res://scenes/rooms/hall_2.tscn"
+draft_probability_class = 2
+metadata/_custom_type_script = "uid://dgfi04hnjvm2r"

@@ -1,19 +1,25 @@
-[gd_scene load_steps=9 format=3 uid="uid://dh68rjdc2w0vf"]
+[gd_scene load_steps=13 format=3 uid="uid://dh68rjdc2w0vf"]
 
 [ext_resource type="PackedScene" uid="uid://ctcvff10ujxfr" path="res://scenes/rooms/start_room.tscn" id="1_ldlxd"]
 [ext_resource type="Script" uid="uid://73wn6oety2kg" path="res://scripts/2d/grid2d.gd" id="1_n4crp"]
 [ext_resource type="Script" uid="uid://dpu4cq0swyq2p" path="res://scripts/reps/dungeon_planner.gd" id="1_ou8db"]
-[ext_resource type="PackedScene" uid="uid://002ygucs70r6" path="res://scenes/rooms/hall_1.tscn" id="4_456hi"]
 [ext_resource type="Script" uid="uid://cuu7qpjrfbuhe" path="res://scripts/reps/planner_options.gd" id="4_o3k1y"]
-[ext_resource type="PackedScene" uid="uid://d3nsed3fmdpi1" path="res://scenes/rooms/hall_3.tscn" id="5_ja8n5"]
-[ext_resource type="PackedScene" uid="uid://ddnef2k77r5t4" path="res://scenes/rooms/broom_closet.tscn" id="6_kdmlh"]
-[ext_resource type="PackedScene" uid="uid://w5v1tdmr0s7d" path="res://scenes/rooms/room_corner.tscn" id="7_d3nvm"]
+[ext_resource type="Script" uid="uid://bp5vn1wokjjtr" path="res://scripts/reps/draft_pool.gd" id="9_qcvmm"]
+[ext_resource type="Script" uid="uid://dgfi04hnjvm2r" path="res://scripts/reps/draft_option.gd" id="10_xsdx5"]
+[ext_resource type="Resource" uid="uid://dlj3wl7brr8py" path="res://scenes/rooms/broom_closet.tres" id="11_fno32"]
+[ext_resource type="Resource" uid="uid://dup76hvqtadic" path="res://scenes/rooms/hall_1.tres" id="12_nfhew"]
+[ext_resource type="Resource" uid="uid://jleov4nw26by" path="res://scenes/rooms/hall_2.tres" id="13_y0vac"]
+[ext_resource type="Resource" uid="uid://svbbunwycye7" path="res://scenes/rooms/hall_3.tres" id="14_w7wwa"]
+[ext_resource type="Resource" uid="uid://dperxq31uq7e" path="res://scenes/rooms/hall_4.tres" id="15_rblym"]
+[ext_resource type="Resource" uid="uid://pic7jy8114bc" path="res://scenes/rooms/room_corner.tres" id="16_il2o4"]
 
-[node name="Dungeon Planner" type="Node2D" node_paths=PackedStringArray("grid", "rooms", "options")]
+[node name="Dungeon Planner" type="Node2D" node_paths=PackedStringArray("grid", "rooms_root", "rooms", "options", "pool")]
 script = ExtResource("1_ou8db")
 grid = NodePath("Grid2D")
+rooms_root = NodePath("Rooms")
 rooms = [NodePath("Rooms/Start Room")]
 options = NodePath("OptionsCatalogue")
+pool = NodePath("DraftPool")
 
 [node name="Grid2D" type="Node2D" parent="."]
 script = ExtResource("1_n4crp")
@@ -29,15 +35,10 @@ position = Vector2(836, 394)
 rotation = 1.5707964
 placed = true
 
-[node name="Hall 1" parent="Rooms" instance=ExtResource("4_456hi")]
-
-[node name="Hall 3" parent="Rooms" instance=ExtResource("5_ja8n5")]
-
-[node name="Broom Closet" parent="Rooms" instance=ExtResource("6_kdmlh")]
-
-[node name="Corner Room" parent="Rooms" instance=ExtResource("7_d3nvm")]
-
-[node name="OptionsCatalogue" type="Node2D" parent="." node_paths=PackedStringArray("_rooms")]
+[node name="OptionsCatalogue" type="Node2D" parent="."]
 position = Vector2(1040, 0)
 script = ExtResource("4_o3k1y")
-_rooms = [NodePath("../Rooms/Hall 1"), NodePath("../Rooms/Broom Closet"), NodePath("../Rooms/Hall 3"), NodePath("../Rooms/Corner Room")]
+
+[node name="DraftPool" type="Node" parent="."]
+script = ExtResource("9_qcvmm")
+pool = Array[ExtResource("10_xsdx5")]([ExtResource("11_fno32"), ExtResource("12_nfhew"), ExtResource("13_y0vac"), ExtResource("14_w7wwa"), ExtResource("15_rblym"), ExtResource("16_il2o4")])

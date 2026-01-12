@@ -1,13 +1,24 @@
 extends Node2D
 
 @export var grid: Grid2D
+@export var rooms_root: Node2D
 @export var rooms: Array[BlueprintRoom]
 @export var options: PlannerOptions
+@export var pool: DraftPool
+@export var draft_count: int = 4
 @export var debug: bool
 
-func _ready() -> void:
+var _options: Dictionary[BlueprintRoom, DraftOption]
+
+func _ready() -> void:  
+    for room_option: DraftOption in pool.draft(draft_count):
+        var room: BlueprintRoom = room_option.instantiate_blueprint_room()
+        _options[room] = room_option
+        rooms_root.add_child(room)
+        options.add_room(room)
+        
     options.assign_grid(grid)
-    
+            
     for room: BlueprintRoom in rooms:
         room.grid = grid
         room.snap_to_grid()
