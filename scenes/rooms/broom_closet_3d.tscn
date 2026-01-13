@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://c1hhf0e0486eq"]
+[gd_scene load_steps=9 format=3 uid="uid://c1hhf0e0486eq"]
 
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="1_hhqpo"]
 [ext_resource type="PackedScene" uid="uid://c0ec8ouvo12kq" path="res://scenes/rooms/meshes/simplewall.glb" id="2_jrcuk"]
 [ext_resource type="PackedScene" uid="uid://x8g44kdeceop" path="res://scenes/rooms/meshes/simplewall_doorframe.glb" id="3_2sgo8"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="4_jrcuk"]
+[ext_resource type="PackedScene" uid="uid://cs6rc6a54gt73" path="res://scenes/rooms/meshes/props/cleaningbucket-and-broom.blend" id="5_lficu"]
+[ext_resource type="PackedScene" uid="uid://3bjnpsn4435m" path="res://scenes/rooms/meshes/props/overhead.blend" id="6_orhin"]
+[ext_resource type="PackedScene" uid="uid://k56m4iovfwcu" path="res://scenes/rooms/meshes/props/paperbasket.blend" id="7_aghwm"]
+[ext_resource type="PackedScene" uid="uid://bhep5i568osx4" path="res://scenes/rooms/meshes/props/toiletroll.blend" id="8_s0ryh"]
 
 [node name="Broom Closet" type="Node3D"]
 
@@ -22,3 +26,24 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0
 
 [node name="simpleceiling" parent="." instance=ExtResource("4_jrcuk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+
+[node name="cleaningbucket-and-broom" parent="." instance=ExtResource("5_lficu")]
+transform = Transform3D(0.8255964, 0, -0.56426114, 0, 1, 0, 0.56426114, 0, 0.8255964, 0.26438344, 0, -1.6701019)
+
+[node name="overhead" parent="." instance=ExtResource("6_orhin")]
+transform = Transform3D(0.028671822, 0, -0.9995889, 0, 1, 0, 0.9995889, 0, 0.028671822, 1.666184, 0, -1.7012744)
+
+[node name="paperbasket2" parent="." instance=ExtResource("7_aghwm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7266972, 0, -0.23210245)
+
+[node name="toiletroll" parent="." instance=ExtResource("8_s0ryh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3236248, 0.07382801, -1.7140995)
+
+[node name="toiletroll2" parent="." instance=ExtResource("8_s0ryh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.80371, 0.41137794, -1.6050225)
+
+[node name="toiletroll3" parent="." instance=ExtResource("8_s0ryh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.696164, 0.41137794, -1.753929)
+
+[node name="toiletroll4" parent="." instance=ExtResource("8_s0ryh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6042104, 0.41137794, -1.5610914)
