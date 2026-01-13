@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1hhf0e0486eq"]
+
+[ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="1_hhqpo"]
+[ext_resource type="PackedScene" uid="uid://c0ec8ouvo12kq" path="res://scenes/rooms/meshes/simplewall.glb" id="2_jrcuk"]
+[ext_resource type="PackedScene" uid="uid://x8g44kdeceop" path="res://scenes/rooms/meshes/simplewall_doorframe.glb" id="3_2sgo8"]
+[ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="4_jrcuk"]
+
+[node name="Broom Closet" type="Node3D"]
+
+[node name="simplefloor" parent="." instance=ExtResource("1_hhqpo")]
+
+[node name="simplewall" parent="." instance=ExtResource("2_jrcuk")]
+
+[node name="simplewall2" parent="." instance=ExtResource("2_jrcuk")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -2)
+
+[node name="simplewall3" parent="." instance=ExtResource("2_jrcuk")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, -2)
+
+[node name="simplewall_doorframe" parent="." instance=ExtResource("3_2sgo8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 0)
+
+[node name="simpleceiling" parent="." instance=ExtResource("4_jrcuk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)

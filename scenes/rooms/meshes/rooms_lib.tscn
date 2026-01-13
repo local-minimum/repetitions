@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cq42h8vx1ies6"]
+
+[ext_resource type="PackedScene" uid="uid://c0ec8ouvo12kq" path="res://scenes/rooms/meshes/simplewall.glb" id="1_wv2s0"]
+[ext_resource type="PackedScene" uid="uid://x8g44kdeceop" path="res://scenes/rooms/meshes/simplewall_doorframe.glb" id="2_ghr5m"]
+[ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="3_ghr5m"]
+
+[node name="Rooms Library" type="Node3D"]
+
+[node name="simplewall" parent="." instance=ExtResource("1_wv2s0")]
+
+[node name="simplewall_doorframe" parent="." instance=ExtResource("2_ghr5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="simplefloor" parent="." instance=ExtResource("3_ghr5m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
