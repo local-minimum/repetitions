@@ -1,0 +1,80 @@
+[gd_scene load_steps=6 format=3 uid="uid://b7hwxdxx78shu"]
+
+[ext_resource type="PackedScene" uid="uid://8qqqf4tvfy1l" path="res://scenes/rooms/meshes/roughwall.blend" id="1_15f1x"]
+[ext_resource type="PackedScene" uid="uid://ipk7tlufbxkm" path="res://scenes/rooms/meshes/roughwall_cell_door.blend" id="2_xm13o"]
+[ext_resource type="PackedScene" uid="uid://cc5747aqrge5g" path="res://scenes/rooms/meshes/simplefloor.blend" id="3_8u76k"]
+[ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="4_co0dn"]
+[ext_resource type="PackedScene" uid="uid://b6em6evajjt8i" path="res://scenes/rooms/meshes/props/cellbed.blend" id="5_ggd3p"]
+
+[node name="Cell23d" type="Node3D"]
+
+[node name="roughwall" parent="." instance=ExtResource("1_15f1x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+
+[node name="roughwall2" parent="." instance=ExtResource("1_15f1x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="roughwall3" parent="." instance=ExtResource("1_15f1x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+
+[node name="roughwall4" parent="." instance=ExtResource("1_15f1x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2, 0, -4)
+
+[node name="roughwall5" parent="." instance=ExtResource("1_15f1x")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -4)
+
+[node name="roughwall6" parent="." instance=ExtResource("1_15f1x")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, -4)
+
+[node name="roughwall7" parent="." instance=ExtResource("1_15f1x")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, -2)
+
+[node name="roughwall8" parent="." instance=ExtResource("1_15f1x")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, 0)
+
+[node name="roughwall9" parent="." instance=ExtResource("1_15f1x")]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 2, 0, 2)
+
+[node name="roughwall_cell_door" parent="." instance=ExtResource("2_xm13o")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 2)
+
+[node name="simplefloor" parent="." instance=ExtResource("3_8u76k")]
+
+[node name="simplefloor2" parent="." instance=ExtResource("3_8u76k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="simplefloor3" parent="." instance=ExtResource("3_8u76k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+
+[node name="simplefloor4" parent="." instance=ExtResource("3_8u76k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="simplefloor5" parent="." instance=ExtResource("3_8u76k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="simplefloor6" parent="." instance=ExtResource("3_8u76k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+
+[node name="simpleceiling" parent="." instance=ExtResource("4_co0dn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0)
+
+[node name="simpleceiling2" parent="." instance=ExtResource("4_co0dn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, 0)
+
+[node name="simpleceiling3" parent="." instance=ExtResource("4_co0dn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, -2)
+
+[node name="simpleceiling4" parent="." instance=ExtResource("4_co0dn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -2)
+
+[node name="simpleceiling5" parent="." instance=ExtResource("4_co0dn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 2)
+
+[node name="simpleceiling6" parent="." instance=ExtResource("4_co0dn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, 2)
+
+[node name="cellbed" parent="." instance=ExtResource("5_ggd3p")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.2326604, 0.5478884, 0.45924962)
+
+[node name="cellbed2" parent="." instance=ExtResource("5_ggd3p")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.2326604, 0.5478884, -2.0866318)
