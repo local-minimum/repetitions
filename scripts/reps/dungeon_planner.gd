@@ -1,21 +1,23 @@
 extends Node2D
+class_name DungeonPlanner
 
 @export var grid: Grid2D
 @export var rooms_root: Node2D
-@export var rooms: Array[BlueprintRoom]
+var rooms: Array[BlueprintRoom]
 @export var options: PlannerOptions
 @export var pool: DraftPool
 @export var draft_count: int = 4
 @export var debug: bool
 
+@export var seed_room: DraftOption
+@export var seed_coordinates: Vector2i
+@export var seed_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NORTH
+
 var _options: Dictionary[BlueprintRoom, DraftOption]
 
-func _ready() -> void:  
+func _ready() -> void:
+    _seed_dungeon()  
     _draw_options()
-              
-    for room: BlueprintRoom in rooms:
-        room.grid = grid
-        room.snap_to_grid()
      
 func _enter_tree() -> void:
     if __SignalBus.on_blueprint_room_move_start.connect(_handle_room_move_start) != OK:
@@ -40,7 +42,25 @@ func _draw_options() -> void:
         options.add_room(room)
         
     options.assign_grid(grid)
-     
+
+func _seed_dungeon() -> void:
+    if seed_room == null:
+        return
+        
+    var direction: CardinalDirections.CardinalDirection = (
+        seed_direction if CardinalDirections.is_planar_cardinal(seed_direction) else CardinalDirections.ALL_PLANAR_DIRECTIONS.pick_random()
+    )
+    
+    var blueprint: BlueprintRoom = seed_room.instantiate_blueprint_room()
+    blueprint.grid = grid
+    blueprint.global_position = grid.get_global_point(seed_coordinates)
+    blueprint.global_rotation = CardinalDirections.direction_to_rotation_2d(direction)
+    blueprint.placed = true
+    blueprint.snap_to_grid()
+    
+    rooms.append(blueprint)
+    rooms_root.add_child(blueprint)
+         
 func _handle_room_move_start(room: BlueprintRoom) -> void:
     room.modulate = Color.GRAY
     options.remove_room(room)

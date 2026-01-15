@@ -8,5 +8,6 @@ signal on_hover_blueprint_room_exit(room: BlueprintRoom)
 signal on_blueprint_room_move_start(room: BlueprintRoom)
 signal on_blueprint_room_position_updated(room: BlueprintRoom, coordinates: Vector2i, valid_coordinates: bool)
 signal on_blueprint_room_dropped(room: BlueprintRoom, drag_origin: Vector2, drag_origin_angle: float)
+signal on_complete_dungeon_plan(rooms: Array[BlueprintRoom])
 
 @warning_ignore_restore("unused_signal")

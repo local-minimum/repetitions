@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DraftOption" load_steps=2 format=3 uid="uid://bwa72k7f68i62"]
+
+[ext_resource type="Script" uid="uid://dgfi04hnjvm2r" path="res://scripts/reps/draft_option.gd" id="1_0gy4n"]
+
+[resource]
+script = ExtResource("1_0gy4n")
+_blueprint_room_path = "res://scenes/rooms/start_room.tscn"
+_3d_room_path = "res://scenes/rooms/start_room_3d.tscn"
+draftable_count = 0
+metadata/_custom_type_script = "uid://dgfi04hnjvm2r"

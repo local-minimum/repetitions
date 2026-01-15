@@ -5,5 +5,6 @@
 [resource]
 script = ExtResource("1_l3n7g")
 _blueprint_room_path = "res://scenes/rooms/cell_2.tscn"
+_3d_room_path = "res://scenes/rooms/cell_2_3d.tscn"
 draftable_count = 2
 metadata/_custom_type_script = "uid://dgfi04hnjvm2r"

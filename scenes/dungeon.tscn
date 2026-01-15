@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://ck4qilcv3pmw3"]
+
+[ext_resource type="Script" uid="uid://crh0uqgb4ags6" path="res://scripts/reps/dungeon_planner_ui.gd" id="1_c4wp1"]
+[ext_resource type="PackedScene" uid="uid://dh68rjdc2w0vf" path="res://scenes/dungeon_plan.tscn" id="2_fpimf"]
+
+[node name="Dungeon" type="Node3D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("1_c4wp1")
+
+[node name="Backdrop" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(2.5268645e-07, 0.20128122, 0.20394182, 1)
+
+[node name="Dungeon Planner" parent="CanvasLayer" instance=ExtResource("2_fpimf")]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Layout Done Btn" type="Button" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "DONE"
+
+[connection signal="pressed" from="CanvasLayer/MarginContainer/Layout Done Btn" to="CanvasLayer" method="_on_layout_done_btn_pressed"]

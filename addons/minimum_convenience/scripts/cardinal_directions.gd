@@ -546,6 +546,22 @@ static func direction_to_rotation(up: CardinalDirection, forward: CardinalDirect
         _:
 
             return Quaternion.IDENTITY
+
+## Direction NORTH is assumed to be the default / non-rotated direction          
+static func direction_to_rotation_2d(direction: CardinalDirection) -> float:
+    match direction:
+        CardinalDirection.NORTH:
+            return 0
+        CardinalDirection.EAST:
+            return PI * 1.5
+        CardinalDirection.SOUTH:
+            return PI
+        CardinalDirection.WEST:
+            return PI * 0.5
+        _:
+            push_warning("%s not a planar cardinal, assuming no rotation" % name(direction))
+            return 0
+        
 static func angle_around_axis(direction: CardinalDirection, down: CardinalDirection) -> float:
     match down:
         CardinalDirection.DOWN:

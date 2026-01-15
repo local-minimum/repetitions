@@ -1,8 +1,8 @@
 [gd_scene load_steps=17 format=3 uid="uid://dh68rjdc2w0vf"]
 
-[ext_resource type="PackedScene" uid="uid://ctcvff10ujxfr" path="res://scenes/rooms/start_room.tscn" id="1_ldlxd"]
 [ext_resource type="Script" uid="uid://73wn6oety2kg" path="res://scripts/2d/grid2d.gd" id="1_n4crp"]
 [ext_resource type="Script" uid="uid://dpu4cq0swyq2p" path="res://scripts/reps/dungeon_planner.gd" id="1_ou8db"]
+[ext_resource type="Resource" uid="uid://bwa72k7f68i62" path="res://scenes/rooms/start_room.tres" id="2_xsdx5"]
 [ext_resource type="Script" uid="uid://cuu7qpjrfbuhe" path="res://scripts/reps/planner_options.gd" id="4_o3k1y"]
 [ext_resource type="Script" uid="uid://bp5vn1wokjjtr" path="res://scripts/reps/draft_pool.gd" id="9_qcvmm"]
 [ext_resource type="Script" uid="uid://dgfi04hnjvm2r" path="res://scripts/reps/draft_option.gd" id="10_xsdx5"]
@@ -17,13 +17,15 @@
 [ext_resource type="Resource" uid="uid://pic7jy8114bc" path="res://scenes/rooms/room_corner.tres" id="16_il2o4"]
 [ext_resource type="Resource" uid="uid://bfwq5awreoag" path="res://scenes/rooms/cell_3.tres" id="16_nfhew"]
 
-[node name="Dungeon Planner" type="Node2D" node_paths=PackedStringArray("grid", "rooms_root", "rooms", "options", "pool")]
+[node name="Dungeon Planner" type="Node2D" node_paths=PackedStringArray("grid", "rooms_root", "options", "pool")]
 script = ExtResource("1_ou8db")
 grid = NodePath("Grid2D")
 rooms_root = NodePath("Rooms")
-rooms = [NodePath("Rooms/Start Room")]
 options = NodePath("OptionsCatalogue")
 pool = NodePath("DraftPool")
+seed_room = ExtResource("2_xsdx5")
+seed_coordinates = Vector2i(20, 20)
+seed_direction = 0
 
 [node name="Grid2D" type="Node2D" parent="."]
 script = ExtResource("1_n4crp")
@@ -33,11 +35,6 @@ show_grid = true
 metadata/_custom_type_script = "uid://73wn6oety2kg"
 
 [node name="Rooms" type="Node2D" parent="."]
-
-[node name="Start Room" parent="Rooms" instance=ExtResource("1_ldlxd")]
-position = Vector2(836, 394)
-rotation = 1.5707964
-placed = true
 
 [node name="OptionsCatalogue" type="Node2D" parent="."]
 position = Vector2(1040, 0)

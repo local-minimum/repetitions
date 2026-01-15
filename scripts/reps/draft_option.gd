@@ -4,6 +4,8 @@ class_name DraftOption
 enum DraftProbability { FREQUENT, DEFAULT, UNCOMMON, RARE }
 @export_file_path("*.tscn") var _blueprint_room_path: String
 
+@export_file_path("*.tscn") var _3d_room_path: String
+
 @export var draft_probability_class: DraftProbability = DraftProbability.DEFAULT
 var draft_probability: float:
     get():
@@ -35,6 +37,16 @@ var _blueprint_scene: PackedScene:
 
 func instantiate_blueprint_room() -> BlueprintRoom:   
     var room: BlueprintRoom = _blueprint_scene.instantiate()
+    return room
+
+var _3d_room_scene: PackedScene:
+    get():
+        if _3d_room_scene == null:
+            _3d_room_scene = load(_3d_room_path)
+        return _3d_room_scene
+
+func instantiate_3d_room() -> Node3D:
+    var room: Node3D = _3d_room_scene.instantiate()
     return room
 
 func _to_string() -> String:
