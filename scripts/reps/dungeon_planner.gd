@@ -12,6 +12,7 @@ var rooms: Array[BlueprintRoom]
 @export var seed_room: DraftOption
 @export var seed_coordinates: Vector2i
 @export var seed_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NORTH
+@export var elevation: int = 0
 
 var _options: Dictionary[BlueprintRoom, DraftOption]
 
@@ -57,6 +58,7 @@ func _seed_dungeon() -> void:
     blueprint.global_rotation = CardinalDirections.direction_to_rotation_2d(direction)
     blueprint.placed = true
     blueprint.snap_to_grid()
+    blueprint.option = seed_room
     
     rooms.append(blueprint)
     rooms_root.add_child(blueprint)
@@ -87,6 +89,7 @@ func _handle_room_dropped(room: BlueprintRoom, _origin: Vector2, _origin_angle: 
         rooms.append(room)
         if _options.has(room):
             _options[room].drafted_count += 1
+            room.option = _options[room]
             if !_options.erase(room):
                 pass
         

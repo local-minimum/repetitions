@@ -5,4 +5,4 @@ extends CanvasLayer
 
 func _on_layout_done_btn_pressed() -> void:
     hide()
-    __SignalBus.on_complete_dungeon_plan.emit()
+    __SignalBus.on_complete_dungeon_plan.emit(planner.elevation, planner.rooms)

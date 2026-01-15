@@ -17,6 +17,9 @@ class_name BlueprintRoom
             else:
                 draggable.enable(self)
         placed = value
+
+
+var option: DraftOption
         
 var grid: Grid2D:
     set(value):
@@ -106,6 +109,9 @@ func perimeter() -> PackedVector2Array:
 ## Logical world coordinates of room origin / what it rotates around
 func get_origin() -> Vector2i:
     return draggable.calculate_coordinates(self)
+
+func get_rotation_direction() -> CardinalDirections.CardinalDirection:
+    return draggable.get_rotation(self)
 
 ## Global coordinates of all pieces of the room
 func get_global_used_tiles() -> Array[Vector2i]:

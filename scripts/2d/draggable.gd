@@ -140,6 +140,20 @@ func get_rotation_name(node: Node2D) -> String:
         _:
             return "Free Angle"
 
+func get_rotation(node: Node2D) -> CardinalDirections.CardinalDirection:
+    match _get_rotation_direction(node):
+        DIR_NORTH:
+            return CardinalDirections.CardinalDirection.NORTH
+        DIR_SOUTH:
+            return CardinalDirections.CardinalDirection.SOUTH
+        DIR_EAST:
+            return CardinalDirections.CardinalDirection.EAST
+        DIR_WEST:
+            return CardinalDirections.CardinalDirection.WEST
+        _:
+            push_error("Unexpected direction %s for %s's rotation" % [_get_rotation_direction(node), node])
+            return CardinalDirections.CardinalDirection.NORTH
+
 func get_global_direction(node: Node2D, local_direction: CardinalDirections.CardinalDirection) -> CardinalDirections.CardinalDirection:
     match _get_rotation_direction(node):
         DIR_NORTH:
