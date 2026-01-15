@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8lqj7rv80ssv"]
+
+[ext_resource type="Shape3D" uid="uid://ccivye2pfod1q" path="res://scenes/player_cast_capsule.tres" id="1_52vux"]
+[ext_resource type="Script" uid="uid://gca7baymjcg6" path="res://scripts/reps/physics_gridplayer_controller.gd" id="1_reoop"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_reoop"]
+height = 1.8
+
+[node name="Player3d" type="Node3D" node_paths=PackedStringArray("_forward", "_left", "_right", "_backward")]
+script = ExtResource("1_reoop")
+_forward = NodePath("Cast Forward")
+_left = NodePath("Cast Left")
+_right = NodePath("Cast Right")
+_backward = NodePath("Cast Backward")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0697947, 0.65)
+near = 0.4
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_reoop")
+
+[node name="Cast Body" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cast Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.79999995, 0)
+shape = ExtResource("1_52vux")
+disabled = true
+
+[node name="Cast Forward" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = ExtResource("1_52vux")
+target_position = Vector3(0, 0, -2)
+
+[node name="Cast Left" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = ExtResource("1_52vux")
+target_position = Vector3(-2, 0, 0)
+
+[node name="Cast Backward" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = ExtResource("1_52vux")
+target_position = Vector3(0, 0, 2)
+
+[node name="Cast Right" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = ExtResource("1_52vux")
+target_position = Vector3(2, 0, 0)

@@ -1,17 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://ck4qilcv3pmw3"]
+[gd_scene load_steps=6 format=3 uid="uid://ck4qilcv3pmw3"]
 
 [ext_resource type="Script" uid="uid://crh0uqgb4ags6" path="res://scripts/reps/dungeon_planner_ui.gd" id="1_c4wp1"]
 [ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_fpimf"]
 [ext_resource type="PackedScene" uid="uid://dh68rjdc2w0vf" path="res://scenes/dungeon_plan.tscn" id="2_fpimf"]
+[ext_resource type="PackedScene" uid="uid://b8lqj7rv80ssv" path="res://scenes/player_3d.tscn" id="4_0wj4k"]
 
 [sub_resource type="Environment" id="Environment_fpimf"]
 ambient_light_color = Color(0.2440432, 0.16552716, 0.1601688, 1)
 
 [node name="Dungeon Level" type="Node3D"]
 
-[node name="3D Builder" type="Node3D" parent="."]
+[node name="3D Builder" type="Node3D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("1_fpimf")
 grid_size = Vector3(2, 3, 2)
+player = NodePath("../Player3d")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("planner")]
 script = ExtResource("1_c4wp1")
@@ -46,5 +48,7 @@ text = "DONE"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fpimf")
+
+[node name="Player3d" parent="." instance=ExtResource("4_0wj4k")]
 
 [connection signal="pressed" from="CanvasLayer/MarginContainer/Layout Done Btn" to="CanvasLayer" method="_on_layout_done_btn_pressed"]
