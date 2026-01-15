@@ -14,23 +14,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
 [node name="roomwall2" parent="." instance=ExtResource("1_2c8kv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
 
-[node name="roomwall4" parent="." instance=ExtResource("1_2c8kv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
-
 [node name="roomwall5" parent="." instance=ExtResource("1_2c8kv")]
-transform = Transform3D(2.9802322e-08, 0, -1, 0, 1, 0, 1, 0, 2.9802322e-08, -4, 0, -6)
+transform = Transform3D(2.9802322e-08, 0, -1, 0, 1, 0, 1, 0, 2.9802322e-08, -4, 0, -4)
 
 [node name="roomwall6" parent="." instance=ExtResource("1_2c8kv")]
-transform = Transform3D(2.9802322e-08, 0, -1, 0, 1, 0, 1, 0, 2.9802322e-08, -2, 0, -6)
+transform = Transform3D(2.9802322e-08, 0, -1, 0, 1, 0, 1, 0, 2.9802322e-08, -2, 0, -4)
 
 [node name="roomwall7" parent="." instance=ExtResource("1_2c8kv")]
-transform = Transform3D(2.9802322e-08, 0, -1, 0, 1, 0, 1, 0, 2.9802322e-08, 0, 0, -6)
+transform = Transform3D(2.9802322e-08, 0, -1, 0, 1, 0, 1, 0, 2.9802322e-08, 0, 0, -4)
 
 [node name="roomwall8" parent="." instance=ExtResource("1_2c8kv")]
-transform = Transform3D(2.9802322e-08, 0, -1, 0, 1, 0, 1, 0, 2.9802322e-08, 2, 0, -6)
-
-[node name="roomwall9" parent="." instance=ExtResource("1_2c8kv")]
-transform = Transform3D(-1, 0, 1.3909066e-08, 0, 1, 0, -1.3909066e-08, 0, -1, 4, 0, -6)
+transform = Transform3D(2.9802322e-08, 0, -1, 0, 1, 0, 1, 0, 2.9802322e-08, 2, 0, -4)
 
 [node name="roomwall10" parent="." instance=ExtResource("1_2c8kv")]
 transform = Transform3D(-1, 0, 1.3909066e-08, 0, 1, 0, -1.3909066e-08, 0, -1, 4, 0, -4)
@@ -88,23 +82,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
 [node name="simplefloor11" parent="." instance=ExtResource("2_77wmc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
 
-[node name="simplefloor12" parent="." instance=ExtResource("2_77wmc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
-
-[node name="simplefloor13" parent="." instance=ExtResource("2_77wmc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -4)
-
-[node name="simplefloor14" parent="." instance=ExtResource("2_77wmc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
-
 [node name="simplefloor15" parent="." instance=ExtResource("2_77wmc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
 [node name="simplefloor16" parent="." instance=ExtResource("2_77wmc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
-
-[node name="simplefloor17" parent="." instance=ExtResource("2_77wmc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4)
 
 [node name="roomwall_cornercap" parent="." instance=ExtResource("3_77wmc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
@@ -116,7 +98,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 4)
 
 [node name="roomwall_door2" parent="." instance=ExtResource("4_laf2p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
 
 [node name="simpleceiling" parent="." instance=ExtResource("5_liy2f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 4)
@@ -156,15 +138,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, -2)
 
 [node name="simpleceiling13" parent="." instance=ExtResource("5_liy2f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.8, -2)
-
-[node name="simpleceiling14" parent="." instance=ExtResource("5_liy2f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.8, -4)
-
-[node name="simpleceiling15" parent="." instance=ExtResource("5_liy2f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, -4)
-
-[node name="simpleceiling16" parent="." instance=ExtResource("5_liy2f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -4)
-
-[node name="simpleceiling17" parent="." instance=ExtResource("5_liy2f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.8, -4)
