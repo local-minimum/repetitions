@@ -8,7 +8,7 @@ var cinematic: bool:
         _translation_pressed.clear()
         cinematic = value
 
-@export var _camera: Node3D
+@export var _camera: Camera3D
 
 @export var _forward: ShapeCast3D
 @export var _left: ShapeCast3D
@@ -25,8 +25,17 @@ var cinematic: bool:
 @export var _gridless_friction: float = 0.5
 @export var _mouse_sensitivity_yaw: float = 1.0
 @export var _mouse_sensistivity_pitch: float = 1.0
+@export var _gridless_camera_near: float = 0.05
+@export var _gridless_camera_fov: float = 70   
 
+@export var _camera_transition_time: float = 0.2
 
+var _gridded_cam_offset: Vector3
+var _gridless_cam_offset: Vector3
+var _gridded_cam_near: float
+var _gridded_cam_fov: float
+
+var _cam_slide_tween: Tween
 var _translation_tween: Tween
 var _rotation_tween: Tween
 
@@ -47,10 +56,36 @@ var gridless: bool:
         
             if value:
                 Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+                if _cam_slide_tween && _cam_slide_tween.is_running():
+                    _cam_slide_tween.kill()
+                _cam_slide_tween = create_tween()
+                @warning_ignore_start("return_value_discarded")
+                _cam_slide_tween.tween_property(_camera, "position", _gridless_cam_offset, _camera_transition_time)
+                _cam_slide_tween.tween_property(_camera, "near", _gridless_camera_near, _camera_transition_time)
+                _cam_slide_tween.tween_property(_camera, "fov", _gridded_cam_fov, _camera_transition_time)
+                @warning_ignore_restore("return_value_discarded")
             else:
                 Input.mouse_mode = Input.MOUSE_MODE_VISIBLE  
+                if _cam_slide_tween && _cam_slide_tween.is_running():
+                    _cam_slide_tween.kill()
+                _cam_slide_tween = create_tween()
+                @warning_ignore_start("return_value_discarded")
+                _cam_slide_tween.tween_property(_camera, "position", _gridded_cam_offset, _camera_transition_time)
+                _cam_slide_tween.tween_property(_camera, "near", _gridded_cam_near, _camera_transition_time)
+                _cam_slide_tween.tween_property(_camera, "fov", _gridded_cam_fov, _camera_transition_time)
+                @warning_ignore_restore("return_value_discarded")   
         gridless = value
-          
+
+func _ready() -> void:
+    _gridded_cam_offset = _camera.position
+    
+    _gridless_cam_offset = _camera.position
+    _gridless_cam_offset.x = 0
+    _gridless_cam_offset.z = 0
+    
+    _gridded_cam_fov = _camera.fov
+    _gridded_cam_near = _camera.near
+              
 func _input(event: InputEvent) -> void:
     var handled: bool = true
     if event.is_echo():
