@@ -1,4 +1,4 @@
-extends Node3D
+extends CharacterBody3D
 class_name PhysicsGridPlayerController
 
 var builder: DungeonBuilder
@@ -18,6 +18,7 @@ var cinematic: bool:
 @export_range(0, 1) var _refuse_distance_other: float = 0.1
 @export var _gridless_translation_speed: float = 5.0
 @export var _gridless_rotation_speed: float = 0.8
+@export var _gridless_friction: float = 0.5
 var _translation_tween: Tween
 var _rotation_tween: Tween
 
@@ -31,23 +32,27 @@ var _allow_continious_translation: bool = true
 
 var gridless: bool:
     set(value):
-        if value:
-            _forward.target_position = Vector3.FORWARD * (1 - _refuse_distance_forward) * 0.5
-            _left.target_position = Vector3.LEFT * (1 - _refuse_distance_other) * 1.2
-            _right.target_position = Vector3.RIGHT * (1 - _refuse_distance_other) * 1.2
-            _backward.target_position = Vector3.BACK * (1 - _refuse_distance_other) * 1.2
-        else:
-            _forward.target_position = Vector3.FORWARD * builder.grid_size
-            _left.target_position = Vector3.LEFT * builder.grid_size
-            _right.target_position = Vector3.RIGHT * builder.grid_size
-            _backward.target_position = Vector3.BACK * builder.grid_size
+        # if value:
+        #    _forward.target_position = Vector3.FORWARD * (1 - _refuse_distance_forward) * 0.5
+        #    _left.target_position = Vector3.LEFT * (1 - _refuse_distance_other) * 1.2
+        #    _right.target_position = Vector3.RIGHT * (1 - _refuse_distance_other) * 1.2
+        #    _backward.target_position = Vector3.BACK * (1 - _refuse_distance_other) * 1.2
+        #else:
+        #    _forward.target_position = Vector3.FORWARD * builder.grid_size
+        #    _left.target_position = Vector3.LEFT * builder.grid_size
+        #    _right.target_position = Vector3.RIGHT * builder.grid_size
+        #    _backward.target_position = Vector3.BACK * builder.grid_size
         
         if gridless != value:
             _translation_stack.clear()
             _translation_pressed.clear()
+            velocity = Vector3.ZERO          
             
         gridless = value
-           
+
+func _ready() -> void:
+    gridless = true
+          
 func _input(event: InputEvent) -> void:
     var handled: bool = true
     if event.is_echo():
@@ -84,6 +89,9 @@ func _input(event: InputEvent) -> void:
         get_viewport().set_input_as_handled()
  
 func _push_ontop_of_movement_stack(movement: Movement.MovementType) -> void:
+    if cinematic:
+        return
+        
     if gridless:
         if !_translation_stack.has(movement):
             _translation_stack.append(movement)
@@ -112,25 +120,28 @@ func _gridless_movement(delta: float) -> void:
         for movement: Movement.MovementType in _translation_stack:
             match movement:
                 Movement.MovementType.FORWARD:
-                    if !_forward.is_colliding():
-                        direction += -basis.z
+                    direction += -basis.z
                 Movement.MovementType.STRAFE_LEFT:
-                    if !_left.is_colliding():
-                        direction += -basis.x
+                    direction += -basis.x
                 Movement.MovementType.STRAFE_RIGHT:
-                    if !_right.is_colliding():
-                        direction += basis.x
+                    direction += basis.x
                 Movement.MovementType.BACK:
-                    if !_backward.is_colliding():
-                        direction += basis.z
+                    direction += basis.z
                 _:
                     push_error("Player %s's movement %s is not a valid translation" % [name, Movement.name(movement)])       
         if direction.length_squared() > 1.0:
             direction = direction.normalized()
         
-        if direction.length_squared() > 0.0:
-            position += direction * _gridless_translation_speed * delta
+        if direction.length_squared() > 0.0: 
+            var v: Vector3 = direction * _gridless_translation_speed
+            velocity.x = v.x
+            velocity.z = v.z
     
+    else:
+        var v: Vector3 = velocity.lerp(Vector3.ZERO, _gridless_friction * delta)
+        velocity.x = v.x
+        velocity.z = v.z
+            
     var angle: float = 0.0
     if Input.is_action_pressed("crawl_turn_left"):
         angle = TAU * delta * _gridless_rotation_speed
@@ -139,6 +150,10 @@ func _gridless_movement(delta: float) -> void:
     
     if angle != 0.0:
         basis = transform.rotated(Vector3.UP, angle).basis          
+    
+    if move_and_slide():
+        # Collides with something
+        pass
             
 func _gridfull_movement() -> void:
     if !_translation_stack.is_empty():
