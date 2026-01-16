@@ -8,17 +8,25 @@ var cinematic: bool:
         _translation_pressed.clear()
         cinematic = value
 
+@export var _camera: Node3D
+
 @export var _forward: ShapeCast3D
 @export var _left: ShapeCast3D
 @export var _right: ShapeCast3D
 @export var _backward: ShapeCast3D 
+
 @export_range(0, 1) var _translation_duration: float = 0.3
 @export_range(0, 1) var _rotation_duration: float = 0.25
 @export_range(0, 1) var _refuse_distance_forward: float = 0.2
 @export_range(0, 1) var _refuse_distance_other: float = 0.1
+
 @export var _gridless_translation_speed: float = 5.0
 @export var _gridless_rotation_speed: float = 0.8
 @export var _gridless_friction: float = 0.5
+@export var _mouse_sensitivity_yaw: float = 1.0
+@export var _mouse_sensistivity_pitch: float = 1.0
+
+
 var _translation_tween: Tween
 var _rotation_tween: Tween
 
@@ -31,27 +39,17 @@ var toggle_gridless: int = 30
 var _allow_continious_translation: bool = true
 
 var gridless: bool:
-    set(value):
-        # if value:
-        #    _forward.target_position = Vector3.FORWARD * (1 - _refuse_distance_forward) * 0.5
-        #    _left.target_position = Vector3.LEFT * (1 - _refuse_distance_other) * 1.2
-        #    _right.target_position = Vector3.RIGHT * (1 - _refuse_distance_other) * 1.2
-        #    _backward.target_position = Vector3.BACK * (1 - _refuse_distance_other) * 1.2
-        #else:
-        #    _forward.target_position = Vector3.FORWARD * builder.grid_size
-        #    _left.target_position = Vector3.LEFT * builder.grid_size
-        #    _right.target_position = Vector3.RIGHT * builder.grid_size
-        #    _backward.target_position = Vector3.BACK * builder.grid_size
-        
+    set(value): 
         if gridless != value:
             _translation_stack.clear()
             _translation_pressed.clear()
             velocity = Vector3.ZERO          
-            
+        
+            if value:
+                Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+            else:
+                Input.mouse_mode = Input.MOUSE_MODE_VISIBLE  
         gridless = value
-
-func _ready() -> void:
-    gridless = true
           
 func _input(event: InputEvent) -> void:
     var handled: bool = true
@@ -87,6 +85,12 @@ func _input(event: InputEvent) -> void:
         
     if handled && !cinematic:
         get_viewport().set_input_as_handled()
+    
+    if gridless && event is InputEventMouseMotion:
+        var mouse: InputEventMouseMotion = event
+        rotation.y -= mouse.relative.x * _mouse_sensitivity_yaw
+        var new_pitch: float = _camera.rotation.x - mouse.relative.y * _mouse_sensistivity_pitch
+        _camera.rotation.x = clampf(new_pitch, -PI * 2/3, PI * 2/3)
  
 func _push_ontop_of_movement_stack(movement: Movement.MovementType) -> void:
     if cinematic:

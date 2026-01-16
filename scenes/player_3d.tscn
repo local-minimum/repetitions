@@ -7,14 +7,17 @@
 radius = 0.3
 height = 1.8
 
-[node name="Player3d" type="CharacterBody3D" node_paths=PackedStringArray("_forward", "_left", "_right", "_backward")]
+[node name="Player3d" type="CharacterBody3D" node_paths=PackedStringArray("_camera", "_forward", "_left", "_right", "_backward")]
 script = ExtResource("1_reoop")
+_camera = NodePath("Camera3D")
 _forward = NodePath("Cast Forward")
 _left = NodePath("Cast Left")
 _right = NodePath("Cast Right")
 _backward = NodePath("Cast Backward")
 _gridless_translation_speed = 4.0
 _gridless_friction = 100.0
+_mouse_sensitivity_yaw = 0.002
+_mouse_sensistivity_pitch = 0.005
 
 [node name="Player Collision Body" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

@@ -48,6 +48,7 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
             first_room = false
             
     player.cinematic = false
+    # player.gridless = true
     
 func _round_to_floor_center(local: Vector3) -> Vector3:
     var offset: Vector3 = 0.5 * grid_size
