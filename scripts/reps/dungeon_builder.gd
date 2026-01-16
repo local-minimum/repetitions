@@ -14,6 +14,9 @@ func _enter_tree() -> void:
 
 func _exit_tree() -> void:
     __SignalBus.on_complete_dungeon_plan.disconnect(_handle_complete_dungeon_plan)
+
+func _ready() -> void:
+    player.cinematic = true
     
 func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) -> void:
     var first_room: bool = true
@@ -44,7 +47,8 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
             player.builder = self
             first_room = false
             
-
+    player.cinematic = false
+    
 func _round_to_floor_center(local: Vector3) -> Vector3:
     var offset: Vector3 = 0.5 * grid_size
     offset.y = 0

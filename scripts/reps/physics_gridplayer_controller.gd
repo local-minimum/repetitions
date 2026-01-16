@@ -2,6 +2,11 @@ extends Node3D
 class_name PhysicsGridPlayerController
 
 var builder: DungeonBuilder
+var cinematic: bool:
+    set(value):
+        _translation_stack.clear()
+        _translation_pressed.clear()
+        cinematic = value
 
 @export var _forward: ShapeCast3D
 @export var _left: ShapeCast3D
@@ -19,7 +24,7 @@ var _rotation_tween: Tween
 var _translation_stack: Array[Movement.MovementType]
 var _translation_pressed: Dictionary[Movement.MovementType, bool]
 
-var toggle_gridless: int = 20
+var toggle_gridless: int = 30
 
 ## This should be false if instant movement or settings say no
 var _allow_continious_translation: bool = true
@@ -75,7 +80,7 @@ func _input(event: InputEvent) -> void:
     else:
         handled = false
         
-    if handled:
+    if handled && !cinematic:
         get_viewport().set_input_as_handled()
  
 func _push_ontop_of_movement_stack(movement: Movement.MovementType) -> void:
@@ -93,6 +98,9 @@ func _release_movement(movement: Movement.MovementType) -> void:
         _translation_pressed[movement] = false
                 
 func _physics_process(delta: float) -> void:
+    if cinematic:
+        return
+        
     if gridless:
         _gridless_movement(delta)
     else:
