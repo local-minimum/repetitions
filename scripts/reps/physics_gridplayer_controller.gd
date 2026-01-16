@@ -11,15 +11,38 @@ var builder: DungeonBuilder
 @export_range(0, 1) var _rotation_duration: float = 0.25
 @export_range(0, 1) var _refuse_distance_forward: float = 0.2
 @export_range(0, 1) var _refuse_distance_other: float = 0.1
+@export var _gridless_translation_speed: float = 5.0
+@export var _gridless_rotation_speed: float = 0.8
 var _translation_tween: Tween
 var _rotation_tween: Tween
 
 var _translation_stack: Array[Movement.MovementType]
 var _translation_pressed: Dictionary[Movement.MovementType, bool]
 
+var toggle_gridless: int = 20
+
 ## This should be false if instant movement or settings say no
 var _allow_continious_translation: bool = true
 
+var gridless: bool:
+    set(value):
+        if value:
+            _forward.target_position = Vector3.FORWARD * (1 - _refuse_distance_forward) * 0.5
+            _left.target_position = Vector3.LEFT * (1 - _refuse_distance_other) * 1.2
+            _right.target_position = Vector3.RIGHT * (1 - _refuse_distance_other) * 1.2
+            _backward.target_position = Vector3.BACK * (1 - _refuse_distance_other) * 1.2
+        else:
+            _forward.target_position = Vector3.FORWARD * builder.grid_size
+            _left.target_position = Vector3.LEFT * builder.grid_size
+            _right.target_position = Vector3.RIGHT * builder.grid_size
+            _backward.target_position = Vector3.BACK * builder.grid_size
+        
+        if gridless != value:
+            _translation_stack.clear()
+            _translation_pressed.clear()
+            
+        gridless = value
+           
 func _input(event: InputEvent) -> void:
     var handled: bool = true
     if event.is_echo():
@@ -29,25 +52,25 @@ func _input(event: InputEvent) -> void:
         _push_ontop_of_movement_stack(Movement.MovementType.FORWARD)
         
     elif event.is_action_released("crawl_forward"):
-        _translation_pressed[Movement.MovementType.FORWARD] = false
+        _release_movement(Movement.MovementType.FORWARD)
         
     elif event.is_action_pressed("crawl_strafe_left"):
         _push_ontop_of_movement_stack(Movement.MovementType.STRAFE_LEFT)
 
     elif event.is_action_released("crawl_strafe_left"):
-        _translation_pressed[Movement.MovementType.STRAFE_LEFT] = false
+        _release_movement(Movement.MovementType.STRAFE_LEFT)
         
     elif event.is_action_pressed("crawl_strafe_right"):
         _push_ontop_of_movement_stack(Movement.MovementType.STRAFE_RIGHT)
 
     elif event.is_action_released("crawl_strafe_right"):
-        _translation_pressed[Movement.MovementType.STRAFE_RIGHT] = false
+        _release_movement(Movement.MovementType.STRAFE_RIGHT)
         
     elif event.is_action_pressed("crawl_backward"):
         _push_ontop_of_movement_stack(Movement.MovementType.BACK)
     
     elif event.is_action_released("crawl_backward"):
-        _translation_pressed[Movement.MovementType.BACK] = false
+        _release_movement(Movement.MovementType.BACK)
 
     else:
         handled = false
@@ -56,16 +79,60 @@ func _input(event: InputEvent) -> void:
         get_viewport().set_input_as_handled()
  
 func _push_ontop_of_movement_stack(movement: Movement.MovementType) -> void:
-    _translation_stack.append(movement)
-    _translation_pressed[movement] = _allow_continious_translation
+    if gridless:
+        if !_translation_stack.has(movement):
+            _translation_stack.append(movement)
+    else:
+        _translation_stack.append(movement)
+        _translation_pressed[movement] = _allow_continious_translation
 
 func _release_movement(movement: Movement.MovementType) -> void:
-    var idx: int = _translation_stack.find(movement)
-    if idx < 0:
-        return
-    _translation_pressed[movement] = false
+    if gridless:
+        _translation_stack.erase(movement)
+    else:
+        _translation_pressed[movement] = false
                 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+    if gridless:
+        _gridless_movement(delta)
+    else:
+        _gridfull_movement()
+
+func _gridless_movement(delta: float) -> void:
+    if !_translation_stack.is_empty():
+        var direction: Vector3 = Vector3.ZERO
+        for movement: Movement.MovementType in _translation_stack:
+            match movement:
+                Movement.MovementType.FORWARD:
+                    if !_forward.is_colliding():
+                        direction += -basis.z
+                Movement.MovementType.STRAFE_LEFT:
+                    if !_left.is_colliding():
+                        direction += -basis.x
+                Movement.MovementType.STRAFE_RIGHT:
+                    if !_right.is_colliding():
+                        direction += basis.x
+                Movement.MovementType.BACK:
+                    if !_backward.is_colliding():
+                        direction += basis.z
+                _:
+                    push_error("Player %s's movement %s is not a valid translation" % [name, Movement.name(movement)])       
+        if direction.length_squared() > 1.0:
+            direction = direction.normalized()
+        
+        if direction.length_squared() > 0.0:
+            position += direction * _gridless_translation_speed * delta
+    
+    var angle: float = 0.0
+    if Input.is_action_pressed("crawl_turn_left"):
+        angle = TAU * delta * _gridless_rotation_speed
+    elif Input.is_action_pressed("crawl_turn_right"):
+        angle = -TAU * delta * _gridless_rotation_speed
+    
+    if angle != 0.0:
+        basis = transform.rotated(Vector3.UP, angle).basis          
+            
+func _gridfull_movement() -> void:
     if !_translation_stack.is_empty():
         var movement: Movement.MovementType = _translation_stack[0]
         match movement:
@@ -81,9 +148,9 @@ func _physics_process(_delta: float) -> void:
                 push_error("Player %s's movement %s is not a valid translation" % [name, Movement.name(movement)])
         
     if Input.is_action_just_pressed("crawl_turn_left"):
-        _attempt_turn(PI / 2)
+        _attempt_turn(PI * 0.5)
     elif Input.is_action_just_pressed("crawl_turn_right"):
-        _attempt_turn(-PI / 2)
+        _attempt_turn(-PI * 0.5)
         
 func _attempt_translation(movement: Movement.MovementType, caster: ShapeCast3D, direction: Vector3) -> void:
     if _translation_tween && _translation_tween.is_running() || _rotation_tween && _rotation_tween.is_running():
@@ -106,6 +173,10 @@ func _attempt_translation(movement: Movement.MovementType, caster: ShapeCast3D, 
 func _handle_translation_end(movement: Movement.MovementType) -> void:
     if !_translation_pressed.get(movement, false):
         _translation_stack.erase(movement)
+    
+    toggle_gridless -= 1
+    if toggle_gridless < 0:
+        gridless = true
         
 func _refuse_movement(movement: Movement.MovementType, caster: ShapeCast3D, direction: Vector3) -> void:
     var target: Vector3 = builder.get_floor_center(global_position, (to_global(direction) - global_position).normalized())
