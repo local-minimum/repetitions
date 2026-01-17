@@ -13,16 +13,56 @@ const _COORDINATES_META: String = "coordinates"
 var _dirt_offset: Vector3 = Vector3.BACK
 
 var dirts: Dictionary[Vector3i, Node3D]
+var dirt_digouts: Dictionary[Vector3i, Array]
 
 func _enter_tree() -> void:
     if __SignalBus.on_complete_dungeon_plan.connect(_handle_complete_dungeon_plan) != OK:
         push_error("Failed to connect complete dungeon plan")
-
+    if __SignalBus.on_use_pickax.connect(_handle_use_pickax) != OK:
+        push_error("Failed to connect use pickax")
+        
 func _exit_tree() -> void:
     __SignalBus.on_complete_dungeon_plan.disconnect(_handle_complete_dungeon_plan)
-
+    __SignalBus.on_use_pickax.disconnect(_handle_use_pickax)
+    
 func _ready() -> void:
     player.cinematic = true
+
+func _handle_use_pickax(target: Node3D, hack_direction: CardinalDirections.CardinalDirection) -> void:
+    while !target.has_meta(_COORDINATES_META):
+        print_debug("%s has no coordinates" % target.name)
+        target = target.get_parent_node_3d()
+        if target == null:
+            print_debug("Was not dirt!")
+            return
+    
+    print_debug("Found potential dirt in %s" % target)
+    
+    var coords: Vector3i = target.get_meta(_COORDINATES_META)
+    if !dirts.has(coords) || dirts[coords] != target || !CardinalDirections.is_planar_cardinal(hack_direction):
+        print_debug("%s not in known dirts %s or wrong dirt %s != %s, direction %s not planar cardinal" % [
+            coords, !dirts.has(coords), dirts[coords], target, CardinalDirections.name(hack_direction),
+        ])
+        return
+    
+    var digs: Array[CardinalDirections.CardinalDirection] = []
+    var digout_direction: CardinalDirections.CardinalDirection = CardinalDirections.invert(hack_direction)
+    if !dirt_digouts.has(coords):
+        digs = [digout_direction]
+        dirt_digouts[coords] = digs
+    elif !dirt_digouts[coords].has(digout_direction):
+        dirt_digouts[coords].append(digout_direction)
+        digs = dirt_digouts[coords]
+    else:
+        digs = dirt_digouts[coords]
+    
+    print_debug("Placing new dirt at %s with digs %s" % [coords, digs.map(func (c: CardinalDirections.CardinalDirection) -> String: return CardinalDirections.name(c))])
+    var new_dirt: Node3D = _place_dirt(coords, digs)
+    if new_dirt != null:
+        target.queue_free()
+        dirts[coords] = new_dirt
+    else:
+        print_debug("Didn't get any new dirt!")
     
 func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) -> void:
     var _used_tiles: Array[Vector2i]
@@ -66,19 +106,25 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
                 var coords: Vector2i = Vector2i(x, y)
                 if _used_tiles.has(coords):
                     continue
-                
-                var pos: Vector3 = Vector3(grid_size.x * x, grid_size.y * elevation, grid_size.z * y)
-                var d: Node3D = dirt_mag.place_block_at(self, pos + _dirt_offset * grid_size, grid_size)
-                if d != null:
-                    var coords3d: Vector3i = Vector3i(coords.x, elevation, coords.y)
-                    dirts[coords3d] = d
-                    d.name = "Dirt @ %s" % coords3d
-                    d.set_meta(_COORDINATES_META, coords3d)
+                    
+                var coords3d: Vector3i = Vector3i(coords.x, elevation, coords.y)
+                if _place_dirt(coords3d) == null:
+                    push_warning("%s: Failed to place dirt at %s" % [name, coords3d])
                     
                         
     player.cinematic = false
     # player.gridless = true
-    
+
+func _place_dirt(coords: Vector3i, digs: Array[CardinalDirections.CardinalDirection] = []) -> Node3D:
+    var pos: Vector3 = Vector3(grid_size.x * coords.x, grid_size.y * coords.y, grid_size.z * coords.z)
+    var d: Node3D = dirt_mag.place_block_at(self, pos + _dirt_offset * grid_size, grid_size, digs)
+    if d != null:
+        dirts[coords] = d
+        d.name = "Dirt @ %s" % coords
+        d.set_meta(_COORDINATES_META, coords)
+
+    return d
+        
 func _round_to_floor_center(local: Vector3) -> Vector3:
     var offset: Vector3 = 0.5 * grid_size
     offset.y = 0

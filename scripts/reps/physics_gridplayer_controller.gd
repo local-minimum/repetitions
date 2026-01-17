@@ -9,6 +9,9 @@ var cinematic: bool:
         cinematic = value
 
 @export var _camera: Camera3D
+var camera: Camera3D:
+    get():
+        return _camera
 
 @export var _forward: ShapeCast3D
 @export var _left: ShapeCast3D
