@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8lqj7rv80ssv"]
+[gd_scene load_steps=7 format=3 uid="uid://b8lqj7rv80ssv"]
 
 [ext_resource type="Shape3D" uid="uid://ccivye2pfod1q" path="res://scenes/player_cast_capsule.tres" id="1_52vux"]
 [ext_resource type="Script" uid="uid://gca7baymjcg6" path="res://scripts/reps/physics_gridplayer_controller.gd" id="1_reoop"]
 [ext_resource type="PackedScene" uid="uid://j0cos57lmqyb" path="res://scenes/rooms/meshes/props/pickax.blend" id="3_2djwe"]
 [ext_resource type="Script" uid="uid://qk83bjxufdn0" path="res://scripts/reps/toolbelt.gd" id="3_4jfb6"]
+[ext_resource type="Script" uid="uid://cyc377qck8xp3" path="res://scripts/reps/equipped_tool.gd" id="4_yevqy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_reoop"]
 radius = 0.3
@@ -60,6 +61,7 @@ _tool_lookup = {
 [node name="Pickax" type="Node3D" parent="Toolbelt"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5396133, 1.0443099, 0.0020033717)
 visible = false
+script = ExtResource("4_yevqy")
 
 [node name="pickax" parent="Toolbelt/Pickax" instance=ExtResource("3_2djwe")]
 transform = Transform3D(0.9785378, 0, -0.20606755, 0.04792364, 0.9725814, 0.22757146, 0.20041746, -0.23256277, 0.95170766, 0, 0, 0.12537825)
