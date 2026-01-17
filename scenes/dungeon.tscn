@@ -13,10 +13,11 @@ ssil_enabled = true
 
 [node name="Dungeon Level" type="Node3D"]
 
-[node name="3D Builder" type="Node3D" parent="." node_paths=PackedStringArray("player")]
+[node name="3D Builder" type="Node3D" parent="." node_paths=PackedStringArray("player", "dirt_mag")]
 script = ExtResource("1_fpimf")
 grid_size = Vector3(2, 3, 2)
 player = NodePath("../Player3d")
+dirt_mag = NodePath("../DirtMagazine")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("planner")]
 script = ExtResource("1_c4wp1")

@@ -3,10 +3,14 @@ class_name DungeonBuilder
 
 @export var grid_size: Vector3
 @export var player: PhysicsGridPlayerController
+@export var dirt_mag: DirtMagazine
 
 var placed_rooms: Array[Node3D]
 const _BLUEPRINT_META: String = "blueprint"
 const _ORIGIN_META: String = "origin"
+const _COORDINATES_META: String = "coordinates"
+
+var dirts: Dictionary[Vector3i, Node3D]
 
 func _enter_tree() -> void:
     if __SignalBus.on_complete_dungeon_plan.connect(_handle_complete_dungeon_plan) != OK:
@@ -19,12 +23,17 @@ func _ready() -> void:
     player.cinematic = true
     
 func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) -> void:
+    var _used_tiles: Array[Vector2i]
+    var grid: Grid2D = null
     var first_room: bool = true
     for room: BlueprintRoom in rooms:
         if room.option == null:
             push_error("Bluepint Room %s lacks an option, no clue what room to place" % room)
             continue
         
+        if grid == null:
+            grid = room.grid
+            
         var room_3d: Node3D = room.option.instantiate_3d_room()
         placed_rooms.append(room_3d)
         room_3d.set_meta(_BLUEPRINT_META, room)
@@ -34,6 +43,8 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
             CardinalDirections.CardinalDirection.UP, 
             room.get_rotation_direction(),
         ).get_euler()
+        
+        _used_tiles.append_array(room.get_global_used_tiles())
         
         var origin2d: Vector2i = room.get_origin()
         var origin: Vector3i = Vector3i(origin2d.x, elevation, origin2d.y)
@@ -46,7 +57,23 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
             player.global_position = to_global(Vector3((ppos.x + 0.5) * grid_size.x, elevation * grid_size.y, (ppos.y + 0.5) * grid_size.z))
             player.builder = self
             first_room = false
-            
+    
+    if grid != null:
+        for x: int in range(grid.extent.position.x, grid.extent.end.x):
+            for y: int in range(grid.extent.position.y, grid.extent.end.y):
+                var coords: Vector2i = Vector2i(x, y)
+                if _used_tiles.has(coords):
+                    continue
+                
+                var pos: Vector3 = Vector3(grid_size.x * x, grid_size.y * elevation, grid_size.z * y)
+                var d: Node3D = dirt_mag.place_block_at(self, pos, grid_size)
+                if d != null:
+                    var coords3d: Vector3i = Vector3i(coords.x, elevation, coords.y)
+                    dirts[coords3d] = d
+                    d.name = "Dirt @ %s" % coords3d
+                    d.set_meta(_COORDINATES_META, coords3d)
+                    
+                        
     player.cinematic = false
     # player.gridless = true
     
