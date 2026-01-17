@@ -10,4 +10,5 @@ signal on_blueprint_room_position_updated(room: BlueprintRoom, coordinates: Vect
 signal on_blueprint_room_dropped(room: BlueprintRoom, drag_origin: Vector2, drag_origin_angle: float)
 signal on_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom])
 
+signal on_pickup_tool(tool: Tool.ToolType)
 @warning_ignore_restore("unused_signal")
