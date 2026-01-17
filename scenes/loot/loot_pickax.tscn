@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cg0gqdy2q4vqx"]
+
+[ext_resource type="PackedScene" uid="uid://j0cos57lmqyb" path="res://scenes/rooms/meshes/props/pickax.blend" id="1_7343p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2gmd0"]
+size = Vector3(0.15234375, 0.7392578, 0.8918457)
+
+[node name="pickax" instance=ExtResource("1_7343p")]
+
+[node name="Area3D" type="Area3D" parent="." index="2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001953125, 0.018066406, -0.0040283203)
+shape = SubResource("BoxShape3D_2gmd0")
