@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://ck4qilcv3pmw3"]
+[gd_scene load_steps=7 format=3 uid="uid://ck4qilcv3pmw3"]
 
 [ext_resource type="Script" uid="uid://crh0uqgb4ags6" path="res://scripts/reps/dungeon_planner_ui.gd" id="1_c4wp1"]
 [ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_fpimf"]
 [ext_resource type="PackedScene" uid="uid://dh68rjdc2w0vf" path="res://scenes/dungeon_plan.tscn" id="2_fpimf"]
 [ext_resource type="PackedScene" uid="uid://b8lqj7rv80ssv" path="res://scenes/player_3d.tscn" id="4_0wj4k"]
+[ext_resource type="Script" uid="uid://dq7lbhrdci5ob" path="res://scripts/reps/dirt_magazine.gd" id="5_fvacq"]
 
 [sub_resource type="Environment" id="Environment_fpimf"]
 ambient_light_color = Color(0.2440432, 0.16552716, 0.1601688, 1)
@@ -52,5 +53,15 @@ text = "DONE"
 environment = SubResource("Environment_fpimf")
 
 [node name="Player3d" parent="." instance=ExtResource("4_0wj4k")]
+
+[node name="DirtMagazine" type="Node" parent="."]
+script = ExtResource("5_fvacq")
+_block_solid_path = "uid://wmhx0mfeg718"
+_block_dug_one_path = "uid://ss76trh6b1u6"
+_block_dug_two_straight_path = "uid://dvhvyjoy1ms0o"
+_block_dug_two_bend_path = "uid://sg7qd61iq8mc"
+_block_dug_three_path = "uid://ci0xmltyydfpb"
+_block_dug_four_path = "uid://bs4vym5pbu1p3"
+metadata/_custom_type_script = "uid://dq7lbhrdci5ob"
 
 [connection signal="pressed" from="CanvasLayer/MarginContainer/Layout Done Btn" to="CanvasLayer" method="_on_layout_done_btn_pressed"]
