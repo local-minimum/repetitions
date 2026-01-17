@@ -8,6 +8,7 @@ size = Vector3(0.15234375, 0.8635254, 0.8918457)
 
 [node name="pickax" node_paths=PackedStringArray("_body") instance=ExtResource("1_7343p")]
 script = ExtResource("2_2gmd0")
+_type = 1
 _body = NodePath("Body")
 
 [node name="Body" type="StaticBody3D" parent="." index="2"]
