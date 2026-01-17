@@ -10,11 +10,11 @@ config_version=5
 
 [application]
 
-config/name="repetitions"
-config/version="0.0.0"
+config/name="Repetitions"
+config/version="0.0.1"
 run/main_scene="uid://ck4qilcv3pmw3"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://bibw47tb2p1uq"
 
 [audio]
 

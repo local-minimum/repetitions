@@ -10,6 +10,8 @@ const _BLUEPRINT_META: String = "blueprint"
 const _ORIGIN_META: String = "origin"
 const _COORDINATES_META: String = "coordinates"
 
+var _dirt_offset: Vector3 = Vector3.BACK
+
 var dirts: Dictionary[Vector3i, Node3D]
 
 func _enter_tree() -> void:
@@ -66,7 +68,7 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
                     continue
                 
                 var pos: Vector3 = Vector3(grid_size.x * x, grid_size.y * elevation, grid_size.z * y)
-                var d: Node3D = dirt_mag.place_block_at(self, pos, grid_size)
+                var d: Node3D = dirt_mag.place_block_at(self, pos + _dirt_offset * grid_size, grid_size)
                 if d != null:
                     var coords3d: Vector3i = Vector3i(coords.x, elevation, coords.y)
                     dirts[coords3d] = d
