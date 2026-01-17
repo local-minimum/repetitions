@@ -48,4 +48,7 @@ func _handle_input_event(camera: Node, event: InputEvent, event_position: Vector
         if can_pickup && mouse_btn_evt.pressed && mouse_btn_evt.button_index == MOUSE_BUTTON_LEFT:
             __SignalBus.on_pickup_tool.emit(_type)
             InputCursorHelper.remove_node(self)
+            
+            get_viewport().set_input_as_handled()
+            
             queue_free()

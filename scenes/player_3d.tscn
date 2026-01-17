@@ -1,14 +1,99 @@
-[gd_scene load_steps=7 format=3 uid="uid://b8lqj7rv80ssv"]
+[gd_scene load_steps=10 format=3 uid="uid://b8lqj7rv80ssv"]
 
 [ext_resource type="Shape3D" uid="uid://ccivye2pfod1q" path="res://scenes/player_cast_capsule.tres" id="1_52vux"]
 [ext_resource type="Script" uid="uid://gca7baymjcg6" path="res://scripts/reps/physics_gridplayer_controller.gd" id="1_reoop"]
 [ext_resource type="PackedScene" uid="uid://j0cos57lmqyb" path="res://scenes/rooms/meshes/props/pickax.blend" id="3_2djwe"]
-[ext_resource type="Script" uid="uid://qk83bjxufdn0" path="res://scripts/reps/toolbelt.gd" id="3_4jfb6"]
-[ext_resource type="Script" uid="uid://cyc377qck8xp3" path="res://scripts/reps/equipped_tool.gd" id="4_yevqy"]
+[ext_resource type="Script" uid="uid://qk83bjxufdn0" path="res://scripts/reps/tools/toolbelt.gd" id="3_4jfb6"]
+[ext_resource type="Script" uid="uid://d3kx3hrrig5b" path="res://scripts/reps/tools/equipped_pickax.gd" id="4_yevqy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_reoop"]
 radius = 0.3
 height = 1.8
+
+[sub_resource type="Animation" id="Animation_yevqy"]
+resource_name = "Wack"
+length = 2.45
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pickax:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.09576294, 0.3, 0.47005707, 0.6333333, 1.0000882, 1.0036664, 1.1333333, 1.3575336, 1.4666667, 1.7666667, 1.8666667, 1.9666667, 2.2049918, 2.2962341, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0.12537825), Vector3(0, 0.016475081, 0.23015934), Vector3(0, 0.016475081, 0.23015934), Vector3(0.13744628, -0.3824578, -0.43938035), Vector3(0.13744628, -0.3824578, -0.43938035), Vector3(0, 0, 0.12537825), Vector3(1.0822294, 0, 0.125), Vector3(1.0822295, 0.003926277, 0.22787046), Vector3(0.87080467, -0.11847758, -0.43978643), Vector3(0.87080467, -0.11847758, -0.43978643), Vector3(0, 0, 0.12537825), Vector3(0, 0.016475081, 0.23015934), Vector3(0, 0.016475081, 0.23015934), Vector3(0.13744628, -0.3824578, -0.43938035), Vector3(0.13744628, -0.3824578, -0.43938035), Vector3(0, 0, 0.12537825)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pickax:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.09576294, 0.3, 0.47005707, 0.6333333, 1.0000882, 1.0036664, 1.1333333, 1.3575336, 1.4666667, 1.7666667, 1.8666667, 1.9666667, 2.2049918, 2.2962341, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.22958297, -0.21323235, 0.04923486), Vector3(-0.051337603, -0.2078324, 0.010820758), Vector3(-0.0513376, -0.2078324, 0.010820758), Vector3(-0.56121075, -0.47907636, 0.5626082), Vector3(-0.56121075, -0.47907633, 0.5626082), Vector3(-0.22958297, -0.21323235, 0.04923486), Vector3(-0.23038347, 0.21293019, 0.04886922), Vector3(0.033579405, 0.20733982, 0.10526279), Vector3(-0.62542135, 0.3952319, -0.2815541), Vector3(-0.62542135, 0.3952319, -0.2815541), Vector3(-0.22958297, -0.21323235, 0.04923486), Vector3(-0.051337603, -0.2078324, 0.010820758), Vector3(-0.0513376, -0.2078324, 0.010820758), Vector3(-0.56121075, -0.47907636, 0.5626082), Vector3(-0.56121075, -0.47907633, 0.5626082), Vector3(-0.22958297, -0.21323235, 0.04923486)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pickax:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6333333, 1.0000882, 1.4670346, 1.7666667, 2.2962341, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_sxlqi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pickax:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0.12537825)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pickax:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.22958297, -0.21323235, 0.04923486)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pickax:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_460ac"]
+_data = {
+&"RESET": SubResource("Animation_sxlqi"),
+&"Wack": SubResource("Animation_yevqy")
+}
 
 [node name="Player3d" type="CharacterBody3D" node_paths=PackedStringArray("_camera", "_forward", "_left", "_right", "_backward")]
 input_ray_pickable = false
@@ -58,10 +143,16 @@ _tool_lookup = {
 1: NodePath("Pickax")
 }
 
-[node name="Pickax" type="Node3D" parent="Toolbelt"]
+[node name="Pickax" type="Node3D" parent="Toolbelt" node_paths=PackedStringArray("_anim", "_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5396133, 1.0443099, 0.0020033717)
-visible = false
 script = ExtResource("4_yevqy")
+_anim = NodePath("AnimationPlayer")
+_player = NodePath("../..")
 
 [node name="pickax" parent="Toolbelt/Pickax" instance=ExtResource("3_2djwe")]
-transform = Transform3D(0.9785378, 0, -0.20606755, 0.04792364, 0.9725814, 0.22757146, 0.20041746, -0.23256277, 0.95170766, 0, 0, 0.12537825)
+transform = Transform3D(0.97853774, 0, -0.20606756, 0.047923636, 0.9725813, 0.22757149, 0.20041746, -0.23256277, 0.9517077, 0, 0, 0.12537825)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Toolbelt/Pickax"]
+libraries = {
+&"": SubResource("AnimationLibrary_460ac")
+}

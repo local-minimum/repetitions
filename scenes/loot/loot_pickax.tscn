@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cg0gqdy2q4vqx"]
 
 [ext_resource type="PackedScene" uid="uid://j0cos57lmqyb" path="res://scenes/rooms/meshes/props/pickax.blend" id="1_7343p"]
-[ext_resource type="Script" uid="uid://3jm6iguafd34" path="res://scripts/reps/tool.gd" id="2_2gmd0"]
+[ext_resource type="Script" uid="uid://3jm6iguafd34" path="res://scripts/reps/tools/tool.gd" id="2_2gmd0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2gmd0"]
 size = Vector3(0.15234375, 0.8635254, 0.8918457)
