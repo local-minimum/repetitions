@@ -42,8 +42,6 @@ var _rotation_tween: Tween
 var _translation_stack: Array[Movement.MovementType]
 var _translation_pressed: Dictionary[Movement.MovementType, bool]
 
-var toggle_gridless: int = 30
-
 ## This should be false if instant movement or settings say no
 var _allow_continious_translation: bool = true
 
@@ -62,7 +60,7 @@ var gridless: bool:
                 @warning_ignore_start("return_value_discarded")
                 _cam_slide_tween.tween_property(_camera, "position", _gridless_cam_offset, _camera_transition_time)
                 _cam_slide_tween.tween_property(_camera, "near", _gridless_camera_near, _camera_transition_time)
-                _cam_slide_tween.tween_property(_camera, "fov", _gridded_cam_fov, _camera_transition_time)
+                _cam_slide_tween.tween_property(_camera, "fov", _gridless_camera_fov, _camera_transition_time)
                 @warning_ignore_restore("return_value_discarded")
             else:
                 Input.mouse_mode = Input.MOUSE_MODE_VISIBLE  
@@ -235,10 +233,6 @@ func _attempt_translation(movement: Movement.MovementType, caster: ShapeCast3D, 
 func _handle_translation_end(movement: Movement.MovementType) -> void:
     if !_translation_pressed.get(movement, false):
         _translation_stack.erase(movement)
-    
-    toggle_gridless -= 1
-    if toggle_gridless < 0:
-        gridless = true
         
 func _refuse_movement(movement: Movement.MovementType, caster: ShapeCast3D, direction: Vector3) -> void:
     var target: Vector3 = builder.get_floor_center(global_position, (to_global(direction) - global_position).normalized())
