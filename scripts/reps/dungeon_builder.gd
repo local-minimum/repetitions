@@ -28,7 +28,7 @@ func _exit_tree() -> void:
 func _ready() -> void:
     player.cinematic = true
 
-func _handle_use_pickax(target: Node3D, hack_direction: CardinalDirections.CardinalDirection) -> void:
+func _handle_use_pickax(target: Node3D, hack_direction: CardinalDirections.CardinalDirection, point: Vector3) -> void:
     while !target.has_meta(_COORDINATES_META):
         print_debug("%s has no coordinates" % target.name)
         target = target.get_parent_node_3d()
@@ -45,8 +45,33 @@ func _handle_use_pickax(target: Node3D, hack_direction: CardinalDirections.Cardi
         ])
         return
     
+    var origin: Vector3 = _get_origin_corner(coords) + _dirt_offset * grid_size
+    var side_points: Array[Vector3] = [
+        origin + 0.5 * Vector3.RIGHT * grid_size,
+        origin + 0.5 * Vector3.FORWARD * grid_size,
+        origin + (Vector3.FORWARD + 0.5 * Vector3.RIGHT) * grid_size,
+        origin + (0.5 * Vector3.FORWARD + Vector3.RIGHT) * grid_size,
+    ]
+    var side_directions: Array[CardinalDirections.CardinalDirection] = [
+        CardinalDirections.CardinalDirection.SOUTH,
+        CardinalDirections.CardinalDirection.WEST,
+        CardinalDirections.CardinalDirection.NORTH,
+        CardinalDirections.CardinalDirection.EAST,
+    ]
+    var closest_idx: int = -1
+    var closest_dist_sq: float = -1
+
+    print_debug("Finding closest side to %s from %s" % [point, side_points])
+    for idx: int in range(4):
+        var d_sq: float = point.distance_squared_to(side_points[idx])
+        if closest_idx < 0 || d_sq < closest_dist_sq:
+            closest_idx = idx
+            closest_dist_sq = d_sq
+    
+    print_debug("Closest was idx %s which is %s" % [closest_idx, CardinalDirections.name(side_directions[closest_idx])])
     var digs: Array[CardinalDirections.CardinalDirection] = []
-    var digout_direction: CardinalDirections.CardinalDirection = CardinalDirections.invert(hack_direction)
+    var digout_direction: CardinalDirections.CardinalDirection = CardinalDirections.invert(hack_direction) if closest_idx < 0 else side_directions[closest_idx]
+    
     if !dirt_digouts.has(coords):
         digs = [digout_direction]
         dirt_digouts[coords] = digs
@@ -115,8 +140,11 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
     player.cinematic = false
     # player.gridless = true
 
+func _get_origin_corner(coords: Vector3i) -> Vector3:
+    return Vector3(grid_size.x * coords.x, grid_size.y * coords.y, grid_size.z * coords.z)
+    
 func _place_dirt(coords: Vector3i, digs: Array[CardinalDirections.CardinalDirection] = []) -> Node3D:
-    var pos: Vector3 = Vector3(grid_size.x * coords.x, grid_size.y * coords.y, grid_size.z * coords.z)
+    var pos: Vector3 = _get_origin_corner(coords)
     var d: Node3D = dirt_mag.place_block_at(self, pos + _dirt_offset * grid_size, grid_size, digs)
     if d != null:
         dirts[coords] = d

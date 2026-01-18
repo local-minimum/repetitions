@@ -43,5 +43,5 @@ func _ready_next_ax(anim_name: String) -> void:
             var col: Object = _caster.get_collider(0)
             if col is Node3D:
                 var dir: CardinalDirections.CardinalDirection = CardinalDirections.node_planar_rotation_to_direction(_player)
-                __SignalBus.on_use_pickax.emit(col, dir)
+                __SignalBus.on_use_pickax.emit(col, dir, _caster.get_collision_point(0))
                 
