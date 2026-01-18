@@ -74,7 +74,9 @@ var gridless: bool:
                 _cam_slide_tween.tween_property(_camera, "position", _gridded_cam_offset, _camera_transition_time)
                 _cam_slide_tween.tween_property(_camera, "near", _gridded_cam_near, _camera_transition_time)
                 _cam_slide_tween.tween_property(_camera, "fov", _gridded_cam_fov, _camera_transition_time)
-                @warning_ignore_restore("return_value_discarded")   
+                @warning_ignore_restore("return_value_discarded")
+                # Force alignment with grid
+                _attempt_turn(0.0) 
         gridless = value
 
 func _ready() -> void:

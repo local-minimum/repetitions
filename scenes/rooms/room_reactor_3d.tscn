@@ -1,0 +1,171 @@
+[gd_scene load_steps=8 format=3 uid="uid://bgtg6k43ekxbg"]
+
+[ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_cq5sr"]
+[ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_b1fcn"]
+[ext_resource type="PackedScene" uid="uid://b7lslbxgj6psm" path="res://scenes/rooms/meshes/roomwall_door.blend" id="4_6dfi5"]
+[ext_resource type="PackedScene" uid="uid://bkcv6hoslgkyn" path="res://scenes/rooms/meshes/props/reactor.blend" id="5_cq5sr"]
+[ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="5_ueo3t"]
+[ext_resource type="Script" uid="uid://bykwxkovlaqog" path="res://scripts/reps/reactor.gd" id="6_b1fcn"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_cq5sr"]
+height = 8.0
+radius = 8.0
+
+[node name="RoomReactor3d" type="Node3D"]
+
+[node name="roomwall" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
+
+[node name="roomwall2" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="roomwall5" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(1, 0, 7.351371e-08, 0, 1, 0, -7.351371e-08, 0, 1, -4, 0, -2)
+
+[node name="roomwall6" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(2.9802322e-08, 0, -1, 0, 1, 0, 1, 0, 2.9802322e-08, -2, 0, -4)
+
+[node name="roomwall7" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(2.9802322e-08, 0, -1, 0, 1, 0, 1, 0, 2.9802322e-08, 0, 0, -4)
+
+[node name="roomwall8" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(2.9802322e-08, 0, -1, 0, 1, 0, 1, 0, 2.9802322e-08, 2, 0, -4)
+
+[node name="roomwall10" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(-1, 0, 1.3909066e-08, 0, 1, 0, -1.3909066e-08, 0, -1, 4, 0, -4)
+
+[node name="roomwall11" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(-1, 0, 1.3909066e-08, 0, 1, 0, -1.3909066e-08, 0, -1, 4, 0, -2)
+
+[node name="roomwall12" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(-1, 0, 1.3909066e-08, 0, 1, 0, -1.3909066e-08, 0, -1, 4, 0, 0)
+
+[node name="roomwall13" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(-1, 0, 1.3909066e-08, 0, 1, 0, -1.3909066e-08, 0, -1, 4, 0, 2)
+
+[node name="roomwall14" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(5.7620454e-08, 0, 1, 0, 1, 0, -1, 0, 5.7620454e-08, 4, 0, 4)
+
+[node name="roomwall15" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(5.7620454e-08, 0, 1, 0, 1, 0, -1, 0, 5.7620454e-08, 0, 0, 4)
+
+[node name="roomwall17" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(5.7620454e-08, 0, 1, 0, 1, 0, -1, 0, 5.7620454e-08, 2, 0, 4)
+
+[node name="roomwall16" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(5.7620454e-08, 0, 1, 0, 1, 0, -1, 0, 5.7620454e-08, -2, 0, 4)
+
+[node name="roomwall3" parent="." instance=ExtResource("1_cq5sr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+
+[node name="simplefloor" parent="." instance=ExtResource("2_b1fcn")]
+
+[node name="simplefloor2" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="simplefloor3" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="simplefloor4" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="simplefloor5" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+
+[node name="simplefloor6" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+
+[node name="simplefloor7" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="simplefloor8" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="simplefloor9" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+
+[node name="simplefloor13" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
+
+[node name="simplefloor14" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
+
+[node name="simplefloor12" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
+
+[node name="simplefloor10" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+
+[node name="simplefloor11" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
+
+[node name="simplefloor15" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="simplefloor16" parent="." instance=ExtResource("2_b1fcn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+
+[node name="roomwall_door2" parent="." instance=ExtResource("4_6dfi5")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4, 0, -4)
+
+[node name="simpleceiling" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 4)
+
+[node name="simpleceiling2" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.8, 4)
+
+[node name="simpleceiling3" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.8, 2)
+
+[node name="simpleceiling4" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 2)
+
+[node name="simpleceiling5" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, 2)
+
+[node name="simpleceiling14" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.8, 2)
+
+[node name="simpleceiling15" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.8, 4)
+
+[node name="simpleceiling16" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, 4)
+
+[node name="simpleceiling6" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.8, 0)
+
+[node name="simpleceiling7" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, 0)
+
+[node name="simpleceiling8" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0)
+
+[node name="simpleceiling9" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.8, 0)
+
+[node name="simpleceiling10" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.8, -2)
+
+[node name="simpleceiling11" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -2)
+
+[node name="simpleceiling12" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, -2)
+
+[node name="simpleceiling13" parent="." instance=ExtResource("5_ueo3t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.8, -2)
+
+[node name="reactor" parent="." node_paths=PackedStringArray("detection_area") instance=ExtResource("5_cq5sr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+script = ExtResource("6_b1fcn")
+detection_area = NodePath("../Area3D")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5999999, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CylinderShape3D_cq5sr")
+
+[connection signal="body_entered" from="Area3D" to="reactor" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="reactor" method="_on_area_3d_body_exited"]

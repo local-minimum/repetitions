@@ -154,7 +154,7 @@ _caster = NodePath("../../PickAxCast")
 _player = NodePath("../..")
 
 [node name="pickax" parent="Toolbelt/Pickax" instance=ExtResource("3_2djwe")]
-transform = Transform3D(0.9785376, 0, -0.20606756, 0.04792363, 0.9725813, 0.22757149, 0.20041743, -0.23256277, 0.9517077, 0, 0, 0.12537825)
+transform = Transform3D(0.97853756, 0, -0.20606756, 0.04792363, 0.9725813, 0.22757149, 0.20041743, -0.23256277, 0.9517077, 0, 0, 0.12537825)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Toolbelt/Pickax"]
 libraries = {
