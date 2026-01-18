@@ -28,20 +28,16 @@ func _exit_tree() -> void:
 func _ready() -> void:
     player.cinematic = true
 
-func _handle_use_pickax(target: Node3D, hack_direction: CardinalDirections.CardinalDirection, point: Vector3) -> void:
+func _handle_use_pickax(target: Node3D, _hack_direction: CardinalDirections.CardinalDirection, point: Vector3) -> void:
     while !target.has_meta(_COORDINATES_META):
-        print_debug("%s has no coordinates" % target.name)
         target = target.get_parent_node_3d()
         if target == null:
-            print_debug("Was not dirt!")
             return
     
-    print_debug("Found potential dirt in %s" % target)
-    
     var coords: Vector3i = target.get_meta(_COORDINATES_META)
-    if !dirts.has(coords) || dirts[coords] != target || !CardinalDirections.is_planar_cardinal(hack_direction):
-        print_debug("%s not in known dirts %s or wrong dirt %s != %s, direction %s not planar cardinal" % [
-            coords, !dirts.has(coords), dirts[coords], target, CardinalDirections.name(hack_direction),
+    if !dirts.has(coords) || dirts[coords] != target:
+        push_error("%s not in known dirts %s or wrong dirt %s != %s" % [
+            coords, !dirts.has(coords), dirts[coords], target,
         ])
         return
     
@@ -61,17 +57,24 @@ func _handle_use_pickax(target: Node3D, hack_direction: CardinalDirections.Cardi
     var closest_idx: int = -1
     var closest_dist_sq: float = -1
 
-    print_debug("Finding closest side to %s from %s" % [point, side_points])
     for idx: int in range(4):
         var d_sq: float = point.distance_squared_to(side_points[idx])
         if closest_idx < 0 || d_sq < closest_dist_sq:
             closest_idx = idx
             closest_dist_sq = d_sq
-    
-    print_debug("Closest was idx %s which is %s" % [closest_idx, CardinalDirections.name(side_directions[closest_idx])])
-    var digs: Array[CardinalDirections.CardinalDirection] = []
-    var digout_direction: CardinalDirections.CardinalDirection = CardinalDirections.invert(hack_direction) if closest_idx < 0 else side_directions[closest_idx]
-    
+
+    if closest_idx < 0:
+        push_error("Failed to figure out side to dig out!")
+        return
+        
+    var digout_direction: CardinalDirections.CardinalDirection = side_directions[closest_idx]
+    _digout_coords(coords, digout_direction, target)
+    var neighbour: Vector3i = CardinalDirections.translate(coords, digout_direction)
+    if dirts.has(neighbour) && (!dirt_digouts.has(neighbour) || !dirt_digouts[neighbour].has(CardinalDirections.invert(digout_direction))):
+        _digout_coords(neighbour, CardinalDirections.invert(digout_direction), dirts[neighbour])
+
+func _digout_coords(coords: Vector3i, digout_direction: CardinalDirections.CardinalDirection, target: Node3D) -> void:
+    var digs: Array[CardinalDirections.CardinalDirection] = []    
     if !dirt_digouts.has(coords):
         digs = [digout_direction]
         dirt_digouts[coords] = digs
