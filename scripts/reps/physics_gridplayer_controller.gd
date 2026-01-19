@@ -276,3 +276,12 @@ func _attempt_turn(angle: float) -> void:
     var tween_func: Callable = QuaternionUtils.create_tween_rotation_method(self)
     _rotation_tween.tween_method(tween_func, global_transform.basis.get_rotation_quaternion(), target_global_rotation, _rotation_duration)
     @warning_ignore_restore("return_value_discarded")
+
+static func find_player_in_tree(body: Node3D) -> PhysicsGridPlayerController:
+    while body != null:
+        if body is PhysicsGridPlayerController:
+            return body as PhysicsGridPlayerController
+    
+        body = body.get_parent_node_3d()
+        
+    return null
