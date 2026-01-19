@@ -6,5 +6,5 @@
 script = ExtResource("1_fero0")
 _blueprint_room_path = "res://scenes/rooms/room_with_backroom.tscn"
 _3d_room_path = "res://scenes/rooms/room_with_backroom_3d.tscn"
-draft_probability_class = 0
+draft_probability_class = 3
 metadata/_custom_type_script = "uid://dgfi04hnjvm2r"
