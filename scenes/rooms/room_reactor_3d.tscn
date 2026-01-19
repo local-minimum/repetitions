@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bgtg6k43ekxbg"]
+[gd_scene load_steps=9 format=3 uid="uid://bgtg6k43ekxbg"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_cq5sr"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_b1fcn"]
@@ -10,6 +10,10 @@
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_cq5sr"]
 height = 8.0
 radius = 8.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_b1fcn"]
+height = 9.0
+radius = 9.5
 
 [node name="RoomReactor3d" type="Node3D"]
 
@@ -159,13 +163,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.8, -2)
 [node name="reactor" parent="." node_paths=PackedStringArray("detection_area") instance=ExtResource("5_cq5sr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
 script = ExtResource("6_b1fcn")
-detection_area = NodePath("../Area3D")
+detection_area = NodePath("../Entry Area")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="Entry Area" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5999999, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Entry Area"]
 shape = SubResource("CylinderShape3D_cq5sr")
 
-[connection signal="body_entered" from="Area3D" to="reactor" method="_on_area_3d_body_entered"]
-[connection signal="body_exited" from="Area3D" to="reactor" method="_on_area_3d_body_exited"]
+[node name="Exit Area" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5999999, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Exit Area"]
+shape = SubResource("CylinderShape3D_b1fcn")
+
+[connection signal="body_entered" from="Entry Area" to="reactor" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Exit Area" to="reactor" method="_on_area_3d_body_exited"]

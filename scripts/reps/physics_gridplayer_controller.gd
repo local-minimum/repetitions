@@ -76,7 +76,9 @@ var gridless: bool:
                 _cam_slide_tween.tween_property(_camera, "fov", _gridded_cam_fov, _camera_transition_time)
                 @warning_ignore_restore("return_value_discarded")
                 # Force alignment with grid
-                _attempt_turn(0.0) 
+                _attempt_translation(Movement.MovementType.CENTER, null, Vector3.ZERO)
+                _attempt_turn(0.0)
+                                
         gridless = value
 
 func _ready() -> void:
@@ -221,7 +223,7 @@ func _attempt_translation(movement: Movement.MovementType, caster: ShapeCast3D, 
     if _translation_tween && _translation_tween.is_running() || _rotation_tween && _rotation_tween.is_running():
         return
         
-    if caster.is_colliding():
+    if caster != null && caster.is_colliding():
         _refuse_movement(movement, caster, direction)
         return
         
