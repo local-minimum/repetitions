@@ -242,6 +242,12 @@ func _handle_translation_end(movement: Movement.MovementType) -> void:
         _translation_stack.erase(movement)
         
 func _refuse_movement(movement: Movement.MovementType, caster: ShapeCast3D, direction: Vector3) -> void:
+    print_debug("Refusing movement %s because %s hits %s of %s" % [
+        Movement.name(movement),
+        caster,
+        caster.get_collider(0) if caster else null,
+        (caster.get_collider(0) as Node3D).get_parent_node_3d(),
+    ])
     var target: Vector3 = builder.get_floor_center(global_position, (to_global(direction) - global_position).normalized())
     var pt: Vector3 = caster.get_collision_point(0)
     

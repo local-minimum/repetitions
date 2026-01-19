@@ -32,11 +32,11 @@ var state: State:
             state_history.remove_at(0)
         state_history.append(value)
         _sync()
-        print_debug("Updating state history to %s" % [state_history.map(func (s: State) -> String: return State.find_key(s))])
-        print_stack()
+        # print_debug("Updating state history to %s" % [state_history.map(func (s: State) -> String: return State.find_key(s))])
+        # print_stack()
         
 func _ready() -> void:
-    print_debug("State is %s" % State.find_key(state))
+    # print_debug("State is %s" % State.find_key(state))
     _sync()
     
 func _sync() -> void:

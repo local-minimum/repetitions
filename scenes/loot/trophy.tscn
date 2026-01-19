@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://dltymdyks2yxi"]
+
+[ext_resource type="PackedScene" uid="uid://dm8ajs68le6fh" path="res://scenes/rooms/meshes/props/trophy.blend" id="1_ju1wj"]
+[ext_resource type="Script" uid="uid://3jm6iguafd34" path="res://scripts/reps/tools/tool.gd" id="2_bleh3"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bn4dj"]
+height = 0.9182129
+radius = 0.12207031
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ju1wj"]
+size = Vector3(0.6251221, 0.27294922, 0.082458496)
+
+[node name="trophy" node_paths=PackedStringArray("_body") instance=ExtResource("1_ju1wj")]
+script = ExtResource("2_bleh3")
+_type = 2
+_pickup_distance_sq = 2.6
+_body = NodePath("StaticBody3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4683838, 0)
+shape = SubResource("CylinderShape3D_bn4dj")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.006286621, 0.7918364, -0.0030212402)
+shape = SubResource("BoxShape3D_ju1wj")

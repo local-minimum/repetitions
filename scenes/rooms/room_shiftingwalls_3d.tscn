@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://c2jmhy2eyq361"]
+[gd_scene load_steps=11 format=3 uid="uid://c2jmhy2eyq361"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_joiea"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_fl883"]
+[ext_resource type="PackedScene" uid="uid://dltymdyks2yxi" path="res://scenes/loot/trophy.tscn" id="3_06beb"]
 [ext_resource type="PackedScene" uid="uid://dnallaxvdf31p" path="res://scenes/rooms/meshes/roomwall_cornercap.blend" id="3_v8raw"]
 [ext_resource type="PackedScene" uid="uid://b7lslbxgj6psm" path="res://scenes/rooms/meshes/roomwall_door.blend" id="4_ij7n1"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="5_gm40r"]
@@ -31,6 +32,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -6)
 
 [node name="crossroads west wall" parent="." instance=ExtResource("1_joiea")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="trophy2" parent="crossroads west wall" instance=ExtResource("3_06beb")]
+transform = Transform3D(0.26057187, 0, 0.96545446, 0, 1, 0, -0.96545446, 0, 0.26057187, -0.2356236, 5.9604645e-08, -0.44469738)
+_pickup_distance_sq = 1.75
 
 [node name="roomwall23" parent="." instance=ExtResource("1_joiea")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
@@ -83,6 +88,9 @@ transform = Transform3D(-1, 0, 1.3909066e-08, 0, 1, 0, -1.3909066e-08, 0, -1, 6,
 [node name="crossroads east wall" parent="." instance=ExtResource("1_joiea")]
 transform = Transform3D(-1, 0, 1.3909066e-08, 0, 1, 0, -1.3909066e-08, 0, -1, 2, 0, -8)
 
+[node name="trophy2" parent="crossroads east wall" instance=ExtResource("3_06beb")]
+transform = Transform3D(0.41483626, 0, 0.9098962, 0, 1, 0, -0.9098962, 0, 0.41483626, -0.11635077, 0, -0.48228455)
+
 [node name="roomwall11" parent="." instance=ExtResource("1_joiea")]
 transform = Transform3D(-1, 0, 1.3909066e-08, 0, 1, 0, -1.3909066e-08, 0, -1, 6, 0, -2)
 
@@ -100,6 +108,9 @@ transform = Transform3D(5.7620454e-08, 0, 1, 0, 1, 0, -1, 0, 5.7620454e-08, 4, 0
 
 [node name="crossroads south wall" parent="." instance=ExtResource("1_joiea")]
 transform = Transform3D(5.7620454e-08, 0, 1, 0, 1, 0, -1, 0, 5.7620454e-08, 2, 0, -6)
+
+[node name="trophy2" parent="crossroads south wall" instance=ExtResource("3_06beb")]
+transform = Transform3D(0.0025655758, 0, 0.9999967, 0, 1, 0, -0.9999967, 0, 0.0025655758, -0.20856333, 0, -0.695626)
 
 [node name="roomwall33" parent="." instance=ExtResource("1_joiea")]
 transform = Transform3D(5.7620454e-08, 0, 1, 0, 1, 0, -1, 0, 5.7620454e-08, 6, 0, 0)
@@ -192,6 +203,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="simplefloor26/Area Goal"]
 shape = SubResource("BoxShape3D_v8raw")
+
+[node name="trophy2" parent="simplefloor26" instance=ExtResource("3_06beb")]
+transform = Transform3D(0.887992, 0, -0.45985883, 0, 1, 0, 0.45985883, 0, 0.887992, 1.3303225, -1.1920929e-07, -1.374094)
 
 [node name="simplefloor21" parent="." instance=ExtResource("2_fl883")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)

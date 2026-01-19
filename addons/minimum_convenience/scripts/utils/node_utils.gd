@@ -59,7 +59,7 @@ static func disable_physics_in_children(root: Node3D) -> void:
         var shape: CollisionShape3D = root
         shape.disabled = true
         
-    for shape: CollisionShape3D in root.find_children("", "CollsionShape3D"):
+    for shape: CollisionShape3D in root.find_children("", "CollisionShape3D"):
         shape.disabled = true
 
     for body: PhysicsBody3D in root.find_children("", "PhysicsBody3D"):
@@ -73,7 +73,7 @@ static func enable_physics_in_children(root: Node3D, mode: Node.ProcessMode = No
         var shape: CollisionShape3D = root
         shape.disabled = false
         
-    for shape: CollisionShape3D in root.find_children("", "CollsionShape3D"):
+    for shape: CollisionShape3D in root.find_children("", "CollisionShape3D"):
         shape.disabled = false
 
     for body: PhysicsBody3D in root.find_children("", "PhysicsBody3D"):

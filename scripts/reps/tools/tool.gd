@@ -1,6 +1,6 @@
 extends Node3D
 class_name Tool
-enum ToolType { NONE, PICKAX }
+enum ToolType { NONE, PICKAX, TROPHY }
 
 @export var _type: ToolType = ToolType.NONE
 @export var _pickup_distance_sq: float = 3.0
@@ -42,6 +42,11 @@ func _handle_input_event(camera: Node, event: InputEvent, event_position: Vector
         var cam: Camera3D = camera
         if cam.global_position.distance_squared_to(event_position) < _pickup_distance_sq:
             can_pickup = true
+        # else:
+            # print_debug("Cannot pickup because %s >= %s" % [
+            #    cam.global_position.distance_squared_to(event_position),
+            #    _pickup_distance_sq,
+            #])
     
     if event is InputEventMouseButton:
         var mouse_btn_evt: InputEventMouseButton = event
