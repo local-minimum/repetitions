@@ -93,9 +93,11 @@ func _digout_coords(coords: Vector3i, digout_direction: CardinalDirections.Cardi
         print_debug("Didn't get any new dirt!")
     
 func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) -> void:
-    var _used_tiles: Array[Vector2i]
+    var used_tiles: Array[Vector2i]
     var grid: Grid2D = null
     var first_room: bool = true
+    var exposed_dirt: bool = false
+    
     for room: BlueprintRoom in rooms:
         if room.option == null:
             push_error("Bluepint Room %s lacks an option, no clue what room to place" % room)
@@ -103,7 +105,10 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
         
         if grid == null:
             grid = room.grid
-            
+        
+        if !exposed_dirt && room.has_unused_door():
+            exposed_dirt = true
+                    
         var room_3d: Node3D = room.option.instantiate_3d_room()
         placed_rooms.append(room_3d)
         room_3d.set_meta(_BLUEPRINT_META, room)
@@ -114,7 +119,7 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
             room.get_rotation_direction(),
         ).get_euler()
         
-        _used_tiles.append_array(room.get_global_used_tiles())
+        used_tiles.append_array(room.get_global_used_tiles())
         
         var origin2d: Vector2i = room.get_origin()
         var origin: Vector3i = Vector3i(origin2d.x, elevation, origin2d.y)
@@ -128,21 +133,24 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
             player.builder = self
             first_room = false
     
+    if exposed_dirt:
+        _populate_level_with_dirt(grid, elevation, used_tiles)
+                    
+                        
+    player.cinematic = false
+
+func _populate_level_with_dirt(grid: Grid2D, elevation: int, used_tiles: Array[Vector2i]) -> void:
     if grid != null:
         for x: int in range(grid.extent.position.x, grid.extent.end.x):
             for y: int in range(grid.extent.position.y, grid.extent.end.y):
                 var coords: Vector2i = Vector2i(x, y)
-                if _used_tiles.has(coords):
+                if used_tiles.has(coords):
                     continue
                     
                 var coords3d: Vector3i = Vector3i(coords.x, elevation, coords.y)
                 if _place_dirt(coords3d) == null:
                     push_warning("%s: Failed to place dirt at %s" % [name, coords3d])
                     
-                        
-    player.cinematic = false
-    # player.gridless = true
-
 func _get_origin_corner(coords: Vector3i) -> Vector3:
     return Vector3(grid_size.x * coords.x, grid_size.y * coords.y, grid_size.z * coords.z)
     

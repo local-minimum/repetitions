@@ -48,7 +48,21 @@ var tweening: bool:
 var valid_doors: Array[DoorData]:
     get():
         return _door_data.filter(func (ddata: DoorData) -> bool: return ddata.valid)
-         
+
+func has_unused_door() -> bool:
+    var doors_local: Array[Vector2i] = door_local_coordinates
+    var doors_global: Array[Vector2i] = draggable.translate_coords_array_to_global(self, doors_local)
+    var idx: int = 0
+    for lcoords: Vector2i in doors_local:
+        var gcoords: Vector2i = doors_global[idx]
+        var atlas: Vector2i = doors.get_cell_atlas_coords(lcoords)
+        for dir: CardinalDirections.CardinalDirection in get_global_door_directions(atlas):
+            if _door_data.any(func (ddata: DoorData) -> bool: return ddata.global_coordinates == gcoords && ddata.global_direction == dir && ddata.room == self):
+                continue
+            return true
+        idx += 1
+    return false
+    
 ## Local coordinates of doors leading to nothing (not counting into walls)
 var door_local_coordinates: Array[Vector2i]:
     get():      
