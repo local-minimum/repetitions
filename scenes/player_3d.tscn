@@ -121,24 +121,24 @@ current = true
 near = 0.4
 
 [node name="Cast Forward" type="ShapeCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.4)
 shape = ExtResource("1_52vux")
-target_position = Vector3(0, 0, -2)
+target_position = Vector3(0, 0, -1.4)
 
 [node name="Cast Left" type="ShapeCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 1.2, 0)
 shape = ExtResource("1_52vux")
-target_position = Vector3(-2, 0, 0)
+target_position = Vector3(-1.4, 0, 0)
 
 [node name="Cast Backward" type="ShapeCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0.4)
 shape = ExtResource("1_52vux")
-target_position = Vector3(0, 0, 2)
+target_position = Vector3(0, 0, 1.4)
 
 [node name="Cast Right" type="ShapeCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 1.2, 0)
 shape = ExtResource("1_52vux")
-target_position = Vector3(2, 0, 0)
+target_position = Vector3(1.4, 0, 0)
 
 [node name="Toolbelt" type="Node3D" parent="." node_paths=PackedStringArray("_tool_lookup")]
 script = ExtResource("3_4jfb6")
@@ -154,7 +154,7 @@ _caster = NodePath("../../PickAxCast")
 _player = NodePath("../..")
 
 [node name="pickax" parent="Toolbelt/Pickax" instance=ExtResource("3_2djwe")]
-transform = Transform3D(0.97853756, 0, -0.20606756, 0.04792363, 0.9725813, 0.22757149, 0.20041743, -0.23256277, 0.9517077, 0, 0, 0.12537825)
+transform = Transform3D(0.9785375, 0, -0.20606756, 0.047923625, 0.9725813, 0.22757149, 0.20041741, -0.23256277, 0.9517077, 0, 0, 0.12537825)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Toolbelt/Pickax"]
 libraries = {
@@ -162,9 +162,9 @@ libraries = {
 }
 
 [node name="PickAxCast" type="ShapeCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.013127, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.013127, -0.6)
 shape = SubResource("SphereShape3D_yevqy")
-target_position = Vector3(0, -0.4, -3)
+target_position = Vector3(0, -0.4, -2.5)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1028626, 0.86164474)

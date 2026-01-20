@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cjduvtbggfby1"]
+[gd_scene load_steps=8 format=3 uid="uid://cjduvtbggfby1"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_mbk1p"]
 [ext_resource type="PackedScene" uid="uid://b7lslbxgj6psm" path="res://scenes/rooms/meshes/roomwall_door.blend" id="2_nr7pi"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="4_2lquy"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="5_nr7pi"]
 [ext_resource type="PackedScene" uid="uid://cg0gqdy2q4vqx" path="res://scenes/loot/loot_pickax.tscn" id="6_w6a1i"]
+[ext_resource type="PackedScene" uid="uid://bhppd8cxmo4ig" path="res://scenes/dugneonbuilderterminal.tscn" id="7_2lquy"]
 
 [node name="StartRoom3d" type="Node3D"]
 
@@ -265,3 +266,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.8, 0)
 
 [node name="pickax" parent="." instance=ExtResource("6_w6a1i")]
 transform = Transform3D(0.9401144, 0.22450241, -0.2564831, 0.25935408, -0.95939773, 0.11086659, -0.22117953, -0.17074719, -0.96016926, -3.730555, 0.33105227, 3.4416356)
+
+[node name="dugneonbuilderterminal2" parent="." instance=ExtResource("7_2lquy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)

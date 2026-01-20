@@ -22,12 +22,16 @@ enum PlannerMode { PICK_ONE, PLACE_ALL }
 var _drafted_rooms: int = 0
 var _options: Dictionary[BlueprintRoom, DraftOption]
 
+# TODO: Show planner should
+# Sync UI with its registered rooms
+# Become visible
+# Draw new rooms if needed
+
+# TODO: Some event if there's no way to place more rooms
+
 func _ready() -> void:
-    _seed_dungeon()
-    complete_planning()
-    
-    # _draw_options()
-    # __SignalBus.on_update_planning.emit(self, max_draft_rooms - _drafted_rooms)
+    if _seed_dungeon():
+        complete_planning()
          
 func _enter_tree() -> void:
     if __SignalBus.on_blueprint_room_move_start.connect(_handle_room_move_start) != OK:
@@ -38,14 +42,43 @@ func _enter_tree() -> void:
         
     if __SignalBus.on_blueprint_room_dropped.connect(_handle_room_dropped) != OK:
         push_error("Failed to connect room dropped")
+    
+    if __SignalBus.on_complete_dungeon_plan.connect(_handle_complete_dungeon_plan) != OK:
+        push_error("Failed to connect complete dungeon plan")
+        
+    if __SignalBus.on_ready_planner.connect(_handle_ready_planner) != OK:
+        push_error("Failed to connect ready player")
         
 func _exit_tree() -> void:
     __SignalBus.on_blueprint_room_move_start.disconnect(_handle_room_move_start)
     __SignalBus.on_blueprint_room_position_updated.disconnect(_handle_room_move)
     __SignalBus.on_blueprint_room_dropped.disconnect(_handle_room_dropped)
+    __SignalBus.on_complete_dungeon_plan.disconnect(_handle_complete_dungeon_plan)
+    __SignalBus.on_ready_planner.disconnect(_handle_ready_planner)
 
+func _handle_ready_planner(player: PhysicsGridPlayerController, d_elevation: int) -> void:
+    if elevation != d_elevation:
+        return
+  
+    if player != null:
+        player.cinematic = true
+    
+    get_canvas_layer_node().show()
+    show()
+    _draw_options()
+    
+func _handle_complete_dungeon_plan(d_elevation: int, d_rooms: Array[BlueprintRoom]) -> void:
+    if elevation != d_elevation || rooms == d_rooms:
+        return
+    
+    for room: BlueprintRoom in rooms:
+        if !d_rooms.has(room):
+            room.queue_free()
+            
+    rooms = d_rooms
+    
 func _draw_options() -> void:
-    for room_option: DraftOption in pool.draft(draft_count):
+    for room_option: DraftOption in pool.draft(draft_count - options.size()):
         var room: BlueprintRoom = room_option.instantiate_blueprint_room()
         _options[room] = room_option
         rooms_root.add_child(room)
@@ -53,10 +86,13 @@ func _draw_options() -> void:
         
     options.assign_grid(grid)
 
-func _seed_dungeon() -> void:
+func _seed_dungeon() -> bool:
     if seed_room == null:
-        return
-        
+        return false
+    
+    if rooms.any(func (br: BlueprintRoom) -> bool: return br.option == seed_room):
+        return false
+            
     var direction: CardinalDirections.CardinalDirection = (
         seed_direction if CardinalDirections.is_planar_cardinal(seed_direction) else CardinalDirections.ALL_PLANAR_DIRECTIONS.pick_random()
     )
@@ -71,7 +107,8 @@ func _seed_dungeon() -> void:
     
     rooms.append(blueprint)
     rooms_root.add_child(blueprint)
-         
+    return true
+    
 func _handle_room_move_start(room: BlueprintRoom) -> void:
     room.modulate = Color.GRAY
     options.remove_room(room)
@@ -212,5 +249,6 @@ func _draw() -> void:
                 draw_rect(cell_rect, Color.DEEP_PINK, false, 2)
                 
 func complete_planning() -> void:
+    hide()
     get_canvas_layer_node().hide()
     __SignalBus.on_complete_dungeon_plan.emit(elevation, rooms)

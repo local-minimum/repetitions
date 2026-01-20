@@ -6,6 +6,9 @@ class_name PlannerOptions
 @export var _debug: bool
 @export var _noease_dist_sq: float = 4
 
+func size() -> int:
+    return _rooms.size()
+    
 func is_empty() -> bool:
     return _rooms.is_empty()
     

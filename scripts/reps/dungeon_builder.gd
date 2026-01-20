@@ -14,6 +14,7 @@ var _dirt_offset: Vector3 = Vector3.BACK
 
 var dirts: Dictionary[Vector3i, Node3D]
 var dirt_digouts: Dictionary[Vector3i, Array]
+var used_tiles: Array[Vector3i]
 
 func _enter_tree() -> void:
     if __SignalBus.on_complete_dungeon_plan.connect(_handle_complete_dungeon_plan) != OK:
@@ -91,11 +92,11 @@ func _digout_coords(coords: Vector3i, digout_direction: CardinalDirections.Cardi
         dirts[coords] = new_dirt
     else:
         print_debug("Didn't get any new dirt!")
+
+var first_room: bool = true
     
 func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) -> void:
-    var used_tiles: Array[Vector2i]
     var grid: Grid2D = null
-    var first_room: bool = true
     var exposed_dirt: bool = false
     
     for room: BlueprintRoom in rooms:
@@ -103,6 +104,9 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
             push_error("Bluepint Room %s lacks an option, no clue what room to place" % room)
             continue
         
+        if placed_rooms.any(func (pr: Node3D) -> bool: return pr.get_meta(_BLUEPRINT_META) == room):
+            continue 
+            
         if grid == null:
             grid = room.grid
         
@@ -119,7 +123,26 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
             room.get_rotation_direction(),
         ).get_euler()
         
-        used_tiles.append_array(room.get_global_used_tiles())
+        var room_tiles: Array[Vector3i] = Array(
+            room.get_global_used_tiles().map(func (v2: Vector2i) -> Vector3i: return Vector3i(v2.x, elevation, v2.y)),
+            TYPE_VECTOR3I,
+            "",
+            null,
+        )
+        
+        for room_tile: Vector3i in room_tiles:
+            if dirts.has(room_tile):
+                dirts[room_tile].queue_free()
+                if !dirts.erase(room_tile):
+                    push_warning("Couldn't fully clear dirt")
+                
+                if dirt_digouts.erase(room_tile):
+                    push_warning("Couldn't fully clear dirt digout data")
+                
+                # We'll readd it below, just dont want dupes
+                used_tiles.erase(room_tile)
+                    
+        used_tiles.append_array(room_tiles)
         
         var origin2d: Vector2i = room.get_origin()
         var origin: Vector3i = Vector3i(origin2d.x, elevation, origin2d.y)
@@ -134,26 +157,32 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
             first_room = false
     
     if exposed_dirt:
-        _populate_level_with_dirt(grid, elevation, used_tiles)
+        _populate_level_with_dirt(grid, elevation)
                     
                         
     player.cinematic = false
 
-func _populate_level_with_dirt(grid: Grid2D, elevation: int, used_tiles: Array[Vector2i]) -> void:
+func _populate_level_with_dirt(grid: Grid2D, elevation: int) -> void:
     if grid != null:
         for x: int in range(grid.extent.position.x, grid.extent.end.x):
             for y: int in range(grid.extent.position.y, grid.extent.end.y):
-                var coords: Vector2i = Vector2i(x, y)
-                if used_tiles.has(coords):
+                var coords3d: Vector3i = Vector3i(x, elevation,y)                
+                if used_tiles.has(coords3d):
                     continue
                     
-                var coords3d: Vector3i = Vector3i(coords.x, elevation, coords.y)
+
                 if _place_dirt(coords3d) == null:
                     push_warning("%s: Failed to place dirt at %s" % [name, coords3d])
+                else:
+                    used_tiles.append(coords3d)
                     
 func _get_origin_corner(coords: Vector3i) -> Vector3:
     return Vector3(grid_size.x * coords.x, grid_size.y * coords.y, grid_size.z * coords.z)
     
+func get_coordinates(global_pos: Vector3) -> Vector3i:
+    var local: Vector3 = to_local(global_pos)
+    return Vector3i(floori(local.x / grid_size.x), floori(local.y / grid_size.y), floori(local.z / grid_size.z))
+           
 func _place_dirt(coords: Vector3i, digs: Array[CardinalDirections.CardinalDirection] = []) -> Node3D:
     var pos: Vector3 = _get_origin_corner(coords)
     var d: Node3D = dirt_mag.place_block_at(self, pos + _dirt_offset * grid_size, grid_size, digs)
@@ -187,3 +216,12 @@ func get_cardial_rotation(global_quat: Quaternion) -> Quaternion:
     ]
     quats.sort_custom(func (a: Quaternion, b: Quaternion) -> bool: return a.angle_to(global_quat) < b.angle_to(global_quat))
     return quats[0]
+
+static func find_builder_in_tree(body: Node3D) -> DungeonBuilder:
+    while body != null:
+        if body is DungeonBuilder:
+            return body as DungeonBuilder
+    
+        body = body.get_parent_node_3d()
+        
+    return null

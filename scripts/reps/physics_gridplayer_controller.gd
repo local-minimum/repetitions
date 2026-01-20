@@ -90,6 +90,8 @@ func _ready() -> void:
     
     _gridded_cam_fov = _camera.fov
     _gridded_cam_near = _camera.near
+    
+    __SignalBus.on_physics_player_ready.emit(self)
               
 func _input(event: InputEvent) -> void:
     var handled: bool = true

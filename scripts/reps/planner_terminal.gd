@@ -1,10 +1,7 @@
 extends Node3D
-class_name Tool
-enum ToolType { NONE, PICKAX, TROPHY }
+class_name PlannerTerminal
 
-@export var _type: ToolType = ToolType.NONE
 @export var _pickup_distance_sq: float = 3.0
-
 @export var _body: CollisionObject3D:
     get():
         if _body == null:
@@ -12,7 +9,9 @@ enum ToolType { NONE, PICKAX, TROPHY }
                 _body = body
                 break
         return _body
-
+@export var _interaction_direction_reference: Node3D
+@export var _interaction_angle_threshold: float = 0.5
+@export var _plans_for_relative_elevation: int = 0
 var _player: PhysicsGridPlayerController
 
 func _enter_tree() -> void:
@@ -33,7 +32,7 @@ func _exit_tree() -> void:
     
 func _handle_player_ready(player: PhysicsGridPlayerController) -> void:
     _player = player
-            
+    
 func _handle_mouse_entered() -> void:
     if validate_player_position():
         InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
@@ -48,21 +47,23 @@ func validate_player_position(camera: Node = null) -> bool:
     if camera is Camera3D:
         var cam: Camera3D = camera
         if cam.global_position.distance_squared_to(global_position) < _pickup_distance_sq:
-            return true
+            var d: Vector3 = (_interaction_direction_reference.global_position - _body.global_position).normalized()
+            var cam_forward: Vector3 = -cam.global_basis.z
+            
+            print_debug("%s vs %s -> %s < %s" % [
+                cam_forward, d, cam_forward.dot(d), _interaction_angle_threshold
+            ])
+            return cam_forward.dot(d) > _interaction_angle_threshold      
+            
     return false
                    
 func _handle_input_event(camera: Node, event: InputEvent, _event_position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
     if event.is_echo():
         return
-        
-    var can_pickup: bool = validate_player_position(camera)
-    
+
     if event is InputEventMouseButton:
         var mouse_btn_evt: InputEventMouseButton = event
-        if can_pickup && mouse_btn_evt.pressed && mouse_btn_evt.button_index == MOUSE_BUTTON_LEFT:
-            __SignalBus.on_pickup_tool.emit(_type)
-            InputCursorHelper.remove_node(self)
-            
-            get_viewport().set_input_as_handled()
-            
-            queue_free()
+        if validate_player_position(camera) && mouse_btn_evt.pressed && mouse_btn_evt.button_index == MOUSE_BUTTON_LEFT:
+            var builder: DungeonBuilder = DungeonBuilder.find_builder_in_tree(self)
+            var coords: Vector3i = builder.get_coordinates(global_position)
+            __SignalBus.on_ready_planner.emit(_player, coords.y + _plans_for_relative_elevation)
