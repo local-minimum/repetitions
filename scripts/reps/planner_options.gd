@@ -73,6 +73,18 @@ func add_room(room: BlueprintRoom) -> void:
         _rooms.append(room)
     _sync_placements()
 
+func discard_rooms() -> void:
+    var tween: Tween = create_tween()
+    tween = tween.set_parallel(true)
+    var viewport_height: float = get_viewport_rect().size.y
+    for room: BlueprintRoom in _rooms:
+        var target: Vector2 = room.global_position + Vector2.DOWN * viewport_height
+        @warning_ignore_start("return_value_discarded")
+        tween.tween_property(room, "global_position", target, 0.5)
+        @warning_ignore_restore("return_value_discarded")        
+    _last_removed_idx = 0    
+    _rooms.clear()
+    
 func assign_grid(grid: Grid2D) -> void:
     for room: BlueprintRoom in _rooms:
         room.grid = grid

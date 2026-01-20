@@ -147,6 +147,10 @@ blueprint_rotate_cw={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://resources/ui.en.translation", "res://resources/ui.sv.translation")
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

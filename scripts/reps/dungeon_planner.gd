@@ -14,12 +14,21 @@ var rooms: Array[BlueprintRoom]
 @export var seed_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NORTH
 @export var elevation: int = 0
 
+@export var max_draft_rooms: int = 4
+
+enum PlannerMode { PICK_ONE, PLACE_ALL }
+@export var mode: PlannerMode = PlannerMode.PICK_ONE
+ 
+var _drafted_rooms: int = 0
 var _options: Dictionary[BlueprintRoom, DraftOption]
 
 func _ready() -> void:
-    _seed_dungeon()  
-    _draw_options()
-     
+    _seed_dungeon()
+    complete_planning()
+    
+    # _draw_options()
+    # __SignalBus.on_update_planning.emit(self, max_draft_rooms - _drafted_rooms)
+         
 func _enter_tree() -> void:
     if __SignalBus.on_blueprint_room_move_start.connect(_handle_room_move_start) != OK:
         push_error("Failed to connect room move start")
@@ -92,13 +101,24 @@ func _handle_room_dropped(room: BlueprintRoom, _origin: Vector2, _origin_angle: 
             room.option = _options[room]
             if !_options.erase(room):
                 pass
-        
-        if options.is_empty():
+           
+        if mode == PlannerMode.PICK_ONE:
+            options.discard_rooms()
+
+        _drafted_rooms += 1
+        __SignalBus.on_update_planning.emit(self, max_draft_rooms - _drafted_rooms)
+            
+        if options.is_empty() && _drafted_rooms < draft_count:
             _draw_options()
+        
+        if _drafted_rooms >= draft_count:
+            await get_tree().create_timer(0.7).timeout
+            complete_planning()
+            
     else:
         room.modulate = Color.WHITE
         options.add_room(room)
-
+    
 func _tween_return(room: BlueprintRoom, origin: Vector2, origin_angle: float) -> void:
         # print_debug("Invalid drop location for %s" % room)
         room.tweening = true
@@ -191,3 +211,6 @@ func _draw() -> void:
                 cell_rect = RectUtils.translate_local(cell_rect, grid, self)
                 draw_rect(cell_rect, Color.DEEP_PINK, false, 2)
                 
+func complete_planning() -> void:
+    get_canvas_layer_node().hide()
+    __SignalBus.on_complete_dungeon_plan.emit(elevation, rooms)

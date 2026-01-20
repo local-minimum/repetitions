@@ -19,9 +19,9 @@ grid_size = Vector3(2, 3, 2)
 player = NodePath("../Player3d")
 dirt_mag = NodePath("../DirtMagazine")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("planner")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("counter_label")]
 script = ExtResource("1_c4wp1")
-planner = NodePath("Dungeon Planner")
+counter_label = NodePath("MarginContainer/Countdown")
 
 [node name="Backdrop" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 15
@@ -49,6 +49,13 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "DONE"
+
+[node name="Countdown" type="Label" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Remaining: 4"
+horizontal_alignment = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fpimf")
