@@ -20,13 +20,6 @@ enum PlannerMode { PICK_ONE, PLACE_ALL }
 var _allowance: int = 0
 var _options: Dictionary[BlueprintRoom, DraftOption]
 
-# TODO: Show planner should
-# Sync UI with its registered rooms
-# Become visible
-# Draw new rooms if needed
-
-# TODO: Some event if there's no way to place more rooms
-
 func _ready() -> void:
     if _seed_dungeon():
         complete_planning()

@@ -91,7 +91,7 @@ var contained_in_grid: bool:
         if grid != null && grid.is_inside_grid(global_position):
             var r: Rect2i = outline.get_used_rect()
             var origin: Vector2i = grid.get_closest_coordinates(global_position)
-            # TODO: This assumes equal grid size...
+            # TODO: This assumes equal grid size... Issue #5
             r.position += origin
             
             if grid.extent.encloses(r):
