@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://hpel2to4u6wx"]
+[gd_scene load_steps=7 format=3 uid="uid://hpel2to4u6wx"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_2c8kv"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_77wmc"]
 [ext_resource type="PackedScene" uid="uid://dnallaxvdf31p" path="res://scenes/rooms/meshes/roomwall_cornercap.blend" id="3_77wmc"]
 [ext_resource type="PackedScene" uid="uid://b7lslbxgj6psm" path="res://scenes/rooms/meshes/roomwall_door.blend" id="4_laf2p"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="5_liy2f"]
+[ext_resource type="PackedScene" uid="uid://bhppd8cxmo4ig" path="res://scenes/dugneonbuilderterminal.tscn" id="6_hyync"]
 
 [node name="RoomCorner3d" type="Node3D"]
 
@@ -138,3 +139,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, -2)
 
 [node name="simpleceiling13" parent="." instance=ExtResource("5_liy2f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.8, -2)
+
+[node name="dugneonbuilderterminal" parent="." instance=ExtResource("6_hyync")]
+transform = Transform3D(-0.50000006, 0, 0.8660254, 0, 1, 0, -0.8660254, 0, -0.50000006, -1.4, 0, 1.4)

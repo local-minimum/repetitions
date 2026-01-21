@@ -14,7 +14,15 @@ func is_empty() -> bool:
     
 func _ready() -> void:
     _sync_placements()
-    
+
+func hide_rooms() -> void:
+    for room: BlueprintRoom in _rooms:
+        room.hide()
+
+func show_rooms() -> void:
+    for room: BlueprintRoom in _rooms:
+        room.show()
+            
 func _sync_placements() -> void:
     var shapes: Dictionary[BlueprintRoom, Rect2]
     var origins: Dictionary[BlueprintRoom, Vector2]

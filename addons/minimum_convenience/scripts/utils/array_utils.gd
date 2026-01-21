@@ -38,6 +38,13 @@ static func sumi(arr: Array[int], start_value: int = 0) -> int:
         start_value,
     )
 
+static func sumf(arr: Array[float], start_value: float = 0.0) -> float:
+    return arr.reduce(
+        func summer(acc: Variant, value: Variant) -> Variant:
+            return acc + value,
+        start_value,
+    )
+
 static func maxi(arr: Array, pred: Callable, start_value: int = 0) -> int:
     return arr.reduce(
         func summer(acc: Variant, item: Variant) -> int:
@@ -95,3 +102,21 @@ static func paginate_with_nav_reservation(arr: Array, page_idx: int, page_size: 
     var end: int = start + page_size - 1 if size - start - 1 <= page_size else start + page_size - 2
     print_debug("[ArrayUtils] %s size, items %s - %s " % [arr.size(), start, end])
     return arr.slice(start, end)
+
+static func pick_weighted_probability_index(arr: Array[float], total: float = -1) -> int:
+    if arr.is_empty():
+        return -1
+    elif arr.size() == 1:
+        return arr[0]
+    
+    if total < 0:
+        total = sumf(arr)
+        
+    var p: float = randf_range(0, total)
+    # print_debug("Des: aewweights %s %s, p %s" % [total, arr, p])
+    for idx: int in range(arr.size()):
+        if p <= arr[idx]:
+            return idx
+        p -= arr[idx]
+        
+    return -1

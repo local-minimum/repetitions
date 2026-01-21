@@ -1,18 +1,44 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhktvedhbgsnp"]
+[gd_scene load_steps=13 format=3 uid="uid://dhktvedhbgsnp"]
 
 [ext_resource type="PackedScene" uid="uid://bnadm2gr0ggsi" path="res://scenes/rooms/meshes/hallwall.blend" id="1_njix7"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_7emko"]
 [ext_resource type="PackedScene" uid="uid://c0dvojglp1sb0" path="res://scenes/rooms/meshes/hallwall_cornercap.blend" id="3_4hf65"]
 [ext_resource type="PackedScene" uid="uid://dm1qptotoe08" path="res://scenes/rooms/meshes/hallceiling.blend" id="4_4e6gb"]
 [ext_resource type="PackedScene" uid="uid://uwl325qn0fde" path="res://scenes/rooms/meshes/hallceiling_blocker.blend" id="5_7emko"]
+[ext_resource type="PackedScene" uid="uid://ct27e5gyfiofs" path="res://scenes/rooms/meshes/hallwall_wall_alcove.blend" id="6_4e6gb"]
+[ext_resource type="PackedScene" uid="uid://bhppd8cxmo4ig" path="res://scenes/dugneonbuilderterminal.tscn" id="7_tcema"]
+[ext_resource type="Script" uid="uid://cnyr016a0ixa8" path="res://scripts/probability_despawner.gd" id="8_tcema"]
+[ext_resource type="Script" uid="uid://cno413aixewp1" path="res://scripts/probability_despawner_configuration.gd" id="9_kyxrg"]
+
+[sub_resource type="Resource" id="Resource_unsba"]
+script = ExtResource("9_kyxrg")
+despawners = Array[NodePath]([NodePath("../hallwall_wall_alcove  opt3"), NodePath("../hallwall_wall_alcove  opt2")])
+weight = 3.0
+metadata/_custom_type_script = "uid://cno413aixewp1"
+
+[sub_resource type="Resource" id="Resource_gtqe2"]
+script = ExtResource("9_kyxrg")
+despawners = Array[NodePath]([NodePath("../hallwall_wall_alcove  opt3"), NodePath("../hallwall29 -opt1")])
+metadata/_custom_type_script = "uid://cno413aixewp1"
+
+[sub_resource type="Resource" id="Resource_im5aj"]
+script = ExtResource("9_kyxrg")
+despawners = Array[NodePath]([NodePath("../hallwall_wall_alcove  opt2"), NodePath("../hallwall22 - op1")])
+metadata/_custom_type_script = "uid://cno413aixewp1"
 
 [node name="Hall33d" type="Node3D"]
 
 [node name="hallwall" parent="." instance=ExtResource("1_njix7")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, -2)
 
-[node name="hallwall22" parent="." instance=ExtResource("1_njix7")]
+[node name="hallwall22 - op1" parent="." instance=ExtResource("1_njix7")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -2, 0, 2)
+
+[node name="hallwall_cornercap20" parent="hallwall22 - op1" instance=ExtResource("3_4hf65")]
+transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, 0.19999993, 0, -0.20000005)
+
+[node name="hallwall_cornercap24" parent="hallwall22 - op1" instance=ExtResource("3_4hf65")]
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 0.19999993, 0, -1.8)
 
 [node name="hallwall2" parent="." instance=ExtResource("1_njix7")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, -4)
@@ -59,8 +85,14 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2, 
 [node name="hallwall28" parent="." instance=ExtResource("1_njix7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 2)
 
-[node name="hallwall29" parent="." instance=ExtResource("1_njix7")]
+[node name="hallwall29 -opt1" parent="." instance=ExtResource("1_njix7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8, 0, 2)
+
+[node name="hallwall_cornercap28" parent="hallwall29 -opt1" instance=ExtResource("3_4hf65")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.19999993, 0, -1.8000002)
+
+[node name="hallwall_cornercap25" parent="hallwall29 -opt1" instance=ExtResource("3_4hf65")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20000005, 0, -0.19999981)
 
 [node name="hallwall30" parent="." instance=ExtResource("1_njix7")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -6, 0, 0)
@@ -170,9 +202,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -4)
 [node name="hallwall_cornercap27" parent="." instance=ExtResource("3_4hf65")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8, 0, -4.2)
 
-[node name="hallwall_cornercap28" parent="." instance=ExtResource("3_4hf65")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.8, 0, 1.8000002)
-
 [node name="hallwall_cornercap29" parent="." instance=ExtResource("3_4hf65")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.8, 0, 3.8000002)
 
@@ -181,12 +210,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
 
 [node name="hallwall_cornercap4" parent="." instance=ExtResource("3_4hf65")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4, 0, 0)
-
-[node name="hallwall_cornercap24" parent="." instance=ExtResource("3_4hf65")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.2, 0, 3.8)
-
-[node name="hallwall_cornercap25" parent="." instance=ExtResource("3_4hf65")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -8.2, 0, 1.8)
 
 [node name="hallwall_cornercap26" parent="." instance=ExtResource("3_4hf65")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.1999998, 0, -4.2)
@@ -205,9 +228,6 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -4, 
 
 [node name="hallwall_cornercap9" parent="." instance=ExtResource("3_4hf65")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -4, 0, 2)
-
-[node name="hallwall_cornercap20" parent="." instance=ExtResource("3_4hf65")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.2, 0, 2.2)
 
 [node name="hallwall_cornercap21" parent="." instance=ExtResource("3_4hf65")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.20000005, 0, -3.8)
@@ -349,3 +369,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8000002, 2, -2)
 
 [node name="hallceiling_blocker18" parent="." instance=ExtResource("5_7emko")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8000002, 2, 2)
+
+[node name="hallwall_wall_alcove  opt2" parent="." instance=ExtResource("6_4e6gb")]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -8, 0, 2)
+
+[node name="dugneonbuilderterminal" parent="hallwall_wall_alcove  opt2" instance=ExtResource("7_tcema")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.33487236, 0, -1.0195622)
+
+[node name="hallwall_wall_alcove  opt3" parent="." instance=ExtResource("6_4e6gb")]
+transform = Transform3D(-1, 0, 8.742277e-08, 0, 1, 0, -8.742277e-08, 0, -1, -2, 0, 2)
+
+[node name="dugneonbuilderterminal" parent="hallwall_wall_alcove  opt3" instance=ExtResource("7_tcema")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.33487236, 0, -1.0195622)
+
+[node name="ProbabilityDespawner" type="Node" parent="."]
+script = ExtResource("8_tcema")
+_options = Array[ExtResource("9_kyxrg")]([SubResource("Resource_unsba"), SubResource("Resource_gtqe2"), SubResource("Resource_im5aj")])
+metadata/_custom_type_script = "uid://cnyr016a0ixa8"

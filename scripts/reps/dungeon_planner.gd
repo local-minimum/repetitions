@@ -14,12 +14,10 @@ var rooms: Array[BlueprintRoom]
 @export var seed_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NORTH
 @export var elevation: int = 0
 
-@export var max_draft_rooms: int = 4
-
 enum PlannerMode { PICK_ONE, PLACE_ALL }
 @export var mode: PlannerMode = PlannerMode.PICK_ONE
  
-var _drafted_rooms: int = 0
+var _allowance: int = 0
 var _options: Dictionary[BlueprintRoom, DraftOption]
 
 # TODO: Show planner should
@@ -56,16 +54,19 @@ func _exit_tree() -> void:
     __SignalBus.on_complete_dungeon_plan.disconnect(_handle_complete_dungeon_plan)
     __SignalBus.on_ready_planner.disconnect(_handle_ready_planner)
 
-func _handle_ready_planner(player: PhysicsGridPlayerController, d_elevation: int) -> void:
+func _handle_ready_planner(player: PhysicsGridPlayerController, d_elevation: int, allowance: int) -> void:
     if elevation != d_elevation:
         return
   
     if player != null:
         player.cinematic = true
     
+    _allowance = allowance
     get_canvas_layer_node().show()
     show()
     _draw_options()
+    
+    __SignalBus.on_update_planning.emit(self, _allowance)
     
 func _handle_complete_dungeon_plan(d_elevation: int, d_rooms: Array[BlueprintRoom]) -> void:
     if elevation != d_elevation || rooms == d_rooms:
@@ -78,6 +79,14 @@ func _handle_complete_dungeon_plan(d_elevation: int, d_rooms: Array[BlueprintRoo
     rooms = d_rooms
     
 func _draw_options() -> void:
+    if _allowance <= 0:
+        options.hide()
+        options.hide_rooms()
+        return
+    elif !options.visible:
+        options.show()
+        options.show_rooms()
+        
     for room_option: DraftOption in pool.draft(draft_count - options.size()):
         var room: BlueprintRoom = room_option.instantiate_blueprint_room()
         _options[room] = room_option
@@ -142,13 +151,14 @@ func _handle_room_dropped(room: BlueprintRoom, _origin: Vector2, _origin_angle: 
         if mode == PlannerMode.PICK_ONE:
             options.discard_rooms()
 
-        _drafted_rooms += 1
-        __SignalBus.on_update_planning.emit(self, max_draft_rooms - _drafted_rooms)
+        _allowance -= 1
+        __SignalBus.on_blueprint_room_placed.emit(room)
+        __SignalBus.on_update_planning.emit(self, _allowance)
             
-        if options.is_empty() && _drafted_rooms < draft_count:
+        if options.is_empty() && _allowance > 0:
             _draw_options()
         
-        if _drafted_rooms >= draft_count:
+        if _allowance <= 0:
             await get_tree().create_timer(0.7).timeout
             complete_planning()
             

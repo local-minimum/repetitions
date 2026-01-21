@@ -1,10 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://qohy6ektieft"]
+[gd_scene load_steps=12 format=3 uid="uid://qohy6ektieft"]
 
 [ext_resource type="PackedScene" uid="uid://bnadm2gr0ggsi" path="res://scenes/rooms/meshes/hallwall.blend" id="1_ouga3"]
 [ext_resource type="PackedScene" uid="uid://c0dvojglp1sb0" path="res://scenes/rooms/meshes/hallwall_cornercap.blend" id="2_ejlae"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="3_m1eep"]
 [ext_resource type="PackedScene" uid="uid://dm1qptotoe08" path="res://scenes/rooms/meshes/hallceiling.blend" id="4_m1eep"]
 [ext_resource type="PackedScene" uid="uid://uwl325qn0fde" path="res://scenes/rooms/meshes/hallceiling_blocker.blend" id="5_ejr1r"]
+[ext_resource type="PackedScene" uid="uid://ct27e5gyfiofs" path="res://scenes/rooms/meshes/hallwall_wall_alcove.blend" id="6_nwusr"]
+[ext_resource type="PackedScene" uid="uid://bhppd8cxmo4ig" path="res://scenes/dugneonbuilderterminal.tscn" id="7_k8ayc"]
+[ext_resource type="Script" uid="uid://cnyr016a0ixa8" path="res://scripts/probability_despawner.gd" id="8_u8775"]
+[ext_resource type="Script" uid="uid://cno413aixewp1" path="res://scripts/probability_despawner_configuration.gd" id="9_k8ayc"]
+
+[sub_resource type="Resource" id="Resource_u8775"]
+script = ExtResource("9_k8ayc")
+despawners = Array[NodePath]([NodePath("../hallwall13")])
+metadata/_custom_type_script = "uid://cno413aixewp1"
+
+[sub_resource type="Resource" id="Resource_cji5a"]
+script = ExtResource("9_k8ayc")
+despawners = Array[NodePath]([NodePath("../hallwall_wall_alcove")])
+weight = 2.0
+metadata/_custom_type_script = "uid://cno413aixewp1"
 
 [node name="Hall23d" type="Node3D"]
 
@@ -193,3 +208,13 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2, 
 
 [node name="hallceiling_blocker7" parent="." instance=ExtResource("5_ejr1r")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 2, -2.2000003)
+
+[node name="hallwall_wall_alcove" parent="." instance=ExtResource("6_nwusr")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="dugneonbuilderterminal" parent="hallwall_wall_alcove" instance=ExtResource("7_k8ayc")]
+transform = Transform3D(-4.371138e-08, 0, 1, 0, 1, 0, -1, 0, -4.371138e-08, 0.33395347, 0, -0.99132097)
+
+[node name="ProbabilityDeSpawner" type="Node" parent="."]
+script = ExtResource("8_u8775")
+_options = Array[ExtResource("9_k8ayc")]([SubResource("Resource_u8775"), SubResource("Resource_cji5a")])
