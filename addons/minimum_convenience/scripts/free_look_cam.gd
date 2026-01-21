@@ -38,7 +38,7 @@ func _enter_tree() -> void:
     if __SignalBus.on_level_pause.connect(_handle_level_pause) != OK:
         push_error("Cannot connect to level pause")
 
-func _handle_level_pause(_level: GridLevelCore, paused: bool) -> void:
+func _handle_level_pause(paused: bool) -> void:
     if _looking && !paused:
         _looking = false
     elif _looking && paused:

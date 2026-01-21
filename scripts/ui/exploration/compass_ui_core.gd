@@ -13,13 +13,17 @@ class_name CompassUICore
 @export var _vertical_label_offset: float = -14
 @export var _horizontal_label_offset: float = -10
 
-func _ready() -> void:
+func _enter_tree() -> void:
     if __SignalBus.on_load_complete.connect(_handle_loaded) != OK:
         push_error("Failed to connect load complete")
 
-    if __SignalBus.on_update_orientation.connect(_handle_update_orientation) != OK:
+    if __SignalBus.on_update_entity_orientation.connect(_handle_update_orientation) != OK:
         push_error("Failed to connect on move start")
 
+func _exit_tree() -> void:
+    __SignalBus.on_load_complete.disconnect(_handle_loaded)
+    __SignalBus.on_update_entity_orientation.disconnect(_handle_update_orientation)
+    
 func _handle_loaded() -> void:
     clear()
 
@@ -30,7 +34,7 @@ func clear() -> void:
 var _orinentation_handled: bool
 
 func _handle_update_orientation(
-    _entity: GridEntity,
+    _entity: Node3D,
     old_down: CardinalDirections.CardinalDirection,
     down: CardinalDirections.CardinalDirection,
     old_forward: CardinalDirections.CardinalDirection,
