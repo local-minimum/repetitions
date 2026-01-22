@@ -19,12 +19,13 @@ grid_size = Vector3(2, 3, 2)
 player = NodePath("../Player3d")
 dirt_mag = NodePath("../DirtMagazine")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("counter_label", "message_label")]
+[node name="Dungeon Planning UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("counter_label", "message_label", "redraw_btn")]
 script = ExtResource("1_c4wp1")
 counter_label = NodePath("MarginContainer/Countdown")
 message_label = NodePath("MarginContainer/Status Label")
+redraw_btn = NodePath("MarginContainer/HBoxContainer/Redraw Rooms Btn")
 
-[node name="Backdrop" type="ColorRect" parent="CanvasLayer"]
+[node name="Backdrop" type="ColorRect" parent="Dungeon Planning UI"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -32,9 +33,9 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(2.5268645e-07, 0.20128122, 0.20394182, 1)
 
-[node name="Dungeon Planner" parent="CanvasLayer" instance=ExtResource("2_fpimf")]
+[node name="Dungeon Planner" parent="Dungeon Planning UI" instance=ExtResource("2_fpimf")]
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+[node name="MarginContainer" type="MarginContainer" parent="Dungeon Planning UI"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -45,25 +46,37 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="Layout Done Btn" type="Button" parent="CanvasLayer/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 8
-text = "DONE"
-
-[node name="Countdown" type="Label" parent="CanvasLayer/MarginContainer"]
+[node name="Countdown" type="Label" parent="Dungeon Planning UI/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "Remaining: 4"
 horizontal_alignment = 1
 
-[node name="Status Label" type="Label" parent="CanvasLayer/MarginContainer"]
+[node name="Status Label" type="Label" parent="Dungeon Planning UI/MarginContainer"]
 custom_minimum_size = Vector2(160, 200)
 layout_mode = 2
 size_flags_horizontal = 8
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Dungeon Planning UI/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+alignment = 2
+
+[node name="Redraw Rooms Btn" type="Button" parent="Dungeon Planning UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "Redraw (Cost 2)"
+
+[node name="Layout Done Btn" type="Button" parent="Dungeon Planning UI/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "UI_DONE"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fpimf")
@@ -80,4 +93,5 @@ _block_dug_three_path = "uid://ci0xmltyydfpb"
 _block_dug_four_path = "uid://bs4vym5pbu1p3"
 metadata/_custom_type_script = "uid://dq7lbhrdci5ob"
 
-[connection signal="pressed" from="CanvasLayer/MarginContainer/Layout Done Btn" to="CanvasLayer" method="_on_layout_done_btn_pressed"]
+[connection signal="pressed" from="Dungeon Planning UI/MarginContainer/HBoxContainer/Redraw Rooms Btn" to="Dungeon Planning UI" method="_on_redraw_rooms_btn_pressed"]
+[connection signal="pressed" from="Dungeon Planning UI/MarginContainer/HBoxContainer/Layout Done Btn" to="Dungeon Planning UI" method="_on_layout_done_btn_pressed"]

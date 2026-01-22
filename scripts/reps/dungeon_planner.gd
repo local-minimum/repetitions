@@ -13,6 +13,7 @@ var rooms: Array[BlueprintRoom]
 @export var seed_coordinates: Vector2i
 @export var seed_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NORTH
 @export var elevation: int = 0
+@export var redraw_cost: int = 2
 
 enum PlannerMode { PICK_ONE, PLACE_ALL }
 @export var mode: PlannerMode = PlannerMode.PICK_ONE
@@ -71,6 +72,22 @@ func _handle_complete_dungeon_plan(d_elevation: int, d_rooms: Array[BlueprintRoo
             room.queue_free()
             
     rooms = d_rooms
+
+var can_redraw_rooms: bool:
+    get():
+        return !_sealed && _allowance >= redraw_cost
+         
+func redraw_rooms()  -> void:
+    if !can_redraw_rooms:
+        push_warning("%s attempted redraw rooms on elevation %s but cost %s > %s or sealed %s" % [
+            self, elevation, redraw_cost, _allowance, _sealed,
+        ])
+        return
+    
+    _allowance -= redraw_cost
+    options.discard_rooms()
+    _draw_options()
+    __SignalBus.on_update_planning.emit(self, _allowance)
     
 func _draw_options() -> void:
     if _allowance <= 0 || _sealed:

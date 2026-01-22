@@ -5,6 +5,7 @@ const _SEALED_ELEVATION_MESSAGE_ID: String = "UI_ELEVATION_SEALED"
 var _planner: DungeonPlanner
 @export var counter_label: Label
 @export var message_label: Label
+@export var redraw_btn: Button
 
 func _enter_tree() -> void:
     if __SignalBus.on_update_planning.connect(_handle_update_planner) != OK:
@@ -38,3 +39,12 @@ func _handle_update_planner(planner: DungeonPlanner, remaining: int) -> void:
         return
     
     counter_label.text = tr("UI_REMAINING_COUNT").format({"remaining_count": remaining})
+    redraw_btn.disabled = !planner.can_redraw_rooms
+    redraw_btn.text = tr("UI_REDRAW_ROOMS").format({"cost": planner.redraw_cost})
+
+
+func _on_redraw_rooms_btn_pressed() -> void:
+    if _planner != null:
+        _planner.redraw_rooms()
+    else:
+        redraw_btn.disabled = true
