@@ -149,7 +149,7 @@ blueprint_rotate_cw={
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://resources/ui.en.translation", "res://resources/ui.sv.translation")
+locale/translations=PackedStringArray("res://resources/ui.en.translation", "res://resources/ui.sv.translation", "res://resources/rooms.en.translation", "res://resources/rooms.sv.translation")
 
 [physics]
 

@@ -4,6 +4,9 @@
 
 [resource]
 script = ExtResource("1_sf7d3")
+room_id = 300
+_type = 1
+room_name_key = "ROOM_CELL"
 _blueprint_room_path = "res://scenes/rooms/cell_1.tscn"
 _3d_room_path = "res://scenes/rooms/cell_1_3d.tscn"
 draftable_count = 2

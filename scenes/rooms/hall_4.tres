@@ -4,6 +4,9 @@
 
 [resource]
 script = ExtResource("1_g7sux")
+room_id = 203
+_type = 2
+room_name_key = "ROOM_HALL"
 _blueprint_room_path = "res://scenes/rooms/hall_4.tscn"
 _3d_room_path = "res://scenes/rooms/hall_4_3d.tscn"
 draft_probability_class = 0

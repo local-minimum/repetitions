@@ -4,6 +4,9 @@
 
 [resource]
 script = ExtResource("1_ceich")
+room_id = 310
+_type = 1
+room_name_key = "ROOM_CORNER"
 _blueprint_room_path = "res://scenes/rooms/room_corner.tscn"
 _3d_room_path = "res://scenes/rooms/room_corner_3d.tscn"
 metadata/_custom_type_script = "uid://dgfi04hnjvm2r"

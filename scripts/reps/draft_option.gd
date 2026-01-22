@@ -1,7 +1,68 @@
 extends Resource
 class_name DraftOption
 
+enum RoomId {
+    UNKNOWN = 0,
+    
+    START_ROOM = 1,
+    
+    BROOM_CLOSET = 100,
+  
+    HALL_1 = 200, 
+    HALL_2 = 201, 
+    HALL_3 = 202, 
+    HALL_4 = 203, 
+    HALL_5 = 204,
+    
+    CELL_1 = 300, 
+    CELL_2 = 301, 
+    CELL_3 = 302,    
+    ROOM_CORNER = 310,
+    ROOM_REACTOR = 320,
+    ROOM_SHIFTING_WALLS = 330,
+    ROOM_BACKROOM = 331,
+}
+
 enum DraftProbability { FREQUENT, DEFAULT, UNCOMMON, RARE }
+@export var room_id: RoomId
+
+@export_flags("Room", "Hall") var _type: int:
+    set(value):
+        type = Type.new(value)
+        _type = value        
+
+var type: Type:
+    get():
+        if type == null:
+            type = Type.new(_type)
+        return type
+
+class Type:
+    enum Categories { NULL = 0, ROOM = 1, HALL = 2}
+
+    @export var room: bool
+    var _bits: int
+    
+    func _init(bits: int) -> void:
+        _bits = bits
+        
+    var categories: Array[Categories]:
+        get():
+            var cats: Array[Categories]
+            
+            if (Categories.ROOM & _bits) == Categories.ROOM:
+                cats.append(Categories.ROOM)
+            if (Categories.HALL & _bits) == Categories.HALL:
+                cats.append(Categories.HALL)
+        
+            return cats
+            
+    func has_all(other: Type) -> bool:
+        return (_bits & other._bits) == _bits
+        
+
+@export var room_name_key: String
+
 @export_file_path("*.tscn") var _blueprint_room_path: String
 
 @export_file_path("*.tscn") var _3d_room_path: String

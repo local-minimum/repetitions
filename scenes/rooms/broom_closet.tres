@@ -4,6 +4,9 @@
 
 [resource]
 script = ExtResource("1_iuujp")
+room_id = 100
+_type = 1
+room_name_key = "ROOM_BROOM_CLOSET"
 _blueprint_room_path = "res://scenes/rooms/broom_closet.tscn"
 _3d_room_path = "res://scenes/rooms/broom_closet_3d.tscn"
 draft_probability_class = 3
