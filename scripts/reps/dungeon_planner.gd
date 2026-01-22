@@ -19,6 +19,7 @@ enum PlannerMode { PICK_ONE, PLACE_ALL }
  
 var _allowance: int = 0
 var _options: Dictionary[BlueprintRoom, DraftOption]
+var _sealed: bool
 
 func _ready() -> void:
     if _seed_dungeon():
@@ -72,7 +73,7 @@ func _handle_complete_dungeon_plan(d_elevation: int, d_rooms: Array[BlueprintRoo
     rooms = d_rooms
     
 func _draw_options() -> void:
-    if _allowance <= 0:
+    if _allowance <= 0 || _sealed:
         options.hide()
         options.hide_rooms()
         return
@@ -147,8 +148,13 @@ func _handle_room_dropped(room: BlueprintRoom, _origin: Vector2, _origin_angle: 
         _allowance -= 1
         __SignalBus.on_blueprint_room_placed.emit(room)
         __SignalBus.on_update_planning.emit(self, _allowance)
-            
-        if options.is_empty() && _allowance > 0:
+        
+        if !has_exposed_door():
+            __SignalBus.on_elevation_plan_sealed.emit(elevation)
+            _sealed = true
+            options.hide_rooms()
+            options.hide()  
+        elif options.is_empty() && _allowance > 0:
             _draw_options()
         
         if _allowance <= 0:
@@ -158,7 +164,15 @@ func _handle_room_dropped(room: BlueprintRoom, _origin: Vector2, _origin_angle: 
     else:
         room.modulate = Color.WHITE
         options.add_room(room)
-    
+
+## If any of the placed rooms have a door that isn't connected or isn't leading into the walls
+## of another room.
+func has_exposed_door() -> bool:
+    for room: BlueprintRoom in rooms:
+        if room.has_unused_door():
+            return true
+    return false
+        
 func _tween_return(room: BlueprintRoom, origin: Vector2, origin_angle: float) -> void:
         # print_debug("Invalid drop location for %s" % room)
         room.tweening = true

@@ -19,9 +19,10 @@ grid_size = Vector3(2, 3, 2)
 player = NodePath("../Player3d")
 dirt_mag = NodePath("../DirtMagazine")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("counter_label")]
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("counter_label", "message_label")]
 script = ExtResource("1_c4wp1")
 counter_label = NodePath("MarginContainer/Countdown")
+message_label = NodePath("MarginContainer/Status Label")
 
 [node name="Backdrop" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 15
@@ -56,6 +57,13 @@ size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "Remaining: 4"
 horizontal_alignment = 1
+
+[node name="Status Label" type="Label" parent="CanvasLayer/MarginContainer"]
+custom_minimum_size = Vector2(160, 200)
+layout_mode = 2
+size_flags_horizontal = 8
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fpimf")

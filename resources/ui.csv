@@ -1,2 +1,3 @@
 id,en,sv
 UI_REMAINING_COUNT,Remaining: {remaining_count},Kvar: {remaining_count}
+UI_ELEVATION_SEALED,No more room placement possible,Inga fler rum kan placeras

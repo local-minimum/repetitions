@@ -13,6 +13,7 @@ signal on_blueprint_room_position_updated(room: BlueprintRoom, coordinates: Vect
 signal on_blueprint_room_dropped(room: BlueprintRoom, drag_origin: Vector2, drag_origin_angle: float)
 signal on_blueprint_room_placed(room: BlueprintRoom)
 signal on_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom])
+signal on_elevation_plan_sealed(elevation: int)
 
 signal on_pickup_tool(tool: Tool.ToolType)
 signal on_use_pickax(target: Node3D, hack_direction: CardinalDirections.CardinalDirection, point: Vector3)
