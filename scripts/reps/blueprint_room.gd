@@ -17,6 +17,7 @@ class_name BlueprintRoom
             else:
                 draggable.enable(self)
         placed = value
+        recalculate_collision()
 
 
 var option: DraftOption
@@ -31,6 +32,8 @@ var grid: Grid2D:
                 tile_size,
             ])
     get():
+        if Engine.is_editor_hint():
+            return null
         return draggable.grid
 
 @export var draggable: Draggable
@@ -83,9 +86,17 @@ func recalculate_collision() -> void:
     if collision == null:
         push_warning("[Blueprint Room %s] Does not have any collsion configured" % name)
         return
-        
-    collision.polygon = perimeter()
 
+    if placed:    
+        collision.polygon = perimeter()
+    else:
+        var r: Rect2 = bounding_box()
+        var factor: float = 0.5
+        var grow_size: Vector2 = Vector2(tile_size) * factor
+        r = r.grow_individual(grow_size.x, grow_size.y, grow_size.x, grow_size.y)
+        
+        collision.polygon = PackedVector2Array(RectUtils.corners(r))
+        
 var contained_in_grid: bool:
     get():
         if grid != null && grid.is_inside_grid(global_position):

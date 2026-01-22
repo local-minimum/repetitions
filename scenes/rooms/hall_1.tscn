@@ -39,4 +39,4 @@ collision_enabled = false
 navigation_enabled = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-16, -16, 32, -16, 32, 16, 16, 16, 16, 48, 0, 48, 0, 0, -16, 0)
+polygon = PackedVector2Array(-24, -24, -24, 56, 40, 56, 40, -24)
