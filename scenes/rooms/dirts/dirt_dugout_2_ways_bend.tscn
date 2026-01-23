@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsqk3tfre2xyg"]
+
+[ext_resource type="PackedScene" uid="uid://sg7qd61iq8mc" path="res://scenes/rooms/meshes/dirt_dugout_2ways_bend.blend" id="1_lo3mq"]
+
+[node name="dirt_dugout_2ways_bend" instance=ExtResource("1_lo3mq")]
+
+[node name="DirtBlock " parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
