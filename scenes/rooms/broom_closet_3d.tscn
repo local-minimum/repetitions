@@ -11,39 +11,42 @@
 
 [node name="Broom Closet" type="Node3D"]
 
-[node name="simplefloor" parent="." instance=ExtResource("1_hhqpo")]
+[node name="Geometry" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
 
-[node name="simplewall" parent="." instance=ExtResource("2_jrcuk")]
+[node name="simplefloor" parent="Geometry" instance=ExtResource("1_hhqpo")]
 
-[node name="simplewall2" parent="." instance=ExtResource("2_jrcuk")]
+[node name="simplewall" parent="Geometry" instance=ExtResource("2_jrcuk")]
+
+[node name="simplewall2" parent="Geometry" instance=ExtResource("2_jrcuk")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -2)
 
-[node name="simplewall3" parent="." instance=ExtResource("2_jrcuk")]
+[node name="simplewall3" parent="Geometry" instance=ExtResource("2_jrcuk")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, -2)
 
-[node name="simplewall_doorframe" parent="." instance=ExtResource("3_2sgo8")]
+[node name="simplewall_doorframe" parent="Geometry" instance=ExtResource("3_2sgo8")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 0)
 
-[node name="simpleceiling" parent="." instance=ExtResource("4_jrcuk")]
+[node name="simpleceiling" parent="Geometry" instance=ExtResource("4_jrcuk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 
-[node name="cleaningbucket-and-broom" parent="." instance=ExtResource("5_lficu")]
+[node name="cleaningbucket-and-broom" parent="Geometry" instance=ExtResource("5_lficu")]
 transform = Transform3D(0.8255964, 0, -0.56426114, 0, 1, 0, 0.56426114, 0, 0.8255964, 0.26438344, 0, -1.6701019)
 
-[node name="overhead" parent="." instance=ExtResource("6_orhin")]
+[node name="overhead" parent="Geometry" instance=ExtResource("6_orhin")]
 transform = Transform3D(0.028671822, 0, -0.9995889, 0, 1, 0, 0.9995889, 0, 0.028671822, 1.666184, 0, -1.7012744)
 
-[node name="paperbasket2" parent="." instance=ExtResource("7_aghwm")]
+[node name="paperbasket2" parent="Geometry" instance=ExtResource("7_aghwm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7266972, 0, -0.23210245)
 
-[node name="toiletroll" parent="." instance=ExtResource("8_s0ryh")]
+[node name="toiletroll" parent="Geometry" instance=ExtResource("8_s0ryh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3236248, 0.07382801, -1.7140995)
 
-[node name="toiletroll2" parent="." instance=ExtResource("8_s0ryh")]
+[node name="toiletroll2" parent="Geometry" instance=ExtResource("8_s0ryh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.80371, 0.41137794, -1.6050225)
 
-[node name="toiletroll3" parent="." instance=ExtResource("8_s0ryh")]
+[node name="toiletroll3" parent="Geometry" instance=ExtResource("8_s0ryh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.696164, 0.41137794, -1.753929)
 
-[node name="toiletroll4" parent="." instance=ExtResource("8_s0ryh")]
+[node name="toiletroll4" parent="Geometry" instance=ExtResource("8_s0ryh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6042104, 0.41137794, -1.5610914)

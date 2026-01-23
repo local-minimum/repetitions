@@ -10,7 +10,7 @@ const _BLUEPRINT_META: String = "blueprint"
 const _ORIGIN_META: String = "origin"
 const _COORDINATES_META: String = "coordinates"
 
-var _dirt_offset: Vector3 = Vector3.BACK
+var _dirt_offset: Vector3 = Vector3.ZERO # Vector3.BACK
 
 var dirts: Dictionary[Vector3i, Node3D]
 var dirt_digouts: Dictionary[Vector3i, Array]

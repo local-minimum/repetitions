@@ -8,105 +8,108 @@
 
 [node name="Hall13d" type="Node3D"]
 
-[node name="hallwall" parent="." instance=ExtResource("1_c4soi")]
+[node name="Geometry" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+
+[node name="hallwall" parent="Geometry" instance=ExtResource("1_c4soi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 
-[node name="hallwall2" parent="." instance=ExtResource("1_c4soi")]
+[node name="hallwall2" parent="Geometry" instance=ExtResource("1_c4soi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
-[node name="hallwall3" parent="." instance=ExtResource("1_c4soi")]
+[node name="hallwall3" parent="Geometry" instance=ExtResource("1_c4soi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
 
-[node name="hallwall4" parent="." instance=ExtResource("1_c4soi")]
+[node name="hallwall4" parent="Geometry" instance=ExtResource("1_c4soi")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, 4)
 
-[node name="hallwall5" parent="." instance=ExtResource("1_c4soi")]
+[node name="hallwall5" parent="Geometry" instance=ExtResource("1_c4soi")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, 2)
 
-[node name="hallwall6" parent="." instance=ExtResource("1_c4soi")]
+[node name="hallwall6" parent="Geometry" instance=ExtResource("1_c4soi")]
 transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 4, 0, 2)
 
-[node name="hallwall12" parent="." instance=ExtResource("1_c4soi")]
+[node name="hallwall12" parent="Geometry" instance=ExtResource("1_c4soi")]
 transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 0, 0, 0)
 
-[node name="hallwall7" parent="." instance=ExtResource("1_c4soi")]
+[node name="hallwall7" parent="Geometry" instance=ExtResource("1_c4soi")]
 transform = Transform3D(-1, 0, 8.742277e-08, 0, 1, 0, -8.742277e-08, 0, -1, 4, 0, 0)
 
-[node name="hallwall8" parent="." instance=ExtResource("1_c4soi")]
+[node name="hallwall8" parent="Geometry" instance=ExtResource("1_c4soi")]
 transform = Transform3D(-1, 0, 8.742277e-08, 0, 1, 0, -8.742277e-08, 0, -1, 4, 0, -2)
 
-[node name="hallwall9" parent="." instance=ExtResource("1_c4soi")]
+[node name="hallwall9" parent="Geometry" instance=ExtResource("1_c4soi")]
 transform = Transform3D(-4.371138e-08, 0, -1, 0, 1, 0, 1, 0, -4.371138e-08, 2, 0, -2)
 
-[node name="hallwall10" parent="." instance=ExtResource("1_c4soi")]
+[node name="hallwall10" parent="Geometry" instance=ExtResource("1_c4soi")]
 transform = Transform3D(-4.371138e-08, 0, -1, 0, 1, 0, 1, 0, -4.371138e-08, 0, 0, -2)
 
-[node name="hallwall11" parent="." instance=ExtResource("1_c4soi")]
+[node name="hallwall11" parent="Geometry" instance=ExtResource("1_c4soi")]
 transform = Transform3D(-4.371138e-08, 0, -1, 0, 1, 0, 1, 0, -4.371138e-08, -2, 0, -2)
 
-[node name="hallwall_cornercap" parent="." instance=ExtResource("2_aaxyl")]
+[node name="hallwall_cornercap" parent="Geometry" instance=ExtResource("2_aaxyl")]
 
-[node name="hallwall_cornercap2" parent="." instance=ExtResource("2_aaxyl")]
+[node name="hallwall_cornercap2" parent="Geometry" instance=ExtResource("2_aaxyl")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 2)
 
-[node name="hallwall_cornercap3" parent="." instance=ExtResource("2_aaxyl")]
+[node name="hallwall_cornercap3" parent="Geometry" instance=ExtResource("2_aaxyl")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 3.8, 0, -1.8)
 
-[node name="hallwall_cornercap4" parent="." instance=ExtResource("2_aaxyl")]
+[node name="hallwall_cornercap4" parent="Geometry" instance=ExtResource("2_aaxyl")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 3.8, 0, -1.8)
 
-[node name="simplefloor" parent="." instance=ExtResource("3_jcwbn")]
+[node name="simplefloor" parent="Geometry" instance=ExtResource("3_jcwbn")]
 
-[node name="simplefloor2" parent="." instance=ExtResource("3_jcwbn")]
+[node name="simplefloor2" parent="Geometry" instance=ExtResource("3_jcwbn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
 
-[node name="simplefloor3" parent="." instance=ExtResource("3_jcwbn")]
+[node name="simplefloor3" parent="Geometry" instance=ExtResource("3_jcwbn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
 
-[node name="simplefloor4" parent="." instance=ExtResource("3_jcwbn")]
+[node name="simplefloor4" parent="Geometry" instance=ExtResource("3_jcwbn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
 
-[node name="simplefloor5" parent="." instance=ExtResource("3_jcwbn")]
+[node name="simplefloor5" parent="Geometry" instance=ExtResource("3_jcwbn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 
-[node name="simplefloor6" parent="." instance=ExtResource("3_jcwbn")]
+[node name="simplefloor6" parent="Geometry" instance=ExtResource("3_jcwbn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
-[node name="simplefloor7" parent="." instance=ExtResource("3_jcwbn")]
+[node name="simplefloor7" parent="Geometry" instance=ExtResource("3_jcwbn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
 
-[node name="hallceiling" parent="." instance=ExtResource("4_2hxh2")]
+[node name="hallceiling" parent="Geometry" instance=ExtResource("4_2hxh2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 6)
 
-[node name="hallceiling2" parent="." instance=ExtResource("4_2hxh2")]
+[node name="hallceiling2" parent="Geometry" instance=ExtResource("4_2hxh2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4)
 
-[node name="hallceiling3" parent="." instance=ExtResource("4_2hxh2")]
+[node name="hallceiling3" parent="Geometry" instance=ExtResource("4_2hxh2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2)
 
-[node name="hallceiling4" parent="." instance=ExtResource("4_2hxh2")]
+[node name="hallceiling4" parent="Geometry" instance=ExtResource("4_2hxh2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 2)
 
-[node name="hallceiling5" parent="." instance=ExtResource("4_2hxh2")]
+[node name="hallceiling5" parent="Geometry" instance=ExtResource("4_2hxh2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0)
 
-[node name="hallceiling6" parent="." instance=ExtResource("4_2hxh2")]
+[node name="hallceiling6" parent="Geometry" instance=ExtResource("4_2hxh2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
-[node name="hallceiling7" parent="." instance=ExtResource("4_2hxh2")]
+[node name="hallceiling7" parent="Geometry" instance=ExtResource("4_2hxh2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 0)
 
-[node name="hallceiling_blocker2" parent="." instance=ExtResource("5_2hxh2")]
+[node name="hallceiling_blocker2" parent="Geometry" instance=ExtResource("5_2hxh2")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 2, -1.8)
 
-[node name="hallceiling_blocker3" parent="." instance=ExtResource("5_2hxh2")]
+[node name="hallceiling_blocker3" parent="Geometry" instance=ExtResource("5_2hxh2")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, 2, -1.8)
 
-[node name="hallceiling_blocker4" parent="." instance=ExtResource("5_2hxh2")]
+[node name="hallceiling_blocker4" parent="Geometry" instance=ExtResource("5_2hxh2")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2, 2, -1.8)
 
-[node name="hallceiling_blocker5" parent="." instance=ExtResource("5_2hxh2")]
+[node name="hallceiling_blocker5" parent="Geometry" instance=ExtResource("5_2hxh2")]
 transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 0, 2, -0.19999996)
 
-[node name="hallceiling_blocker6" parent="." instance=ExtResource("5_2hxh2")]
+[node name="hallceiling_blocker6" parent="Geometry" instance=ExtResource("5_2hxh2")]
 transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 4, 2, 1.8000001)
