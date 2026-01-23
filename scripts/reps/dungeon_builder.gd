@@ -10,8 +10,6 @@ const _BLUEPRINT_META: String = "blueprint"
 const _ORIGIN_META: String = "origin"
 const _COORDINATES_META: String = "coordinates"
 
-var _dirt_offset: Vector3 = Vector3.ZERO # Vector3.BACK
-
 var dirts: Dictionary[Vector3i, Node3D]
 var dirt_digouts: Dictionary[Vector3i, Array]
 var used_tiles: Array[Vector3i]
@@ -42,7 +40,7 @@ func _handle_use_pickax(target: Node3D, _hack_direction: CardinalDirections.Card
         ])
         return
     
-    var origin: Vector3 = _get_origin_corner(coords) + _dirt_offset * grid_size
+    var origin: Vector3 = _get_origin_corner(coords)
     var side_points: Array[Vector3] = [
         origin + 0.5 * Vector3.RIGHT * grid_size,
         origin + 0.5 * Vector3.FORWARD * grid_size,
@@ -129,7 +127,7 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
             "",
             null,
         )
-        
+   
         for room_tile: Vector3i in room_tiles:
             if dirts.has(room_tile):
                 dirts[room_tile].queue_free()
@@ -147,7 +145,9 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
         var origin2d: Vector2i = room.get_origin()
         var origin: Vector3i = Vector3i(origin2d.x, elevation, origin2d.y)
         
-        room_3d.position = Vector3(grid_size.x * origin.x, grid_size.y * origin.y, grid_size.z * origin.z)
+        room_3d.position = _get_origin_corner(origin)
+        print_debug("Placed room %s at %s %s with tiles %s" % [room, room_3d.position, origin, room_tiles])
+
         room_3d.set_meta(_ORIGIN_META, origin)
         
         if first_room && player != null:
@@ -166,7 +166,7 @@ func _populate_level_with_dirt(grid: Grid2D, elevation: int) -> void:
     if grid != null:
         for x: int in range(grid.extent.position.x, grid.extent.end.x):
             for y: int in range(grid.extent.position.y, grid.extent.end.y):
-                var coords3d: Vector3i = Vector3i(x, elevation,y)                
+                var coords3d: Vector3i = Vector3i(x, elevation, y)                
                 if used_tiles.has(coords3d):
                     continue
                     
@@ -185,7 +185,9 @@ func get_coordinates(global_pos: Vector3) -> Vector3i:
            
 func _place_dirt(coords: Vector3i, digs: Array[CardinalDirections.CardinalDirection] = []) -> Node3D:
     var pos: Vector3 = _get_origin_corner(coords)
-    var d: Node3D = dirt_mag.place_block_at(self, pos + _dirt_offset * grid_size, grid_size, digs)
+    var d: Node3D = dirt_mag.place_block_at(self, pos, grid_size, digs)
+    if coords.x == 20:
+        print_debug("Placing dirt at %s %s" % [d.position, coords])
     if d != null:
         dirts[coords] = d
         d.name = "Dirt @ %s" % coords

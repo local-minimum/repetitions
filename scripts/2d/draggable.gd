@@ -54,7 +54,7 @@ func calculate_coordinates(node: Node2D) -> Vector2i:
     if grid != null:
         return grid.get_closest_coordinates(node.global_position)
         
-    return Vector2i.ONE * -1
+    return -Vector2i.ONE
 
 func translate_coords_array_to_global(node: Node2D, coords: Array[Vector2i]) -> Array[Vector2i]:
     var origin: Vector2i = calculate_coordinates(node)

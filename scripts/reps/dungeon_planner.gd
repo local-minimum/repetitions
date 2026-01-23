@@ -167,6 +167,7 @@ func _seed_dungeon() -> bool:
     
     rooms.append(blueprint)
     _rooms_root.add_child(blueprint)
+    #print_debug("Seeding %s dungeon with %s at %s %s" % [seed_coordinates, blueprint, blueprint.global_position, grid.get_closest_coordinates(blueprint.global_position)])
     return true
     
 func _handle_room_move_start(room: BlueprintRoom) -> void:
