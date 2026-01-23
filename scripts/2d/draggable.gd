@@ -23,10 +23,6 @@ const DIR_WEST: int = 3
 func dragging(node: Node2D) -> bool:
     return node == _dragging && _dragging != null
 
-var rotating: bool:
-    get():
-        return _rotating_nodes.is_empty()
-
 var _disabled: Array[Node2D]
             
 var grid: Grid2D
@@ -68,11 +64,11 @@ func translate_coords_array_to_global(node: Node2D, coords: Array[Vector2i]) -> 
         DIR_NORTH:
             res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return c + origin))
         DIR_EAST:
-            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(-c.y + origin.x - 1, c.x + origin.y)))
+            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(-c.y + origin.x, c.x + origin.y)))
         DIR_SOUTH:
-            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(-c.x + origin.x - 1, -c.y + origin.y - 1))) 
+            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(-c.x + origin.x, -c.y + origin.y))) 
         DIR_WEST:
-            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(c.y + origin.x, -c.x + origin.y - 1)))
+            res.append_array(coords.map(func (c: Vector2i) -> Vector2i: return Vector2i(c.y + origin.x, -c.x + origin.y)))
              
     return res
 
