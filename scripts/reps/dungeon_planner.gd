@@ -1,8 +1,12 @@
 extends Node2D
 class_name DungeonPlanner
 
+@export var _builder: DungeonBuilder
 @export var grid: Grid2D
-@export var rooms_root: Node2D
+
+@export var _rooms_root: Node2D
+@export var _icons_root: Node2D
+
 var rooms: Array[BlueprintRoom]
 @export var options: PlannerOptions
 @export var pool: DraftPool
@@ -17,7 +21,14 @@ var rooms: Array[BlueprintRoom]
 
 enum PlannerMode { PICK_ONE, PLACE_ALL }
 @export var mode: PlannerMode = PlannerMode.PICK_ONE
- 
+
+@export var _terminal_scene: PackedScene
+@export var _player_scene: PackedScene
+
+
+var _player_icon: Control = null
+var _terminals: Dictionary[PlannerTerminal, PlannerTerminalIcon]
+var _active_terminal: PlannerTerminal
 var _allowance: int = 0
 var _options: Dictionary[BlueprintRoom, DraftOption]
 var _sealed: bool
@@ -49,10 +60,33 @@ func _exit_tree() -> void:
     __SignalBus.on_complete_dungeon_plan.disconnect(_handle_complete_dungeon_plan)
     __SignalBus.on_ready_planner.disconnect(_handle_ready_planner)
 
-func _handle_ready_planner(player: PhysicsGridPlayerController, d_elevation: int, allowance: int) -> void:
+func _handle_ready_planner(terminal: PlannerTerminal, player: PhysicsGridPlayerController, d_elevation: int, allowance: int) -> void:
     if elevation != d_elevation:
         return
   
+    if player == null:
+        push_error("No player is known to %s so cannot show its position" % [self])
+        _player_icon.hide()
+    else:
+        if _player_icon == null:
+            _player_icon = _player_scene.instantiate()
+            _icons_root.add_child(_player_icon)
+            _player_icon.name = "Player"
+            
+        _player_icon.global_position = grid.get_global_pointf(_builder.get_2d_grid_float_position(player.global_position))
+        _player_icon.show()
+        
+    _active_terminal = terminal
+    if !_terminals.has(terminal):
+        var term_icon: PlannerTerminalIcon = _terminal_scene.instantiate()
+        term_icon.name = "Terminal Marker: %s" % terminal.name
+        _icons_root.add_child(term_icon)
+        var grid_pos: Vector2 = _builder.get_2d_grid_float_position(terminal.global_position)
+        term_icon.global_position = grid.get_global_pointf(grid_pos)
+        _terminals[terminal] = term_icon
+
+    _terminals[terminal].credits = allowance
+         
     if player != null:
         player.cinematic = true
     
@@ -88,6 +122,7 @@ func redraw_rooms()  -> void:
     options.discard_rooms()
     _draw_options()
     __SignalBus.on_update_planning.emit(self, _allowance)
+    _terminals[_active_terminal].credits = _allowance
     
 func _draw_options() -> void:
     if _allowance <= 0 || _sealed:
@@ -101,7 +136,7 @@ func _draw_options() -> void:
     for room_option: DraftOption in pool.draft(draft_count - options.size()):
         var room: BlueprintRoom = room_option.instantiate_blueprint_room()
         _options[room] = room_option
-        rooms_root.add_child(room)
+        _rooms_root.add_child(room)
         options.add_room(room)
         
     options.assign_grid(grid)
@@ -126,15 +161,16 @@ func _seed_dungeon() -> bool:
     blueprint.option = seed_room
     
     rooms.append(blueprint)
-    rooms_root.add_child(blueprint)
+    _rooms_root.add_child(blueprint)
     return true
     
 func _handle_room_move_start(room: BlueprintRoom) -> void:
+    room.z_index = 100
     room.modulate = Color.GRAY
     options.remove_room(room)
     
 func _handle_room_move(room: BlueprintRoom, _coords: Vector2i, valid: bool) -> void:
-    # var t0: int = Time.get_ticks_usec() 
+    # var t0: int = Time.get_ticks_usec() e
     # print_debug("<<< %s: Has moved!" % [room.summary()]) 
     if !valid:
         room.modulate = Color.WEB_GRAY
@@ -150,6 +186,7 @@ func _handle_room_move(room: BlueprintRoom, _coords: Vector2i, valid: bool) -> v
         
 func _handle_room_dropped(room: BlueprintRoom, _origin: Vector2, _origin_angle: float) -> void:
     if _check_valid_room_placement(room, true):
+        room.z_index = 3
         room.placed = true
         room.modulate = Color.WHITE
         rooms.append(room)
@@ -165,6 +202,7 @@ func _handle_room_dropped(room: BlueprintRoom, _origin: Vector2, _origin_angle: 
         _allowance -= 1
         __SignalBus.on_blueprint_room_placed.emit(room)
         __SignalBus.on_update_planning.emit(self, _allowance)
+        _terminals[_active_terminal].credits = _allowance
         
         if !has_exposed_door():
             __SignalBus.on_elevation_plan_sealed.emit(elevation)
@@ -261,6 +299,7 @@ func _check_valid_room_placement(room: BlueprintRoom, finalize: bool) -> bool:
 func _draw() -> void:
     if !debug:
         return
+        
     var show_area: bool = true
     var show_logical_tiles: bool = true
     

@@ -1,9 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://dh68rjdc2w0vf"]
+[gd_scene load_steps=22 format=3 uid="uid://dh68rjdc2w0vf"]
 
 [ext_resource type="Script" uid="uid://73wn6oety2kg" path="res://scripts/2d/grid2d.gd" id="1_n4crp"]
 [ext_resource type="Script" uid="uid://dpu4cq0swyq2p" path="res://scripts/reps/dungeon_planner.gd" id="1_ou8db"]
 [ext_resource type="Resource" uid="uid://bwa72k7f68i62" path="res://scenes/rooms/start_room.tres" id="2_xsdx5"]
 [ext_resource type="Script" uid="uid://cuu7qpjrfbuhe" path="res://scripts/reps/planner_options.gd" id="4_o3k1y"]
+[ext_resource type="PackedScene" uid="uid://kfu710kiu8if" path="res://scenes/player_marker.tscn" id="4_w7wwa"]
+[ext_resource type="PackedScene" uid="uid://kyjc8l6qvaqf" path="res://scenes/terminal_marker.tscn" id="4_y0vac"]
 [ext_resource type="Script" uid="uid://bp5vn1wokjjtr" path="res://scripts/reps/draft_pool.gd" id="9_qcvmm"]
 [ext_resource type="Script" uid="uid://dgfi04hnjvm2r" path="res://scripts/reps/draft_option.gd" id="10_xsdx5"]
 [ext_resource type="Resource" uid="uid://dlj3wl7brr8py" path="res://scenes/rooms/broom_closet.tres" id="11_fno32"]
@@ -20,15 +22,18 @@
 [ext_resource type="Resource" uid="uid://btlo0fu3130eu" path="res://scenes/rooms/room_with_backroom.tres" id="18_fno32"]
 [ext_resource type="Resource" uid="uid://j1of13mkkyri" path="res://scenes/rooms/room_shiftingwalls.tres" id="19_nfhew"]
 
-[node name="Dungeon Planner" type="Node2D" node_paths=PackedStringArray("grid", "rooms_root", "options", "pool")]
+[node name="Dungeon Planner" type="Node2D" node_paths=PackedStringArray("grid", "_rooms_root", "_icons_root", "options", "pool")]
 script = ExtResource("1_ou8db")
 grid = NodePath("Grid2D")
-rooms_root = NodePath("Rooms")
+_rooms_root = NodePath("Rooms")
+_icons_root = NodePath("Icons")
 options = NodePath("OptionsCatalogue")
 pool = NodePath("DraftPool")
 seed_room = ExtResource("2_xsdx5")
 seed_coordinates = Vector2i(20, 20)
 seed_direction = 0
+_terminal_scene = ExtResource("4_y0vac")
+_player_scene = ExtResource("4_w7wwa")
 
 [node name="Grid2D" type="Node2D" parent="."]
 script = ExtResource("1_n4crp")
@@ -38,6 +43,9 @@ show_grid = true
 metadata/_custom_type_script = "uid://73wn6oety2kg"
 
 [node name="Rooms" type="Node2D" parent="."]
+
+[node name="Icons" type="Node2D" parent="."]
+z_index = 5
 
 [node name="OptionsCatalogue" type="Node2D" parent="."]
 position = Vector2(1040, 0)

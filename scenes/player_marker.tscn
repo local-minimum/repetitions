@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://kfu710kiu8if"]
+
+[ext_resource type="Texture2D" uid="uid://ceqlv70vmj076" path="res://textures/2d/player-marker.png" id="1_ywjxs"]
+
+[node name="Node2D" type="TextureRect"]
+modulate = Color(0, 0.7372549, 0.7411765, 0.78039217)
+z_index = 1
+custom_minimum_size = Vector2(16, 16)
+offset_right = 16.0
+offset_bottom = 16.0
+texture = ExtResource("1_ywjxs")
+expand_mode = 2
+stretch_mode = 4

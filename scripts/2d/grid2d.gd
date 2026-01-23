@@ -57,6 +57,17 @@ func get_global_point(coordinates: Vector2i, overflow: bool = false) -> Vector2:
         )
     )
     
+func get_global_pointf(coordinates: Vector2, overflow: bool = false) -> Vector2:
+    if !overflow:
+        coordinates = RectUtils.clamp_pointf(extent, coordinates)
+    
+    return to_global(
+        Vector2(
+            coordinates.x * tile_size.x,
+            coordinates.y * tile_size.y,
+        )
+    )
+    
 func get_local_cell_rect(coordinates: Vector2i, overflow: bool = false) -> Rect2:
     if !overflow:
         coordinates = RectUtils.clamp_pointi(extent, coordinates)

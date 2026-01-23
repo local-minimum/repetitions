@@ -14,7 +14,7 @@ class_name PlannerTerminal
 @export var _plans_for_relative_elevation: int = 0
 @export var _placement_allowance: int = 4
 var _placed_rooms: int = 0
-var _player: PhysicsGridPlayerController
+static var _player: PhysicsGridPlayerController
 var _terminal_active: bool
 
 func _enter_tree() -> void:
@@ -69,9 +69,9 @@ func validate_player_position(camera: Node = null) -> bool:
             var d: Vector3 = (_interaction_direction_reference.global_position - _body.global_position).normalized()
             var cam_forward: Vector3 = -cam.global_basis.z
             
-            print_debug("%s vs %s -> %s < %s" % [
-                cam_forward, d, cam_forward.dot(d), _interaction_angle_threshold
-            ])
+            # print_debug("%s vs %s -> %s < %s" % [
+            #    cam_forward, d, cam_forward.dot(d), _interaction_angle_threshold
+            # ])
             return cam_forward.dot(d) > _interaction_angle_threshold      
             
     return false
@@ -85,7 +85,7 @@ func _handle_input_event(camera: Node, event: InputEvent, _event_position: Vecto
         if validate_player_position(camera) && mouse_btn_evt.pressed && mouse_btn_evt.button_index == MOUSE_BUTTON_LEFT:
             var builder: DungeonBuilder = DungeonBuilder.find_builder_in_tree(self)
             var coords: Vector3i = builder.get_coordinates(global_position)
-            __SignalBus.on_ready_planner.emit(_player, coords.y + _plans_for_relative_elevation, maxi(0, _placement_allowance - _placed_rooms))
+            __SignalBus.on_ready_planner.emit(self, _player, coords.y + _plans_for_relative_elevation, maxi(0, _placement_allowance - _placed_rooms))
             _terminal_active = true
             print_debug("%s got clicked and is active now" % [self])
         

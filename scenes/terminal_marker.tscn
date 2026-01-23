@@ -1,0 +1,25 @@
+[gd_scene load_steps=9 format=3 uid="uid://kyjc8l6qvaqf"]
+
+[ext_resource type="Texture2D" uid="uid://cb6w8f3fpf6if" path="res://textures/2d/term0.png" id="1_m3sr4"]
+[ext_resource type="Script" uid="uid://8ygsjh7hcrb8" path="res://scripts/reps/planner_terminal_icon.gd" id="2_f5yti"]
+[ext_resource type="Texture2D" uid="uid://2iduex3xoav5" path="res://textures/2d/term1.png" id="3_6xr8v"]
+[ext_resource type="Texture2D" uid="uid://ihvcn44gcnlw" path="res://textures/2d/term2.png" id="4_6lyn3"]
+[ext_resource type="Texture2D" uid="uid://sw8db3wv8krg" path="res://textures/2d/term3.png" id="5_v421b"]
+[ext_resource type="Texture2D" uid="uid://bx5ltc48lwci0" path="res://textures/2d/term4.png" id="6_th7sb"]
+[ext_resource type="Texture2D" uid="uid://brveticnnasod" path="res://textures/2d/term5.png" id="7_0glac"]
+[ext_resource type="Texture2D" uid="uid://cqkwf7sm17h8s" path="res://textures/2d/term6.png" id="8_n3yer"]
+
+[node name="TerminalMarker" type="TextureRect"]
+modulate = Color(1, 0.1882353, 1, 1)
+custom_minimum_size = Vector2(16, 16)
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+texture = ExtResource("1_m3sr4")
+expand_mode = 2
+script = ExtResource("2_f5yti")
+_variants = Array[Texture2D]([ExtResource("1_m3sr4"), ExtResource("3_6xr8v"), ExtResource("4_6lyn3"), ExtResource("5_v421b"), ExtResource("6_th7sb"), ExtResource("7_0glac"), ExtResource("8_n3yer")])
+_default_modulate_color = Color(0.79911447, 0.45977378, 0.8983838, 1)
+_zero_modulate_color = Color(0.5288736, 0.28439564, 0.75975806, 1)
+_neg_modulate_color = Color(0.73592556, 0.20054808, 0.19575256, 1)

@@ -207,6 +207,10 @@ func get_floor_center(global_origin: Vector3, global_translation_direction: Vect
     #    to_global(_round_to_floor_center(target))])
     return to_global(_round_to_floor_center(target))
 
+func get_2d_grid_float_position(global_pos: Vector3) -> Vector2:
+    var pos: Vector3 = to_local(global_pos) / grid_size
+    return Vector2(pos.x, pos.z)
+
 func get_cardial_rotation(global_quat: Quaternion) -> Quaternion:
     var quats: Array[Quaternion] = [
         self.global_basis.get_rotation_quaternion(),
