@@ -24,6 +24,9 @@ enum RoomId {
 }
 
 enum DraftProbability { FREQUENT, DEFAULT, UNCOMMON, RARE }
+static func prob_name_key(dprob: DraftProbability) -> String:
+    return "ENUM_PROBABILITY_%s" % DraftProbability.find_key(dprob)
+
 @export var room_id: RoomId
 
 @export_flags("Room", "Hall") var _type: int:
@@ -56,7 +59,15 @@ class Type:
                 cats.append(Categories.HALL)
         
             return cats
-            
+    
+    func humanized_categories() -> Array[String]:
+        return Array(
+            categories.map(func (c: Categories) -> String: return tr("ENUM_ROOM_CATEGORY_%s" % Categories.find_key(c))),
+            TYPE_STRING,
+            "",
+            null,
+        )
+        
     func has_all(other: Type) -> bool:
         return (_bits & other._bits) == _bits
         

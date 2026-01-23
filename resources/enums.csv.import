@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://b27pj7yw6jx50"
+
+[deps]
+
+files=["res://resources/enums.en.translation", "res://resources/enums.sv.translation"]
+
+source_file="res://resources/enums.csv"
+dest_files=["res://resources/enums.en.translation", "res://resources/enums.sv.translation"]
+
+[params]
+
+compress=true
+delimiter=0

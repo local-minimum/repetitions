@@ -72,7 +72,12 @@ func _handle_ready_planner(terminal: PlannerTerminal, player: PhysicsGridPlayerC
             _player_icon = _player_scene.instantiate()
             _icons_root.add_child(_player_icon)
             _player_icon.name = "Player"
-            
+        
+        print_debug("Player is at %s (%s) which gives 2d %s" % [
+            player.global_position,
+            _builder.get_2d_grid_float_position(player.global_position),
+            grid.get_global_pointf(_builder.get_2d_grid_float_position(player.global_position)),
+        ])    
         _player_icon.global_position = grid.get_global_pointf(_builder.get_2d_grid_float_position(player.global_position))
         _player_icon.show()
         

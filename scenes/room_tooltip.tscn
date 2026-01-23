@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://gxpyj72pt8s6"]
+
+[ext_resource type="Script" uid="uid://dm0noqol4nscs" path="res://scripts/reps/room_tooltip.gd" id="1_4slat"]
+
+[sub_resource type="Theme" id="Theme_52mui"]
+HBoxContainer/constants/separation = 4
+Label/font_sizes/font_size = 10
+MarginContainer/constants/margin_bottom = 6
+MarginContainer/constants/margin_left = 8
+MarginContainer/constants/margin_right = 8
+MarginContainer/constants/margin_top = 4
+VBoxContainer/constants/separation = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_52mui"]
+
+[node name="Room Tooltip" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_52mui")
+script = ExtResource("1_4slat")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Room Name" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "ROOM NAME HERE"
+label_settings = SubResource("LabelSettings_52mui")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Room Rarity" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "frequency"
+
+[node name="Pool Stats" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2/3"
+horizontal_alignment = 2
+
+[node name="Type Tags" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "room tags"
+autowrap_mode = 2

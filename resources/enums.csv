@@ -1,0 +1,8 @@
+id,en,sv
+ENUM_PROBABILITY_FREQUENT,frequent,vanlig
+ENUM_PROBABILITY_DEFAULT,default,normal
+ENUM_PROBABILITY_UNCOMMON,uncommon,ovanlig
+ENUM_PROBABILITY_RARE,rare,sällsynt
+ENUM_ROOM_CATEGORY_NULL,uncategorized,uncategorized
+ENUM_ROOM_CATEGORY_ROOM,room,rum
+ENUM_ROOM_CATEGORY_HALL,hall,hall
