@@ -18,15 +18,14 @@ outline = NodePath("Outline")
 doors = NodePath("Doors")
 doors_directions = ExtResource("2_bf5r6")
 collision = NodePath("CollisionPolygon2D")
-debug = true
 draggable = SubResource("Resource_6afpx")
 
 [node name="Outline" type="TileMapLayer" parent="."]
 z_index = -1
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(-8, 8)
-tile_map_data = PackedByteArray("AAABAAAAAAAIAAAAAAABAP//AAAIAAAAAAABAP7/AAAEAAAAAAAAAAAAAAAJAAIAAAAAAP//AAACAAEAAAAAAP7/AAAJAAAAAAD//wAAAAADAAEAAAD/////AAAJAAIAAAD///7/AAAJAAAAAAABAAEAAAAEAAEAAAAAAAEAAAADAAEAAAD+////AAADAAEAAAD+//7/AAADAAAAAAA=")
+position = Vector2(-8, -8)
+tile_map_data = PackedByteArray("AAABAAAAAAAIAAAAAAABAP//AAAEAAAAAAAAAAAAAAACAAEAAAAAAP//AAAJAAAAAAD//wAAAAAJAAIAAAD/////AAAJAAAAAAABAAEAAAAIAAAAAAAAAAEAAAAJAAIAAAD+////AAADAAAAAAD+/wAAAAADAAEAAAD//wEAAAADAAEAAAAAAAIAAAADAAEAAAABAAIAAAAEAAEAAAA=")
 tile_set = ExtResource("4_qia4h")
 collision_enabled = false
 navigation_enabled = false
@@ -35,8 +34,8 @@ navigation_enabled = false
 z_index = -1
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(-8, 8)
-tile_map_data = PackedByteArray("AAAAAAEAAAADAAcAAAD+//7/AAACAAcAAAA=")
+position = Vector2(-8, -8)
+tile_map_data = PackedByteArray("AAAAAAIAAAADAAcAAAD+////AAACAAcAAAA=")
 tile_set = ExtResource("4_qia4h")
 collision_enabled = false
 navigation_enabled = false
