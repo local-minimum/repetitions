@@ -206,13 +206,13 @@ func _gridfull_movement() -> void:
         var movement: Movement.MovementType = _translation_stack[0]
         match movement:
             Movement.MovementType.FORWARD:
-                _attempt_translation(movement, _forward, Vector3.FORWARD)
+                _attempt_translation(movement, _forward, -global_basis.z)
             Movement.MovementType.STRAFE_LEFT:
-                _attempt_translation(movement, _left, Vector3.LEFT)
+                _attempt_translation(movement, _left, -global_basis.x)
             Movement.MovementType.STRAFE_RIGHT:
-                _attempt_translation(movement, _right, Vector3.RIGHT)
+                _attempt_translation(movement, _right, global_basis.x)
             Movement.MovementType.BACK:
-                _attempt_translation(movement, _backward, Vector3.BACK)
+                _attempt_translation(movement, _backward, global_basis.z)
             _:
                 push_error("Player %s's movement %s is not a valid translation" % [name, Movement.name(movement)])
         
@@ -229,7 +229,13 @@ func _attempt_translation(movement: Movement.MovementType, caster: ShapeCast3D, 
         _refuse_movement(movement, caster, direction)
         return
         
-    var target: Vector3 = builder.get_floor_center(global_position, (to_global(direction) - global_position).normalized())
+    var target: Vector3 = builder.get_closest_global_neighbour_position(global_position, CardinalDirections.vector_to_direction(direction.normalized()))
+    # print_debug("Moving %s in direction %s from %s to %s" % [
+    #    CardinalDirections.name(CardinalDirections.vector_to_direction(direction.normalized())),
+    #    direction,
+    #    global_position,
+    #    builder.get_closest_global_neighbour_position(global_position, CardinalDirections.vector_to_direction(direction)),
+    #])
     
     _translation_tween = create_tween()
     @warning_ignore_start("return_value_discarded")
@@ -250,7 +256,7 @@ func _refuse_movement(movement: Movement.MovementType, caster: ShapeCast3D, dire
         caster.get_collider(0) if caster else null,
         (caster.get_collider(0) as Node3D).get_parent_node_3d(),
     ])
-    var target: Vector3 = builder.get_floor_center(global_position, (to_global(direction) - global_position).normalized())
+    var target: Vector3 = builder.get_closest_global_neighbour_position(global_position, CardinalDirections.vector_to_direction(direction.normalized()))
     var pt: Vector3 = caster.get_collision_point(0)
     
     var l: float = global_position.distance_to(pt)

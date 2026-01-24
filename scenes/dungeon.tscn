@@ -35,6 +35,7 @@ color = Color(2.5268645e-07, 0.20128122, 0.20394182, 1)
 
 [node name="Dungeon Planner" parent="Dungeon Planning UI" node_paths=PackedStringArray("_builder") instance=ExtResource("2_fpimf")]
 _builder = NodePath("../../3D Builder")
+seed_direction = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="Dungeon Planning UI"]
 anchors_preset = 15
@@ -86,12 +87,12 @@ environment = SubResource("Environment_fpimf")
 
 [node name="DirtMagazine" type="Node" parent="."]
 script = ExtResource("5_fvacq")
-_block_solid_path = "uid://wmhx0mfeg718"
-_block_dug_one_path = "uid://ss76trh6b1u6"
-_block_dug_two_straight_path = "uid://dvhvyjoy1ms0o"
-_block_dug_two_bend_path = "uid://sg7qd61iq8mc"
-_block_dug_three_path = "uid://ci0xmltyydfpb"
-_block_dug_four_path = "uid://bs4vym5pbu1p3"
+_block_solid_path = "uid://cihs04opsmiy8"
+_block_dug_one_path = "uid://bclui8nnjmoh"
+_block_dug_two_straight_path = "uid://bikpq2lqukop2"
+_block_dug_two_bend_path = "uid://bsqk3tfre2xyg"
+_block_dug_three_path = "uid://c524ln2q266q"
+_block_dug_four_path = "uid://ckdk2uh7rdouf"
 metadata/_custom_type_script = "uid://dq7lbhrdci5ob"
 
 [connection signal="pressed" from="Dungeon Planning UI/MarginContainer/HBoxContainer/Redraw Rooms Btn" to="Dungeon Planning UI" method="_on_redraw_rooms_btn_pressed"]

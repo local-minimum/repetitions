@@ -9,17 +9,24 @@
 [ext_resource type="Texture2D" uid="uid://brveticnnasod" path="res://textures/2d/term5.png" id="7_0glac"]
 [ext_resource type="Texture2D" uid="uid://cqkwf7sm17h8s" path="res://textures/2d/term6.png" id="8_n3yer"]
 
-[node name="TerminalMarker" type="TextureRect"]
+[node name="TerminalMarker" type="Control" node_paths=PackedStringArray("_target")]
 modulate = Color(1, 0.1882353, 1, 1)
-custom_minimum_size = Vector2(16, 16)
-offset_left = -8.0
-offset_top = -12.0
-offset_right = 8.0
-offset_bottom = 4.0
-texture = ExtResource("1_m3sr4")
-expand_mode = 2
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("2_f5yti")
+_target = NodePath("TextureRect")
 _variants = Array[Texture2D]([ExtResource("1_m3sr4"), ExtResource("3_6xr8v"), ExtResource("4_6lyn3"), ExtResource("5_v421b"), ExtResource("6_th7sb"), ExtResource("7_0glac"), ExtResource("8_n3yer")])
 _default_modulate_color = Color(0.79911447, 0.45977378, 0.8983838, 1)
 _zero_modulate_color = Color(0.5288736, 0.28439564, 0.75975806, 1)
 _neg_modulate_color = Color(0.73592556, 0.20054808, 0.19575256, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 0
+offset_left = -8.0
+offset_top = -12.0
+offset_right = 8.0
+offset_bottom = 4.0
+texture = ExtResource("8_n3yer")
+expand_mode = 2
+stretch_mode = 4

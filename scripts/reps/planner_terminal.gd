@@ -84,7 +84,7 @@ func _handle_input_event(camera: Node, event: InputEvent, _event_position: Vecto
         var mouse_btn_evt: InputEventMouseButton = event
         if validate_player_position(camera) && mouse_btn_evt.pressed && mouse_btn_evt.button_index == MOUSE_BUTTON_LEFT:
             var builder: DungeonBuilder = DungeonBuilder.find_builder_in_tree(self)
-            var coords: Vector3i = builder.get_coordinates(global_position)
+            var coords: Vector3i = builder.get_closest_coordinates(global_position)
             __SignalBus.on_ready_planner.emit(self, _player, coords.y + _plans_for_relative_elevation, maxi(0, _placement_allowance - _placed_rooms))
             _terminal_active = true
             print_debug("%s got clicked and is active now" % [self])

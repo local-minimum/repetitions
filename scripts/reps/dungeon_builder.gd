@@ -10,8 +10,6 @@ const _BLUEPRINT_META: String = "blueprint"
 const _ORIGIN_META: String = "origin"
 const _COORDINATES_META: String = "coordinates"
 
-var _dirt_offset: Vector3 = Vector3.BACK
-
 var dirts: Dictionary[Vector3i, Node3D]
 var dirt_digouts: Dictionary[Vector3i, Array]
 var used_tiles: Array[Vector3i]
@@ -42,12 +40,12 @@ func _handle_use_pickax(target: Node3D, _hack_direction: CardinalDirections.Card
         ])
         return
     
-    var origin: Vector3 = _get_origin_corner(coords) + _dirt_offset * grid_size
+    var origin: Vector3 = get_global_grid_position_from_coordinates(coords)
     var side_points: Array[Vector3] = [
-        origin + 0.5 * Vector3.RIGHT * grid_size,
-        origin + 0.5 * Vector3.FORWARD * grid_size,
-        origin + (Vector3.FORWARD + 0.5 * Vector3.RIGHT) * grid_size,
-        origin + (0.5 * Vector3.FORWARD + Vector3.RIGHT) * grid_size,
+        origin + CardinalDirections.direction_to_vector(CardinalDirections.CardinalDirection.SOUTH) * grid_size * 0.5,
+        origin + CardinalDirections.direction_to_vector(CardinalDirections.CardinalDirection.WEST) * grid_size * 0.5,
+        origin + CardinalDirections.direction_to_vector(CardinalDirections.CardinalDirection.NORTH) * grid_size * 0.5,
+        origin + CardinalDirections.direction_to_vector(CardinalDirections.CardinalDirection.EAST) * grid_size * 0.5,
     ]
     var side_directions: Array[CardinalDirections.CardinalDirection] = [
         CardinalDirections.CardinalDirection.SOUTH,
@@ -129,7 +127,7 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
             "",
             null,
         )
-        
+   
         for room_tile: Vector3i in room_tiles:
             if dirts.has(room_tile):
                 dirts[room_tile].queue_free()
@@ -147,14 +145,17 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
         var origin2d: Vector2i = room.get_origin()
         var origin: Vector3i = Vector3i(origin2d.x, elevation, origin2d.y)
         
-        room_3d.position = Vector3(grid_size.x * origin.x, grid_size.y * origin.y, grid_size.z * origin.z)
+        room_3d.global_position = get_global_grid_position_from_coordinates(origin)
+        # print_debug("Placed room %s at %s %s with tiles %s" % [room, room_3d.position, origin, room_tiles])
+
         room_3d.set_meta(_ORIGIN_META, origin)
         
         if first_room && player != null:
             var ppos: Vector2i = room.get_global_used_tiles()[0]
-            player.global_position = to_global(Vector3((ppos.x + 0.5) * grid_size.x, elevation * grid_size.y, (ppos.y + 0.5) * grid_size.z))
+            player.global_position = get_global_grid_position_from_2d_coordinates(ppos, elevation)
             player.builder = self
             first_room = false
+            print_debug("Player located at %s at the center of %s" % [player.global_position, ppos])
     
     if exposed_dirt:
         _populate_level_with_dirt(grid, elevation)
@@ -166,7 +167,7 @@ func _populate_level_with_dirt(grid: Grid2D, elevation: int) -> void:
     if grid != null:
         for x: int in range(grid.extent.position.x, grid.extent.end.x):
             for y: int in range(grid.extent.position.y, grid.extent.end.y):
-                var coords3d: Vector3i = Vector3i(x, elevation,y)                
+                var coords3d: Vector3i = Vector3i(x, elevation, y)                
                 if used_tiles.has(coords3d):
                     continue
                     
@@ -175,38 +176,41 @@ func _populate_level_with_dirt(grid: Grid2D, elevation: int) -> void:
                     push_warning("%s: Failed to place dirt at %s" % [name, coords3d])
                 else:
                     used_tiles.append(coords3d)
-                    
-func _get_origin_corner(coords: Vector3i) -> Vector3:
-    return Vector3(grid_size.x * coords.x, grid_size.y * coords.y, grid_size.z * coords.z)
-    
-func get_coordinates(global_pos: Vector3) -> Vector3i:
+
+## Get the coordinates closest to the global position    
+func get_closest_coordinates(global_pos: Vector3) -> Vector3i:
     var local: Vector3 = to_local(global_pos)
-    return Vector3i(floori(local.x / grid_size.x), floori(local.y / grid_size.y), floori(local.z / grid_size.z))
+    return Vector3i(roundi(local.x / grid_size.x), floori(local.y / grid_size.y), roundi(local.z / grid_size.z))   
            
 func _place_dirt(coords: Vector3i, digs: Array[CardinalDirections.CardinalDirection] = []) -> Node3D:
-    var pos: Vector3 = _get_origin_corner(coords)
-    var d: Node3D = dirt_mag.place_block_at(self, pos + _dirt_offset * grid_size, grid_size, digs)
+    var global_pos: Vector3 = get_global_grid_position_from_coordinates(coords)
+    var d: Node3D = dirt_mag.place_block_at(self, global_pos, digs)
+    # if coords.x == 20:
+    #    print_debug("Placing dirt at %s %s" % [d.position, coords])
     if d != null:
         dirts[coords] = d
         d.name = "Dirt @ %s" % coords
         d.set_meta(_COORDINATES_META, coords)
 
     return d
-        
-func _round_to_floor_center(local: Vector3) -> Vector3:
-    var offset: Vector3 = 0.5 * grid_size
-    offset.y = 0
-    return ((local - offset) / grid_size).round() * grid_size + offset
-    
-func get_floor_center(global_origin: Vector3, global_translation_direction: Vector3) -> Vector3:
-    var direction: Vector3 = to_local(global_translation_direction + global_position).normalized()
-    var target: Vector3 = to_local(global_origin) + direction * grid_size
-    # print_debug("%s with %s/%s -> %s -> %s/%s" % [
-    #    to_local(global_origin), global_translation_direction, direction, target,
-    #     _round_to_floor_center(target),
-    #    to_global(_round_to_floor_center(target))])
-    return to_global(_round_to_floor_center(target))
 
+func get_global_grid_position_from_2d_coordinates(coords: Vector2i, elevation: int) -> Vector3:
+    return Vector3(coords.x * grid_size.x, elevation * grid_size.y, coords.y * grid_size.z)
+    
+func get_global_grid_position_from_coordinates(coords: Vector3i) -> Vector3:
+    return Vector3(coords.x * grid_size.x, coords.y * grid_size.y, coords.z * grid_size.z)
+    
+func _get_closest_local_grid_position(global_pos: Vector3) -> Vector3:
+    var local: Vector3 = to_local(global_pos)
+    return Vector3(roundi(local.x / grid_size.x) * grid_size.x, floori(local.y / grid_size.y) * grid_size.y, roundi(local.z / grid_size.z) * grid_size.z)
+    
+func get_closest_global_grid_position(global_pos: Vector3) -> Vector3:
+    return to_global(_get_closest_local_grid_position(global_pos))
+
+# Get closest neighbour to a global position in direction of the grid
+func get_closest_global_neighbour_position(global_pos: Vector3, direction: CardinalDirections.CardinalDirection) -> Vector3:
+    return to_global(_get_closest_local_grid_position(global_pos) + CardinalDirections.direction_to_vector(direction) * grid_size)
+    
 func get_2d_grid_float_position(global_pos: Vector3) -> Vector2:
     var pos: Vector3 = to_local(global_pos) / grid_size
     return Vector2(pos.x, pos.z)

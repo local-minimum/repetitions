@@ -4,6 +4,7 @@ class_name DungeonPlanner
 @export var _builder: DungeonBuilder
 @export var grid: Grid2D
 
+
 @export var _rooms_root: Node2D
 @export var _icons_root: Node2D
 
@@ -167,6 +168,7 @@ func _seed_dungeon() -> bool:
     
     rooms.append(blueprint)
     _rooms_root.add_child(blueprint)
+    #print_debug("Seeding %s dungeon with %s at %s %s" % [seed_coordinates, blueprint, blueprint.global_position, grid.get_closest_coordinates(blueprint.global_position)])
     return true
     
 func _handle_room_move_start(room: BlueprintRoom) -> void:
@@ -322,7 +324,7 @@ func _draw() -> void:
         if show_logical_tiles:
             var coords: Array[Vector2i] = room.get_global_used_tiles()
             for c: Vector2i in coords:
-                var cell_rect: Rect2 = grid.get_local_cell_rect(c, true)
+                var cell_rect: Rect2 = grid.get_grid_cell_rect(c, true)
                 cell_rect = RectUtils.translate_local(cell_rect, grid, self)
                 draw_rect(cell_rect, Color.DEEP_PINK, false, 2)
                 

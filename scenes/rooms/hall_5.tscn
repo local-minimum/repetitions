@@ -24,7 +24,8 @@ draggable = SubResource("Resource_6afpx")
 z_index = -1
 texture_filter = 1
 texture_repeat = 1
-tile_map_data = PackedByteArray("AAAAAP7/AAAGAAAAAAAAAP//AAACAAMAAAAAAAAAAAAEAAMAAAAAAAEAAAACAAMAAAAAAAIAAAAEAAMAAAAAAAMAAAACAAMAAAAAAAQAAAAGAAIAAAA=")
+position = Vector2(-8, -8)
+tile_map_data = PackedByteArray("AAAAAP7/AAACAAMAAAAAAP//AAACAAMAAAAAAAAAAAAEAAMAAAAAAAEAAAACAAMAAAAAAAIAAAAEAAMAAAAAAAMAAAAGAAIAAAAAAP3/AAAGAAAAAAA=")
 tile_set = ExtResource("4_l1523")
 collision_enabled = false
 navigation_enabled = false
@@ -33,10 +34,11 @@ navigation_enabled = false
 z_index = -1
 texture_filter = 1
 texture_repeat = 1
-tile_map_data = PackedByteArray("AAAAAP7/AAAEAAcAAAAAAP//AAACAAcAAAAAAAEAAAAEAAcAAAAAAAIAAAACAAcAAAAAAAQAAAADAAcAAAA=")
+position = Vector2(-8, -8)
+tile_map_data = PackedByteArray("AAAAAP3/AAACAAgAAAAAAAAAAAACAAgAAAAAAAMAAAADAAcAAAA=")
 tile_set = ExtResource("4_l1523")
 collision_enabled = false
 navigation_enabled = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-8, -40, -8, 88, 24, 88, 24, -40)
+polygon = PackedVector2Array(-16, -64, -16, 64, 16, 64, 16, -64)
