@@ -1,5 +1,13 @@
+@tool
 extends Node2D
 class_name Grid2D
+
+## If the grid is centered on the tiles, this should be half the tile size with relevant signs
+@export var _tile_start_offset: Vector2:
+    set(value):
+        _tile_start_offset = value
+        if show_grid:
+            queue_redraw()
 
 @export var tile_size: Vector2:
     set(value):
@@ -12,6 +20,11 @@ class_name Grid2D
         extent = value
         if show_grid:
             queue_redraw()
+
+## The bounding box of the grid, takes the tile start offset into account
+var bounding_box: Rect2:
+    get():
+        return Rect2(Vector2(extent.position) * tile_size + _tile_start_offset, Vector2(extent.size) * tile_size)    
             
 @export_group("Drawing")
 @export var show_grid: bool:
@@ -88,18 +101,37 @@ func _draw() -> void:
     if !show_grid:
         return
     
-    for row: int in range(extent.position.y, extent.end.y):
+    if extent.size.x == 0 || extent.size.y == 0:
+        return
+        
+    var bb: Rect2 = bounding_box
+    for row: float in range(bb.position.y, bb.end.y, tile_size.y):
         draw_line(
-            Vector2(extent.position.x * tile_size.x, row * tile_size.y), 
-            Vector2(extent.end.x * tile_size.x, row * tile_size.y),
+            Vector2(bb.position.x, row), 
+            Vector2(bb.end.x, row),
             line_color,
             line_width,
         )
     
-    for col: int in range(extent.position.x, extent.end.x):
+    draw_line(
+        Vector2(bb.position.x, bb.end.y),
+        Vector2(bb.end.x, bb.end.y),
+        line_color,
+        line_width,
+    )
+    
+    
+    for col: float in range(bb.position.x, bb.end.x, tile_size.x):
         draw_line(
-            Vector2(col * tile_size.x, extent.position.y * tile_size.y), 
-            Vector2(col * tile_size.x, extent.end.y * tile_size.y),
+            Vector2(col, bb.position.y), 
+            Vector2(col, bb.end.y),
             line_color,
             line_width,
-        ) 
+        )
+    
+    draw_line(
+        Vector2(bb.end.x, bb.position.y),
+        Vector2(bb.end.x, bb.end.y),
+        line_color,
+        line_width,
+    )

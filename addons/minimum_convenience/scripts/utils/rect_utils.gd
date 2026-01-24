@@ -45,3 +45,6 @@ static func translate_local(r: Rect2, from: Node2D, to: Node2D) -> Rect2:
     var p: Vector2 = to.to_local(from.to_global(r.position))
     var e: Vector2 = to.to_local(from.to_global(r.end))
     return Rect2(p.min(e), (e - p).abs())
+
+static func translate(r: Rect2, amount: Vector2) -> Rect2:
+    return Rect2(r.position + amount, r.size)

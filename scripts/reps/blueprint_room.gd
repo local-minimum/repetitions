@@ -101,7 +101,7 @@ var contained_in_grid: bool:
     get():
         if grid != null && grid.is_inside_grid(global_position):
             var r: Rect2i = outline.get_used_rect()
-            var origin: Vector2i = grid.get_closest_coordinates(global_position)
+            var origin: Vector2i = get_origin()
             # TODO: This assumes equal grid size... Issue #5
             r.position += origin
             
@@ -326,7 +326,12 @@ func _draw() -> void:
     if outline != null:
         var o: Vector2i = draggable.translate_coord_to_local(self, get_origin())
         for tile_coords: Vector2i in outline.get_used_cells():
-            draw_rect(TileMapLayerUtils.get_tile_bbox(outline, tile_coords), Color.AQUA, o == tile_coords, 1 if o != tile_coords else -1)
+            draw_rect(
+                RectUtils.translate(TileMapLayerUtils.get_tile_bbox(outline, tile_coords), Vector2(-0.5 * tile_size.x, 0.5 * tile_size.y)), 
+                Color.AQUA, 
+                o == tile_coords,
+                1 if o != tile_coords else -1,
+            )
     
     if doors != null:
         for door_coords: Vector2i in doors.get_used_cells():

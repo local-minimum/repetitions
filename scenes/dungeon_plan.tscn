@@ -36,9 +36,11 @@ _terminal_scene = ExtResource("4_y0vac")
 _player_scene = ExtResource("4_w7wwa")
 
 [node name="Grid2D" type="Node2D" parent="."]
+position = Vector2(16, 20)
 script = ExtResource("1_n4crp")
+_tile_start_offset = Vector2(-8, -8)
 tile_size = Vector2(16, 16)
-extent = Rect2i(0, 0, 60, 40)
+extent = Rect2i(0, 0, 60, 39)
 show_grid = true
 metadata/_custom_type_script = "uid://73wn6oety2kg"
 
