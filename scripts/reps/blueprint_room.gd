@@ -59,8 +59,8 @@ func has_unused_door() -> bool:
     for lcoords: Vector2i in doors_local:
         var gcoords: Vector2i = doors_global[idx]
         var atlas: Vector2i = doors.get_cell_atlas_coords(lcoords)
-        for dir: CardinalDirections.CardinalDirection in get_global_door_directions(atlas):
-            if _door_data.any(func (ddata: DoorData) -> bool: return ddata.global_coordinates == gcoords && ddata.global_direction == dir && ddata.room == self):
+        for gdir: CardinalDirections.CardinalDirection in get_global_door_directions(atlas):
+            if _door_data.any(func (ddata: DoorData) -> bool: return ddata.global_coordinates == gcoords && ddata.global_direction == gdir && ddata.room == self):
                 continue
             return true
         idx += 1
@@ -87,6 +87,8 @@ func recalculate_collision() -> void:
         push_warning("[Blueprint Room %s] Does not have any collsion configured" % name)
         return
 
+    collision.position = Vector2.ZERO
+    
     if placed:    
         collision.polygon = perimeter()
     else:
@@ -125,12 +127,12 @@ func snap_to_grid() -> void:
            
 ## Local space float precision bounding box, only reliable to say that things don't overlap
 func bounding_box() -> Rect2: 
-    return TileMapLayerUtils.bounding_box(outline)
+    return RectUtils.translate(TileMapLayerUtils.bounding_box(outline), outline.position)
 
 ## Local space perimeter points
 func perimeter() -> PackedVector2Array:
-    return TileMapLayerUtils.perimeter(outline, true)
-    
+    return ArrayUtils.translate_packed_vector2_array(TileMapLayerUtils.perimeter(outline, true), outline.position, true)
+        
 ## Logical world coordinates of room origin / what it rotates around
 func get_origin() -> Vector2i:
     return draggable.calculate_coordinates(self)
@@ -321,49 +323,55 @@ func _draw() -> void:
         return
         
     var bbox: Rect2 = bounding_box()
-    draw_rect(bbox, Color.MEDIUM_ORCHID, false, 1)
+    draw_rect(bbox, Color.MEDIUM_ORCHID, false, 1)  
     
-    if outline != null:
-        var o: Vector2i = draggable.translate_coord_to_local(self, get_origin())
-        for tile_coords: Vector2i in outline.get_used_cells():
-            draw_rect(
-                RectUtils.translate(TileMapLayerUtils.get_tile_bbox(outline, tile_coords), Vector2(-0.5 * tile_size.x, 0.5 * tile_size.y)), 
-                Color.AQUA, 
-                o == tile_coords,
-                1 if o != tile_coords else -1,
-            )
-    
+    if grid == null:
+        return
+          
+    var origin: Vector2i = get_origin()
+    for coords: Vector2i in get_global_used_tiles():
+        var r: Rect2 = RectUtils.translate_local(grid.get_grid_cell_rect(coords), grid, self)
+        draw_rect(
+            r, 
+            Color.AQUA, 
+            origin == coords,
+            1 if origin != coords else -1,
+        )      
+            
+
     if doors != null:
         for door_coords: Vector2i in doors.get_used_cells():
             var atlas_coords: Vector2i = doors.get_cell_atlas_coords(door_coords)
-            var tile_bbox: Rect2 = TileMapLayerUtils.get_tile_bbox(doors, door_coords)
             var door_global_coords: Vector2i = draggable.translate_coords_array_to_global(self, [door_coords])[0]
-            var center: Vector2 = tile_bbox.get_center()
+            var local_center: Vector2 = to_local(grid.get_global_point(door_global_coords))
             
             if !doors_directions.is_door(atlas_coords):
                 if !_debugged:
                     print_debug("[Blueprint Room %s] Has unregistered door at atlas coords %s in %s" % [
                         name, atlas_coords, doors_directions.resource_path
                     ])
+                    
             for local_direction: CardinalDirections.CardinalDirection in doors_directions.get_directions(atlas_coords):
                 if !_debugged:
                     print_debug("[Blueprint Room %s] Door at %s has atlas coords %s giving local direction %s" % [name, door_coords, atlas_coords, CardinalDirections.name(local_direction)])
                     
-                var delta: Vector2 = tile_bbox.size * CardinalDirections.direction_to_vector2d(local_direction) * 0.5
-                var direction: CardinalDirections.CardinalDirection = draggable.get_global_direction(self, local_direction)
-                var used: bool = has_registered_door(door_global_coords, direction)
-                var connected: bool = used && get_connected_room(door_global_coords, direction) != null
-                var tip: Vector2 = center + delta * 0.8
+                var local_delta: Vector2 = grid.tile_size * CardinalDirections.direction_to_vector2d(local_direction) * 0.5
+                var global_direction: CardinalDirections.CardinalDirection = draggable.get_global_direction(self, local_direction)
+                var used: bool = has_registered_door(door_global_coords, global_direction)
+                var connected: bool = used && get_connected_room(door_global_coords, global_direction) != null
+                
+                var local_tip: Vector2 = local_center + local_delta * 0.8
                 if !used:              
-                    draw_line(center, tip, Color.GREEN_YELLOW, 2)
-                    draw_circle(tip, 2, Color.GREEN_YELLOW)
+                    draw_line(local_center, local_tip, Color.GREEN_YELLOW, 2)
+                    draw_circle(local_tip, 2, Color.GREEN_YELLOW)
                 elif connected:
-                    draw_line(center, tip, Color.GREEN, 2)
-                    draw_rect(Rect2(center, Vector2.ZERO).grow(2), Color.GREEN)
+                    draw_line(local_center, local_tip, Color.GREEN, 2)
+                    draw_rect(Rect2(local_center, Vector2.ZERO).grow(2), Color.GREEN)
                 else:
-                    draw_line(center, tip, Color.DARK_RED, 2)
-                    var rotated_delta: Vector2 = tile_bbox.size * CardinalDirections.direction_to_vector2d(CardinalDirections.yaw_cw(local_direction)[0]) * 0.5
-                    draw_line(tip - rotated_delta * 0.6, tip + rotated_delta * 0.6, Color.DARK_RED, 2)
+                    draw_line(local_center, local_tip, Color.DARK_RED, 2)
+                    # TODO: If the grid is not square this isn't fully correct
+                    var rotated_delta: Vector2 = grid.tile_size * CardinalDirections.direction_to_vector2d(CardinalDirections.yaw_cw(local_direction)[0]) * 0.5
+                    draw_line(local_tip - rotated_delta * 0.6, local_tip + rotated_delta * 0.6, Color.DARK_RED, 2)
                 
     _debugged = true
 

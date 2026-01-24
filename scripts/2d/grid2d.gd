@@ -80,15 +80,16 @@ func get_global_pointf(coordinates: Vector2, overflow: bool = false) -> Vector2:
             coordinates.y * tile_size.y,
         )
     )
-    
-func get_local_cell_rect(coordinates: Vector2i, overflow: bool = false) -> Rect2:
+
+# Get rect for tile/cell in the reference system of the grid    
+func get_grid_cell_rect(coordinates: Vector2i, overflow: bool = false) -> Rect2:
     if !overflow:
         coordinates = RectUtils.clamp_pointi(extent, coordinates)
     
     return Rect2(
         Vector2(
-            coordinates.x * tile_size.x,
-            coordinates.y * tile_size.y,
+            coordinates.x * tile_size.x + _tile_start_offset.x,
+            coordinates.y * tile_size.y + _tile_start_offset.y,
         ),
         tile_size,
     )

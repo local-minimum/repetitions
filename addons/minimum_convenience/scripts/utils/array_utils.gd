@@ -120,3 +120,10 @@ static func pick_weighted_probability_index(arr: Array[float], total: float = -1
         p -= arr[idx]
         
     return -1
+
+static func translate_packed_vector2_array(arr: PackedVector2Array, amount: Vector2, inplace: bool = false) -> PackedVector2Array:
+    var out: PackedVector2Array = arr if inplace else PackedVector2Array(arr)
+    for idx: int in range(out.size()):
+        out[idx] += amount
+    
+    return out

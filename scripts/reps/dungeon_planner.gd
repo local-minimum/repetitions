@@ -324,7 +324,7 @@ func _draw() -> void:
         if show_logical_tiles:
             var coords: Array[Vector2i] = room.get_global_used_tiles()
             for c: Vector2i in coords:
-                var cell_rect: Rect2 = grid.get_local_cell_rect(c, true)
+                var cell_rect: Rect2 = grid.get_grid_cell_rect(c, true)
                 cell_rect = RectUtils.translate_local(cell_rect, grid, self)
                 draw_rect(cell_rect, Color.DEEP_PINK, false, 2)
                 
