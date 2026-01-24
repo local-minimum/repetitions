@@ -44,13 +44,13 @@ var _block_dug_four: PackedScene:
             _block_dug_four = load(_block_dug_four_path)
         return _block_dug_four
 
-## Place a block as a child to `parent` using the `pos` as local position, ofset as needed by enforced rotations 
-func place_block_at(parent: Node3D, pos: Vector3, grid_size: Vector3, digs: Array[CardinalDirections.CardinalDirection] = []) -> Node3D:
+## Place a block as a child to `parent` using the `global_pos` as global position, ofset as needed by enforced rotations 
+func place_block_at(parent: Node3D, global_pos: Vector3, digs: Array[CardinalDirections.CardinalDirection] = []) -> Node3D:
     match digs.size():
         0:
             var n: Node3D = _block_solid.instantiate()
             parent.add_child(n)
-            n.position = pos
+            n.global_position = global_pos
             return n
             
         1:
@@ -71,7 +71,7 @@ func place_block_at(parent: Node3D, pos: Vector3, grid_size: Vector3, digs: Arra
                         name, _block_dug_one.resource_path, CardinalDirections.name(dig),
                     ])
                     
-            n.position = pos
+            n.global_position = global_pos
             return n
         
         2:
@@ -86,7 +86,7 @@ func place_block_at(parent: Node3D, pos: Vector3, grid_size: Vector3, digs: Arra
                     push_error("%s cannot rotate %s to %s-%s, only straight planar cardinals allowed, using default rotation" % [
                         name, _block_dug_two_straight.resource_path, CardinalDirections.name(digs[0]), CardinalDirections.name(digs[1])
                     ])
-                n.position = pos
+                n.global_position = global_pos
                 return n
             elif CardinalDirections.ALL_PLANAR_DIRECTIONS.has(digs[0]) && CardinalDirections.ALL_PLANAR_DIRECTIONS.has(digs[1]):
                 var n: Node3D = _block_dug_two_bend.instantiate()
@@ -110,7 +110,7 @@ func place_block_at(parent: Node3D, pos: Vector3, grid_size: Vector3, digs: Arra
                         name, _block_dug_two_bend.resource_path, CardinalDirections.name(digs[0]), CardinalDirections.name(digs[1])
                     ])
                 
-                n.position = pos
+                n.global_position = global_pos
                 return n
             else:
                 push_error("%s doesn't have a template for dug out cardinals %s - %s" % [
@@ -127,7 +127,7 @@ func place_block_at(parent: Node3D, pos: Vector3, grid_size: Vector3, digs: Arra
                 push_error("%s cannot rotate %s because expected only planar cardinals in %s, %s, %s. Using default rotation." % [
                     name, _block_dug_three.resource_path, CardinalDirections.name(digs[0]), CardinalDirections.name(digs[1]), CardinalDirections.name(digs[2])
                 ])
-                n.position = pos
+                n.global_position = global_pos
                 return n
             
             var undig: CardinalDirections.CardinalDirection = undug[0]    
@@ -146,12 +146,12 @@ func place_block_at(parent: Node3D, pos: Vector3, grid_size: Vector3, digs: Arra
                         name, _block_dug_one.resource_path, CardinalDirections.name(undig),
                     ])
             
-            n.position = pos
+            n.global_position = global_pos
             return n
         4:
             var n: Node3D = _block_dug_four.instantiate()
             parent.add_child(n)
-            n.position = pos
+            n.global_position = global_pos
             return n
             
         _:

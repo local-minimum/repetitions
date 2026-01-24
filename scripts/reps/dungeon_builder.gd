@@ -145,7 +145,7 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
         var origin2d: Vector2i = room.get_origin()
         var origin: Vector3i = Vector3i(origin2d.x, elevation, origin2d.y)
         
-        room_3d.position = _get_origin_corner(origin)
+        room_3d.global_position = get_global_grid_position_from_coordinates(origin)
         # print_debug("Placed room %s at %s %s with tiles %s" % [room, room_3d.position, origin, room_tiles])
 
         room_3d.set_meta(_ORIGIN_META, origin)
@@ -176,9 +176,6 @@ func _populate_level_with_dirt(grid: Grid2D, elevation: int) -> void:
                     push_warning("%s: Failed to place dirt at %s" % [name, coords3d])
                 else:
                     used_tiles.append(coords3d)
-                    
-func _get_origin_corner(coords: Vector3i) -> Vector3:
-    return Vector3(grid_size.x * coords.x - grid_size.x * 0.5, grid_size.y * coords.y, grid_size.z * coords.z - grid_size.z * 0.5)
 
 ## Get the coordinates closest to the global position    
 func get_closest_coordinates(global_pos: Vector3) -> Vector3i:
@@ -186,8 +183,8 @@ func get_closest_coordinates(global_pos: Vector3) -> Vector3i:
     return Vector3i(roundi(local.x / grid_size.x), floori(local.y / grid_size.y), roundi(local.z / grid_size.z))   
            
 func _place_dirt(coords: Vector3i, digs: Array[CardinalDirections.CardinalDirection] = []) -> Node3D:
-    var pos: Vector3 = _get_origin_corner(coords)
-    var d: Node3D = dirt_mag.place_block_at(self, pos, grid_size, digs)
+    var global_pos: Vector3 = get_global_grid_position_from_coordinates(coords)
+    var d: Node3D = dirt_mag.place_block_at(self, global_pos, digs)
     # if coords.x == 20:
     #    print_debug("Placing dirt at %s %s" % [d.position, coords])
     if d != null:
