@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ck4qilcv3pmw3"]
+[gd_scene load_steps=11 format=3 uid="uid://ck4qilcv3pmw3"]
 
 [ext_resource type="Script" uid="uid://crh0uqgb4ags6" path="res://scripts/reps/dungeon_planner_ui.gd" id="1_c4wp1"]
 [ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_fpimf"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://rcdrc4gcc8ry" path="res://scripts/reps/room_tooltip_manager.gd" id="4_hsn05"]
 [ext_resource type="PackedScene" uid="uid://gxpyj72pt8s6" path="res://scenes/room_tooltip.tscn" id="5_etlrv"]
 [ext_resource type="Script" uid="uid://dq7lbhrdci5ob" path="res://scripts/reps/dirt_magazine.gd" id="5_fvacq"]
+[ext_resource type="Script" uid="uid://ey6peb5lfj3o" path="res://scripts/reps/exploration_ui.gd" id="6_tkjml"]
+[ext_resource type="PackedScene" uid="uid://cgryxgwcumo58" path="res://scenes/trophy_ui.tscn" id="7_5hkx1"]
 
 [sub_resource type="Environment" id="Environment_fpimf"]
 ambient_light_color = Color(0.2440432, 0.16552716, 0.1601688, 1)
@@ -98,6 +100,11 @@ wait_time = 0.5
 
 [node name="Room Tooltip" parent="Dungeon Planning UI" instance=ExtResource("5_etlrv")]
 z_index = 1000
+
+[node name="Exploration UI" type="CanvasLayer" parent="."]
+script = ExtResource("6_tkjml")
+
+[node name="TrophyUI" parent="Exploration UI" instance=ExtResource("7_5hkx1")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fpimf")

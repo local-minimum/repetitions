@@ -16,5 +16,7 @@ signal on_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom])
 signal on_elevation_plan_sealed(elevation: int)
 
 signal on_pickup_tool(tool: Tool.ToolType)
+signal on_drop_tool(tool: Tool.ToolType)
+
 signal on_use_pickax(target: Node3D, hack_direction: CardinalDirections.CardinalDirection, point: Vector3)
 @warning_ignore_restore("unused_signal")

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgryxgwcumo58"]
+
+[ext_resource type="Texture2D" uid="uid://dolv20twx1qqy" path="res://textures/2d/trophy_icon.png" id="1_mtshf"]
+[ext_resource type="Script" uid="uid://cejr0dralwch3" path="res://scripts/reps/trophies_ui.gd" id="1_sw6l8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sw6l8"]
+font_size = 32
+
+[node name="TrophyUI" type="HBoxContainer" node_paths=PackedStringArray("_text")]
+modulate = Color(1, 1, 0.16862746, 0.8117647)
+mouse_filter = 2
+script = ExtResource("1_sw6l8")
+_text = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "1 x"
+label_settings = SubResource("LabelSettings_sw6l8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_mtshf")
+expand_mode = 3
+stretch_mode = 4
