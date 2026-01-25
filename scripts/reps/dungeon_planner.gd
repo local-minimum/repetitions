@@ -31,7 +31,6 @@ var _player_icon: Control = null
 var _terminals: Dictionary[PlannerTerminal, PlannerTerminalIcon]
 var _active_terminal: PlannerTerminal
 var _allowance: int = 0
-var _options: Dictionary[BlueprintRoom, DraftOption]
 var _sealed: bool
 
 func _ready() -> void:
@@ -141,7 +140,6 @@ func _draw_options() -> void:
         
     for room_option: DraftOption in pool.draft(draft_count - options.size()):
         var room: BlueprintRoom = room_option.instantiate_blueprint_room()
-        _options[room] = room_option
         _rooms_root.add_child(room)
         options.add_room(room)
         
@@ -164,7 +162,7 @@ func _seed_dungeon() -> bool:
     blueprint.global_rotation = CardinalDirections.direction_to_rotation_2d(direction)
     blueprint.placed = true
     blueprint.snap_to_grid()
-    blueprint.option = seed_room
+    blueprint.option.drafted_count += 1
     
     rooms.append(blueprint)
     _rooms_root.add_child(blueprint)
@@ -197,11 +195,7 @@ func _handle_room_dropped(room: BlueprintRoom, _origin: Vector2, _origin_angle: 
         room.placed = true
         room.modulate = Color.WHITE
         rooms.append(room)
-        if _options.has(room):
-            _options[room].drafted_count += 1
-            room.option = _options[room]
-            if !_options.erase(room):
-                pass
+        room.option.draftable_count += 1
            
         if mode == PlannerMode.PICK_ONE:
             options.discard_rooms()

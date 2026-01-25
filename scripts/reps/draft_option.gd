@@ -109,6 +109,7 @@ var _blueprint_scene: PackedScene:
 
 func instantiate_blueprint_room() -> BlueprintRoom:   
     var room: BlueprintRoom = _blueprint_scene.instantiate()
+    room.option = self
     return room
 
 var _3d_room_scene: PackedScene:

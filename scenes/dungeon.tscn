@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://ck4qilcv3pmw3"]
+[gd_scene load_steps=9 format=3 uid="uid://ck4qilcv3pmw3"]
 
 [ext_resource type="Script" uid="uid://crh0uqgb4ags6" path="res://scripts/reps/dungeon_planner_ui.gd" id="1_c4wp1"]
 [ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_fpimf"]
 [ext_resource type="PackedScene" uid="uid://dh68rjdc2w0vf" path="res://scenes/dungeon_plan.tscn" id="2_fpimf"]
 [ext_resource type="PackedScene" uid="uid://b8lqj7rv80ssv" path="res://scenes/player_3d.tscn" id="4_0wj4k"]
+[ext_resource type="Script" uid="uid://rcdrc4gcc8ry" path="res://scripts/reps/room_tooltip_manager.gd" id="4_hsn05"]
+[ext_resource type="PackedScene" uid="uid://gxpyj72pt8s6" path="res://scenes/room_tooltip.tscn" id="5_etlrv"]
 [ext_resource type="Script" uid="uid://dq7lbhrdci5ob" path="res://scripts/reps/dirt_magazine.gd" id="5_fvacq"]
 
 [sub_resource type="Environment" id="Environment_fpimf"]
@@ -80,6 +82,20 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "UI_DONE"
 
+[node name="Room Tooltip Manager" type="Node" parent="Dungeon Planning UI" node_paths=PackedStringArray("_tooltip", "_show_timer", "_hide_timer")]
+script = ExtResource("4_hsn05")
+_tooltip = NodePath("../Room Tooltip")
+_show_timer = NodePath("Delay Show")
+_hide_timer = NodePath("Delay Hide")
+
+[node name="Delay Show" type="Timer" parent="Dungeon Planning UI/Room Tooltip Manager"]
+wait_time = 0.3
+
+[node name="Delay Hide" type="Timer" parent="Dungeon Planning UI/Room Tooltip Manager"]
+wait_time = 0.5
+
+[node name="Room Tooltip" parent="Dungeon Planning UI" instance=ExtResource("5_etlrv")]
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fpimf")
 
@@ -97,3 +113,5 @@ metadata/_custom_type_script = "uid://dq7lbhrdci5ob"
 
 [connection signal="pressed" from="Dungeon Planning UI/MarginContainer/HBoxContainer/Redraw Rooms Btn" to="Dungeon Planning UI" method="_on_redraw_rooms_btn_pressed"]
 [connection signal="pressed" from="Dungeon Planning UI/MarginContainer/HBoxContainer/Layout Done Btn" to="Dungeon Planning UI" method="_on_layout_done_btn_pressed"]
+[connection signal="timeout" from="Dungeon Planning UI/Room Tooltip Manager/Delay Show" to="Dungeon Planning UI/Room Tooltip Manager" method="_on_delay_show_timeout"]
+[connection signal="timeout" from="Dungeon Planning UI/Room Tooltip Manager/Delay Hide" to="Dungeon Planning UI/Room Tooltip Manager" method="_on_delay_hide_timeout"]
