@@ -32,6 +32,7 @@ var camera: Camera3D:
 @export var _gridless_camera_fov: float = 70   
 
 @export var _camera_transition_time: float = 0.2
+@export var _allow_vertical_movement: bool
 
 var _gridded_cam_offset: Vector3
 var _gridless_cam_offset: Vector3
@@ -51,8 +52,8 @@ var _allow_continious_translation: bool = true
 var gridless: bool:
     set(value): 
         if gridless != value:
-            _translation_stack.clear()
-            _translation_pressed.clear()
+            # _translation_stack.clear()
+            # _translation_pressed.clear()
             velocity = Vector3.ZERO          
         
             if value:
@@ -74,6 +75,7 @@ var gridless: bool:
                 _cam_slide_tween.tween_property(_camera, "position", _gridded_cam_offset, _camera_transition_time)
                 _cam_slide_tween.tween_property(_camera, "near", _gridded_cam_near, _camera_transition_time)
                 _cam_slide_tween.tween_property(_camera, "fov", _gridded_cam_fov, _camera_transition_time)
+                _cam_slide_tween.tween_property(_camera, "rotation:x", 0, _camera_transition_time)
                 @warning_ignore_restore("return_value_discarded")
                 # Force alignment with grid
                 _attempt_translation(Movement.MovementType.CENTER, null, Vector3.ZERO)
@@ -221,15 +223,20 @@ func _gridfull_movement() -> void:
     elif Input.is_action_just_pressed("crawl_turn_right"):
         _attempt_turn(-PI * 0.5)
         
-func _attempt_translation(movement: Movement.MovementType, caster: ShapeCast3D, direction: Vector3) -> void:
+func _attempt_translation(movement: Movement.MovementType, caster: ShapeCast3D, direction: Vector3) -> void:   
     if _translation_tween && _translation_tween.is_running() || _rotation_tween && _rotation_tween.is_running():
         return
-        
+ 
+    if direction != Vector3.ZERO:
+        if !_allow_vertical_movement:
+            direction.y = 0
+        direction = direction.normalized()
+            
     if caster != null && caster.is_colliding():
         _refuse_movement(movement, caster, direction)
         return
         
-    var target: Vector3 = builder.get_closest_global_neighbour_position(global_position, CardinalDirections.vector_to_direction(direction.normalized()))
+    var target: Vector3 = builder.get_closest_global_neighbour_position(global_position, CardinalDirections.vector_to_direction(direction))
     # print_debug("Moving %s in direction %s from %s to %s" % [
     #    CardinalDirections.name(CardinalDirections.vector_to_direction(direction.normalized())),
     #    direction,
@@ -256,7 +263,7 @@ func _refuse_movement(movement: Movement.MovementType, caster: ShapeCast3D, dire
         caster.get_collider(0) if caster else null,
         (caster.get_collider(0) as Node3D).get_parent_node_3d(),
     ])
-    var target: Vector3 = builder.get_closest_global_neighbour_position(global_position, CardinalDirections.vector_to_direction(direction.normalized()))
+    var target: Vector3 = builder.get_closest_global_neighbour_position(global_position, CardinalDirections.vector_to_direction(direction))
     var pt: Vector3 = caster.get_collision_point(0)
     
     var l: float = global_position.distance_to(pt)
