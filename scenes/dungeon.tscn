@@ -82,19 +82,22 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "UI_DONE"
 
-[node name="Room Tooltip Manager" type="Node" parent="Dungeon Planning UI" node_paths=PackedStringArray("_tooltip", "_show_timer", "_hide_timer")]
+[node name="Room Tooltip Manager" type="Control" parent="Dungeon Planning UI" node_paths=PackedStringArray("_tooltip", "_show_timer", "_hide_timer")]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("4_hsn05")
 _tooltip = NodePath("../Room Tooltip")
 _show_timer = NodePath("Delay Show")
 _hide_timer = NodePath("Delay Hide")
 
 [node name="Delay Show" type="Timer" parent="Dungeon Planning UI/Room Tooltip Manager"]
-wait_time = 0.3
+wait_time = 0.7
 
 [node name="Delay Hide" type="Timer" parent="Dungeon Planning UI/Room Tooltip Manager"]
 wait_time = 0.5
 
 [node name="Room Tooltip" parent="Dungeon Planning UI" instance=ExtResource("5_etlrv")]
+z_index = 1000
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fpimf")

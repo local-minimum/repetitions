@@ -16,6 +16,7 @@ VBoxContainer/constants/separation = 2
 [node name="Room Tooltip" type="PanelContainer" node_paths=PackedStringArray("_icon", "_title", "_rarity", "_pool_stats", "_type_tags")]
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 theme = SubResource("Theme_52mui")
 script = ExtResource("1_4slat")
 _icon = NodePath("MarginContainer/HBoxContainer/Icon")

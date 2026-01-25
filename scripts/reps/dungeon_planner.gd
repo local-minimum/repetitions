@@ -195,7 +195,7 @@ func _handle_room_dropped(room: BlueprintRoom, _origin: Vector2, _origin_angle: 
         room.placed = true
         room.modulate = Color.WHITE
         rooms.append(room)
-        room.option.draftable_count += 1
+        room.option.drafted_count += 1
            
         if mode == PlannerMode.PICK_ONE:
             options.discard_rooms()
