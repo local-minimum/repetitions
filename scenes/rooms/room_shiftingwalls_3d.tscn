@@ -46,7 +46,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
 
 [node name="trophy2" parent="Geometry/crossroads west wall" instance=ExtResource("3_06beb")]
 transform = Transform3D(0.26057187, 0, 0.96545446, 0, 1, 0, -0.96545446, 0, 0.26057187, -0.2356236, 5.9604645e-08, -0.44469738)
-_pickup_distance_sq = 1.75
 
 [node name="roomwall23" parent="Geometry" instance=ExtResource("1_joiea")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
