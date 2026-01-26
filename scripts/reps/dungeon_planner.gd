@@ -95,6 +95,8 @@ func _handle_ready_planner(terminal: PlannerTerminal, player: PhysicsGridPlayerC
     if player != null:
         player.cinematic = true
     
+    Input.mouse_mode = Input.MOUSE_MODE_VISIBLE 
+    
     _allowance = allowance
     get_canvas_layer_node().show()
     show()

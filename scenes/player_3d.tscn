@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://b8lqj7rv80ssv"]
+[gd_scene load_steps=12 format=3 uid="uid://b8lqj7rv80ssv"]
 
 [ext_resource type="Shape3D" uid="uid://ccivye2pfod1q" path="res://scenes/player_cast_capsule.tres" id="1_52vux"]
 [ext_resource type="Script" uid="uid://gca7baymjcg6" path="res://scripts/reps/physics_gridplayer_controller.gd" id="1_reoop"]
+[ext_resource type="Script" uid="uid://vbs5gbbsn6tv" path="res://addons/minimum_convenience/scripts/captured_mouse_eventer.gd" id="2_sxlqi"]
 [ext_resource type="PackedScene" uid="uid://j0cos57lmqyb" path="res://scenes/rooms/meshes/props/pickax.blend" id="3_2djwe"]
 [ext_resource type="Script" uid="uid://qk83bjxufdn0" path="res://scripts/reps/tools/toolbelt.gd" id="3_4jfb6"]
 [ext_resource type="Script" uid="uid://d3kx3hrrig5b" path="res://scripts/reps/tools/equipped_pickax.gd" id="4_yevqy"]
@@ -98,10 +99,11 @@ _data = {
 [sub_resource type="SphereShape3D" id="SphereShape3D_yevqy"]
 radius = 0.2
 
-[node name="Player3d" type="CharacterBody3D" node_paths=PackedStringArray("_camera", "_forward", "_left", "_right", "_backward")]
+[node name="Player3d" type="CharacterBody3D" node_paths=PackedStringArray("_camera", "_captured_pointer_eventer", "_forward", "_left", "_right", "_backward")]
 input_ray_pickable = false
 script = ExtResource("1_reoop")
 _camera = NodePath("Camera3D")
+_captured_pointer_eventer = NodePath("Camera3D/CapturedMouseRay")
 _forward = NodePath("Cast Forward")
 _left = NodePath("Cast Left")
 _right = NodePath("Cast Right")
@@ -119,6 +121,11 @@ shape = SubResource("CapsuleShape3D_reoop")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0697947, 0.65)
 current = true
 near = 0.4
+
+[node name="CapturedMouseRay" type="RayCast3D" parent="Camera3D" node_paths=PackedStringArray("_camera")]
+target_position = Vector3(0, 0, -20)
+script = ExtResource("2_sxlqi")
+_camera = NodePath("..")
 
 [node name="Cast Forward" type="ShapeCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.4)

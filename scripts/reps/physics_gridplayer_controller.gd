@@ -6,12 +6,20 @@ var cinematic: bool:
     set(value):
         _translation_stack.clear()
         _translation_pressed.clear()
+        if cinematic && !value && gridless:
+            Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+            _captured_pointer_eventer.active = true
+        elif !cinematic && value && !gridless:
+            _captured_pointer_eventer.active = false            
+            
         cinematic = value
 
 @export var _camera: Camera3D
 var camera: Camera3D:
     get():
         return _camera
+
+@export var _captured_pointer_eventer: CapturedMouseEventer         
 
 @export var _forward: ShapeCast3D
 @export var _left: ShapeCast3D
@@ -58,6 +66,7 @@ var gridless: bool:
         
             if value:
                 Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+                _captured_pointer_eventer.active = true
                 if _cam_slide_tween && _cam_slide_tween.is_running():
                     _cam_slide_tween.kill()
                 _cam_slide_tween = create_tween()
@@ -67,7 +76,8 @@ var gridless: bool:
                 _cam_slide_tween.tween_property(_camera, "fov", _gridless_camera_fov, _camera_transition_time)
                 @warning_ignore_restore("return_value_discarded")
             else:
-                Input.mouse_mode = Input.MOUSE_MODE_VISIBLE  
+                Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+                _captured_pointer_eventer.active = false
                 if _cam_slide_tween && _cam_slide_tween.is_running():
                     _cam_slide_tween.kill()
                 _cam_slide_tween = create_tween()
@@ -94,6 +104,7 @@ func _ready() -> void:
     _gridded_cam_near = _camera.near
     
     __SignalBus.on_physics_player_ready.emit(self)
+    _captured_pointer_eventer.active = gridless
               
 func _input(event: InputEvent) -> void:
     var handled: bool = true
