@@ -12,7 +12,15 @@ class_name PlannerTerminal
 @export var _interaction_direction_reference: Node3D
 @export var _interaction_angle_threshold: float = 0.5
 @export var _plans_for_relative_elevation: int = 0
-@export var _placement_allowance: int = 4
+@export var _placement_allowance: int = 4:
+    get():
+        return _placement_allowance + trophy_bonus
+
+var is_overused: bool:
+    get():
+        return _placed_rooms > _placement_allowance
+        
+var trophy_bonus: int = 0
 var _placed_rooms: int = 0
 static var _player: PhysicsGridPlayerController
 var _terminal_active: bool
