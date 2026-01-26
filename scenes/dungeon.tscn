@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ck4qilcv3pmw3"]
+[gd_scene load_steps=20 format=3 uid="uid://ck4qilcv3pmw3"]
 
 [ext_resource type="Script" uid="uid://crh0uqgb4ags6" path="res://scripts/reps/dungeon_planner_ui.gd" id="1_c4wp1"]
 [ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_fpimf"]
@@ -9,11 +9,41 @@
 [ext_resource type="Script" uid="uid://dq7lbhrdci5ob" path="res://scripts/reps/dirt_magazine.gd" id="5_fvacq"]
 [ext_resource type="Script" uid="uid://ey6peb5lfj3o" path="res://scripts/reps/exploration_ui.gd" id="6_tkjml"]
 [ext_resource type="PackedScene" uid="uid://cgryxgwcumo58" path="res://scenes/trophy_ui.tscn" id="7_5hkx1"]
+[ext_resource type="Script" uid="uid://bu7vo1xyipwpf" path="res://addons/minimum_convenience/scripts/crosshair/adaptive_crosshair.gd" id="10_5hkx1"]
+[ext_resource type="Script" uid="uid://1a438hwonqsq" path="res://addons/minimum_convenience/scripts/crosshair/adaptive_crosshair_config.gd" id="11_7wjui"]
+[ext_resource type="Script" uid="uid://613q6o0xpnom" path="res://addons/minimum_convenience/scripts/crosshair/dot_crosshair_config.gd" id="12_7a5bf"]
+[ext_resource type="Script" uid="uid://cq13k5jqrlqw5" path="res://addons/minimum_convenience/scripts/crosshair/circ_lines_crosshair_config.gd" id="13_3afjq"]
+[ext_resource type="Script" uid="uid://cufotv8ogf1gx" path="res://addons/minimum_convenience/scripts/crosshair/combined_crosshair_config.gd" id="14_6nb7m"]
 
 [sub_resource type="Environment" id="Environment_fpimf"]
 ambient_light_color = Color(0.2440432, 0.16552716, 0.1601688, 1)
 ssao_enabled = true
 ssil_enabled = true
+
+[sub_resource type="Resource" id="Resource_3afjq"]
+script = ExtResource("12_7a5bf")
+_radius = 3.0
+_outline_thickness = 1.0
+_fill_color = Color(0.73300546, 0.7330054, 0.7330054, 1)
+_outline_color = Color(0.21950102, 0.21950102, 0.21950102, 1)
+metadata/_custom_type_script = "uid://613q6o0xpnom"
+
+[sub_resource type="Resource" id="Resource_hh3g7"]
+script = ExtResource("12_7a5bf")
+_outline_thickness = 1.0
+_fill_color = Color(0.73333335, 0.73333335, 0.73333335, 1)
+_outline_color = Color(0.21960784, 0.21960784, 0.21960784, 1)
+metadata/_custom_type_script = "uid://613q6o0xpnom"
+
+[sub_resource type="Resource" id="Resource_rfuge"]
+script = ExtResource("13_3afjq")
+_line_color = Color(0.73333335, 0.73333335, 0.73333335, 1)
+metadata/_custom_type_script = "uid://cq13k5jqrlqw5"
+
+[sub_resource type="Resource" id="Resource_1o5ds"]
+script = ExtResource("14_6nb7m")
+_configs = Array[ExtResource("11_7wjui")]([SubResource("Resource_hh3g7"), SubResource("Resource_rfuge")])
+metadata/_custom_type_script = "uid://cufotv8ogf1gx"
 
 [node name="Dungeon Level" type="Node3D"]
 
@@ -120,6 +150,21 @@ _block_dug_two_bend_path = "uid://bsqk3tfre2xyg"
 _block_dug_three_path = "uid://c524ln2q266q"
 _block_dug_four_path = "uid://ckdk2uh7rdouf"
 metadata/_custom_type_script = "uid://dq7lbhrdci5ob"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 200
+
+[node name="AdaptiveCrosshair" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("10_5hkx1")
+_configs = Dictionary[int, ExtResource("11_7wjui")]({
+0: SubResource("Resource_3afjq"),
+2: SubResource("Resource_1o5ds")
+})
+metadata/_custom_type_script = "uid://bu7vo1xyipwpf"
 
 [connection signal="pressed" from="Dungeon Planning UI/MarginContainer/HBoxContainer/Redraw Rooms Btn" to="Dungeon Planning UI" method="_on_redraw_rooms_btn_pressed"]
 [connection signal="pressed" from="Dungeon Planning UI/MarginContainer/HBoxContainer/Layout Done Btn" to="Dungeon Planning UI" method="_on_layout_done_btn_pressed"]

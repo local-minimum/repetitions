@@ -86,7 +86,7 @@ func _reposition_tooltip() -> void:
     var vp_rect: Rect2 = _show_room.get_viewport_rect()
     
     var room_local_bb: Rect2 = _show_room.bounding_box()
-    print_debug(room_local_bb)
+    #print_debug(room_local_bb)
     var room_position: Vector2 = _show_room.to_global(room_local_bb.position)
     var room_end: Vector2 = _show_room.to_global(room_local_bb.end)
     var room_min_x: float = minf(room_position.x, room_end.x)

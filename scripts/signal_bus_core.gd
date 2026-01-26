@@ -2,6 +2,10 @@ extends Node
 class_name SignalBusCore
 
 @warning_ignore_start("unused_signal")
+# Cursor
+signal on_toggle_captured_cursor(active: bool)
+signal on_captured_cursor_change(cursor_shape: Input.CursorShape)
+
 # Settings
 signal on_update_input_mode(method: BindingHints.InputMode)
 signal on_update_handedness(handedness: AccessibilitySettings.Handedness)

@@ -44,18 +44,22 @@ static func _sync_cursor(node: Node) -> void:
         # print_debug("[Input Cursor Helper] -> Forbidden")
         _sync_node_cursor(node, Control.CURSOR_FORBIDDEN)
         Input.set_default_cursor_shape(Input.CURSOR_FORBIDDEN)
+        __SignalBus.on_captured_cursor_change.emit(Input.CURSOR_FORBIDDEN)
     elif !_dragged.is_empty():
         # print_debug("[Input Cursor Helper] -> Drag")
         _sync_node_cursor(node, Control.CURSOR_DRAG)
         Input.set_default_cursor_shape(Input.CURSOR_DRAG)
+        __SignalBus.on_captured_cursor_change.emit(Input.CURSOR_DRAG)
     elif !_hovered.is_empty():
         # print_debug("[Input Cursor Helper] -> Hover")
         _sync_node_cursor(node, Control.CURSOR_POINTING_HAND)
         Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
+        __SignalBus.on_captured_cursor_change.emit(Input.CURSOR_POINTING_HAND)
     else:
         # print_debug("[Input Cursor Helper] -> Default")
         _sync_node_cursor(node, Control.CURSOR_ARROW)
         Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+        __SignalBus.on_captured_cursor_change.emit(Input.CURSOR_ARROW)
 
 static func _sync_node_cursor(node: Node, shape: Control.CursorShape) -> void:
     if node is Control:
