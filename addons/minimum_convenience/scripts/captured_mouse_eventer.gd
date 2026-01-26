@@ -6,19 +6,23 @@ class_name CapturedMouseEventer
 ## If the ray should be processing and triggering events
 @export var active: bool = true:
     set(value):
-        set_process_input(value)
-        set_physics_process(value)
-        active = value
-        enabled = value
-        __SignalBus.on_toggle_captured_cursor.emit(value)
-
+        if value != active:
+            set_process_input(value)
+            set_physics_process(value)
+            active = value
+            enabled = value
+            __SignalBus.on_toggle_captured_cursor.emit(value)
+            _state_set = true
+            
 var _hovered: PhysicsBody3D
 var _collision_position: Vector3
 var _collision_normal: Vector3
 var _collision_shape_idx: int
+var _state_set: bool = false
 
 func _ready() -> void:
-    __SignalBus.on_toggle_captured_cursor.emit(active)
+    if !_state_set:
+        __SignalBus.on_toggle_captured_cursor.emit(active)
     
 func _input(event: InputEvent) -> void:
     if _hovered == null:

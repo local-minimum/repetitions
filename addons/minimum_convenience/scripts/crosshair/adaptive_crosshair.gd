@@ -24,9 +24,7 @@ func _handle_toggle_captured_cursor(active: bool) -> void:
         _handle_captured_cursor_change(Input.get_current_cursor_shape())
     else:
         hide()
-    
-    print_debug("Toggle visible %s" % active)
-    print_stack()
+
     queue_redraw()
 
 var _active_config: AdaptiveCrosshairConfig

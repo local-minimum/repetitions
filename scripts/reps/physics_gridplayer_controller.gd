@@ -6,10 +6,12 @@ var cinematic: bool:
     set(value):
         _translation_stack.clear()
         _translation_pressed.clear()
+
         if cinematic && !value && gridless:
             Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
             _captured_pointer_eventer.active = true
-        elif !cinematic && value && !gridless:
+            
+        elif !cinematic && value && gridless:
             _captured_pointer_eventer.active = false            
             
         cinematic = value
@@ -141,7 +143,7 @@ func _input(event: InputEvent) -> void:
     if handled && !cinematic:
         get_viewport().set_input_as_handled()
     
-    if gridless && event is InputEventMouseMotion:
+    if gridless && event is InputEventMouseMotion && !cinematic:
         var mouse: InputEventMouseMotion = event
         rotation.y -= mouse.relative.x * _mouse_sensitivity_yaw
         var new_pitch: float = _camera.rotation.x - mouse.relative.y * _mouse_sensistivity_pitch
