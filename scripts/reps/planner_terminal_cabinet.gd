@@ -69,6 +69,8 @@ func _on_input_event(camera: Node, event: InputEvent, event_position: Vector3, _
                 _trophy_state = TrophyState.STOLEN if _terminal.is_overused else TrophyState.DEFAULT
                 _trophy.hide()
                 __SignalBus.on_pickup_tool.emit(Tool.ToolType.TROPHY)
+                if _trophy_state == TrophyState.STOLEN:
+                    __SignalBus.on_trophy_stolen_from_terminal.emit(_terminal)
             
             get_viewport().set_input_as_handled()
 
