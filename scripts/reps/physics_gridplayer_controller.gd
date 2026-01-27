@@ -164,8 +164,8 @@ func _push_ontop_of_movement_stack(movement: Movement.MovementType) -> void:
 func _release_movement(movement: Movement.MovementType) -> void:
     if gridless:
         _translation_stack.erase(movement)
-    else:
-        _translation_pressed[movement] = false
+        
+    _translation_pressed[movement] = false
                 
 func _physics_process(delta: float) -> void:
     if cinematic:
