@@ -89,8 +89,9 @@ var gridless: bool:
                 _cam_slide_tween.tween_property(_camera, "fov", _gridded_cam_fov, _camera_transition_time)
                 _cam_slide_tween.tween_property(_camera, "rotation:x", 0, _camera_transition_time)
                 @warning_ignore_restore("return_value_discarded")
-                # Force alignment with grid
-                _attempt_translation(Movement.MovementType.CENTER, null, Vector3.ZERO)
+                # Force alignment with grid.
+                # NOTE: move needs to happend before turn
+                _attempt_translation(Movement.MovementType.NONE, null, Vector3.ZERO)
                 _attempt_turn(0.0)
                                 
         gridless = value
@@ -249,7 +250,11 @@ func _attempt_translation(movement: Movement.MovementType, caster: ShapeCast3D, 
         _refuse_movement(movement, caster, direction)
         return
         
-    var target: Vector3 = builder.get_closest_global_neighbour_position(global_position, CardinalDirections.vector_to_direction(direction))
+    var target: Vector3 = (
+        builder.get_closest_global_neighbour_position(global_position, CardinalDirections.vector_to_direction(direction))
+        if movement != Movement.MovementType.NONE else
+        builder.get_closest_global_grid_position(global_position)
+    )
     # print_debug("Moving %s in direction %s from %s to %s" % [
     #    CardinalDirections.name(CardinalDirections.vector_to_direction(direction.normalized())),
     #    direction,

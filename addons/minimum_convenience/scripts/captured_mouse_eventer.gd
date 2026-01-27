@@ -29,8 +29,6 @@ func _input(event: InputEvent) -> void:
         return
     
     _hovered.input_event.emit(_camera, event, _collision_position, _collision_normal, _collision_shape_idx)
-    # if event is InputEventMouseButton:
-    #    __SignalBus.on_captured_cursor_change.emit(Input.get_current_cursor_shape())
     
 func _physics_process(_delta: float) -> void:
     if !is_colliding():
@@ -42,7 +40,7 @@ func _physics_process(_delta: float) -> void:
         if _hovered != null:
             _hovered.mouse_exited.emit()
             _hovered = null
-            # __SignalBus.on_captured_cursor_change.emit(Input.get_current_cursor_shape())
+
         return
  
     _collision_position = get_collision_point()
@@ -58,4 +56,3 @@ func _physics_process(_delta: float) -> void:
     _hovered = _body
     _hovered.mouse_entered.emit()
     
-    # __SignalBus.on_captured_cursor_change.emit(Input.get_current_cursor_shape())  
