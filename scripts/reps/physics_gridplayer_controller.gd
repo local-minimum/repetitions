@@ -255,6 +255,7 @@ func _attempt_translation(movement: Movement.MovementType, caster: ShapeCast3D, 
         if movement != Movement.MovementType.NONE else
         builder.get_closest_global_grid_position(global_position)
     )
+        
     # print_debug("Moving %s in direction %s from %s to %s" % [
     #    CardinalDirections.name(CardinalDirections.vector_to_direction(direction.normalized())),
     #    direction,

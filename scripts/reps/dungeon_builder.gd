@@ -181,7 +181,7 @@ func _populate_level_with_dirt(grid: Grid2D, elevation: int) -> void:
 ## Get the coordinates closest to the global position    
 func get_closest_coordinates(global_pos: Vector3) -> Vector3i:
     var local: Vector3 = to_local(global_pos)
-    return Vector3i(roundi(local.x / grid_size.x), floori(local.y / grid_size.y), roundi(local.z / grid_size.z))   
+    return Vector3i(roundi(local.x / grid_size.x), roundi(local.y / grid_size.y), roundi(local.z / grid_size.z))   
            
 func _place_dirt(coords: Vector3i, digs: Array[CardinalDirections.CardinalDirection] = []) -> Node3D:
     var global_pos: Vector3 = get_global_grid_position_from_coordinates(coords)
@@ -203,7 +203,7 @@ func get_global_grid_position_from_coordinates(coords: Vector3i) -> Vector3:
     
 func _get_closest_local_grid_position(global_pos: Vector3) -> Vector3:
     var local: Vector3 = to_local(global_pos)
-    return Vector3(roundi(local.x / grid_size.x) * grid_size.x, floori(local.y / grid_size.y) * grid_size.y, roundi(local.z / grid_size.z) * grid_size.z)
+    return Vector3(roundi(local.x / grid_size.x) * grid_size.x, roundi(local.y / grid_size.y) * grid_size.y, roundi(local.z / grid_size.z) * grid_size.z)
     
 func get_closest_global_grid_position(global_pos: Vector3) -> Vector3:
     return to_global(_get_closest_local_grid_position(global_pos))

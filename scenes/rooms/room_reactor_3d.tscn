@@ -164,18 +164,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, -2)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.8, -2)
 
 [node name="reactor" parent="Geometry" node_paths=PackedStringArray("detection_area") instance=ExtResource("5_cq5sr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.345047, 0)
 script = ExtResource("6_b1fcn")
 detection_area = NodePath("../Entry Area")
 
 [node name="Entry Area" type="Area3D" parent="Geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5999999, 0)
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Entry Area"]
 shape = SubResource("CylinderShape3D_cq5sr")
 
 [node name="Exit Area" type="Area3D" parent="Geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5999999, 0)
+collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Exit Area"]
 shape = SubResource("CylinderShape3D_b1fcn")
