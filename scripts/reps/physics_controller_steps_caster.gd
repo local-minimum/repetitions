@@ -69,3 +69,21 @@ func _sync_cast_origin() -> void:
     
     global_position = body.global_position + up_delta + dir * step_distance
     target_position.y = -(step_height_max + step_down_max)
+
+
+enum StepData { POINT, NORMAL }
+
+func can_step_up(data: Dictionary[StepData, Vector3] = {}) -> bool:
+    force_shapecast_update()
+    if !is_colliding():
+        return false
+
+    var pt: Vector3 = get_collision_point(0)
+    
+    if body != null && (pt - body.global_position).dot(up_global) < 0:
+        return false
+    
+    data[StepData.POINT] = pt
+    data[StepData.NORMAL] = get_collision_normal(0)
+    
+    return true

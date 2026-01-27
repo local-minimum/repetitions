@@ -183,6 +183,7 @@ light_energy = 0.6
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95000005, -0.1)
+enabled = false
 shape = ExtResource("1_52vux")
 target_position = Vector3(0, -0.7, 0)
 script = ExtResource("7_460ac")
