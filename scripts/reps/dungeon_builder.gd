@@ -32,7 +32,7 @@ func _handle_use_pickax(target: Node3D, _hack_direction: CardinalDirections.Card
         target = target.get_parent_node_3d()
         if target == null:
             return
-    
+
     var coords: Vector3i = target.get_meta(_COORDINATES_META)
     if !dirts.has(coords) || dirts[coords] != target:
         push_error("%s not in known dirts %s or wrong dirt %s != %s" % [
@@ -67,6 +67,7 @@ func _handle_use_pickax(target: Node3D, _hack_direction: CardinalDirections.Card
         return
         
     var digout_direction: CardinalDirections.CardinalDirection = side_directions[closest_idx]
+    print_debug("Digging %s" % [CardinalDirections.name(digout_direction)])
     _digout_coords(coords, digout_direction, target)
     var neighbour: Vector3i = CardinalDirections.translate(coords, digout_direction)
     if dirts.has(neighbour) && (!dirt_digouts.has(neighbour) || !dirt_digouts[neighbour].has(CardinalDirections.invert(digout_direction))):

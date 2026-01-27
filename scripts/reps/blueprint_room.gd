@@ -25,12 +25,16 @@ var option: DraftOption
 var grid: Grid2D:
     set(value):
         draggable.grid = value
-        if value != null && !VectorUtils.is_scaled2di(tile_size, value.tile_size):
-            push_warning("[Blueprint Room %s] The new grid %s has a tile size of %s which doesn't line up with our internal size of %s" % [
-                value,
-                value.tile_size,
-                tile_size,
-            ])
+        if value != null:
+            assert(
+                Vector2(tile_size) == value.tile_size,
+                "[Blueprint Room %s] The new grid %s has a tile size of %s which doesn't line up with our internal size of %s" % [
+                    name,
+                    value,
+                    value.tile_size,
+                    tile_size,
+                ],
+            )
     get():
         if Engine.is_editor_hint():
             return null
@@ -104,7 +108,7 @@ var contained_in_grid: bool:
         if grid != null && grid.is_inside_grid(global_position):
             var r: Rect2i = outline.get_used_rect()
             var origin: Vector2i = get_origin()
-            # TODO: This assumes equal grid size... Issue #5
+            # We assert equal grid size so this works fine
             r.position += origin
             
             if grid.extent.encloses(r):
@@ -369,7 +373,7 @@ func _draw() -> void:
                     draw_rect(Rect2(local_center, Vector2.ZERO).grow(2), Color.GREEN)
                 else:
                     draw_line(local_center, local_tip, Color.DARK_RED, 2)
-                    # TODO: If the grid is not square this isn't fully correct
+                    # NOTE: If the grid is not square this isn't fully correct
                     var rotated_delta: Vector2 = grid.tile_size * CardinalDirections.direction_to_vector2d(CardinalDirections.yaw_cw(local_direction)[0]) * 0.5
                     draw_line(local_tip - rotated_delta * 0.6, local_tip + rotated_delta * 0.6, Color.DARK_RED, 2)
                 
