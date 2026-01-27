@@ -78,3 +78,13 @@ static func enable_physics_in_children(root: Node3D, mode: Node.ProcessMode = No
 
     for body: PhysicsBody3D in root.find_children("", "PhysicsBody3D"):
         body.process_mode = mode
+
+## Translates a direction vector in A's system to one in B's.
+## NOTE: Returned vector isn't normalized for B's system
+static func translate_local_direction(direction_a: Vector3, a: Node3D, b: Node3D) -> Vector3:
+    return b.to_local((a.to_global(direction_a) - a.global_position) + b.global_position)
+
+## Translates a direction vector in A's system to the global stystem
+## NOTE: Returned vector isn't normalized
+static func translate_to_global_direction(direction: Vector3, n: Node3D) -> Vector3:
+    return n.to_global(direction) - n.global_position

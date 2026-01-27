@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b8lqj7rv80ssv"]
+[gd_scene load_steps=13 format=3 uid="uid://b8lqj7rv80ssv"]
 
 [ext_resource type="Shape3D" uid="uid://ccivye2pfod1q" path="res://scenes/player_cast_capsule.tres" id="1_52vux"]
 [ext_resource type="Script" uid="uid://gca7baymjcg6" path="res://scripts/reps/physics_gridplayer_controller.gd" id="1_reoop"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://j0cos57lmqyb" path="res://scenes/rooms/meshes/props/pickax.blend" id="3_2djwe"]
 [ext_resource type="Script" uid="uid://qk83bjxufdn0" path="res://scripts/reps/tools/toolbelt.gd" id="3_4jfb6"]
 [ext_resource type="Script" uid="uid://d3kx3hrrig5b" path="res://scripts/reps/tools/equipped_pickax.gd" id="4_yevqy"]
+[ext_resource type="Script" uid="uid://x6uxf7lr5f1b" path="res://scripts/reps/physics_controller_steps_caster.gd" id="7_460ac"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_reoop"]
 radius = 0.3
@@ -163,7 +164,7 @@ _caster = NodePath("../../PickAxCast")
 _player = NodePath("../..")
 
 [node name="pickax" parent="Toolbelt/Pickax" instance=ExtResource("3_2djwe")]
-transform = Transform3D(0.9785371, 0, -0.20606756, 0.047923606, 0.9725813, 0.22757149, 0.20041732, -0.23256277, 0.9517077, 0, 0, 0.12537825)
+transform = Transform3D(0.978537, 0, -0.20606756, 0.047923602, 0.9725813, 0.22757149, 0.20041731, -0.23256277, 0.9517077, 0, 0, 0.12537825)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Toolbelt/Pickax"]
 libraries = {
@@ -179,3 +180,11 @@ target_position = Vector3(0, -0.4, -2.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1028626, 0.86164474)
 light_color = Color(0.8043004, 0.5058316, 0.35971963, 1)
 light_energy = 0.6
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95000005, -0.1)
+shape = ExtResource("1_52vux")
+target_position = Vector3(0, -0.7, 0)
+script = ExtResource("7_460ac")
+step_direction = Vector2(0, 1)
+step_distance = 0.1
