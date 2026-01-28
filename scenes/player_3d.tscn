@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b8lqj7rv80ssv"]
+[gd_scene load_steps=15 format=3 uid="uid://b8lqj7rv80ssv"]
 
 [ext_resource type="Shape3D" uid="uid://ccivye2pfod1q" path="res://scenes/player_cast_capsule.tres" id="1_52vux"]
 [ext_resource type="Script" uid="uid://gca7baymjcg6" path="res://scripts/reps/physics_gridplayer_controller.gd" id="1_reoop"]
@@ -100,13 +100,21 @@ _data = {
 [sub_resource type="SphereShape3D" id="SphereShape3D_yevqy"]
 radius = 0.2
 
-[node name="Player3d" type="CharacterBody3D" node_paths=PackedStringArray("_camera", "_captured_pointer_eventer", "_forward", "_left", "_right", "_backward")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_460ac"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_460ac"]
+material = SubResource("StandardMaterial3D_460ac")
+radius = 0.1
+height = 0.2
+
+[node name="Player3d" type="CharacterBody3D" node_paths=PackedStringArray("_camera", "_captured_pointer_eventer", "_stepper", "_forward", "_left", "_right", "_backward")]
 collision_layer = 2
 collision_mask = 3
 input_ray_pickable = false
 script = ExtResource("1_reoop")
 _camera = NodePath("Camera3D")
 _captured_pointer_eventer = NodePath("Camera3D/CapturedMouseRay")
+_stepper = NodePath("Step Caster")
 _forward = NodePath("Cast Forward")
 _left = NodePath("Cast Left")
 _right = NodePath("Cast Right")
@@ -164,7 +172,7 @@ _caster = NodePath("../../PickAxCast")
 _player = NodePath("../..")
 
 [node name="pickax" parent="Toolbelt/Pickax" instance=ExtResource("3_2djwe")]
-transform = Transform3D(0.978537, 0, -0.20606756, 0.047923602, 0.9725813, 0.22757149, 0.20041731, -0.23256277, 0.9517077, 0, 0, 0.12537825)
+transform = Transform3D(0.97853696, 0, -0.20606756, 0.0479236, 0.9725813, 0.22757149, 0.20041731, -0.23256277, 0.9517077, 0, 0, 0.12537825)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Toolbelt/Pickax"]
 libraries = {
@@ -181,11 +189,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1028626, 0.86164474)
 light_color = Color(0.8043004, 0.5058316, 0.35971963, 1)
 light_energy = 0.6
 
-[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95000005, -0.1)
+[node name="Step Caster" type="ShapeCast3D" parent="." node_paths=PackedStringArray("_debug_shape")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0.25)
 enabled = false
 shape = ExtResource("1_52vux")
-target_position = Vector3(0, -0.7, 0)
+target_position = Vector3(0, -0.85, 0)
 script = ExtResource("7_460ac")
 step_direction = Vector2(0, 1)
-step_distance = 0.1
+step_distance = 0.25
+min_clearing_above = 0.15
+_debug_shape = NodePath("CollisionPt")
+
+[node name="CollisionPt" type="MeshInstance3D" parent="Step Caster"]
+visible = false
+mesh = SubResource("SphereMesh_460ac")

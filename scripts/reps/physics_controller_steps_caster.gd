@@ -4,7 +4,7 @@ class_name PhysicsControllerStepCaster
 
 @export var step_direction: Vector2:
     set(value):
-        step_direction = value
+        step_direction = value.normalized()
         _sync_cast_origin()
         
 @export var step_distance: float = 0.2:
@@ -21,6 +21,15 @@ class_name PhysicsControllerStepCaster
     set(value):
         step_down_max = value
         _sync_cast_origin()
+
+@export var min_clearing_above: float = 0.2:
+    set(value):
+        min_clearing_above = value
+        _sync_cast_origin()
+
+@export var ignore_step_height: float = 0.05
+
+@export var _debug_shape: MeshInstance3D
 
 var body: PhysicsBody3D:
     get():
@@ -64,11 +73,11 @@ func _sync_cast_origin() -> void:
     if b == null:
         return
     
-    var up_delta: Vector3 = up_global * (step_height_max + shape_half_height)    
-    var dir: Vector3 = (b.global_basis.x * step_direction.x - b.global_basis.z * step_direction.y).normalized()
+    var up_delta: Vector3 = up_global * (step_height_max + shape_half_height + min_clearing_above)    
+    var dir: Vector3 = (b.global_basis.x * step_direction.x + b.global_basis.z * step_direction.y).normalized()
     
     global_position = body.global_position + up_delta + dir * step_distance
-    target_position.y = -(step_height_max + step_down_max)
+    target_position.y = -(step_height_max + step_down_max + min_clearing_above)
 
 
 enum StepData { POINT, NORMAL }
@@ -76,12 +85,33 @@ enum StepData { POINT, NORMAL }
 func can_step_up(data: Dictionary[StepData, Vector3] = {}) -> bool:
     force_shapecast_update()
     if !is_colliding():
+        if _debug_shape != null:
+            _debug_shape.hide()
+            
         return false
 
     var pt: Vector3 = get_collision_point(0)
+    if _debug_shape != null:
+        _debug_shape.global_position = pt
+        _debug_shape.show()
+        
+    if body != null:
+        var projection: float = (pt - body.global_position).dot(up_global)
+        if projection <= ignore_step_height || projection > step_height_max:
+            if _debug_shape != null:
+                var mat: StandardMaterial3D = _debug_shape.get_active_material(0)
+                if projection <= 0:
+                    mat.albedo_color = Color.AQUA
+                elif projection <= ignore_step_height:
+                    mat.albedo_color = Color.BLUE
+                else:
+                    mat.albedo_color = Color.RED
     
-    if body != null && (pt - body.global_position).dot(up_global) < 0:
-        return false
+            return false
+ 
+    if _debug_shape != null:
+        var mat: StandardMaterial3D = _debug_shape.get_active_material(0)
+        mat.albedo_color = Color.WEB_GREEN
     
     data[StepData.POINT] = pt
     data[StepData.NORMAL] = get_collision_normal(0)

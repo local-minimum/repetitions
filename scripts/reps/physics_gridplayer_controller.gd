@@ -23,6 +23,8 @@ var camera: Camera3D:
 
 @export var _captured_pointer_eventer: CapturedMouseEventer         
 
+@export var _stepper: PhysicsControllerStepCaster
+
 @export var _forward: ShapeCast3D
 @export var _left: ShapeCast3D
 @export var _right: ShapeCast3D
@@ -177,8 +179,9 @@ func _physics_process(delta: float) -> void:
         _gridfull_movement()
 
 func _gridless_movement(delta: float) -> void:
+    var direction: Vector3 = Vector3.ZERO
     if !_translation_stack.is_empty():
-        var direction: Vector3 = Vector3.ZERO
+
         for movement: Movement.MovementType in _translation_stack:
             match movement:
                 Movement.MovementType.FORWARD:
@@ -195,6 +198,8 @@ func _gridless_movement(delta: float) -> void:
             direction = direction.normalized()
         
         if direction.length_squared() > 0.0: 
+
+                
             var v: Vector3 = direction * _gridless_translation_speed
             velocity.x = v.x
             velocity.z = v.z
@@ -213,10 +218,14 @@ func _gridless_movement(delta: float) -> void:
     if angle != 0.0:
         basis = transform.rotated(Vector3.UP, angle).basis          
     
-    if move_and_slide():
+    if move_and_slide() && direction.length_squared() > 0:
         # Collides with something
-        pass
-            
+        var step_data: Dictionary[PhysicsControllerStepCaster.StepData, Vector3] = {}
+        _stepper.step_direction = Vector2(direction.x, direction.z)
+        
+        if _stepper.can_step_up(step_data):    
+            global_position = step_data[PhysicsControllerStepCaster.StepData.POINT]      
+                  
 func _gridfull_movement() -> void:
     if !_translation_stack.is_empty():
         var movement: Movement.MovementType = _translation_stack[0]
