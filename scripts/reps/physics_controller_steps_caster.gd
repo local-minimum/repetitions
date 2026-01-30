@@ -2,9 +2,13 @@
 extends ShapeCast3D
 class_name PhysicsControllerStepCaster
 
-@export var step_direction: Vector2:
+@export var _translation_testers: Array[Node3D] = []
+
+## Note: Normalizes and removes component parallell to up_global
+@export var global_step_direction: Vector3:
     set(value):
-        step_direction = value.normalized()
+        value -= value.project(up_global)
+        global_step_direction = value.normalized()
         _sync_cast_origin()
 
 @export var step_distance: float = 0.2:
@@ -64,29 +68,89 @@ var shape_half_height: float:
             push_warning("Don't know the exact height of %s" % shape)
             return 1.0
 
+var _testers_inited: bool = false
+var _translation_tester_offsets: Dictionary[Node3D, Vector3]
+
 func _ready() -> void:
     enabled = false
     _sync_cast_origin()
+    if !_testers_inited:
+        _init_testers()
+
+func _init_testers() -> void:
+    for tester: Node3D in _translation_testers:
+        _translation_tester_offsets[tester] = tester.global_position - body.global_position
+    _testers_inited = true
 
 func _sync_cast_origin() -> void:
     var b: PhysicsBody3D = body
     if b == null:
         return
 
+    # Step checker
     var up_delta: Vector3 = up_global * (step_height_max + shape_half_height + min_clearing_above)
-    var dir: Vector3 = (b.global_basis.x * step_direction.x + b.global_basis.z * step_direction.y).normalized()
-
-    global_position = body.global_position + up_delta + dir * step_distance
+    global_position = body.global_position + up_delta + global_step_direction * step_distance
     target_position.y = -(step_height_max + step_down_max + min_clearing_above)
 
+    # Sync translations checkers
+    if !_testers_inited:
+        _init_testers()
+
+    var up: Vector3 = up_global
+    up_delta = up  * (step_height_max + shape_half_height)
+    var origin: Vector3 = body.global_position
+    for other: Node3D in _translation_testers:
+        var delta: Vector3 = _translation_tester_offsets[other]
+        delta -= delta.project(up)
+        delta += up_delta
+        other.global_position = origin + delta
 
 enum StepData { POINT, NORMAL }
 
+var _showing_debug_shape_status: bool
 func display_debug_not_hitting() -> void:
+    if _debug_shape != null && _showing_debug_shape_status:
+        _showing_debug_shape_status = false
+        await get_tree().create_timer(0.4).timeout
+        if !_showing_debug_shape_status:
+            _debug_shape.global_position = global_position
+            var mat: StandardMaterial3D = _debug_shape.get_active_material(0)
+            mat.albedo_color = Color.BLACK
+
+func can_step(data: Dictionary[StepData, Vector3] = {}) -> bool:
+    force_shapecast_update()
+    if !is_colliding():
+        display_debug_not_hitting()
+        return false
+
+    var pt: Vector3 = get_collision_point(0)
     if _debug_shape != null:
-        _debug_shape.global_position = global_position
+        _debug_shape.global_position = pt
+
+    if body != null:
+        var projection: float = (pt - body.global_position).dot(up_global)
+        if projection <= ignore_step_height && projection >= -ignore_step_height || projection > step_height_max || projection < -step_down_max:
+            if _debug_shape != null:
+                var mat: StandardMaterial3D = _debug_shape.get_active_material(0)
+                if projection <= -ignore_step_height:
+                    mat.albedo_color = Color.AQUA
+                elif projection <= ignore_step_height:
+                    mat.albedo_color = Color.BLUE
+                else:
+                    mat.albedo_color = Color.RED
+                _showing_debug_shape_status = true
+
+            return false
+
+    if _debug_shape != null:
         var mat: StandardMaterial3D = _debug_shape.get_active_material(0)
-        mat.albedo_color = Color.BLACK
+        mat.albedo_color = Color.WEB_GREEN
+        _showing_debug_shape_status = true
+
+    data[StepData.POINT] = pt
+    data[StepData.NORMAL] = get_collision_normal(0)
+
+    return true
 
 func can_step_up(data: Dictionary[StepData, Vector3] = {}) -> bool:
     force_shapecast_update()
@@ -103,18 +167,20 @@ func can_step_up(data: Dictionary[StepData, Vector3] = {}) -> bool:
         if projection <= ignore_step_height || projection > step_height_max:
             if _debug_shape != null:
                 var mat: StandardMaterial3D = _debug_shape.get_active_material(0)
-                if projection <= 0:
+                if projection <= -ignore_step_height:
                     mat.albedo_color = Color.AQUA
                 elif projection <= ignore_step_height:
                     mat.albedo_color = Color.BLUE
                 else:
                     mat.albedo_color = Color.RED
+                _showing_debug_shape_status = true
 
             return false
 
     if _debug_shape != null:
         var mat: StandardMaterial3D = _debug_shape.get_active_material(0)
         mat.albedo_color = Color.WEB_GREEN
+        _showing_debug_shape_status = true
 
     data[StepData.POINT] = pt
     data[StepData.NORMAL] = get_collision_normal(0)

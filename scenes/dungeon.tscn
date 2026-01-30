@@ -9,16 +9,12 @@
 [ext_resource type="Script" uid="uid://dq7lbhrdci5ob" path="res://scripts/reps/dirt_magazine.gd" id="5_fvacq"]
 [ext_resource type="Script" uid="uid://ey6peb5lfj3o" path="res://scripts/reps/exploration_ui.gd" id="6_tkjml"]
 [ext_resource type="PackedScene" uid="uid://cgryxgwcumo58" path="res://scenes/trophy_ui.tscn" id="7_5hkx1"]
+[ext_resource type="Environment" uid="uid://dyvjkwni31khi" path="res://scenes/dungeon_environment.tres" id="8_6nb7m"]
 [ext_resource type="Script" uid="uid://bu7vo1xyipwpf" path="res://addons/minimum_convenience/scripts/crosshair/adaptive_crosshair.gd" id="10_5hkx1"]
 [ext_resource type="Script" uid="uid://1a438hwonqsq" path="res://addons/minimum_convenience/scripts/crosshair/adaptive_crosshair_config.gd" id="11_7wjui"]
 [ext_resource type="Script" uid="uid://613q6o0xpnom" path="res://addons/minimum_convenience/scripts/crosshair/dot_crosshair_config.gd" id="12_7a5bf"]
 [ext_resource type="Script" uid="uid://cq13k5jqrlqw5" path="res://addons/minimum_convenience/scripts/crosshair/circ_lines_crosshair_config.gd" id="13_3afjq"]
 [ext_resource type="Script" uid="uid://cufotv8ogf1gx" path="res://addons/minimum_convenience/scripts/crosshair/combined_crosshair_config.gd" id="14_6nb7m"]
-
-[sub_resource type="Environment" id="Environment_fpimf"]
-ambient_light_color = Color(0.2440432, 0.16552716, 0.1601688, 1)
-ssao_enabled = true
-ssil_enabled = true
 
 [sub_resource type="Resource" id="Resource_3afjq"]
 script = ExtResource("12_7a5bf")
@@ -137,7 +133,7 @@ script = ExtResource("6_tkjml")
 [node name="TrophyUI" parent="Exploration UI" instance=ExtResource("7_5hkx1")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_fpimf")
+environment = ExtResource("8_6nb7m")
 
 [node name="Player3d" parent="." instance=ExtResource("4_0wj4k")]
 

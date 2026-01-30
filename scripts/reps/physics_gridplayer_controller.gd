@@ -210,7 +210,6 @@ func _gridless_movement(delta: float) -> void:
 
         if direction.length_squared() > 0.0:
 
-
             var v: Vector3 = direction * _gridless_translation_speed
             velocity.x = v.x
             velocity.z = v.z
@@ -232,7 +231,8 @@ func _gridless_movement(delta: float) -> void:
     if move_and_slide() && direction.length_squared() > 0:
         # Collides with something
         var step_data: Dictionary[PhysicsControllerStepCaster.StepData, Vector3] = {}
-        _stepper.step_direction = Vector2(direction.x, direction.z)
+        _stepper.global_step_direction = direction
+        _stepper.step_distance = (direction * velocity).length() * delta
 
         if _stepper.can_step_up(step_data):
             global_position = step_data[PhysicsControllerStepCaster.StepData.POINT]
@@ -240,7 +240,8 @@ func _gridless_movement(delta: float) -> void:
     elif _show_debug_shapes:
         _stepper.display_debug_not_hitting()
 
-    velocity += get_gravity()
+    if !is_on_floor():
+        velocity += get_gravity()
 
 func _gridfull_movement() -> void:
     if !_translation_stack.is_empty():
@@ -262,6 +263,24 @@ func _gridfull_movement() -> void:
     elif Input.is_action_just_pressed("crawl_turn_right"):
         _attempt_turn(-PI * 0.5)
 
+func _calculate_grid_position(movement: Movement.MovementType = Movement.MovementType.NONE, direction: Vector3 = Vector3.ZERO) -> Vector3:
+    var target: Vector3 = (
+        builder.get_closest_global_neighbour_position(global_position, CardinalDirections.vector_to_direction(direction))
+        if movement != Movement.MovementType.NONE else
+        builder.get_closest_global_grid_position(global_position)
+    )
+
+    var dir: Vector3 = target - global_position
+    _stepper.global_step_direction = dir
+    _stepper.step_distance = dir.length()
+
+    var data: Dictionary[PhysicsControllerStepCaster.StepData, Vector3]
+
+    if _stepper.can_step(data):
+        return data[PhysicsControllerStepCaster.StepData.POINT]
+
+    return target
+
 func _attempt_translation(movement: Movement.MovementType, caster: ShapeCast3D, direction: Vector3) -> void:
     if _translation_tween && _translation_tween.is_running() || _rotation_tween && _rotation_tween.is_running():
         return
@@ -275,11 +294,7 @@ func _attempt_translation(movement: Movement.MovementType, caster: ShapeCast3D, 
         _refuse_movement(movement, caster, direction)
         return
 
-    var target: Vector3 = (
-        builder.get_closest_global_neighbour_position(global_position, CardinalDirections.vector_to_direction(direction))
-        if movement != Movement.MovementType.NONE else
-        builder.get_closest_global_grid_position(global_position)
-    )
+    var target: Vector3 = _calculate_grid_position(movement, direction)
 
     # print_debug("Moving %s in direction %s from %s to %s" % [
     #    CardinalDirections.name(CardinalDirections.vector_to_direction(direction.normalized())),
@@ -307,7 +322,8 @@ func _refuse_movement(movement: Movement.MovementType, caster: ShapeCast3D, dire
         caster.get_collider(0) if caster else null,
         (caster.get_collider(0) as Node3D).get_parent_node_3d(),
     ])
-    var target: Vector3 = builder.get_closest_global_neighbour_position(global_position, CardinalDirections.vector_to_direction(direction))
+    var target: Vector3 = _calculate_grid_position(movement, direction)
+
     var pt: Vector3 = caster.get_collision_point(0)
 
     var l: float = global_position.distance_to(pt)
