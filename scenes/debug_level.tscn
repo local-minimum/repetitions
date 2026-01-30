@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c06htcj4rgjof"]
+[gd_scene load_steps=11 format=3 uid="uid://c06htcj4rgjof"]
 
 [ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_8d50e"]
 [ext_resource type="PackedScene" uid="uid://cc5747aqrge5g" path="res://scenes/rooms/meshes/simplefloor.blend" id="1_ln2x5"]
@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://bclui8nnjmoh" path="res://scenes/rooms/dirts/dirt_dugout_1_way.tscn" id="5_ahmjg"]
 [ext_resource type="PackedScene" uid="uid://bsqk3tfre2xyg" path="res://scenes/rooms/dirts/dirt_dugout_2_ways_bend.tscn" id="6_swri5"]
 [ext_resource type="Environment" uid="uid://dyvjkwni31khi" path="res://scenes/dungeon_environment.tres" id="7_swri5"]
+[ext_resource type="PackedScene" uid="uid://c524ln2q266q" path="res://scenes/rooms/dirts/dirt_dugout_3_ways.tscn" id="8_xsg4u"]
+[ext_resource type="PackedScene" uid="uid://ckdk2uh7rdouf" path="res://scenes/rooms/dirts/dirt_dugout_4_ways.tscn" id="9_jomtx"]
+[ext_resource type="PackedScene" uid="uid://bikpq2lqukop2" path="res://scenes/rooms/dirts/dirt_dugout_2_ways_straight.tscn" id="10_wnm7q"]
 
 [node name="debug level" type="Node3D" node_paths=PackedStringArray("player")]
 script = ExtResource("1_8d50e")
@@ -22,11 +25,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
 [node name="simplefloor2" parent="." instance=ExtResource("1_ln2x5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
 
+[node name="simplefloor15" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -0.3, 1)
+
+[node name="simplefloor16" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.39999998, -1)
+
 [node name="simplefloor3" parent="." instance=ExtResource("1_ln2x5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
 
 [node name="simplefloor14" parent="." instance=ExtResource("1_ln2x5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -3)
+
+[node name="simplefloor17" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -5)
 
 [node name="simplefloor4" parent="." instance=ExtResource("1_ln2x5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
@@ -49,8 +61,32 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.5, -9)
 [node name="simplefloor6" parent="." instance=ExtResource("1_ln2x5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 1)
 
+[node name="simplefloor18" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, 0, 0, 1, -4.944253, 0.5197898, 1)
+
+[node name="simplefloor19" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(0.86602545, 0.50000006, 0, -0.50000006, 0.86602545, 0, 0, 0, 1, -6.6927366, 1.5197898, 1)
+
+[node name="simplefloor20" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(0.70710677, 0.7071068, 0, -0.7071068, 0.70710677, 0, 0, 0, 1, -8.113665, 2.940933, 1)
+
+[node name="simplefloor21" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(0.49999994, 0.86602545, 0, -0.86602545, 0.49999994, 0, 0, 0, 1, -9.122671, 4.6691065, 1)
+
 [node name="simplefloor7" parent="." instance=ExtResource("1_ln2x5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 3)
+
+[node name="simplefloor22" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 3)
+
+[node name="simplefloor23" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6, 0.3, 3)
+
+[node name="simplefloor24" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 0.6, 3)
+
+[node name="simplefloor25" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.7999997, 0.9, 3)
 
 [node name="simplefloor8" parent="." instance=ExtResource("1_ln2x5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 3)
@@ -98,6 +134,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
 [node name="dirt_dugout_2ways_bend" parent="." instance=ExtResource("6_swri5")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, -4)
+
+[node name="dirt_dugout_3ways" parent="." instance=ExtResource("8_xsg4u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -4)
+
+[node name="dirt_dugout_4ways" parent="." instance=ExtResource("9_jomtx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -2)
+
+[node name="dirt_dugout_2ways_straight" parent="." instance=ExtResource("10_wnm7q")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4, 0, -2)
 
 [connection signal="pressed" from="DebugControls/HBoxContainer/Cinematic Btn" to="DebugControls" method="_on_cinematic_btn_pressed"]
 [connection signal="pressed" from="DebugControls/HBoxContainer/Gridless Btn" to="DebugControls" method="_on_gridless_btn_pressed"]
