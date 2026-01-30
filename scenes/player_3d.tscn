@@ -214,7 +214,7 @@ _caster = NodePath("../../PickAxCast")
 _player = NodePath("../..")
 
 [node name="pickax" parent="Toolbelt/Pickax" instance=ExtResource("3_2djwe")]
-transform = Transform3D(0.9785369, 0, -0.20606756, 0.047923595, 0.9725813, 0.22757149, 0.2004173, -0.23256277, 0.9517077, 0, 0, 0.12537825)
+transform = Transform3D(0.97853684, 0, -0.20606756, 0.04792359, 0.9725813, 0.22757149, 0.20041728, -0.23256277, 0.9517077, 0, 0, 0.12537825)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Toolbelt/Pickax"]
 libraries = {
@@ -238,7 +238,6 @@ shape = ExtResource("1_52vux")
 target_position = Vector3(0, -0.85, 0)
 script = ExtResource("7_460ac")
 _translation_testers = [NodePath("../Cast Forward"), NodePath("../Cast Left"), NodePath("../Cast Backward"), NodePath("../Cast Right")]
-global_step_direction = null
 step_distance = 0.25
 min_clearing_above = 0.15
 _debug_shape = NodePath("../Debug Step CollisionPt")

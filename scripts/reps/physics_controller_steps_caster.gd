@@ -68,19 +68,9 @@ var shape_half_height: float:
             push_warning("Don't know the exact height of %s" % shape)
             return 1.0
 
-var _testers_inited: bool = false
-var _translation_tester_offsets: Dictionary[Node3D, Vector3]
-
 func _ready() -> void:
     enabled = false
     _sync_cast_origin()
-    if !_testers_inited:
-        _init_testers()
-
-func _init_testers() -> void:
-    for tester: Node3D in _translation_testers:
-        _translation_tester_offsets[tester] = tester.global_position - body.global_position
-    _testers_inited = true
 
 func _sync_cast_origin() -> void:
     var b: PhysicsBody3D = body
@@ -93,17 +83,11 @@ func _sync_cast_origin() -> void:
     target_position.y = -(step_height_max + step_down_max + min_clearing_above)
 
     # Sync translations checkers
-    if !_testers_inited:
-        _init_testers()
+    up_delta = up_global  * (step_height_max + shape_half_height)
 
-    var up: Vector3 = up_global
-    up_delta = up  * (step_height_max + shape_half_height)
-    var origin: Vector3 = body.global_position
-    for other: Node3D in _translation_testers:
-        var delta: Vector3 = _translation_tester_offsets[other]
-        delta -= delta.project(up)
-        delta += up_delta
-        other.global_position = origin + delta
+    for tester: Node3D in _translation_testers:
+        up_delta = tester.global_basis.y * (step_height_max + shape_half_height)
+        tester.position.y = tester.to_local(up_delta + tester.global_position).y
 
 enum StepData { POINT, NORMAL }
 
