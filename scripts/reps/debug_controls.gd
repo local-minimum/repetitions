@@ -37,3 +37,7 @@ func _on_gridless_btn_pressed() -> void:
 func _on_debug_shapes_btn_pressed() -> void:
     _player._show_debug_shapes = !_player._show_debug_shapes
     _sync_debug_shapes()
+
+
+func _on_reset_pos_btn_pressed() -> void:
+    _player.global_position = _player.builder.get_closest_global_grid_position(Vector3.ZERO)

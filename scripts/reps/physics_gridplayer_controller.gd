@@ -240,6 +240,8 @@ func _gridless_movement(delta: float) -> void:
     elif _show_debug_shapes:
         _stepper.display_debug_not_hitting()
 
+    velocity += get_gravity()
+
 func _gridfull_movement() -> void:
     if !_translation_stack.is_empty():
         var movement: Movement.MovementType = _translation_stack[0]

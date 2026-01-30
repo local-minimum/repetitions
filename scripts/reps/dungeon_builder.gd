@@ -1,7 +1,7 @@
 extends Node3D
 class_name DungeonBuilder
 
-@export var grid_size: Vector3
+@export var grid_size: Vector3 = Vector3(2.5, 2.5, 2.5)
 @export var player: PhysicsGridPlayerController
 @export var dirt_mag: DirtMagazine
 

@@ -7,6 +7,7 @@
 
 [node name="debug level" type="Node3D" node_paths=PackedStringArray("player")]
 script = ExtResource("1_8d50e")
+grid_size = Vector3(2, 3, 2)
 player = NodePath("Player3d")
 
 [node name="simplefloor" parent="." instance=ExtResource("1_ln2x5")]
@@ -78,6 +79,12 @@ layout_mode = 2
 toggle_mode = true
 text = "Debug Shapes"
 
+[node name="Reset Pos Btn" type="Button" parent="DebugControls/HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+text = "Reset Pos"
+
 [connection signal="pressed" from="DebugControls/HBoxContainer/Cinematic Btn" to="DebugControls" method="_on_cinematic_btn_pressed"]
 [connection signal="pressed" from="DebugControls/HBoxContainer/Gridless Btn" to="DebugControls" method="_on_gridless_btn_pressed"]
 [connection signal="pressed" from="DebugControls/HBoxContainer/Debug Shapes Btn" to="DebugControls" method="_on_debug_shapes_btn_pressed"]
+[connection signal="pressed" from="DebugControls/HBoxContainer/Reset Pos Btn" to="DebugControls" method="_on_reset_pos_btn_pressed"]
