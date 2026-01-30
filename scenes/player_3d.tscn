@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b8lqj7rv80ssv"]
+[gd_scene load_steps=21 format=3 uid="uid://b8lqj7rv80ssv"]
 
 [ext_resource type="Shape3D" uid="uid://ccivye2pfod1q" path="res://scenes/player_cast_capsule.tres" id="1_52vux"]
 [ext_resource type="Script" uid="uid://gca7baymjcg6" path="res://scripts/reps/physics_gridplayer_controller.gd" id="1_reoop"]
@@ -10,7 +10,33 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_reoop"]
 radius = 0.3
-height = 1.8
+height = 1.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_60w1x"]
+transparency = 1
+albedo_color = Color(0.2627451, 1, 1, 0.36862746)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0nu4v"]
+material = SubResource("StandardMaterial3D_60w1x")
+radius = 0.3
+height = 1.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ali1n"]
+albedo_color = Color(0.2627451, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_aoiyr"]
+material = SubResource("StandardMaterial3D_ali1n")
+radius = 0.05
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aoiyr"]
+albedo_color = Color(0.2627451, 1, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_60w1x"]
+material = SubResource("StandardMaterial3D_aoiyr")
+top_radius = 0.0
+bottom_radius = 0.1
+height = 0.5
 
 [sub_resource type="Animation" id="Animation_sxlqi"]
 length = 0.001
@@ -107,7 +133,7 @@ material = SubResource("StandardMaterial3D_460ac")
 radius = 0.1
 height = 0.2
 
-[node name="Player3d" type="CharacterBody3D" node_paths=PackedStringArray("_camera", "_captured_pointer_eventer", "_stepper", "_forward", "_left", "_right", "_backward")]
+[node name="Player3d" type="CharacterBody3D" node_paths=PackedStringArray("_camera", "_captured_pointer_eventer", "_stepper", "_forward", "_left", "_right", "_backward", "_debug_shapes")]
 collision_layer = 2
 collision_mask = 3
 input_ray_pickable = false
@@ -123,13 +149,19 @@ _gridless_translation_speed = 4.0
 _gridless_friction = 100.0
 _mouse_sensitivity_yaw = 0.002
 _mouse_sensistivity_pitch = 0.005
+_debug_shapes = [NodePath("Camera3D/Debug Cam Position"), NodePath("Camera3D/Debug Cam Look Direction"), NodePath("Player Collision Body/Debug Body Shape"), NodePath("Debug Step CollisionPt")]
 
 [node name="Player Collision Body" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CapsuleShape3D_reoop")
+
+[node name="Debug Body Shape" type="MeshInstance3D" parent="Player Collision Body"]
+layers = 524288
+mesh = SubResource("CapsuleMesh_0nu4v")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0697947, 0.65)
+cull_mask = 524287
 current = true
 near = 0.4
 
@@ -137,6 +169,15 @@ near = 0.4
 target_position = Vector3(0, 0, -20)
 script = ExtResource("2_sxlqi")
 _camera = NodePath("..")
+
+[node name="Debug Cam Position" type="MeshInstance3D" parent="Camera3D"]
+layers = 524288
+mesh = SubResource("SphereMesh_aoiyr")
+
+[node name="Debug Cam Look Direction" type="MeshInstance3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.19999999)
+layers = 524288
+mesh = SubResource("CylinderMesh_60w1x")
 
 [node name="Cast Forward" type="ShapeCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.4)
@@ -172,7 +213,7 @@ _caster = NodePath("../../PickAxCast")
 _player = NodePath("../..")
 
 [node name="pickax" parent="Toolbelt/Pickax" instance=ExtResource("3_2djwe")]
-transform = Transform3D(0.97853696, 0, -0.20606756, 0.0479236, 0.9725813, 0.22757149, 0.20041731, -0.23256277, 0.9517077, 0, 0, 0.12537825)
+transform = Transform3D(0.9785369, 0, -0.20606756, 0.047923595, 0.9725813, 0.22757149, 0.2004173, -0.23256277, 0.9517077, 0, 0, 0.12537825)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Toolbelt/Pickax"]
 libraries = {
@@ -198,8 +239,10 @@ script = ExtResource("7_460ac")
 step_direction = Vector2(0, 1)
 step_distance = 0.25
 min_clearing_above = 0.15
-_debug_shape = NodePath("CollisionPt")
+_debug_shape = NodePath("../Debug Step CollisionPt")
 
-[node name="CollisionPt" type="MeshInstance3D" parent="Step Caster"]
-visible = false
+[node name="Debug Step CollisionPt" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0.25)
+layers = 524289
 mesh = SubResource("SphereMesh_460ac")
+skeleton = NodePath("../Step Caster")
