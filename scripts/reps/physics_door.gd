@@ -59,13 +59,13 @@ func _handle_hover_door_enter() -> void:
         return
     InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
     _hovered = true
-    print_debug("Door %s can be interacted with" % name)
+    # print_debug("Door %s can be interacted with" % name)
 
 func _handle_hover_door_exit() -> void:
     if _hovered:
         InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
         _hovered = false
-        print_debug("Door %s can no longer be interacted with" % name)
+        # print_debug("Door %s can no longer be interacted with" % name)
 
 func _is_mouse_click(evt: InputEvent) -> bool:
     if evt.is_echo():
@@ -81,7 +81,7 @@ func _handle_input_event(cam: Node, evt: InputEvent, _pt: Vector3, _normal: Vect
     if _player != null && _player.cinematic:
         return
 
-    print_debug("Door %s getting event %s while hovered %s" % [name, evt, _hovered])
+    # print_debug("Door %s getting event %s while hovered %s" % [name, evt, _hovered])
 
     if _hovered:
         var interactor: Node3D = NodeUtils.node3d(cam)
@@ -99,6 +99,9 @@ func _handle_input_event(cam: Node, evt: InputEvent, _pt: Vector3, _normal: Vect
 func _handle_body_enter_door_trigger(body: Node3D) -> void:
     var b: PhysicsBody3D = NodeUtils.body3d(body)
     if b == null || _ignore_colliders.has(b):
+        print_debug("Ignoring collision with %s / %s in ignores %s" % [
+            body, b, _ignore_colliders.has(b)
+        ])
         return
 
     _blocking_body_detected(b)

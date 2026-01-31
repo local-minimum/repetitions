@@ -141,7 +141,7 @@ func _input(event: InputEvent) -> void:
     elif event.is_action_released(&"crawl_strafe_right"):
         _release_movement(Movement.MovementType.STRAFE_RIGHT)
 
-    elif event.is_action_pressed("&crawl_backward"):
+    elif event.is_action_pressed(&"crawl_backward"):
         _push_ontop_of_movement_stack(Movement.MovementType.BACK)
 
     elif event.is_action_released(&"crawl_backward"):
