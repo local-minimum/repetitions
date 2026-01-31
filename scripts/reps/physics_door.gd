@@ -31,8 +31,10 @@ func _enter_tree() -> void:
         push_error("Failed to connect mouse exited")
     if !_body.input_event.is_connected(_handle_input_event) && _body.input_event.connect(_handle_input_event) != OK:
         push_error("Failed to connect input event")
+
     if __SignalBus.on_physics_player_ready.connect(_handle_player_ready) != OK:
         push_error("Failed to connect physics player ready")
+
     if _trigger_area.body_entered.is_connected(_handle_body_enter_door_trigger) && _trigger_area.body_entered.connect(_handle_body_enter_door_trigger) != OK:
         push_error("Failed to connect body entered trigger area")
 

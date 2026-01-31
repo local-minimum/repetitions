@@ -4,7 +4,6 @@ extends CanvasLayer
 @export var _cinematic_btn: Button
 @export var _gridless_btn: Button
 @export var _debug_shapes_btn: Button
-@export var _reset_pos_btn: Button
 
 func _ready() -> void:
     _sync_cinematic.call_deferred()
