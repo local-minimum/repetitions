@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://y1ffxoreajkp"]
+
+[ext_resource type="PackedScene" uid="uid://4c4xlnfkrmmd" path="res://scenes/rooms/meshes/roomwall_door_with_door.blend" id="1_vka4u"]
+[ext_resource type="Script" uid="uid://bvkevtj83moe3" path="res://scripts/reps/swinging_door.gd" id="2_tcvdb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tcvdb"]
+size = Vector3(0.059936523, 1.9832764, 0.9202881)
+
+[node name="roomwall_door_with_door" instance=ExtResource("1_vka4u")]
+
+[node name="Door " parent="." index="4" node_paths=PackedStringArray("_rotating_node", "_side_detectors", "_body", "_interaction_point", "_trigger_area", "_ignore_colliders")]
+script = ExtResource("2_tcvdb")
+_rotating_node = NodePath(".")
+_side_detectors = [NodePath("Neg Side Pt"), NodePath("Pos Side Pt")]
+_body = NodePath("StaticBody3D")
+_interaction_point = NodePath("Interaction Center")
+_trigger_area = NodePath("Door Trigger Area")
+_ignore_colliders = [NodePath("StaticBody3D"), NodePath("../DoorFrame /StaticBody3D"), NodePath("../Horzontal Support /StaticBody3D"), NodePath("../Vertical Support /StaticBody3D"), NodePath("../Wall /StaticBody3D")]
+
+[node name="Door Trigger Area" type="Area3D" parent="Door " index="1"]
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door /Door Trigger Area" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.031433105, 0.0033569336, -0.49969482)
+shape = SubResource("BoxShape3D_tcvdb")
+
+[node name="Interaction Center" type="Node3D" parent="Door " index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.029399455, 0, -0.8663733)
+
+[node name="Neg Side Pt" type="Node3D" parent="Door " index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.891435)
+
+[node name="Pos Side Pt" type="Node3D" parent="Door " index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06274244, 0, -0.891435)
