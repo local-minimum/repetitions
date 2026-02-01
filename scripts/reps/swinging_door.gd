@@ -1,6 +1,8 @@
 extends PhysicsDoor
 class_name SwingingDoor
 
+const _BOUNCE_BACK_KEY: String = "door_bounce_back"
+
 @export var _rotating_node: Node3D
 
 @export var _local_rotation_axis: Vector3 = Vector3.UP
@@ -12,6 +14,7 @@ class_name SwingingDoor
 @export_range(0.0, 2.0) var _rotation_duration: float = 0.7
 @export var _animator: AnimationPlayer
 @export var _anim_interact: String
+@export var _bounce_back_on_collision: bool
 
 var _is_opening: bool
 var _motion_blocked: bool
@@ -23,6 +26,10 @@ var _tween_start: float
 
 func _ready() -> void:
     _last_open_interaction_target = _resting_rotation
+
+    var parent: Node = NodeUtils.find_parent_with_meta(self, _BOUNCE_BACK_KEY)
+    if parent != null:
+        _bounce_back_on_collision = parent.get_meta(_BOUNCE_BACK_KEY, _bounce_back_on_collision)
 
 func is_animating() -> bool:
     return _tween != null && _tween.is_running()
@@ -62,7 +69,7 @@ func _blocking_body_detected(body: PhysicsBody3D) -> void:
     if !_bocking_is_in_motion_direction(body):
         return
 
-    if _motion_blocked:
+    if _motion_blocked || !_bounce_back_on_collision:
         if _tween != null && _tween.is_running():
             _tween.kill()
             # print_debug("Rotating Door %s ran into %s while animating back to start, we give up" % [name, body])

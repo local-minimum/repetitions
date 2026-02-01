@@ -42,6 +42,15 @@ static func find_parent_type(node: Node, type: String) -> Node:
 
     return find_parent_type(node.get_parent(), type)
 
+## Returns first `node` parent that has sought `meta_key` set
+static func find_parent_with_meta(node: Node, meta_key: String, include_self: bool = true) -> Node:
+    if node != null && !include_self:
+        node = node.get_parent()
+    while node != null && !node.has_meta(meta_key):
+        node = node.get_parent()
+
+    return node
+
 ## Returns the first physics body 3d parent, including `node` itself
 static func body3d(node: Node) -> PhysicsBody3D:
     if node is PhysicsBody3D:

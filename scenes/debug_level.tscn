@@ -168,6 +168,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1, 
 
 [node name="roomwall_door_with_door2" parent="." instance=ExtResource("11_jomtx")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1, 0, 7)
+metadata/door_bounce_back = true
 
 [node name="hallwall_cornercap" parent="." instance=ExtResource("12_wnm7q")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1.1, 0, 6.6)
