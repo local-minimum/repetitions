@@ -38,23 +38,43 @@ func is_open() -> bool:
 func is_opening() -> bool:
     return is_animating() && _is_opening
 
+func _bocking_is_in_motion_direction(interactor: Node3D) -> bool:
+    var idx: int = _get_side_of_door_index(interactor)
+    if idx < 0:
+        return false
+
+    elif _is_opening:
+        if _motion_blocked:
+            return _last_open_interaction_target != _open_rotation_deg[idx]
+        else:
+            return _last_open_interaction_target == _open_rotation_deg[idx]
+
+    else:
+        if _motion_blocked:
+            return _last_open_interaction_target == _open_rotation_deg[idx]
+        else:
+            return _last_open_interaction_target != _open_rotation_deg[idx]
+
 func _blocking_body_detected(body: PhysicsBody3D) -> void:
     if !is_animating():
+        return
+
+    if !_bocking_is_in_motion_direction(body):
         return
 
     if _motion_blocked:
         if _tween != null && _tween.is_running():
             _tween.kill()
-            print_debug("Rotating Door %s ran into %s while animating back to start, we give up" % [name, body])
+            # print_debug("Rotating Door %s ran into %s while animating back to start, we give up" % [name, body])
             return
     else:
         if _tween_progress > _successful_interaction_after_progress:
             if _tween != null && _tween.is_running():
                 _tween.kill()
-                print_debug("Rotating Door %s ran into %s while animating, we are done" % [name, body])
+                # print_debug("Rotating Door %s ran into %s while animating, we are done" % [name, body])
                 return
 
-        print_debug("Rotating Door %s ran into %s while animating, we return back" % [name, body])
+        # print_debug("Rotating Door %s ran into %s while animating, we return back" % [name, body])
         _motion_blocked = true
         _motion_block_progress = _tween_progress
         _tween_target = _tween_start
@@ -89,6 +109,9 @@ func _get_rotation_target(interactor: Node3D) -> float:
         return _open_rotation_deg.pick_random()
 
     # We attempt to open away from the interactor
+    return _get_opposing_rotation_or_random(interactor)
+
+func _get_side_of_door_index(interactor: Node3D) -> int:
     var best_idx: int = -1
     var best_dist_sq: float = 0
     for idx: int in range(_side_detectors.size()):
@@ -96,6 +119,11 @@ func _get_rotation_target(interactor: Node3D) -> float:
         if best_idx < 0 || dist_sq < best_dist_sq:
             best_idx = idx
             best_dist_sq = dist_sq
+
+    return best_idx
+
+func _get_opposing_rotation_or_random(interactor: Node3D) -> float:
+    var best_idx: int = _get_side_of_door_index(interactor)
 
     if best_idx > -1 && best_idx < _open_rotation_deg.size():
         var open_idx: int = Array(
