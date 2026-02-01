@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://cjduvtbggfby1"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_mbk1p"]
-[ext_resource type="PackedScene" uid="uid://b7lslbxgj6psm" path="res://scenes/rooms/meshes/roomwall_door.blend" id="2_nr7pi"]
 [ext_resource type="PackedScene" uid="uid://dnallaxvdf31p" path="res://scenes/rooms/meshes/roomwall_cornercap.blend" id="3_w6a1i"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="4_2lquy"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="5_nr7pi"]
 [ext_resource type="PackedScene" uid="uid://cg0gqdy2q4vqx" path="res://scenes/loot/loot_pickax.tscn" id="6_w6a1i"]
 [ext_resource type="PackedScene" uid="uid://bhppd8cxmo4ig" path="res://scenes/dugneonbuilderterminal.tscn" id="7_2lquy"]
+[ext_resource type="PackedScene" uid="uid://y1ffxoreajkp" path="res://scenes/rooms/meshes/roomwall_door_with_door.tscn" id="7_rcr32"]
 
 [node name="StartRoom3d" type="Node3D"]
 
@@ -72,18 +72,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 2)
 
 [node name="roomwall3" parent="Geometry" instance=ExtResource("1_mbk1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
-
-[node name="roomwall_door" parent="Geometry" instance=ExtResource("2_nr7pi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
-
-[node name="roomwall_door2" parent="Geometry" instance=ExtResource("2_nr7pi")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, 0, -6)
-
-[node name="roomwall_door3" parent="Geometry" instance=ExtResource("2_nr7pi")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 8, 0, -4)
-
-[node name="roomwall_door4" parent="Geometry" instance=ExtResource("2_nr7pi")]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 4, 0, 4)
 
 [node name="roomwall_cornercap" parent="Geometry" instance=ExtResource("3_w6a1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
@@ -272,3 +260,15 @@ transform = Transform3D(0.9401144, 0.22450241, -0.2564831, 0.25935408, -0.959397
 
 [node name="dugneonbuilderterminal2" parent="Geometry" instance=ExtResource("7_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="roomwall_door_with_door" parent="." instance=ExtResource("7_rcr32")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3, 0, 5)
+
+[node name="roomwall_door_with_door2" parent="." instance=ExtResource("7_rcr32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 1)
+
+[node name="roomwall_door_with_door3" parent="." instance=ExtResource("7_rcr32")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1, 0, -5)
+
+[node name="roomwall_door_with_door4" parent="." instance=ExtResource("7_rcr32")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 7, 0, -3)

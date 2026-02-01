@@ -2,11 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_h2b07"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_uxsx7"]
-[ext_resource type="PackedScene" uid="uid://b7lslbxgj6psm" path="res://scenes/rooms/meshes/roomwall_door.blend" id="4_41tem"]
 [ext_resource type="PackedScene" uid="uid://e4340jfyjvua" path="res://scenes/rooms/meshes/roomwall_twosided.blend" id="5_41tem"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="5_wancy"]
 [ext_resource type="PackedScene" uid="uid://b8p8rq2akjh17" path="res://scenes/rooms/meshes/roomwall_twosided_window.blend" id="6_wancy"]
 [ext_resource type="PackedScene" uid="uid://cydmlq8hfh5mo" path="res://scenes/rooms/meshes/roomwall_twosided_truncated.blend" id="7_47r7j"]
+[ext_resource type="PackedScene" uid="uid://y1ffxoreajkp" path="res://scenes/rooms/meshes/roomwall_door_with_door.tscn" id="8_41tem"]
 [ext_resource type="PackedScene" uid="uid://bb1kovci4qgku" path="res://scenes/rooms/meshes/roomwall_twosided_endcap.blend" id="8_bnp8r"]
 
 [node name="RoomCorner3d" type="Node3D"]
@@ -100,9 +100,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 [node name="simplefloor16" parent="Geometry" instance=ExtResource("2_uxsx7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
 
-[node name="roomwall_door2" parent="Geometry" instance=ExtResource("4_41tem")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
-
 [node name="simpleceiling" parent="Geometry" instance=ExtResource("5_wancy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 4)
 
@@ -162,3 +159,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2.9)
 
 [node name="roomwall_twosided_endcap2" parent="Geometry" instance=ExtResource("8_bnp8r")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2.1, 0, 2)
+
+[node name="roomwall_door_with_door" parent="." instance=ExtResource("8_41tem")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -1)

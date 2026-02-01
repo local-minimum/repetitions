@@ -46,12 +46,12 @@ func _exit_tree() -> void:
     _trigger_area.body_entered.disconnect(_handle_body_enter_door_trigger)
 
 func with_interaction_range(interactor: Node3D) -> bool:
-    # print_debug("%s in range of %s -> %s < %s" % [
+    #print_debug("%s in range of %s -> %s < %s" % [
     #    interactor.name,
     #    _interaction_point.name,
     #    interactor.global_position.distance_squared_to(_interaction_point.global_position),
     #    _max_interaction_distance_sq,
-    # ])
+    #])
     return interactor.global_position.distance_squared_to(_interaction_point.global_position) < _max_interaction_distance_sq
 
 func _handle_player_ready(player: PhysicsGridPlayerController) -> void:
@@ -92,6 +92,7 @@ func _handle_input_event(cam: Node, evt: InputEvent, _pt: Vector3, _normal: Vect
             return
 
         if evt.is_action_pressed(&"crawl_search") || _is_mouse_click(evt):
+            print_debug("Interacting with door %s" % [name])
             _interact(interactor)
             get_viewport().set_input_as_handled()
         elif !with_interaction_range(interactor):

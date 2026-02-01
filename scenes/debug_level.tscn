@@ -84,8 +84,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 5)
 [node name="simplefloor27" parent="." instance=ExtResource("1_ln2x5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 7)
 
+[node name="simplefloor30" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 7)
+
+[node name="simplefloor31" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 7)
+
 [node name="simplefloor28" parent="." instance=ExtResource("1_ln2x5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 9)
+
+[node name="simplefloor29" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 11)
 
 [node name="simplefloor22" parent="." instance=ExtResource("1_ln2x5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 3)
@@ -168,6 +177,18 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1, 
 
 [node name="roomwall_door_with_door2" parent="." instance=ExtResource("11_jomtx")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1, 0, 7)
+metadata/door_bounce_back = true
+
+[node name="roomwall_door_with_door4" parent="." instance=ExtResource("11_jomtx")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -5, 0, 5)
+metadata/door_bounce_back = true
+
+[node name="roomwall_door_with_door5" parent="." instance=ExtResource("11_jomtx")]
+transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -5, 0, 7)
+metadata/door_bounce_back = true
+
+[node name="roomwall_door_with_door3" parent="." instance=ExtResource("11_jomtx")]
+transform = Transform3D(-4.3711385e-08, 0, 2, 0, 1.4, 0, -0.99999994, 0, -8.742278e-08, -0.036135674, 0, 11)
 metadata/door_bounce_back = true
 
 [node name="hallwall_cornercap" parent="." instance=ExtResource("12_wnm7q")]

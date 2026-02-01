@@ -2,10 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_cq5sr"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_b1fcn"]
-[ext_resource type="PackedScene" uid="uid://b7lslbxgj6psm" path="res://scenes/rooms/meshes/roomwall_door.blend" id="4_6dfi5"]
 [ext_resource type="PackedScene" uid="uid://bkcv6hoslgkyn" path="res://scenes/rooms/meshes/props/reactor.blend" id="5_cq5sr"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="5_ueo3t"]
 [ext_resource type="Script" uid="uid://bykwxkovlaqog" path="res://scripts/reps/reactor.gd" id="6_b1fcn"]
+[ext_resource type="PackedScene" uid="uid://y1ffxoreajkp" path="res://scenes/rooms/meshes/roomwall_door_with_door.tscn" id="6_weq4u"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_cq5sr"]
 height = 8.0
@@ -112,9 +112,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 [node name="simplefloor16" parent="Geometry" instance=ExtResource("2_b1fcn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
 
-[node name="roomwall_door2" parent="Geometry" instance=ExtResource("4_6dfi5")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4, 0, -4)
-
 [node name="simpleceiling" parent="Geometry" instance=ExtResource("5_ueo3t")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 4)
 
@@ -181,6 +178,9 @@ collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Exit Area"]
 shape = SubResource("CylinderShape3D_b1fcn")
+
+[node name="roomwall_door_with_door" parent="." instance=ExtResource("6_weq4u")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -5, 0, -5)
 
 [connection signal="body_entered" from="Geometry/Entry Area" to="Geometry/reactor" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Geometry/Exit Area" to="Geometry/reactor" method="_on_area_3d_body_exited"]
