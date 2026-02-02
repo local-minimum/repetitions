@@ -2,13 +2,15 @@ extends PhysicsDoor
 class_name SwingingDoor
 
 const _BOUNCE_BACK_KEY: String = "door_bounce_back"
-
+enum RotationSide { UNKNOWN, CLOSED, POSITIVE, NEGATIVE}
 @export var _rotating_node: Node3D
 
 @export var _local_rotation_axis: Vector3 = Vector3.UP
-@export var _resting_rotation: float = 0
-@export var _open_rotation_deg: Array[float] = [-118.0]
-@export var _side_detectors: Array[Node3D] = []
+@export var _closed_rotation_deg: float = 0
+@export var _neg_open_rotation_deg: float = -118.0
+@export var _pos_open_rotation_deg: float = 0
+@export var _pos_side_detector: Node3D
+@export var _neg_side_detector: Node3D
 @export var _successful_interaction_after_progress: float = 0.8
 @export_range(0.0, 10.0) var _rotation_start_delay: float = 0.0
 @export_range(0.0, 2.0) var _rotation_duration: float = 0.7
@@ -20,12 +22,14 @@ var _is_opening: bool
 var _motion_blocked: bool
 var _motion_block_progress: float
 var _tween_progress: float
-var _last_open_interaction_target: float = 0
+var _last_open_interaction_target: RotationSide = RotationSide.UNKNOWN
+var _rotation_direction: RotationSide = RotationSide.UNKNOWN
 var _tween_target: float
 var _tween_start: float
 
 func _ready() -> void:
-    _last_open_interaction_target = _resting_rotation
+    _last_open_interaction_target = RotationSide.UNKNOWN
+    _tween_target = _closed_rotation_deg
 
     var parent: Node = NodeUtils.find_parent_with_meta(self, _BOUNCE_BACK_KEY)
     if parent != null:
@@ -36,116 +40,117 @@ func is_animating() -> bool:
 
 func is_open() -> bool:
     var a: float = _rotating_node.rotation_degrees.dot(_local_rotation_axis)
-    var best: float = fposmod(a - _resting_rotation, 180)
-    for open_a: float in _open_rotation_deg:
-        if best > fposmod(a - open_a, 180):
+    var best: float = fposmod(a - _closed_rotation_deg, 180)
+    for open_a: float in [_pos_open_rotation_deg, _neg_open_rotation_deg]:
+        if open_a != _closed_rotation_deg && best > fposmod(a - open_a, 180):
             return true
     return false
 
 func is_opening() -> bool:
     return is_animating() && _is_opening
 
-func _bocking_is_in_motion_direction(interactor: Node3D) -> bool:
-    var idx: int = _get_side_of_door_index(interactor)
-    if idx < 0:
-        return false
 
-    elif _is_opening:
-        if _motion_blocked:
-            return _last_open_interaction_target != _open_rotation_deg[idx]
-        else:
-            return _last_open_interaction_target == _open_rotation_deg[idx]
+var _blockers: Dictionary[Node3D, RotationSide]
 
-    else:
-        if _motion_blocked:
-            return _last_open_interaction_target == _open_rotation_deg[idx]
-        else:
-            return _last_open_interaction_target != _open_rotation_deg[idx]
+func _blocking_body_removed(body: PhysicsBody3D) -> void:
+    if !_blockers.erase(body):
+        print_debug("Body %s wasn't blocking any direction")
+
+func _end_rotation() -> void:
+    if _tween != null && _tween.is_running():
+        _tween.kill()
+        # print_debug("Rotating Door %s ran into %s while animating back to start, we give up" % [name, body])
+        return
 
 func _blocking_body_detected(body: PhysicsBody3D) -> void:
+    var side: RotationSide = _get_side_of_door_interaction(body)
+    _blockers[body] = side
+
     if !is_animating():
         return
 
-    if !_bocking_is_in_motion_direction(body):
+    if side != _rotation_direction || side == RotationSide.UNKNOWN:
         return
 
     if _motion_blocked || !_bounce_back_on_collision:
-        if _tween != null && _tween.is_running():
-            _tween.kill()
-            # print_debug("Rotating Door %s ran into %s while animating back to start, we give up" % [name, body])
-            return
-    else:
-        if _tween_progress > _successful_interaction_after_progress:
-            if _tween != null && _tween.is_running():
-                _tween.kill()
-                # print_debug("Rotating Door %s ran into %s while animating, we are done" % [name, body])
-                return
+        _end_rotation()
+        return
 
-        # print_debug("Rotating Door %s ran into %s while animating, we return back" % [name, body])
-        _motion_blocked = true
-        _motion_block_progress = _tween_progress
-        _tween_target = _tween_start
-        _tween_start = _rotating_node.rotation_degrees.dot(_local_rotation_axis)
+    if _tween_progress > _successful_interaction_after_progress:
+        _end_rotation()
+        return
+
+    _rotation_direction = _invert_rotaion_side(_rotation_direction)
+    if _blockers.values().has(_rotation_direction):
+        _end_rotation()
+        return
+
+    # print_debug("Rotating Door %s ran into %s while animating, we return back" % [name, body])
+    _motion_blocked = true
+    _motion_block_progress = _tween_progress
+    _tween_target = _tween_start
+    _tween_start = _rotating_node.rotation_degrees.dot(_local_rotation_axis)
 
 var _tween: Tween
 
-func _get_rotation_target(interactor: Node3D) -> float:
+func _blocked_rotation_target(direction: RotationSide) -> bool:
+    if _blockers.is_empty():
+        return false
+
+    elif _blockers.values().has(direction) || _blockers.values().has(RotationSide.UNKNOWN):
+        return true
+
+    return false
+
+func _get_rotation_target(interactor: Node3D) -> RotationSide:
     # The door was opened last and should now be closed
-    if _tween_target != _resting_rotation:
-        return _resting_rotation
+    if _tween_target != _closed_rotation_deg:
+        return RotationSide.CLOSED
 
-    # If there's only one direction time to open to it
-    if _open_rotation_deg.size() == 1:
-        return _open_rotation_deg[0]
+    elif _closed_rotation_deg == _pos_open_rotation_deg:
+        return RotationSide.NEGATIVE
 
-    # The door is closed but has been opened before, so if it opens both ways we will try and open the other way
-    if _last_open_interaction_target != _resting_rotation:
-        var opts: Array[float] = Array(
-            _open_rotation_deg.filter(func (a: float) -> bool: return a != _last_open_interaction_target),
-            TYPE_FLOAT,
-            "",
-            null,
-        )
-        # If it only opens one way we do that
-        if opts.is_empty():
-            return _open_rotation_deg.pick_random()
-        return opts.pick_random()
+    elif _neg_open_rotation_deg == _closed_rotation_deg:
+        return RotationSide.POSITIVE
 
-    # If we don't know which side the interactor is on, we open random direction
-    if interactor == null:
-        return _open_rotation_deg.pick_random()
+    match _get_side_of_door_interaction(interactor):
+        RotationSide.POSITIVE:
+            if _last_open_interaction_target == RotationSide.NEGATIVE:
+                return RotationSide.POSITIVE
+            return RotationSide.NEGATIVE
+        RotationSide.NEGATIVE:
+            if _last_open_interaction_target == RotationSide.POSITIVE:
+                return RotationSide.NEGATIVE
+            return RotationSide.POSITIVE
 
-    # We attempt to open away from the interactor
-    return _get_opposing_rotation_or_random(interactor)
+    return [_neg_open_rotation_deg, _pos_open_rotation_deg].pick_random()
 
-func _get_side_of_door_index(interactor: Node3D) -> int:
-    var best_idx: int = -1
-    var best_dist_sq: float = 0
-    for idx: int in range(_side_detectors.size()):
-        var dist_sq: float = _side_detectors[idx].global_position.distance_squared_to(interactor.global_position)
-        if best_idx < 0 || dist_sq < best_dist_sq:
-            best_idx = idx
-            best_dist_sq = dist_sq
+func _get_side_of_door_interaction(interactor: Node3D) -> RotationSide:
+    var pos_dist_sq: float = _pos_side_detector.global_position.distance_squared_to(interactor.global_position)
 
-    return best_idx
+    var neg_dist_sq: float = _neg_side_detector.global_position.distance_squared_to(interactor.global_position)
+    if neg_dist_sq < pos_dist_sq:
+        return RotationSide.NEGATIVE
 
-func _get_opposing_rotation_or_random(interactor: Node3D) -> float:
-    var best_idx: int = _get_side_of_door_index(interactor)
+    return RotationSide.POSITIVE
 
-    if best_idx > -1 && best_idx < _open_rotation_deg.size():
-        var open_idx: int = Array(
-            range(_open_rotation_deg.size).filter(func (opt_idx: int) -> bool: return opt_idx != best_idx),
-            TYPE_INT,
-            "",
-            null,
-        ).pick_random()
-        return _open_rotation_deg[open_idx]
-
-    # Give up and just pick at random
-    return _open_rotation_deg.pick_random()
+func _invert_rotaion_side(side: RotationSide) -> RotationSide:
+    match side:
+        RotationSide.POSITIVE:
+            return RotationSide.NEGATIVE
+        RotationSide.NEGATIVE:
+            return RotationSide.POSITIVE
+        RotationSide.CLOSED:
+            if _pos_open_rotation_deg == _closed_rotation_deg:
+                return RotationSide.NEGATIVE
+            elif _neg_open_rotation_deg == _closed_rotation_deg:
+                return RotationSide.POSITIVE
+            return RotationSide.UNKNOWN
+        _:
+            return RotationSide.UNKNOWN
 
 func _interact(interactor: Node3D) -> void:
-    if _open_rotation_deg.is_empty():
+    if _neg_open_rotation_deg == _closed_rotation_deg && _pos_open_rotation_deg == _closed_rotation_deg:
         push_warning("Door cannot be opened")
         return
 
@@ -155,12 +160,26 @@ func _interact(interactor: Node3D) -> void:
     _motion_blocked = false
     _motion_block_progress = 0
     _tween_start = _rotating_node.rotation_degrees.dot(_local_rotation_axis)
-    _tween_target = _get_rotation_target(interactor)
-    if _tween_target != _resting_rotation:
-        _last_open_interaction_target = _tween_target
-        _is_opening = true
-    else:
-        _is_opening = false
+    var target: RotationSide = _get_rotation_target(interactor)
+    match target:
+        RotationSide.POSITIVE:
+            _tween_target = _pos_open_rotation_deg
+            _last_open_interaction_target = target
+            _is_opening = true
+            _rotation_direction = target
+        RotationSide.NEGATIVE:
+            _tween_target = _neg_open_rotation_deg
+            _last_open_interaction_target = target
+            _is_opening = true
+            _rotation_direction = target
+        RotationSide.CLOSED:
+            _tween_target = _closed_rotation_deg
+            _is_opening = false
+            _rotation_direction = _invert_rotaion_side(_last_open_interaction_target)
+        _:
+            _tween_target = _tween_start
+            _is_opening = false
+            _rotation_direction = RotationSide.UNKNOWN
 
     if _animator != null && !_anim_interact.is_empty():
         _animator.play(_anim_interact)

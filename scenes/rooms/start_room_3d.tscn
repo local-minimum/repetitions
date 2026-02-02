@@ -272,3 +272,9 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1, 0
 
 [node name="roomwall_door_with_door4" parent="." instance=ExtResource("7_rcr32")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 7, 0, -3)
+
+[node name="roomwall_door_with_door5" parent="." instance=ExtResource("7_rcr32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 5)
+
+[node name="roomwall_door_with_door6" parent="." instance=ExtResource("7_rcr32")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 1, 0, 3)

@@ -4,14 +4,15 @@
 [ext_resource type="Script" uid="uid://bvkevtj83moe3" path="res://scripts/reps/swinging_door.gd" id="2_tcvdb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tcvdb"]
-size = Vector3(0.059936523, 1.9832764, 0.9202881)
+size = Vector3(0.10734558, 1.9832764, 0.9202881)
 
 [node name="roomwall_door_with_door" instance=ExtResource("1_vka4u")]
 
-[node name="Door " parent="." index="4" node_paths=PackedStringArray("_rotating_node", "_side_detectors", "_body", "_interaction_point", "_trigger_area", "_ignore_colliders")]
+[node name="Door " parent="." index="4" node_paths=PackedStringArray("_rotating_node", "_pos_side_detector", "_neg_side_detector", "_body", "_interaction_point", "_trigger_area", "_ignore_colliders")]
 script = ExtResource("2_tcvdb")
 _rotating_node = NodePath(".")
-_side_detectors = [NodePath("Neg Side Pt"), NodePath("Pos Side Pt")]
+_pos_side_detector = NodePath("Pos Side Pt")
+_neg_side_detector = NodePath("Neg Side Pt")
 _body = NodePath("StaticBody3D")
 _interaction_point = NodePath("Interaction Center")
 _trigger_area = NodePath("Door Trigger Area")
@@ -21,7 +22,7 @@ _ignore_colliders = [NodePath("StaticBody3D"), NodePath("../DoorFrame /StaticBod
 input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Door /Door Trigger Area" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.031433105, 0.0033569336, -0.49969482)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026679993, 0.0033569336, -0.49969482)
 shape = SubResource("BoxShape3D_tcvdb")
 
 [node name="Interaction Center" type="Node3D" parent="Door " index="2"]
