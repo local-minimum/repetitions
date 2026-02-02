@@ -9,8 +9,8 @@ enum RotationSide { UNKNOWN, CLOSED, POSITIVE, NEGATIVE}
 @export var _closed_rotation_deg: float = 0
 @export var _neg_open_rotation_deg: float = -118.0
 @export var _pos_open_rotation_deg: float = 0
-@export var _pos_side_detector: Node3D
-@export var _neg_side_detector: Node3D
+@export var _pos_side_area: Area3D
+@export var _neg_side_area: Area3D
 @export var _successful_interaction_after_progress: float = 0.8
 @export_range(0.0, 10.0) var _rotation_start_delay: float = 0.0
 @export_range(0.0, 2.0) var _rotation_duration: float = 0.7
@@ -52,8 +52,18 @@ func is_opening() -> bool:
 
 var _blockers: Dictionary[Node3D, RotationSide]
 
-func _blocking_body_removed(body: PhysicsBody3D) -> void:
-    if !_blockers.erase(body):
+func _area_to_side(area: Area3D) -> RotationSide:
+    if area == null:
+        return RotationSide.UNKNOWN
+    if area == _neg_side_area:
+        return RotationSide.NEGATIVE
+    if area == _pos_side_area:
+        return RotationSide.POSITIVE
+    return RotationSide.UNKNOWN
+
+func _blocking_body_removed(area: Area3D, body: PhysicsBody3D) -> void:
+    var side: RotationSide = _area_to_side(area)
+    if _blockers.get(body, RotationSide.UNKNOWN) == side && !_blockers.erase(body):
         print_debug("Body %s wasn't blocking any direction")
 
 func _end_rotation() -> void:
@@ -62,17 +72,18 @@ func _end_rotation() -> void:
         # print_debug("Rotating Door %s ran into %s while animating back to start, we give up" % [name, body])
         return
 
-func _blocking_body_detected(body: PhysicsBody3D) -> void:
-    var side: RotationSide = _get_side_of_door_interaction(body)
+func _blocking_body_detected(area: Area3D, body: PhysicsBody3D) -> void:
+    var side: RotationSide = _area_to_side(area)
     _blockers[body] = side
 
     if !is_animating():
         return
 
-    if side != _rotation_direction || side == RotationSide.UNKNOWN:
+    if side != _rotation_direction:
+        print_debug("Detected %s but its side %s is irrelevant for rotation direction %s" % [body, RotationSide.find_key(side), RotationSide.find_key(_rotation_direction)])
         return
 
-    if _motion_blocked || !_bounce_back_on_collision:
+    if _motion_blocked || !_bounce_back_on_collision || side == RotationSide.UNKNOWN:
         _end_rotation()
         return
 
@@ -126,9 +137,10 @@ func _get_rotation_target(interactor: Node3D) -> RotationSide:
     return [_neg_open_rotation_deg, _pos_open_rotation_deg].pick_random()
 
 func _get_side_of_door_interaction(interactor: Node3D) -> RotationSide:
-    var pos_dist_sq: float = _pos_side_detector.global_position.distance_squared_to(interactor.global_position)
+    var pos_dist_sq: float = _pos_side_area.global_position.distance_squared_to(interactor.global_position)
 
-    var neg_dist_sq: float = _neg_side_detector.global_position.distance_squared_to(interactor.global_position)
+    var neg_dist_sq: float = _neg_side_area.global_position.distance_squared_to(interactor.global_position)
+    print_debug("%s Comparing sides for %s %s (-) < %s (+)" % [get_parent().name, interactor.get_parent(), neg_dist_sq, pos_dist_sq])
     if neg_dist_sq < pos_dist_sq:
         return RotationSide.NEGATIVE
 

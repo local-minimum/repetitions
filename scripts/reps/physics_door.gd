@@ -5,11 +5,11 @@ class_name PhysicsDoor
 @export var _body: PhysicsBody3D
 @export var _interaction_point: Node3D
 @export var _max_interaction_distance_sq: float = 6.0
-@export var _trigger_area: Area3D
+@export var _trigger_areas: Array[Area3D]
 @export var _ignore_colliders: Array[StaticBody3D]
 
-@abstract func _blocking_body_detected(body: PhysicsBody3D) -> void
-@abstract func _blocking_body_removed(body: PhysicsBody3D) -> void
+@abstract func _blocking_body_detected(area: Area3D, body: PhysicsBody3D) -> void
+@abstract func _blocking_body_removed(area: Area3D, body: PhysicsBody3D) -> void
 
 @abstract func _interact(interactor: Node3D) -> void
 
@@ -37,17 +37,17 @@ func _enter_tree() -> void:
     if __SignalBus.on_physics_player_ready.connect(_handle_player_ready) != OK:
         push_error("Failed to connect physics player ready")
 
-    if !_trigger_area.body_entered.is_connected(_handle_body_enter_door_trigger) && _trigger_area.body_entered.connect(_handle_body_enter_door_trigger) != OK:
-        push_error("Failed to connect body entered trigger area")
-    if !_trigger_area.body_exited.is_connected(_handle_body_exit_door_trigger) && _trigger_area.body_exited.connect(_handle_body_exit_door_trigger) != OK:
-        push_error("Failed to connect body exited trigger area")
+    for _trigger_area: Area3D in _trigger_areas:
+        if !_trigger_area.body_entered.is_connected(_handle_body_enter_door_trigger) && _trigger_area.body_entered.connect(_handle_body_enter_door_trigger.bind(_trigger_area)) != OK:
+            push_error("Failed to connect body entered trigger area %s" % [_trigger_area])
+        if !_trigger_area.body_exited.is_connected(_handle_body_exit_door_trigger) && _trigger_area.body_exited.connect(_handle_body_exit_door_trigger.bind(_trigger_area)) != OK:
+            push_error("Failed to connect body exited trigger area %s" % [_trigger_area])
 
 func _exit_tree() -> void:
     _body.mouse_entered.disconnect(_handle_hover_door_enter)
     _body.mouse_exited.disconnect(_handle_hover_door_exit)
     _body.input_event.disconnect(_handle_input_event)
-    _trigger_area.body_entered.disconnect(_handle_body_enter_door_trigger)
-    _trigger_area.body_exited.disconnect(_handle_body_exit_door_trigger)
+
 
 func with_interaction_range(interactor: Node3D) -> bool:
     #print_debug("%s in range of %s -> %s < %s" % [
@@ -104,7 +104,7 @@ func _handle_input_event(cam: Node, evt: InputEvent, _pt: Vector3, _normal: Vect
     else:
         _handle_hover_door_enter()
 
-func _handle_body_enter_door_trigger(body: Node3D) -> void:
+func _handle_body_enter_door_trigger(body: Node3D, area: Area3D) -> void:
     var b: PhysicsBody3D = NodeUtils.body3d(body)
     if b == null || _ignore_colliders.has(b):
         # print_debug("Ignoring collision with %s / %s in ignores %s" % [
@@ -112,9 +112,9 @@ func _handle_body_enter_door_trigger(body: Node3D) -> void:
         #])
         return
 
-    _blocking_body_detected(b)
+    _blocking_body_detected(area, b)
 
-func _handle_body_exit_door_trigger(body: Node3D) -> void:
+func _handle_body_exit_door_trigger(body: Node3D, area: Area3D) -> void:
     var b: PhysicsBody3D = NodeUtils.body3d(body)
     if b == null || _ignore_colliders.has(b):
         # print_debug("Ignoring collision with %s / %s in ignores %s" % [
@@ -122,4 +122,4 @@ func _handle_body_exit_door_trigger(body: Node3D) -> void:
         #])
         return
 
-    _blocking_body_removed(b)
+    _blocking_body_removed(area, b)
