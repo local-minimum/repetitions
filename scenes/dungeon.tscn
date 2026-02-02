@@ -96,6 +96,7 @@ autowrap_mode = 2
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
+mouse_filter = 2
 alignment = 2
 
 [node name="Redraw Rooms Btn" type="Button" parent="Dungeon Planning UI/MarginContainer/HBoxContainer"]
@@ -155,6 +156,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 script = ExtResource("10_5hkx1")
 _configs = Dictionary[int, ExtResource("11_7wjui")]({
 0: SubResource("Resource_3afjq"),

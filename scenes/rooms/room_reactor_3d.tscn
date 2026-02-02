@@ -168,6 +168,7 @@ detection_area = NodePath("../Entry Area")
 [node name="Entry Area" type="Area3D" parent="Geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5999999, 0)
 collision_mask = 2
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Entry Area"]
 shape = SubResource("CylinderShape3D_cq5sr")
@@ -175,6 +176,7 @@ shape = SubResource("CylinderShape3D_cq5sr")
 [node name="Exit Area" type="Area3D" parent="Geometry"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5999999, 0)
 collision_mask = 2
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Exit Area"]
 shape = SubResource("CylinderShape3D_b1fcn")

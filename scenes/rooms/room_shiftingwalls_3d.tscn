@@ -177,6 +177,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
 
 [node name="Area Out Left" type="Area3D" parent="Geometry/simplefloor11"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -1)
+collision_mask = 2
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/simplefloor11/Area Out Left"]
 shape = SubResource("BoxShape3D_v8raw")
@@ -186,6 +188,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
 
 [node name="Area Left In" type="Area3D" parent="Geometry/simplefloor13"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -1)
+collision_mask = 2
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/simplefloor13/Area Left In"]
 shape = SubResource("BoxShape3D_v8raw")
@@ -201,6 +205,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
 
 [node name="Area CrossRoads" type="Area3D" parent="Geometry/simplefloor20"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -1)
+collision_mask = 2
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/simplefloor20/Area CrossRoads"]
 shape = SubResource("BoxShape3D_v8raw")
@@ -213,6 +219,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
 
 [node name="Area Goal" type="Area3D" parent="Geometry/simplefloor26"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -1)
+collision_mask = 2
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/simplefloor26/Area Goal"]
 shape = SubResource("BoxShape3D_v8raw")
@@ -229,6 +237,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
 
 [node name="Area In Right" type="Area3D" parent="Geometry/simplefloor22"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -1)
+collision_mask = 2
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/simplefloor22/Area In Right"]
 shape = SubResource("BoxShape3D_v8raw")
@@ -244,6 +254,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
 [node name="Area Out Mid" type="Area3D" parent="Geometry/simplefloor15"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -1)
+collision_mask = 2
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/simplefloor15/Area Out Mid"]
 shape = SubResource("BoxShape3D_v8raw")
@@ -256,6 +268,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2)
 
 [node name="Area Out Right" type="Area3D" parent="Geometry/simplefloor17"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -1)
+collision_mask = 2
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/simplefloor17/Area Out Right"]
 shape = SubResource("BoxShape3D_v8raw")
