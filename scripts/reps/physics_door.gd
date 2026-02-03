@@ -55,7 +55,6 @@ func _exit_tree() -> void:
     _body.mouse_exited.disconnect(_handle_hover_door_exit)
     _body.input_event.disconnect(_handle_input_event)
 
-
 func with_interaction_range(interactor: Node3D) -> bool:
     #print_debug("%s in range of %s -> %s < %s" % [
     #    interactor.name,

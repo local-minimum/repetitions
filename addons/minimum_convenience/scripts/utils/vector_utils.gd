@@ -3,6 +3,9 @@ class_name VectorUtils
 static func maxi_scalar(v: Vector3i) -> int:
     return maxi(maxi(v.x, v.y), v.z)
 
+static func maxf_scalar(v: Vector3) -> float:
+    return maxf(maxf(v.x, v.y), v.z)
+
 static func rotate_cw(direction: Vector3i, up: Vector3i) -> Vector3i:
     if up.y > 0:
         return Vector3i(-direction.z, direction.y, direction.x)
@@ -50,6 +53,16 @@ static func chebychev_distance2f(a: Vector2, b: Vector2) -> float:
 
 static func inv_chebychev_distance2f(a: Vector2, b: Vector2) -> float:
     return min(abs(a.x - b.x), abs(a.y - b.y))
+
+static func count_differing_axis(a: Vector3i, b: Vector3i) -> int:
+    var n: int = 0
+    if a.x != b.x:
+        n += 1
+    if a.y != b.y:
+        n += 1
+    if a.z != b.z:
+        n += 1
+    return n
 
 static func primary_direction(v: Vector3i) -> Vector3i:
     var abs_x: int = abs(v.x)
@@ -166,10 +179,10 @@ static func is_scaled2di(v: Vector2i, other: Variant, float_tolerance: float = 0
     if other is Vector2i:
         var v2: Vector2i = other
         return posmod(v2.x, v.x) == 0 && posmod(v2.y, v.y) == 0
-    
+
     elif other is Vector2:
         var v2: Vector2 = other
         return fposmod((v2.x - v.x) / v.x, 1.0) < float_tolerance && fposmod((v2.y - v.y) / v.y, 1.0) < float_tolerance
-        
+
     push_error("Is scaled2di does not know how to handle %s" % other)
     return false

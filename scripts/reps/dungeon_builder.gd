@@ -227,6 +227,28 @@ func get_cardial_rotation(global_quat: Quaternion) -> Quaternion:
     quats.sort_custom(func (a: Quaternion, b: Quaternion) -> bool: return a.angle_to(global_quat) < b.angle_to(global_quat))
     return quats[0]
 
+## Determines if n is located between coordinates a and b
+## NOTE: `a` and `b` must be along an axis
+## NOTE: if `n` is exactly on a grid corner, the operation becomes unreliable
+func is_between_coordinates(n: Node3D, a: Vector3i, b: Vector3i) -> bool:
+    if VectorUtils.count_differing_axis(a, b) != 1:
+        push_error("Coordinates must be along an axis. Got %s and %" % [a, b])
+        return false
+
+    var pt_a: Vector3 = get_global_grid_position_from_coordinates(a)
+    var pt_b: Vector3 = get_global_grid_position_from_coordinates(b)
+
+    var ab: Vector3 = pt_b - pt_a
+    var dir_ab: Vector3 = ab.normalized()
+
+    var an: Vector3 = n.global_position - pt_a
+    var dot: float = dir_ab.dot(an)
+    if dot <= 0 || dot > ab.length():
+        return false
+
+    var orth_an: Vector3 = an - an.project(dir_ab)
+    return VectorUtils.all_dimensions_smaller(orth_an.abs(), 0.5 * grid_size)
+
 static func find_builder_in_tree(body: Node3D) -> DungeonBuilder:
     while body != null:
         if body is DungeonBuilder:
