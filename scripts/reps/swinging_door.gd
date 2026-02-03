@@ -64,23 +64,41 @@ func _area_to_side(area: Area3D) -> RotationSide:
 func _blocking_body_removed(area: Area3D, body: PhysicsBody3D) -> void:
     var side: RotationSide = _area_to_side(area)
     if _blockers.get(body, RotationSide.UNKNOWN) == side && !_blockers.erase(body):
-        print_debug("Body %s wasn't blocking any direction")
+        push_warning("Body %s wasn't blocking any direction")
+
+    #print_debug("%s now has the following blockers %s after %s left %s" % [
+    #    get_parent().name,
+    #    _blockers,
+    #    body.get_parent().name,
+    #    area.name,
+    #])
 
 func _end_rotation() -> void:
     if _tween != null && _tween.is_running():
         _tween.kill()
-        # print_debug("Rotating Door %s ran into %s while animating back to start, we give up" % [name, body])
+        print_debug("%s terminated rotation tween" % [get_parent().name])
         return
 
 func _blocking_body_detected(area: Area3D, body: PhysicsBody3D) -> void:
     var side: RotationSide = _area_to_side(area)
-    _blockers[body] = side
+    # NOTE: This is a little bit of a hack due to door moving too fast and hitting both areas
+    if !_blockers.has(body):
+        _blockers[body] = side
+    #print_debug("%s now has the following blockers %s after adding %s as %s" % [
+    #    get_parent().name,
+    #    _blockers,
+    #    body.get_parent().name,
+    #    RotationSide.find_key(side),
+    #])
 
     if !is_animating():
+        #print_debug("%s is not animating so nothing to do about blocker %s rn" % [
+        #    get_parent().name, body,
+        #])
         return
 
     if side != _rotation_direction:
-        print_debug("Detected %s but its side %s is irrelevant for rotation direction %s" % [body, RotationSide.find_key(side), RotationSide.find_key(_rotation_direction)])
+        #print_debug("%s: Detected %s but its side %s is irrelevant for rotation direction %s" % [get_parent().name, body, RotationSide.find_key(side), RotationSide.find_key(_rotation_direction)])
         return
 
     if _motion_blocked || !_bounce_back_on_collision || side == RotationSide.UNKNOWN:
@@ -96,11 +114,12 @@ func _blocking_body_detected(area: Area3D, body: PhysicsBody3D) -> void:
         _end_rotation()
         return
 
-    # print_debug("Rotating Door %s ran into %s while animating, we return back" % [name, body])
+    #print_debug("Rotating Door %s ran into %s while animating, we return back" % [get_parent().name, body])
     _motion_blocked = true
     _motion_block_progress = _tween_progress
     _tween_target = _tween_start
     _tween_start = _rotating_node.rotation_degrees.dot(_local_rotation_axis)
+
 
 var _tween: Tween
 
@@ -111,6 +130,8 @@ func _blocked_rotation_target(direction: RotationSide) -> bool:
     elif _blockers.values().has(direction) || _blockers.values().has(RotationSide.UNKNOWN):
         return true
 
+    elif direction == RotationSide.CLOSED:
+        return _blockers.values().has(_invert_rotaion_side(_last_open_interaction_target))
     return false
 
 func _get_rotation_target(interactor: Node3D) -> RotationSide:
@@ -140,7 +161,7 @@ func _get_side_of_door_interaction(interactor: Node3D) -> RotationSide:
     var pos_dist_sq: float = _pos_side_area.global_position.distance_squared_to(interactor.global_position)
 
     var neg_dist_sq: float = _neg_side_area.global_position.distance_squared_to(interactor.global_position)
-    print_debug("%s Comparing sides for %s %s (-) < %s (+)" % [get_parent().name, interactor.get_parent(), neg_dist_sq, pos_dist_sq])
+    #print_debug("%s Comparing sides for %s %s (-) < %s (+)" % [get_parent().name, interactor.get_parent(), neg_dist_sq, pos_dist_sq])
     if neg_dist_sq < pos_dist_sq:
         return RotationSide.NEGATIVE
 
@@ -169,10 +190,23 @@ func _interact(interactor: Node3D) -> void:
     if _tween != null && _tween.is_running():
         _tween.kill()
 
+    var target: RotationSide = _get_rotation_target(interactor)
+    if _blocked_rotation_target(target):
+        print_debug("Door %s cannot rotate towards %s" % [
+            get_parent().name,
+            RotationSide.find_key(target),
+        ])
+        return
+    #print_debug("Door %s wants to rotate %s (%s) and blockers were %s" % [
+    #    get_parent().name,
+    #    RotationSide.find_key(target),
+    #    target,
+    #    _blockers,
+    #])
     _motion_blocked = false
     _motion_block_progress = 0
     _tween_start = _rotating_node.rotation_degrees.dot(_local_rotation_axis)
-    var target: RotationSide = _get_rotation_target(interactor)
+
     match target:
         RotationSide.POSITIVE:
             _tween_target = _pos_open_rotation_deg

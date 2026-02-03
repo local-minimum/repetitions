@@ -4,21 +4,9 @@
 [ext_resource type="Script" uid="uid://bvkevtj83moe3" path="res://scripts/reps/swinging_door.gd" id="2_tcvdb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tcvdb"]
-size = Vector3(0.036094666, 1.9832764, 0.9202881)
+size = Vector3(0.067373276, 1.9832764, 0.9202881)
 
 [node name="roomwall_door_with_door" instance=ExtResource("1_vka4u")]
-
-[node name="Wall " parent="." index="0"]
-visible = false
-
-[node name="Vertical Support " parent="." index="1"]
-visible = false
-
-[node name="Horzontal Support " parent="." index="2"]
-visible = false
-
-[node name="DoorFrame " parent="." index="3"]
-visible = false
 
 [node name="Door " parent="." index="4" node_paths=PackedStringArray("_rotating_node", "_pos_side_area", "_neg_side_area", "_body", "_interaction_point", "_trigger_areas", "_ignore_colliders")]
 script = ExtResource("2_tcvdb")
@@ -34,7 +22,7 @@ _ignore_colliders = [NodePath("StaticBody3D"), NodePath("../DoorFrame /StaticBod
 input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Door /Neg Door Trigger Area" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.008945465, 0.0033569336, -0.49969482)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01627922, 0.0033569336, -0.49969482)
 shape = SubResource("BoxShape3D_tcvdb")
 
 [node name="Pos Door Trigger Area" type="Area3D" parent="Door " index="2"]
@@ -42,7 +30,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.082177, 0, 0)
 input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Door /Pos Door Trigger Area" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.008945465, 0.0033569336, -0.49969482)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00063991547, 0.0033569336, -0.49969482)
 shape = SubResource("BoxShape3D_tcvdb")
 
 [node name="Interaction Center" type="Node3D" parent="Door " index="3"]
