@@ -22,7 +22,12 @@ class_name PhysicsDoor
 ## If the door is animating and opening
 @abstract func is_opening() -> bool
 
-var _player: PhysicsGridPlayerController
+var _player: PhysicsGridPlayerController:
+    get():
+        if _player == null:
+            return PhysicsGridPlayerController.last_connected_player
+        return _player
+
 var _hovered: bool
 
 func _enter_tree() -> void:
@@ -34,7 +39,9 @@ func _enter_tree() -> void:
         push_error("Failed to connect input event")
 
 
-    if __SignalBus.on_physics_player_ready.connect(_handle_player_ready) != OK:
+    if !__SignalBus.on_physics_player_ready.is_connected(_handle_player_ready) && __SignalBus.on_physics_player_ready.connect(_handle_player_ready) != OK:
+        push_error("Failed to connect physics player ready")
+    if __SignalBus.on_physics_player_removed.connect(_handle_player_removed) != OK:
         push_error("Failed to connect physics player ready")
 
     for _trigger_area: Area3D in _trigger_areas:
@@ -60,6 +67,10 @@ func with_interaction_range(interactor: Node3D) -> bool:
 
 func _handle_player_ready(player: PhysicsGridPlayerController) -> void:
     _player = player
+
+func _handle_player_removed(player: PhysicsGridPlayerController) -> void:
+    if _player == player:
+        _player = null
 
 func _handle_hover_door_enter() -> void:
     if _player == null || !with_interaction_range(_player):

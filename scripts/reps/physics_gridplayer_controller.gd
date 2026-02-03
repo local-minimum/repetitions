@@ -1,6 +1,8 @@
 extends CharacterBody3D
 class_name PhysicsGridPlayerController
 
+static var last_connected_player: PhysicsGridPlayerController
+
 var builder: DungeonBuilder
 var cinematic: bool:
     set(value):
@@ -117,6 +119,13 @@ func _ready() -> void:
     __SignalBus.on_physics_player_ready.emit(self)
     _captured_pointer_eventer.active = gridless
     _sync_debug_shape_visibilities()
+    last_connected_player = self
+
+func _exit_tree() -> void:
+    if last_connected_player == self:
+        last_connected_player = null
+
+    __SignalBus.on_physics_player_removed.emit(self)
 
 func _input(event: InputEvent) -> void:
     var handled: bool = true

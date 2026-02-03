@@ -13,7 +13,11 @@ enum ToolType { NONE, PICKAX, TROPHY }
                 break
         return _body
 
-var _player: PhysicsGridPlayerController
+var _player: PhysicsGridPlayerController:
+    get():
+        if _player == null:
+            return PhysicsGridPlayerController.last_connected_player
+        return _player
 
 func _enter_tree() -> void:
     if !_body.mouse_entered.is_connected(_handle_mouse_entered) && _body.mouse_entered.connect(_handle_mouse_entered) != OK:
@@ -24,15 +28,22 @@ func _enter_tree() -> void:
         push_error("Failed to connect mouse entered")
     if __SignalBus.on_physics_player_ready.connect(_handle_player_ready) != OK:
         push_error("Failed to connect physics player ready")
+    if __SignalBus.on_physics_player_removed.connect(_handle_player_removed) != OK:
+        push_error("Failed to connect physics player ready")
 
 func _exit_tree() -> void:
     _body.mouse_entered.disconnect(_handle_mouse_entered)
     _body.mouse_exited.disconnect(_handle_mouse_exited)
     _body.input_event.disconnect(_handle_input_event)
     __SignalBus.on_physics_player_ready.disconnect(_handle_player_ready)
+    __SignalBus.on_physics_player_removed.disconnect(_handle_player_removed)
 
 func _handle_player_ready(player: PhysicsGridPlayerController) -> void:
     _player = player
+
+func _handle_player_removed(player: PhysicsControllerStepCaster) -> void:
+    if _player == player:
+        _player = null
 
 func _handle_mouse_entered() -> void:
     if validate_player_position():

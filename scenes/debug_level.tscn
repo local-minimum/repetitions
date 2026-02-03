@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c06htcj4rgjof"]
+[gd_scene load_steps=16 format=3 uid="uid://c06htcj4rgjof"]
 
 [ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_8d50e"]
 [ext_resource type="PackedScene" uid="uid://cc5747aqrge5g" path="res://scenes/rooms/meshes/simplefloor.blend" id="1_ln2x5"]
@@ -12,6 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://bikpq2lqukop2" path="res://scenes/rooms/dirts/dirt_dugout_2_ways_straight.tscn" id="10_wnm7q"]
 [ext_resource type="PackedScene" uid="uid://y1ffxoreajkp" path="res://scenes/rooms/meshes/roomwall_door_with_door.tscn" id="11_jomtx"]
 [ext_resource type="PackedScene" uid="uid://c0dvojglp1sb0" path="res://scenes/rooms/meshes/hallwall_cornercap.blend" id="12_wnm7q"]
+[ext_resource type="PackedScene" uid="uid://hpel2to4u6wx" path="res://scenes/rooms/room_corner_3d.tscn" id="13_8puai"]
+[ext_resource type="PackedScene" uid="uid://cjduvtbggfby1" path="res://scenes/rooms/start_room_3d.tscn" id="14_8qey6"]
+[ext_resource type="PackedScene" uid="uid://bgtg6k43ekxbg" path="res://scenes/rooms/room_reactor_3d.tscn" id="15_iyhq1"]
 
 [node name="debug level" type="Node3D" node_paths=PackedStringArray("player")]
 script = ExtResource("1_8d50e")
@@ -114,6 +117,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 3)
 [node name="simplefloor9" parent="." instance=ExtResource("1_ln2x5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3)
 
+[node name="simplefloor32" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 5)
+
+[node name="simplefloor33" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 7)
+
+[node name="simplefloor34" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 7)
+
+[node name="simplefloor36" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 9)
+
+[node name="simplefloor37" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 11)
+
+[node name="simplefloor38" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 13)
+
+[node name="simplefloor35" parent="." instance=ExtResource("1_ln2x5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 5)
+
 [node name="Player3d" parent="." instance=ExtResource("3_iwus7")]
 
 [node name="DebugControls" type="CanvasLayer" parent="." node_paths=PackedStringArray("_player", "_cinematic_btn", "_gridless_btn", "_debug_shapes_btn")]
@@ -193,6 +217,15 @@ metadata/door_bounce_back = true
 
 [node name="hallwall_cornercap" parent="." instance=ExtResource("12_wnm7q")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1.1, 0, 6.6)
+
+[node name="RoomCorner3d" parent="." instance=ExtResource("13_8puai")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 8)
+
+[node name="StartRoom3d" parent="." instance=ExtResource("14_8qey6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 18)
+
+[node name="RoomReactor3d" parent="." instance=ExtResource("15_iyhq1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 28)
 
 [connection signal="pressed" from="DebugControls/HBoxContainer/Cinematic Btn" to="DebugControls" method="_on_cinematic_btn_pressed"]
 [connection signal="pressed" from="DebugControls/HBoxContainer/Gridless Btn" to="DebugControls" method="_on_gridless_btn_pressed"]

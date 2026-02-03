@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c2jmhy2eyq361"]
+[gd_scene load_steps=12 format=3 uid="uid://c2jmhy2eyq361"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_joiea"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_fl883"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://8qqqf4tvfy1l" path="res://scenes/rooms/meshes/roughwall.blend" id="6_v8raw"]
 [ext_resource type="PackedScene" uid="uid://ipk7tlufbxkm" path="res://scenes/rooms/meshes/roughwall_cell_door.blend" id="7_ij7n1"]
 [ext_resource type="Script" uid="uid://dkuc2goe2m1h" path="res://scripts/reps/shifting_walls_puzzle.gd" id="8_ij7n1"]
+[ext_resource type="PackedScene" uid="uid://y1ffxoreajkp" path="res://scenes/rooms/meshes/roomwall_door_with_door.tscn" id="10_06beb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v8raw"]
 size = Vector3(1.8, 2, 1.8)
@@ -295,9 +296,6 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0
 [node name="roomwall_door2" parent="Geometry" instance=ExtResource("4_ij7n1")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4, 0, -4)
 
-[node name="roomwall_door3" parent="Geometry" instance=ExtResource("4_ij7n1")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -4)
-
 [node name="roomwall_door4" parent="Geometry" instance=ExtResource("4_ij7n1")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4, 0, -4)
 
@@ -390,6 +388,9 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0
 
 [node name="roughwall_cell_door" parent="Geometry" instance=ExtResource("7_ij7n1")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -10)
+
+[node name="roomwall_door_with_door" parent="Geometry" instance=ExtResource("10_06beb")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -4)
 
 [connection signal="body_entered" from="Geometry/simplefloor11/Area Out Left" to="Shifting Crossroads Walls Puzzle" method="_on_area_out_left_body_entered"]
 [connection signal="body_entered" from="Geometry/simplefloor13/Area Left In" to="Shifting Crossroads Walls Puzzle" method="_on_area_left_in_body_entered"]

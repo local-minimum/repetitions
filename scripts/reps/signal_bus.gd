@@ -3,9 +3,10 @@ class_name SignalBus
 
 @warning_ignore_start("unused_signal")
 signal on_physics_player_ready(player: PhysicsGridPlayerController)
+signal on_physics_player_removed(player: PhysicsControllerStepCaster)
 
 signal on_ready_planner(terminal: PlannerTerminal, player: PhysicsGridPlayerController, elevation: int, allowance: int)
-signal on_update_planning(planner: DungeonPlanner, remaining_rooms: int) 
+signal on_update_planning(planner: DungeonPlanner, remaining_rooms: int)
 signal on_hover_blueprint_room_enter(room: BlueprintRoom)
 signal on_hover_blueprint_room_exit(room: BlueprintRoom)
 signal on_blueprint_room_move_start(room: BlueprintRoom)
