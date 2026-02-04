@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bgtg6k43ekxbg"]
+[gd_scene load_steps=10 format=3 uid="uid://bgtg6k43ekxbg"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_cq5sr"]
+[ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_weq4u"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_b1fcn"]
 [ext_resource type="PackedScene" uid="uid://bkcv6hoslgkyn" path="res://scenes/rooms/meshes/props/reactor.blend" id="5_cq5sr"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="5_ueo3t"]
@@ -16,6 +17,8 @@ height = 9.0
 radius = 12.0
 
 [node name="RoomReactor3d" type="Node3D"]
+script = ExtResource("1_weq4u")
+metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
 [node name="Geometry" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)

@@ -3,20 +3,20 @@ class_name DraftOption
 
 enum RoomId {
     UNKNOWN = 0,
-    
+
     START_ROOM = 1,
-    
+
     BROOM_CLOSET = 100,
-  
-    HALL_1 = 200, 
-    HALL_2 = 201, 
-    HALL_3 = 202, 
-    HALL_4 = 203, 
+
+    HALL_1 = 200,
+    HALL_2 = 201,
+    HALL_3 = 202,
+    HALL_4 = 203,
     HALL_5 = 204,
-    
-    CELL_1 = 300, 
-    CELL_2 = 301, 
-    CELL_3 = 302,    
+
+    CELL_1 = 300,
+    CELL_2 = 301,
+    CELL_3 = 302,
     ROOM_CORNER = 310,
     ROOM_REACTOR = 320,
     ROOM_SHIFTING_WALLS = 330,
@@ -32,7 +32,7 @@ static func prob_name_key(dprob: DraftProbability) -> String:
 @export_flags("Room", "Hall") var _type: int:
     set(value):
         type = Type.new(value)
-        _type = value        
+        _type = value
 
 var type: Type:
     get():
@@ -45,21 +45,21 @@ class Type:
 
     @export var room: bool
     var _bits: int
-    
+
     func _init(bits: int) -> void:
         _bits = bits
-        
+
     var categories: Array[Categories]:
         get():
             var cats: Array[Categories]
-            
+
             if (Categories.ROOM & _bits) == Categories.ROOM:
                 cats.append(Categories.ROOM)
             if (Categories.HALL & _bits) == Categories.HALL:
                 cats.append(Categories.HALL)
-        
+
             return cats
-    
+
     func humanized_categories() -> Array[String]:
         return Array(
             categories.map(func (c: Categories) -> String: return tr("ENUM_ROOM_CATEGORY_%s" % Categories.find_key(c))),
@@ -67,10 +67,10 @@ class Type:
             "",
             null,
         )
-        
+
     func has_all(other: Type) -> bool:
         return (_bits & other._bits) == _bits
-        
+
 
 @export var room_name_key: String
 
@@ -91,9 +91,9 @@ var draft_probability: float:
             DraftProbability.RARE:
                 return 0.1
             _:
-                push_error("Unhandled probability class %s in %s" % [DraftProbability.find_key(draft_probability_class), resource_path])                
+                push_error("Unhandled probability class %s in %s" % [DraftProbability.find_key(draft_probability_class), resource_path])
                 return 1.0
-                
+
 @export var draftable_count: int = 1
 var drafted_count: int = 0
 
@@ -107,7 +107,7 @@ var _blueprint_scene: PackedScene:
             _blueprint_scene = load(_blueprint_room_path)
         return _blueprint_scene
 
-func instantiate_blueprint_room() -> BlueprintRoom:   
+func instantiate_blueprint_room() -> BlueprintRoom:
     var room: BlueprintRoom = _blueprint_scene.instantiate()
     room.option = self
     return room
@@ -118,9 +118,8 @@ var _3d_room_scene: PackedScene:
             _3d_room_scene = load(_3d_room_path)
         return _3d_room_scene
 
-func instantiate_3d_room() -> Node3D:
-    var room: Node3D = _3d_room_scene.instantiate()
-    return room
+func instantiate_3d_room() -> Room3D:
+    return _3d_room_scene.instantiate() as Room3D
 
 func _to_string() -> String:
     return "<DraftOption %s %s %s/%s>" % [_blueprint_room_path, DraftProbability.find_key(draft_probability_class), drafted_count, draftable_count]

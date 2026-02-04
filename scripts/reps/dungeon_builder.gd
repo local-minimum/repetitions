@@ -5,9 +5,7 @@ class_name DungeonBuilder
 @export var player: PhysicsGridPlayerController
 @export var dirt_mag: DirtMagazine
 
-var placed_rooms: Array[Node3D]
-const _BLUEPRINT_META: String = "blueprint"
-const _ORIGIN_META: String = "origin"
+var placed_rooms: Array[Room3D]
 const _COORDINATES_META: String = "coordinates"
 
 var dirts: Dictionary[Vector3i, Node3D]
@@ -96,6 +94,15 @@ func _digout_coords(coords: Vector3i, digout_direction: CardinalDirections.Cardi
 
 var first_room: bool = true
 
+func _get_room_by_blueprint(blue_print: BlueprintRoom) -> Room3D:
+    for room: Room3D in placed_rooms:
+        if room.blueprint == blue_print:
+            return room
+    return null
+
+static func any_door_leading_into_dirt(doors: Array[DoorData]) -> bool:
+    return doors.any(func (dd: DoorData) -> bool: return dd.type == DoorData.Type.DOOR_TO_DIRT )
+
 func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) -> void:
     var grid: Grid2D = null
     var exposed_dirt: bool = false
@@ -105,25 +112,59 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
             push_error("Bluepint Room %s lacks an option, no clue what room to place" % room)
             continue
 
-        if placed_rooms.any(func (pr: Node3D) -> bool: return pr.get_meta(_BLUEPRINT_META) == room):
+        var room_doors: Array[DoorData] = room.all_doors
+        var room3d: Room3D = _get_room_by_blueprint(room)
+
+        if room3d != null:
+            room3d.update_doors_states(room_doors)
             continue
 
         if grid == null:
             grid = room.grid
 
-        if !exposed_dirt && room.has_unused_door():
+        if !exposed_dirt && any_door_leading_into_dirt(room_doors):
             exposed_dirt = true
 
-        var room_3d: Node3D = room.option.instantiate_3d_room()
-        placed_rooms.append(room_3d)
-        room_3d.set_meta(_BLUEPRINT_META, room)
-        add_child(room_3d)
+        var origin2d: Vector2i = room.get_origin()
+        var origin: Vector3i = Vector3i(origin2d.x, elevation, origin2d.y)
 
-        room_3d.rotation = CardinalDirections.direction_to_rotation(
-            CardinalDirections.CardinalDirection.UP,
-            room.get_rotation_direction(),
-        ).get_euler()
+        room3d = _instantiate_3d_room(room, origin)
+        room3d.configure_door_states(room_doors, placed_rooms)
 
+        _clear_out_dirt_in_new_room(room, elevation)
+
+        if first_room && player != null:
+            var ppos: Vector2i = room.get_global_used_tiles()[0]
+            player.global_position = get_global_grid_position_from_2d_coordinates(ppos, elevation)
+            first_room = false
+            print_debug("Player located at %s at the center of %s" % [player.global_position, ppos])
+
+    if exposed_dirt:
+        _populate_level_with_dirt(grid, elevation)
+
+    player.cinematic = false
+
+func _instantiate_3d_room(room: BlueprintRoom, origin: Vector3) -> Room3D:
+    var room_3d: Room3D = room.option.instantiate_3d_room()
+
+    room_3d.builder = self
+    room_3d.blueprint = room
+    room_3d.origin = origin
+
+    placed_rooms.append(room_3d)
+    add_child(room_3d)
+
+    room_3d.rotation = CardinalDirections.direction_to_rotation(
+        CardinalDirections.CardinalDirection.UP,
+        room.get_rotation_direction(),
+    ).get_euler()
+
+    room_3d.global_position = get_global_grid_position_from_coordinates(origin)
+    # print_debug("Placed room %s at %s %s with tiles %s" % [room, room_3d.position, origin, room_tiles])
+
+    return room_3d
+
+func _clear_out_dirt_in_new_room(room: BlueprintRoom, elevation: int) -> void:
         var room_tiles: Array[Vector3i] = Array(
             room.get_global_used_tiles().map(func (v2: Vector2i) -> Vector3i: return Vector3i(v2.x, elevation, v2.y)),
             TYPE_VECTOR3I,
@@ -144,26 +185,6 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
                 used_tiles.erase(room_tile)
 
         used_tiles.append_array(room_tiles)
-
-        var origin2d: Vector2i = room.get_origin()
-        var origin: Vector3i = Vector3i(origin2d.x, elevation, origin2d.y)
-
-        room_3d.global_position = get_global_grid_position_from_coordinates(origin)
-        # print_debug("Placed room %s at %s %s with tiles %s" % [room, room_3d.position, origin, room_tiles])
-
-        room_3d.set_meta(_ORIGIN_META, origin)
-
-        if first_room && player != null:
-            var ppos: Vector2i = room.get_global_used_tiles()[0]
-            player.global_position = get_global_grid_position_from_2d_coordinates(ppos, elevation)
-            first_room = false
-            print_debug("Player located at %s at the center of %s" % [player.global_position, ppos])
-
-    if exposed_dirt:
-        _populate_level_with_dirt(grid, elevation)
-
-
-    player.cinematic = false
 
 func _populate_level_with_dirt(grid: Grid2D, elevation: int) -> void:
     if grid != null:

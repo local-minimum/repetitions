@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dvud7c3q5eeda"]
+[gd_scene load_steps=7 format=3 uid="uid://dvud7c3q5eeda"]
 
+[ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_70a0j"]
 [ext_resource type="PackedScene" uid="uid://8qqqf4tvfy1l" path="res://scenes/rooms/meshes/roughwall.blend" id="1_ys88f"]
 [ext_resource type="PackedScene" uid="uid://ipk7tlufbxkm" path="res://scenes/rooms/meshes/roughwall_cell_door.blend" id="2_wrj36"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="3_6tomx"]
@@ -7,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://b6em6evajjt8i" path="res://scenes/rooms/meshes/props/cellbed.blend" id="5_wkh6p"]
 
 [node name="Cell33d" type="Node3D"]
+script = ExtResource("1_70a0j")
+metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
 [node name="Geometry" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)

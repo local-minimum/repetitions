@@ -51,10 +51,9 @@ var tweening: bool:
             draggable.enable(self)
         tweening = value
 
-## Local coordinates of doors that lead to other rooms
 var valid_doors: Array[DoorData]:
     get():
-        return _door_data.filter(func (ddata: DoorData) -> bool: return ddata.valid)
+        return _door_data.filter(func (ddata: DoorData) -> bool: return ddata.type == DoorData.Type.DOOR_TO_DOOR)
 
 func has_unused_door() -> bool:
     var doors_local: Array[Vector2i] = door_local_coordinates
@@ -69,6 +68,22 @@ func has_unused_door() -> bool:
             return true
         idx += 1
     return false
+
+var all_doors: Array[DoorData]:
+    get():
+        var ret: Array[DoorData] = Array(_door_data)
+        var doors_local: Array[Vector2i] = door_local_coordinates
+        var doors_global: Array[Vector2i] = draggable.translate_coords_array_to_global(self, doors_local)
+        var idx: int = 0
+        for lcoords: Vector2i in doors_local:
+            var gcoords: Vector2i = doors_global[idx]
+            var atlas: Vector2i = doors.get_cell_atlas_coords(lcoords)
+            for gdir: CardinalDirections.CardinalDirection in get_global_door_directions(atlas):
+                if _door_data.any(func (ddata: DoorData) -> bool: return ddata.global_coordinates == gcoords && ddata.global_direction == gdir && ddata.room == self):
+                    continue
+                ret.append(DoorData.new(DoorData.Type.DOOR_TO_DIRT, self, gcoords, gdir, null))
+            idx += 1
+        return ret
 
 ## Local coordinates of doors leading to nothing (not counting into walls)
 var door_local_coordinates: Array[Vector2i]:
@@ -222,7 +237,15 @@ func has_registered_door(global_coords: Vector2i, global_direction: CardinalDire
     return _door_data.any(func (ddata: DoorData) -> bool: return ddata.room == self && ddata.global_coordinates == global_coords && ddata.global_direction == global_direction)
 
 func get_connected_room(global_coords: Vector2i, global_direction: CardinalDirections.CardinalDirection) -> BlueprintRoom:
-    var idx: int = _door_data.find_custom(func (ddata: DoorData) -> bool: return ddata.valid && ddata.room == self && ddata.global_coordinates == global_coords && ddata.global_direction == global_direction)
+    var idx: int = _door_data.find_custom(
+        func (ddata: DoorData) -> bool:
+            return (
+                ddata.type == DoorData.Type.DOOR_TO_DOOR &&
+                ddata.room == self &&
+                ddata.global_coordinates == global_coords &&
+                ddata.global_direction == global_direction
+            )
+    )
     if idx < 0:
         return null
 
@@ -230,7 +253,7 @@ func get_connected_room(global_coords: Vector2i, global_direction: CardinalDirec
 
 ## If two rooms have doors that are connected and the door data
 ## The `connecting_doors` variable will contain all affected doors
-## Returns true as soon as any door coonnects
+## Returns true if any door coonnects
 func has_connecting_doors(
     other: BlueprintRoom,
     connecting_doors: Array[DoorData],
@@ -268,14 +291,14 @@ func has_connecting_doors(
                 var other_idx: int = other_doors.find(leading_to_coords)
                 # print_debug("%s: My door leads from %s leads to %s and Other has door %s there!" % [self, my_doors[my_idx], leading_to_coords, other_idx])
                 if other.has_local_door_global_direction(other_doors_local[other_idx], CardinalDirections.invert(direction)):
-                    connecting_doors.append(DoorData.new(true, self, my_doors[my_idx], direction, other))
+                    connecting_doors.append(DoorData.new(DoorData.Type.DOOR_TO_DOOR, self, my_doors[my_idx], direction, other))
                     continue
                 # else:
                     # print_debug("%s: But it was in the wrong direction" % [self])
 
             if other.is_inside(leading_to_coords):
                 print_debug("%s: My door %s leads to %s which is inside %s, but not via doors!" % [self, my_doors[my_idx], leading_to_coords, other])
-                connecting_doors.append(DoorData.new(false, self, my_doors[my_idx], direction, other))
+                connecting_doors.append(DoorData.new(DoorData.Type.DOOR_TO_WALL, self, my_doors[my_idx], direction, other))
 
     for other_idx: int in range(other_doors_local.size()):
         var other_local_coords: Vector2i = other_doors_local[other_idx]
@@ -299,10 +322,10 @@ func has_connecting_doors(
             var leading_to_coords: Vector2i = CardinalDirections.translate2d(other_doors[other_idx], direction)
 
             if is_inside(leading_to_coords):
-                connecting_doors.append(DoorData.new(false, other, other_doors[other_idx], direction, self))
+                connecting_doors.append(DoorData.new(DoorData.Type.DOOR_TO_WALL, other, other_doors[other_idx], direction, self))
 
     # print_debug(">>> Found doors %s" % [connecting_doors])
-    return connecting_doors.any(func (ddata: DoorData) -> bool: return ddata.valid)
+    return connecting_doors.any(func (ddata: DoorData) -> bool: return ddata.type == DoorData.Type.DOOR_TO_DOOR)
 
 func register_connection(data: Array[DoorData]) -> void:
     for ddata: DoorData in data:

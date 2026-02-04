@@ -9,29 +9,29 @@ func _ready() -> void:
 
 var _exp: RegEx = RegEx.new()
 var _exp_compiled: bool
-    
-func validate_integrity() -> void:   
+
+func validate_integrity() -> void:
     var ids: Dictionary[DraftOption.RoomId, DraftOption]
     var paths: Dictionary[String, DraftOption]
-    
+
     for opt: DraftOption in _start_rooms:
         _validate_option(opt, ids, paths)
-        
+
     for opt: DraftOption in pool:
         _validate_option(opt, ids, paths)
-        
+
 func _validate_option(
-    opt: DraftOption, 
-    ids: Dictionary[DraftOption.RoomId, DraftOption], 
+    opt: DraftOption,
+    ids: Dictionary[DraftOption.RoomId, DraftOption],
     paths: Dictionary[String, DraftOption],
 ) -> void:
     if !_exp_compiled:
         if _exp.compile("^[A-Z_]+$") != OK:
             push_error("Failed to compile regex")
-            _exp_compiled = true    
-            
+            _exp_compiled = true
+
     var errs: Array[String]
-    
+
     # 1. Check IDs
     if opt.room_id == DraftOption.RoomId.UNKNOWN:
         errs.append("Room lacks ID")
@@ -39,19 +39,19 @@ func _validate_option(
         errs.append("ID collides with %s" % ids[opt.room_id].resource_path)
     else:
         ids[opt.room_id] = opt
-    
+
     # 2. Check 2d path:
     if paths.has(opt._blueprint_room_path):
         errs.append("2d blueprint scene is same as in %s" % paths[opt._blueprint_room_path].resource_path)
     else:
         paths[opt._blueprint_room_path] = opt
-    
+
     # 3. Check 3d path:
     if paths.has(opt._3d_room_path):
         errs.append("3d scene is same as in" % paths[opt._3d_room_path].resource_path)
     else:
         paths[opt._3d_room_path] = opt
-    
+
     # 4. Room name key:
     if opt.room_name_key.is_empty():
         errs.append("Lacking translation key")
@@ -59,10 +59,10 @@ func _validate_option(
         errs.append("Malformed translation key '%s'" % opt.room_name_key)
     elif tr(opt.room_name_key) == opt.room_name_key:
         errs.append("Missing translation key for '%s'" % opt.room_name_key)
-    
+
     if !errs.is_empty():
         push_error("%s has the following errors: %s" % [opt.resource_path, errs])
-    
+
 func draft(count: int = 1) -> Array[DraftOption]:
     var available: Array[DraftOption] = Array(
         pool.filter(func (opt: DraftOption) -> bool: return !opt.consumed),
@@ -70,7 +70,7 @@ func draft(count: int = 1) -> Array[DraftOption]:
         "Resource",
         DraftOption,
     )
-    
+
     if available.is_empty():
         push_warning("Out of options in draft pool / all consumed")
         return []
@@ -78,35 +78,35 @@ func draft(count: int = 1) -> Array[DraftOption]:
         if available.size() < count:
             push_warning("Not enough options, returning everything %s" % [available])
         return available
-        
-    print_debug("[Draft Pool] options: %s" % [available])    
+
+    print_debug("[Draft Pool] options: %s" % [available])
     var total_prob: float = 0.0
     var probs: Array[float] = []
     var idx: int = 0
     var available_count: int = available.size()
-    
+
     if probs.resize(available_count) != OK:
         push_error("Failed to allocate probability array")
         return []
-    
+
     for opt: DraftOption in available:
         total_prob += opt.draft_probability
         probs[idx] = total_prob
         idx += 1
-    
+
     var drafts: Array[DraftOption] = []
     for _idx: int in range(count):
         if available_count < 1:
             push_error("No more rooms available %s we should have known this" % [available])
             return drafts
-            
+
         var p: float = randf_range(0, probs[available_count - 1])
         var opt_idx: int = probs.find_custom(func (v: float) -> bool: return p <= v)
-        
+
         if opt_idx < 0:
             push_warning("Unexpected option selection - option not found drawing one on unweighted random")
             opt_idx = randi_range(0, available_count - 1)
-            
+
         drafts.append(available[opt_idx])
         available.remove_at(opt_idx)
         var diff: float = probs[opt_idx] if opt_idx == 0 else probs[opt_idx] - probs[opt_idx - 1]
@@ -114,6 +114,5 @@ func draft(count: int = 1) -> Array[DraftOption]:
         available_count -= 1
         for idx2: int in range(opt_idx, available_count):
             probs[opt_idx] -= diff
-        
-    return drafts    
-    
+
+    return drafts

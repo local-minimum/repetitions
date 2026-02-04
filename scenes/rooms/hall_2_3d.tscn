@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://qohy6ektieft"]
+[gd_scene load_steps=13 format=3 uid="uid://qohy6ektieft"]
 
 [ext_resource type="PackedScene" uid="uid://bnadm2gr0ggsi" path="res://scenes/rooms/meshes/hallwall.blend" id="1_ouga3"]
+[ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_u8775"]
 [ext_resource type="PackedScene" uid="uid://c0dvojglp1sb0" path="res://scenes/rooms/meshes/hallwall_cornercap.blend" id="2_ejlae"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="3_m1eep"]
 [ext_resource type="PackedScene" uid="uid://dm1qptotoe08" path="res://scenes/rooms/meshes/hallceiling.blend" id="4_m1eep"]
@@ -22,6 +23,8 @@ weight = 2.0
 metadata/_custom_type_script = "uid://cno413aixewp1"
 
 [node name="Hall23d" type="Node3D"]
+script = ExtResource("1_u8775")
+metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
 [node name="ProbabilityDeSpawner" type="Node" parent="."]
 script = ExtResource("8_u8775")

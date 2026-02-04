@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://chkw5q3yhwuml"]
+[gd_scene load_steps=10 format=3 uid="uid://chkw5q3yhwuml"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_h2b07"]
+[ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_wancy"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_uxsx7"]
 [ext_resource type="PackedScene" uid="uid://e4340jfyjvua" path="res://scenes/rooms/meshes/roomwall_twosided.blend" id="5_41tem"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="5_wancy"]
@@ -10,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://bb1kovci4qgku" path="res://scenes/rooms/meshes/roomwall_twosided_endcap.blend" id="8_bnp8r"]
 
 [node name="RoomCorner3d" type="Node3D"]
+script = ExtResource("1_wancy")
+metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
 [node name="Geometry" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)

@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://dhktvedhbgsnp"]
+[gd_scene load_steps=14 format=3 uid="uid://dhktvedhbgsnp"]
 
 [ext_resource type="PackedScene" uid="uid://bnadm2gr0ggsi" path="res://scenes/rooms/meshes/hallwall.blend" id="1_njix7"]
+[ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_unsba"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_7emko"]
 [ext_resource type="PackedScene" uid="uid://c0dvojglp1sb0" path="res://scenes/rooms/meshes/hallwall_cornercap.blend" id="3_4hf65"]
 [ext_resource type="PackedScene" uid="uid://dm1qptotoe08" path="res://scenes/rooms/meshes/hallceiling.blend" id="4_4e6gb"]
@@ -27,6 +28,8 @@ despawners = Array[NodePath]([NodePath("../Geometry/hallwall_wall_alcove  opt2")
 metadata/_custom_type_script = "uid://cno413aixewp1"
 
 [node name="Hall33d" type="Node3D"]
+script = ExtResource("1_unsba")
+metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
 [node name="ProbabilityDespawner" type="Node" parent="."]
 script = ExtResource("8_tcema")

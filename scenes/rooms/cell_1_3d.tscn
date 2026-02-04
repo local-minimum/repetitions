@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://b7vca186klo1f"]
+[gd_scene load_steps=9 format=3 uid="uid://b7vca186klo1f"]
 
+[ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_btyxj"]
 [ext_resource type="PackedScene" uid="uid://8qqqf4tvfy1l" path="res://scenes/rooms/meshes/roughwall.blend" id="1_vpoiu"]
 [ext_resource type="PackedScene" uid="uid://cc5747aqrge5g" path="res://scenes/rooms/meshes/simplefloor.blend" id="2_xmja6"]
 [ext_resource type="PackedScene" uid="uid://c47aj4cavtjfw" path="res://scenes/rooms/meshes/simpleceiling.blend" id="3_t5rov"]
@@ -9,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://bhppd8cxmo4ig" path="res://scenes/dugneonbuilderterminal.tscn" id="7_btyxj"]
 
 [node name="Cell13d" type="Node3D"]
+script = ExtResource("1_btyxj")
+metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
 [node name="Geometry" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)

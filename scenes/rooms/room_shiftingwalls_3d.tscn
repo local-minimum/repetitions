@@ -1,5 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://c2jmhy2eyq361"]
+[gd_scene load_steps=13 format=3 uid="uid://c2jmhy2eyq361"]
 
+[ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_8aa6e"]
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_joiea"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_fl883"]
 [ext_resource type="PackedScene" uid="uid://dltymdyks2yxi" path="res://scenes/loot/trophy.tscn" id="3_06beb"]
@@ -15,6 +16,8 @@
 size = Vector3(1.8, 2, 1.8)
 
 [node name="RoomCorner3d" type="Node3D"]
+script = ExtResource("1_8aa6e")
+metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
 [node name="Shifting Crossroads Walls Puzzle" type="Node" parent="." node_paths=PackedStringArray("_crossroads_west_wall", "_crossroads_east_wall", "_crossroads_south_wall", "_crossroads_north_wall", "_gate_wall")]
 script = ExtResource("8_ij7n1")

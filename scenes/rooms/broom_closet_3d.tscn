@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://c1hhf0e0486eq"]
+[gd_scene load_steps=10 format=3 uid="uid://c1hhf0e0486eq"]
 
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="1_hhqpo"]
+[ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_orhin"]
 [ext_resource type="PackedScene" uid="uid://c0ec8ouvo12kq" path="res://scenes/rooms/meshes/simplewall.glb" id="2_jrcuk"]
 [ext_resource type="PackedScene" uid="uid://x8g44kdeceop" path="res://scenes/rooms/meshes/simplewall_doorframe.glb" id="3_2sgo8"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="4_jrcuk"]
@@ -10,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://bhep5i568osx4" path="res://scenes/rooms/meshes/props/toiletroll.blend" id="8_s0ryh"]
 
 [node name="Broom Closet" type="Node3D"]
+script = ExtResource("1_orhin")
+metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
 [node name="Geometry" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
