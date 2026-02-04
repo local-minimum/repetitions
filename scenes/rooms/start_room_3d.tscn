@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cjduvtbggfby1"]
+[gd_scene load_steps=10 format=3 uid="uid://cjduvtbggfby1"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_mbk1p"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_rcr32"]
@@ -8,9 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://cg0gqdy2q4vqx" path="res://scenes/loot/loot_pickax.tscn" id="6_w6a1i"]
 [ext_resource type="PackedScene" uid="uid://bhppd8cxmo4ig" path="res://scenes/dugneonbuilderterminal.tscn" id="7_2lquy"]
 [ext_resource type="PackedScene" uid="uid://y1ffxoreajkp" path="res://scenes/rooms/meshes/roomwall_door_with_door.tscn" id="7_rcr32"]
+[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="8_mgtto"]
 
-[node name="StartRoom3d" type="Node3D"]
+[node name="StartRoom3d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_rcr32")
+_managed_door_configs = [NodePath("Geometry/Door 1 ConfigOptions"), NodePath("Geometry/Door 2 ConfigOptions"), NodePath("Geometry/Door 3 ConfigOptions"), NodePath("Geometry/Door 4 ConfigOptions")]
 metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
 [node name="Geometry" type="Node3D" parent="."]
@@ -264,14 +266,34 @@ transform = Transform3D(0.9401144, 0.22450241, -0.2564831, 0.25935408, -0.959397
 [node name="dugneonbuilderterminal2" parent="Geometry" instance=ExtResource("7_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 
-[node name="roomwall_door_with_door" parent="." instance=ExtResource("7_rcr32")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3, 0, 5)
+[node name="Door 1 ConfigOptions" type="Node3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, -1)
+script = ExtResource("8_mgtto")
+metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
 
-[node name="roomwall_door_with_door2" parent="." instance=ExtResource("7_rcr32")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 1)
+[node name="Door 1" parent="Geometry/Door 1 ConfigOptions" instance=ExtResource("7_rcr32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 1)
 
-[node name="roomwall_door_with_door3" parent="." instance=ExtResource("7_rcr32")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1, 0, -5)
+[node name="Door 2 ConfigOptions" type="Node3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 4)
+script = ExtResource("8_mgtto")
+metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
 
-[node name="roomwall_door_with_door4" parent="." instance=ExtResource("7_rcr32")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 7, 0, -3)
+[node name="Door 2" parent="Geometry/Door 2 ConfigOptions" instance=ExtResource("7_rcr32")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1, -1, 0)
+
+[node name="Door 3 ConfigOptions" type="Node3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1, -3)
+script = ExtResource("8_mgtto")
+metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
+
+[node name="Door 3" parent="Geometry/Door 3 ConfigOptions" instance=ExtResource("7_rcr32")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, -1, -1)
+
+[node name="Door 4 ConfigOptions" type="Node3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, -6)
+script = ExtResource("8_mgtto")
+metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
+
+[node name="Door 4" parent="Geometry/Door 4 ConfigOptions" instance=ExtResource("7_rcr32")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1, -1, 0)

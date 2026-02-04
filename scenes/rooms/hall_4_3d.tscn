@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dkfwydhlo5oqs"]
+[gd_scene load_steps=8 format=3 uid="uid://dkfwydhlo5oqs"]
 
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_imvhj"]
 [ext_resource type="PackedScene" uid="uid://bnadm2gr0ggsi" path="res://scenes/rooms/meshes/hallwall.blend" id="1_oi1o5"]
@@ -6,9 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://c0dvojglp1sb0" path="res://scenes/rooms/meshes/hallwall_cornercap.blend" id="3_p3n6l"]
 [ext_resource type="PackedScene" uid="uid://dm1qptotoe08" path="res://scenes/rooms/meshes/hallceiling.blend" id="4_vcfej"]
 [ext_resource type="PackedScene" uid="uid://uwl325qn0fde" path="res://scenes/rooms/meshes/hallceiling_blocker.blend" id="5_pwv7c"]
+[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="7_p3n6l"]
 
-[node name="Hall43d" type="Node3D"]
+[node name="Hall43d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_imvhj")
+_managed_door_configs = [NodePath("Geometry/Door 1 ConfigOptions"), NodePath("Geometry/Door 2 ConfigOptions")]
 metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
 [node name="Geometry" type="Node3D" parent="."]
@@ -128,9 +130,6 @@ transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -3.8
 [node name="hallwall_cornercap8" parent="Geometry" instance=ExtResource("3_p3n6l")]
 transform = Transform3D(-2.1855695e-07, 0, 1, 0, 1, 0, -1, 0, -2.1855695e-07, 1.8000001, 0, 3.7999997)
 
-[node name="hallwall_cornercap9" parent="Geometry" instance=ExtResource("3_p3n6l")]
-transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, 4, 0, 1.9999998)
-
 [node name="hallceiling" parent="Geometry" instance=ExtResource("4_vcfej")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4)
 
@@ -184,3 +183,16 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4, 
 
 [node name="hallceiling_blocker9" parent="Geometry" instance=ExtResource("5_pwv7c")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 5.8, 2, 2.8312206e-07)
+
+[node name="Door 1 ConfigOptions" type="Node3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 2)
+script = ExtResource("7_p3n6l")
+metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
+
+[node name="hallwall_cornercap9" parent="Geometry/Door 1 ConfigOptions" instance=ExtResource("3_p3n6l")]
+transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -1, -1, -2.3841858e-07)
+
+[node name="Door 2 ConfigOptions" type="Node3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3)
+script = ExtResource("7_p3n6l")
+metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
