@@ -108,22 +108,22 @@ static func pick_weighted_probability_index(arr: Array[float], total: float = -1
         return -1
     elif arr.size() == 1:
         return arr[0]
-    
+
     if total < 0:
         total = sumf(arr)
-        
+
     var p: float = randf_range(0, total)
     # print_debug("Des: aewweights %s %s, p %s" % [total, arr, p])
     for idx: int in range(arr.size()):
         if p <= arr[idx]:
             return idx
         p -= arr[idx]
-        
+
     return -1
 
 static func translate_packed_vector2_array(arr: PackedVector2Array, amount: Vector2, inplace: bool = false) -> PackedVector2Array:
     var out: PackedVector2Array = arr if inplace else PackedVector2Array(arr)
     for idx: int in range(out.size()):
         out[idx] += amount
-    
+
     return out
