@@ -17,8 +17,8 @@ var credits: int:
         if value > 0:
             _target.modulate = _default_modulate_color
         elif value == 0:
-            _target.modulate = _zero_modulate_color      
+            _target.modulate = _zero_modulate_color
         else:
             _target.modulate = _neg_modulate_color
-            
+
         credits = value

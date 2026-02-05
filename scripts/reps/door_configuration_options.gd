@@ -56,7 +56,7 @@ func resolve_connected_doors(
     # TODO: This can be refined by more precise logic for when a special may be activated
     var own_special: SpecialState = _to_door_special_conditions.get(other_room.blueprint.option, SpecialState.NONE)
     _implement_special(_special_to_node(own_special), true)
-    var other_special: SpecialState = other_conf._to_door_special_conditions.get(own_room, SpecialState.NONE)
+    var other_special: SpecialState = other_conf._to_door_special_conditions.get(own_room.blueprint.option, SpecialState.NONE)
     other_conf._implement_special(other_conf._special_to_node(other_special), true)
 
     finalized = true
