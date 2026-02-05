@@ -50,11 +50,11 @@ func _resolve_conf_with_door_data(
 ) -> void:
     match door.type:
         DoorData.Type.DOOR_TO_DOOR:
-            conf.resolve_connected_doors(door, other_room)
+            conf.resolve_connected_doors(self, other_room, other_room._get_config_for_door_data(door.reflect()))
         DoorData.Type.DOOR_TO_WALL:
-            conf.resolve_door_to_wall(door, other_room)
+            conf.resolve_door_to_wall(other_room)
         DoorData.Type.DOOR_TO_DIRT:
-            conf.resolve_door_to_nothing(door)
+            conf.resolve_door_to_nothing()
         _:
             conf.resolve_panic()
 
