@@ -109,6 +109,7 @@ metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 3)
 script = ExtResource("6_palvg")
 metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
+metadata/special_science_cell_connection = true
 
 [node name="hallwall_cornercap6" parent="Geometry/Door 2 ConfigOptions" instance=ExtResource("3_palvg")]
 transform = Transform3D(1.3113416e-07, 3.821371e-15, 1, -8.742278e-08, 1, 7.642742e-15, -1, -8.742278e-08, 1.3113416e-07, 0, -1, 1)

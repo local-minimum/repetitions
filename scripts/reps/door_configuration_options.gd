@@ -32,6 +32,7 @@ enum SpecialState { NONE, ONE, TWO }
 @export var _to_door_probabilities: Dictionary[DoorState, float]
 @export var _to_door_overrides: Dictionary[DraftOption, DoorState]
 @export var _to_door_special_conditions: Dictionary[DraftOption, SpecialState]
+@export var _to_door_reactors: Array[ConnectionReaction]
 
 var finalized: bool
 
@@ -62,6 +63,13 @@ func resolve_connected_doors(
 
     finalized = true
     other_conf.finalized = true
+
+    # In case reactors consider if room is finalized we do this after marking finalized
+    for reactor: ConnectionReaction in _to_door_reactors:
+        reactor.handle_connection(other_room, other_conf)
+    for reactor: ConnectionReaction in other_conf._to_door_reactors:
+        reactor.handle_connection(own_room, self)
+
 
 func _resolve_own_to_door_state(other_state: DoorState, other_option: DraftOption) -> DoorState:
     if _to_door_overrides.has(other_option):
