@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dh68rjdc2w0vf"]
+[gd_scene load_steps=18 format=3 uid="uid://dh68rjdc2w0vf"]
 
 [ext_resource type="Script" uid="uid://73wn6oety2kg" path="res://scripts/2d/grid2d.gd" id="1_n4crp"]
 [ext_resource type="Script" uid="uid://dpu4cq0swyq2p" path="res://scripts/reps/dungeon_planner.gd" id="1_ou8db"]
@@ -13,14 +13,10 @@
 [ext_resource type="Resource" uid="uid://domffnlj5hgey" path="res://scenes/rooms/hall_5.tres" id="12_qcvmm"]
 [ext_resource type="Resource" uid="uid://jleov4nw26by" path="res://scenes/rooms/hall_2.tres" id="13_y0vac"]
 [ext_resource type="Resource" uid="uid://svbbunwycye7" path="res://scenes/rooms/hall_3.tres" id="14_w7wwa"]
-[ext_resource type="Resource" uid="uid://bvuf7ns5fyuwb" path="res://scenes/rooms/cell_1.tres" id="14_xsdx5"]
-[ext_resource type="Resource" uid="uid://c0f036425di6l" path="res://scenes/rooms/cell_2.tres" id="15_fno32"]
 [ext_resource type="Resource" uid="uid://dperxq31uq7e" path="res://scenes/rooms/hall_4.tres" id="15_rblym"]
 [ext_resource type="Resource" uid="uid://pic7jy8114bc" path="res://scenes/rooms/room_corner.tres" id="16_il2o4"]
 [ext_resource type="Resource" uid="uid://bfwq5awreoag" path="res://scenes/rooms/cell_3.tres" id="16_nfhew"]
-[ext_resource type="Resource" uid="uid://bhvvm6hnhr1qu" path="res://scenes/rooms/room_reactor.tres" id="17_xsdx5"]
 [ext_resource type="Resource" uid="uid://btlo0fu3130eu" path="res://scenes/rooms/room_with_backroom.tres" id="18_fno32"]
-[ext_resource type="Resource" uid="uid://j1of13mkkyri" path="res://scenes/rooms/room_shiftingwalls.tres" id="19_nfhew"]
 
 [node name="Dungeon Planner" type="Node2D" node_paths=PackedStringArray("grid", "_rooms_root", "_icons_root", "options", "pool")]
 script = ExtResource("1_ou8db")
@@ -56,4 +52,4 @@ script = ExtResource("4_o3k1y")
 [node name="DraftPool" type="Node" parent="."]
 script = ExtResource("9_qcvmm")
 _start_rooms = Array[ExtResource("10_xsdx5")]([ExtResource("2_xsdx5")])
-pool = Array[ExtResource("10_xsdx5")]([ExtResource("11_fno32"), ExtResource("12_nfhew"), ExtResource("13_y0vac"), ExtResource("14_w7wwa"), ExtResource("15_rblym"), ExtResource("12_qcvmm"), ExtResource("16_il2o4"), ExtResource("14_xsdx5"), ExtResource("15_fno32"), ExtResource("16_nfhew"), ExtResource("17_xsdx5"), ExtResource("18_fno32"), ExtResource("19_nfhew")])
+pool = Array[ExtResource("10_xsdx5")]([ExtResource("11_fno32"), ExtResource("12_nfhew"), ExtResource("13_y0vac"), ExtResource("14_w7wwa"), ExtResource("15_rblym"), ExtResource("12_qcvmm"), ExtResource("16_il2o4"), ExtResource("16_nfhew"), ExtResource("18_fno32")])

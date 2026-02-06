@@ -10,5 +10,5 @@ room_name_key = "ROOM_HALL"
 _blueprint_room_path = "res://scenes/rooms/hall_4.tscn"
 _3d_room_path = "res://scenes/rooms/hall_4_3d.tscn"
 draft_probability_class = 0
-draftable_count = 3
+draftable_count = 2
 metadata/_custom_type_script = "uid://dgfi04hnjvm2r"

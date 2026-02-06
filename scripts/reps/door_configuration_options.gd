@@ -30,6 +30,7 @@ enum SpecialState { NONE, ONE, TWO }
 @export var _to_door_if_other_no_door: DoorState = DoorState.UNDECIDED
 @export var _to_door_default: DoorState = DoorState.OPEN_DOOR
 @export var _to_door_probabilities: Dictionary[DoorState, float]
+@export var _to_door_overrides: Dictionary[DraftOption, DoorState]
 @export var _to_door_special_conditions: Dictionary[DraftOption, SpecialState]
 
 var finalized: bool
@@ -44,11 +45,11 @@ func resolve_connected_doors(
         return
 
     var other_state: DoorState = DoorState.UNDECIDED
-    other_state = other_conf._get_random_to_door_state()
+    other_state = other_conf._get_random_to_door_state(own_room.blueprint.option)
 
-    var own_state: DoorState = _resolve_own_to_door_state(other_state)
+    var own_state: DoorState = _resolve_own_to_door_state(other_state, other_room.blueprint.option)
     if other_state == DoorState.UNDECIDED:
-        other_state = other_conf._resolve_own_to_door_state(own_state)
+        other_state = other_conf._resolve_own_to_door_state(own_state, own_room.blueprint.option)
 
     _implement_doorage(_state_to_door(own_state), true)
     other_conf._implement_doorage(other_conf._state_to_door(other_state ), true)
@@ -62,8 +63,10 @@ func resolve_connected_doors(
     finalized = true
     other_conf.finalized = true
 
+func _resolve_own_to_door_state(other_state: DoorState, other_option: DraftOption) -> DoorState:
+    if _to_door_overrides.has(other_option):
+        return _to_door_overrides[other_option]
 
-func _resolve_own_to_door_state(other_state: DoorState) -> DoorState:
     match other_state:
         DoorState.UNDECIDED:
             return _get_random_to_door_state_or_default()
@@ -96,7 +99,10 @@ func _get_random_to_door_state_or_default() -> DoorState:
         return _to_door_default
     return  own_state
 
-func _get_random_to_door_state() -> DoorState:
+func _get_random_to_door_state(other_option: DraftOption = null) -> DoorState:
+    if _to_door_overrides.has(other_option):
+        return _to_door_overrides[other_option]
+
     match _to_door_probabilities.size():
         0:
             return DoorState.UNDECIDED

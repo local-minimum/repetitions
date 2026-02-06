@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://lsc34dmlfvyc"]
+
+[ext_resource type="PackedScene" uid="uid://b6em6evajjt8i" path="res://scenes/rooms/meshes/props/cellbed.blend" id="1_hm2v1"]
+
+[node name="cellbed" instance=ExtResource("1_hm2v1")]
+
+[node name="StaticBody3D" parent="Bedframe " index="0"]
+collision_layer = 4
+collision_mask = 7
+
+[node name="StaticBody3D" parent="Bedsupport " index="0"]
+collision_layer = 4
+collision_mask = 7
+
+[node name="StaticBody3D" parent="Mattress " index="0"]
+collision_layer = 4
+collision_mask = 7
+
+[node name="StaticBody3D" parent="Pillow " index="0"]
+collision_layer = 4
+collision_mask = 7

@@ -155,6 +155,7 @@ locale/translations=PackedStringArray("res://resources/ui.en.translation", "res:
 
 3d_physics/layer_1="Default"
 3d_physics/layer_2="Entities"
+3d_physics/layer_3="Passable Decorations"
 3d_physics/layer_31="s"
 3d_physics/layer_32="Debug"
 

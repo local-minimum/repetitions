@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b7hwxdxx78shu"]
+[gd_scene load_steps=7 format=3 uid="uid://b7hwxdxx78shu"]
 
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_8u76k"]
 [ext_resource type="PackedScene" uid="uid://8qqqf4tvfy1l" path="res://scenes/rooms/meshes/roughwall.blend" id="1_15f1x"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://cc5747aqrge5g" path="res://scenes/rooms/meshes/simplefloor.blend" id="3_8u76k"]
 [ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="3_co0dn"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="4_co0dn"]
-[ext_resource type="PackedScene" uid="uid://b6em6evajjt8i" path="res://scenes/rooms/meshes/props/cellbed.blend" id="5_ggd3p"]
 
 [node name="Cell23d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_8u76k")
@@ -85,9 +84,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 2)
 
 [node name="simpleceiling6" parent="Geometry" instance=ExtResource("4_co0dn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, 2)
-
-[node name="cellbed" parent="Geometry" instance=ExtResource("5_ggd3p")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.2326604, 0.5478884, 0.45924962)
-
-[node name="cellbed2" parent="Geometry" instance=ExtResource("5_ggd3p")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.2326604, 0.5478884, -2.0866318)

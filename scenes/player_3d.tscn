@@ -168,6 +168,7 @@ near = 0.4
 
 [node name="CapturedMouseRay" type="RayCast3D" parent="Camera3D" node_paths=PackedStringArray("_camera")]
 target_position = Vector3(0, 0, -20)
+collision_mask = 7
 script = ExtResource("2_sxlqi")
 _camera = NodePath("..")
 
@@ -214,7 +215,7 @@ _caster = NodePath("../../PickAxCast")
 _player = NodePath("../..")
 
 [node name="pickax" parent="Toolbelt/Pickax" instance=ExtResource("3_2djwe")]
-transform = Transform3D(0.97853667, 0, -0.20606756, 0.047923584, 0.9725813, 0.22757149, 0.20041725, -0.23256277, 0.9517077, 0, 0, 0.12537825)
+transform = Transform3D(0.9785366, 0, -0.20606756, 0.04792358, 0.9725813, 0.22757149, 0.20041724, -0.23256277, 0.9517077, 0, 0, 0.12537825)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Toolbelt/Pickax"]
 libraries = {
@@ -225,9 +226,11 @@ libraries = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.013127, -0.25996527)
 shape = SubResource("SphereShape3D_yevqy")
 target_position = Vector3(0, -0.4, -2.5)
+collision_mask = 7
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1028626, 0.86164474)
+layers = 7
 light_color = Color(0.8043004, 0.5058316, 0.35971963, 1)
 light_energy = 0.6
 

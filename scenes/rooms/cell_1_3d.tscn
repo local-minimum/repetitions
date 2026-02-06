@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://b7vca186klo1f"]
+[gd_scene load_steps=9 format=3 uid="uid://b7vca186klo1f"]
 
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_btyxj"]
 [ext_resource type="PackedScene" uid="uid://8qqqf4tvfy1l" path="res://scenes/rooms/meshes/roughwall.blend" id="1_vpoiu"]
 [ext_resource type="PackedScene" uid="uid://cc5747aqrge5g" path="res://scenes/rooms/meshes/simplefloor.blend" id="2_xmja6"]
 [ext_resource type="PackedScene" uid="uid://c47aj4cavtjfw" path="res://scenes/rooms/meshes/simpleceiling.blend" id="3_t5rov"]
-[ext_resource type="PackedScene" uid="uid://b6em6evajjt8i" path="res://scenes/rooms/meshes/props/cellbed.blend" id="4_t5rov"]
 [ext_resource type="PackedScene" uid="uid://ipk7tlufbxkm" path="res://scenes/rooms/meshes/roughwall_cell_door.blend" id="5_1t3po"]
 [ext_resource type="PackedScene" uid="uid://bd8m8y3n7j7is" path="res://scenes/rooms/meshes/roughwall_alcove.blend" id="6_ea4pd"]
 [ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="6_meqsa"]
@@ -76,9 +75,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, 2)
 
 [node name="simpleceiling6" parent="Geometry" instance=ExtResource("3_t5rov")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 2)
-
-[node name="cellbed" parent="Geometry" instance=ExtResource("4_t5rov")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.38739663, 0.50062466, -3.231297)
 
 [node name="Door ConfigOptions" type="Node3D" parent="Geometry"]
 transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 1.0000001, 1, 2)
