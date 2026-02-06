@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dvud7c3q5eeda"]
+[gd_scene load_steps=14 format=3 uid="uid://dvud7c3q5eeda"]
 
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_70a0j"]
 [ext_resource type="PackedScene" uid="uid://8qqqf4tvfy1l" path="res://scenes/rooms/meshes/roughwall.blend" id="1_ys88f"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c8i5jtx06b375" path="res://scenes/rooms/meshes/roughwall_cell_door_broken.blend" id="5_ynnqa"]
 [ext_resource type="PackedScene" uid="uid://lsc34dmlfvyc" path="res://scenes/rooms/meshes/props/cellbed.tscn" id="10_vxii2"]
 [ext_resource type="Script" uid="uid://d4mu737x18spn" path="res://scripts/reps/scientific_cell_despawner.gd" id="12_mqvr4"]
+[ext_resource type="PackedScene" uid="uid://duf1yh5vcnqvt" path="res://scenes/rooms/meshes/props/blueprint_reactor.tscn" id="13_hyjgd"]
 
 [node name="Cell33d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_70a0j")
@@ -125,7 +126,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2361791, 0.5, -2.5)
 [node name="cellbed2" parent="Geometry" instance=ExtResource("10_vxii2")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.2395504, 0.5, -2.5)
 
+[node name="blueprint" parent="Geometry" instance=ExtResource("13_hyjgd")]
+transform = Transform3D(0.49749824, 1.0040537e-09, 0.04995495, 0.04995495, -2.0048883e-08, -0.49749824, 1.0040537e-09, 0.5, -2.0048883e-08, -0.012331247, 1.3409498, -3.5941863)
+
 [node name="ScientificCellDespawner" type="Node" parent="." node_paths=PackedStringArray("_despawns")]
 script = ExtResource("12_mqvr4")
 _despawn_if_blueprint = ExtResource("5_pvbl0")
-_despawns = [NodePath("../Geometry/roughwall7/Decal")]
+_despawns = [NodePath("../Geometry/roughwall7/Decal"), NodePath("../Geometry/blueprint")]

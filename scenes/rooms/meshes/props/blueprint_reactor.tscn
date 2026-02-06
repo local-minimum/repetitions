@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://duf1yh5vcnqvt"]
+
+[ext_resource type="PackedScene" uid="uid://blyo6wvgh1yoa" path="res://scenes/rooms/meshes/props/blueprint.blend" id="1_0aubx"]
+[ext_resource type="Texture2D" uid="uid://ccjuwixxqxs78" path="res://scenes/rooms/meshes/props/blueprint_reactor_texture.png" id="2_r0nqd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hf3ub"]
+albedo_texture = ExtResource("2_r0nqd")
+
+[node name="blueprint" instance=ExtResource("1_0aubx")]
+
+[node name="Blueprint " parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_hf3ub")
