@@ -39,8 +39,8 @@ func is_inverse_connection(
     return (
         self.room == other_room &&
         self.other_room == room &&
-        other_global_coordinates == self.global_coordinates &&
-        CardinalDirections.invert(global_direction) == self.global_direction
+        self.other_global_coordinates == global_coordinates &&
+        self.global_direction == CardinalDirections.invert(global_direction)
     )
 
 func reflect() -> DoorData:
