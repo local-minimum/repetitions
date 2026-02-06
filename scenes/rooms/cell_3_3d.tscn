@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://dvud7c3q5eeda"]
+[gd_scene load_steps=12 format=3 uid="uid://dvud7c3q5eeda"]
 
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_70a0j"]
 [ext_resource type="PackedScene" uid="uid://8qqqf4tvfy1l" path="res://scenes/rooms/meshes/roughwall.blend" id="1_ys88f"]
 [ext_resource type="PackedScene" uid="uid://ipk7tlufbxkm" path="res://scenes/rooms/meshes/roughwall_cell_door.blend" id="2_wrj36"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="3_6tomx"]
 [ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="3_jnptr"]
+[ext_resource type="Texture2D" uid="uid://b783hgilj4um7" path="res://textures/decals/science1.png" id="3_pvbl0"]
 [ext_resource type="Script" uid="uid://dgfi04hnjvm2r" path="res://scripts/reps/draft_option.gd" id="4_vxii2"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="4_wkh6p"]
 [ext_resource type="Resource" uid="uid://domffnlj5hgey" path="res://scenes/rooms/hall_5.tres" id="5_pvbl0"]
@@ -39,6 +40,13 @@ transform = Transform3D(-1, 4.371139e-08, 8.742278e-08, 4.371139e-08, 1, -4.3711
 
 [node name="roughwall7" parent="Geometry" instance=ExtResource("1_ys88f")]
 transform = Transform3D(-1, 4.371139e-08, 8.742278e-08, 4.371139e-08, 1, -4.371139e-08, -8.742278e-08, -4.371139e-08, -1, 2, 0, 0)
+
+[node name="Decal" type="Decal" parent="Geometry/roughwall7"]
+transform = Transform3D(-8.404241e-08, 1, 3.7519943e-08, 0.07212406, 4.3483713e-08, -0.99739563, -0.99739563, -8.111753e-08, -0.07212406, 0.41019344, 1.2084385, -0.678436)
+size = Vector3(1.5, 0.068, 1.5)
+texture_albedo = ExtResource("3_pvbl0")
+emission_energy = 1.75
+modulate = Color(1, 0.80784315, 1, 1)
 
 [node name="roughwall8" parent="Geometry" instance=ExtResource("1_ys88f")]
 transform = Transform3D(1.3113416e-07, 4.3711385e-08, 1, 4.371139e-08, 1, -4.371139e-08, -1, 4.3711392e-08, 1.3113416e-07, 2, 0, 2)
@@ -86,6 +94,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
 
 [node name="simpleceiling" parent="Geometry" instance=ExtResource("4_wkh6p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Geometry/simpleceiling"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3023634, -0.3137219, -0.07836872)
+light_color = Color(1, 1, 0.3764706, 1)
+light_energy = 0.1
+light_bake_mode = 1
+omni_range = 2.2
 
 [node name="simpleceiling2" parent="Geometry" instance=ExtResource("4_wkh6p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, 0)

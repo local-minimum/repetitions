@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://rn1k76ploxul"]
+[gd_scene load_steps=9 format=3 uid="uid://rn1k76ploxul"]
 
 [ext_resource type="PackedScene" uid="uid://bnadm2gr0ggsi" path="res://scenes/rooms/meshes/hallwall.blend" id="1_estw6"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_jemjs"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_jemjs"]
+[ext_resource type="Texture2D" uid="uid://b783hgilj4um7" path="res://textures/decals/science1.png" id="3_lrage"]
 [ext_resource type="PackedScene" uid="uid://c0dvojglp1sb0" path="res://scenes/rooms/meshes/hallwall_cornercap.blend" id="3_palvg"]
 [ext_resource type="PackedScene" uid="uid://dm1qptotoe08" path="res://scenes/rooms/meshes/hallceiling.blend" id="4_lrage"]
 [ext_resource type="PackedScene" uid="uid://uwl325qn0fde" path="res://scenes/rooms/meshes/hallceiling_blocker.blend" id="5_sx2bb"]
@@ -36,6 +37,13 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0
 
 [node name="hallwall8" parent="Geometry" instance=ExtResource("1_estw6")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, 4)
+
+[node name="Decal" type="Decal" parent="Geometry/hallwall8"]
+transform = Transform3D(-8.742278e-08, 1, 4.3711395e-08, -8.940697e-08, 4.371139e-08, -1, -1, -8.742278e-08, 8.940696e-08, 0.2800085, 0.9446081, -0.9443061)
+size = Vector3(0.5, 0.068481445, 0.5)
+texture_albedo = ExtResource("3_lrage")
+emission_energy = 1.75
+modulate = Color(1, 0.80784315, 1, 1)
 
 [node name="hallwall9" parent="Geometry" instance=ExtResource("1_estw6")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, 0)
