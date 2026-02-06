@@ -19,7 +19,6 @@ class_name BlueprintRoom
         placed = value
         recalculate_collision()
 
-
 var option: DraftOption
 
 var grid: Grid2D:
