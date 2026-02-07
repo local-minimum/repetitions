@@ -1,6 +1,6 @@
 extends Node3D
 class_name Tool
-enum ToolType { NONE, PICKAX, TROPHY, BLUEPRINT }
+enum ToolType { NONE, PICKAX, TROPHY, BLUEPRINT, KEY }
 
 @export var _type: ToolType = ToolType.NONE
 @export var _pickup_distance_sq: float = 3.0

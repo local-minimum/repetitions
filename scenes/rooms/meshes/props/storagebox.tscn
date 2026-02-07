@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://88tejawrtsl3"]
+
+[ext_resource type="PackedScene" uid="uid://hopyr4ujrle8" path="res://scenes/rooms/meshes/props/storagebox.blend" id="1_1ydo4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2axaa"]
+albedo_color = Color(0.67, 0.6052334, 0.47570005, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ibtya"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f7mov"]
+albedo_color = Color(0.67, 0.6052334, 0.47570005, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1ydo4"]
+size = Vector3(0.39282227, 0.2647705, 0.30737305)
+
+[node name="storagebox" instance=ExtResource("1_1ydo4")]
+
+[node name="BoxLower" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_2axaa")
+surface_material_override/1 = SubResource("StandardMaterial3D_ibtya")
+
+[node name="Lid" parent="." index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_f7mov")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00036621094, 0.13238525, -0.00012207031)
+shape = SubResource("BoxShape3D_1ydo4")

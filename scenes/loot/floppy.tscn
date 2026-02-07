@@ -1,0 +1,55 @@
+[gd_scene load_steps=11 format=3 uid="uid://d4c40ocodslaq"]
+
+[ext_resource type="PackedScene" uid="uid://b3nhwl714j32h" path="res://scenes/loot/floppy.blend" id="1_6612r"]
+[ext_resource type="Script" uid="uid://3jm6iguafd34" path="res://scripts/reps/tools/tool.gd" id="2_m36fk"]
+[ext_resource type="Texture2D" uid="uid://dkescfkoarrhi" path="res://scenes/loot/key.png" id="3_lf0gu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p0sbx"]
+albedo_color = Color(1, 0.46666667, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m36fk"]
+albedo_color = Color(0.6775668, 0.6775668, 0.6775668, 1)
+metallic = 0.35
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lf0gu"]
+albedo_color = Color(0.7274283, 0.7274284, 0.7274283, 1)
+metallic = 0.55
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hyfbd"]
+albedo_color = Color(0.25565878, 0.25565878, 0.25565878, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bpuxj"]
+albedo_texture = ExtResource("3_lf0gu")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ljhcl"]
+albedo_color = Color(0, 0.20954692, 0.21105838, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hyfbd"]
+size = Vector3(0.10067749, 0.025146484, 0.103271484)
+
+[node name="floppy" node_paths=PackedStringArray("_body") instance=ExtResource("1_6612r")]
+script = ExtResource("2_m36fk")
+_type = 4
+_body = NodePath("Floppy/StaticBody3D")
+
+[node name="Floppy" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_p0sbx")
+
+[node name="DiscCenter" parent="Floppy" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_m36fk")
+
+[node name="MetalProtector" parent="Floppy" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_lf0gu")
+
+[node name="ReadWrite" parent="Floppy" index="2"]
+surface_material_override/0 = SubResource("StandardMaterial3D_hyfbd")
+
+[node name="Sticker" parent="Floppy" index="3"]
+surface_material_override/0 = SubResource("StandardMaterial3D_bpuxj")
+surface_material_override/1 = SubResource("StandardMaterial3D_ljhcl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floppy" index="4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floppy/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00050354004, 0.00061035156, 0.00036621094)
+shape = SubResource("BoxShape3D_hyfbd")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://chkw5q3yhwuml"]
+[gd_scene load_steps=13 format=3 uid="uid://chkw5q3yhwuml"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_h2b07"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_wancy"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://y1ffxoreajkp" path="res://scenes/rooms/meshes/roomwall_door_with_door.tscn" id="8_41tem"]
 [ext_resource type="PackedScene" uid="uid://bb1kovci4qgku" path="res://scenes/rooms/meshes/roomwall_twosided_endcap.blend" id="8_bnp8r"]
 [ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="9_47r7j"]
+[ext_resource type="PackedScene" uid="uid://88tejawrtsl3" path="res://scenes/rooms/meshes/props/storagebox.tscn" id="11_hnk0c"]
+[ext_resource type="PackedScene" uid="uid://d4c40ocodslaq" path="res://scenes/loot/floppy.tscn" id="12_o1vui"]
 
 [node name="RoomCorner3d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_wancy")
@@ -172,3 +174,15 @@ metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
 
 [node name="Door" parent="Geometry/Door ConfigOptions" instance=ExtResource("8_41tem")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 1)
+
+[node name="storagebox" parent="." instance=ExtResource("11_hnk0c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5726531, -2.9802322e-08, 3.3722754)
+
+[node name="storagebox2" parent="." instance=ExtResource("11_hnk0c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6233488, -2.9802322e-08, 3.7347944)
+
+[node name="storagebox3" parent="." instance=ExtResource("11_hnk0c")]
+transform = Transform3D(0.99197185, 0, -0.12645867, 0, 1, 0, 0.12645867, 0, 0.99197185, -0.6005287, 0.26649714, 3.4955928)
+
+[node name="floppy" parent="." instance=ExtResource("12_o1vui")]
+transform = Transform3D(0.5825486, 0, 0.8127958, 0, 1, 0, -0.8127958, 0, 0.5825486, -0.49777976, 0.5325181, 3.5798116)
