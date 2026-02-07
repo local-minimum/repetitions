@@ -11,4 +11,7 @@ func handle_connection(other_room: Room3D, other_door: DoorConfigurationOptions)
         (other_door != null && !other_door.get_meta(_OVERRIDE_BOOL_META, false))
     ):
         for despawn: Node in _despawns:
-            despawn.queue_free()
+            if despawn != null && is_instance_valid(despawn):
+                despawn.queue_free()
+
+        _despawns.clear()

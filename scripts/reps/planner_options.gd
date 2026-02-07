@@ -8,10 +8,10 @@ class_name PlannerOptions
 
 func size() -> int:
     return _rooms.size()
-    
+
 func is_empty() -> bool:
     return _rooms.is_empty()
-    
+
 func _ready() -> void:
     _sync_placements()
 
@@ -22,23 +22,23 @@ func hide_rooms() -> void:
 func show_rooms() -> void:
     for room: BlueprintRoom in _rooms:
         room.show()
-            
+
 func _sync_placements() -> void:
     var shapes: Dictionary[BlueprintRoom, Rect2]
     var origins: Dictionary[BlueprintRoom, Vector2]
     var total_height: float = _gap * (_rooms.size() - 1)
-    
+
     for room: BlueprintRoom in _rooms:
-        var r: Rect2 = RectUtils.translate_local(room.bounding_box(), room, self)    
+        var r: Rect2 = RectUtils.translate_local(room.bounding_box(), room, self)
         total_height += r.size.y
         shapes[room] = r
         origins[room] = to_local(room.global_position)
-        
+
     var available_height: float = to_local(get_viewport_rect().size).y
 
     var y_anchor: float =  (available_height - total_height) / 2.0
     var y_used: float = 0.0
-    
+
     # print_debug("Using %s out of %s height" % [total_height, available_height])
     for room: BlueprintRoom in _rooms:
         var d: Vector2 = shapes[room].get_center() - origins[room]
@@ -58,19 +58,19 @@ func _sync_placements() -> void:
             ) != OK:
                 push_error("Failed to connect tween finished")
                 room.tweening = false
-                
+
         y_used += shapes[room].size.y + _gap
-    
-    if _debug:    
+
+    if _debug:
         queue_redraw()
 
 var _last_removed: BlueprintRoom
 var _last_removed_idx: int
-    
+
 func remove_room(room: BlueprintRoom) -> void:
     _last_removed = room
     _last_removed_idx = _rooms.find(room)
-    
+
     _rooms.erase(room)
     _sync_placements()
 
@@ -79,12 +79,15 @@ func add_room(room: BlueprintRoom) -> void:
     if room == _last_removed:
         if _rooms.insert(_last_removed_idx, room) == OK:
             added = true
-    
+
     if !added:
         _rooms.append(room)
     _sync_placements()
 
 func discard_rooms() -> void:
+    if _rooms.is_empty():
+        return
+
     var tween: Tween = create_tween()
     tween = tween.set_parallel(true)
     var viewport_height: float = get_viewport_rect().size.y
@@ -92,18 +95,18 @@ func discard_rooms() -> void:
         var target: Vector2 = room.global_position + Vector2.DOWN * viewport_height
         @warning_ignore_start("return_value_discarded")
         tween.tween_property(room, "global_position", target, 0.5)
-        @warning_ignore_restore("return_value_discarded")        
-    _last_removed_idx = 0    
+        @warning_ignore_restore("return_value_discarded")
+    _last_removed_idx = 0
     _rooms.clear()
-    
+
 func assign_grid(grid: Grid2D) -> void:
     for room: BlueprintRoom in _rooms:
         room.grid = grid
-        
+
 func _draw() -> void:
     if !_debug:
         return
-        
+
     for room: BlueprintRoom in _rooms:
         var r: Rect2 = RectUtils.translate_local(room.bounding_box(), room, self)
         draw_rect(r, Color.CORAL)

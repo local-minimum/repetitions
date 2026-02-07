@@ -1,10 +1,11 @@
 extends Node3D
 class_name Tool
-enum ToolType { NONE, PICKAX, TROPHY }
+enum ToolType { NONE, PICKAX, TROPHY, BLUEPRINT }
 
 @export var _type: ToolType = ToolType.NONE
 @export var _pickup_distance_sq: float = 3.0
 
+## The collision object that outlines the interaction area of the tool
 @export var _body: CollisionObject3D:
     get():
         if _body == null:
@@ -73,7 +74,12 @@ func _handle_input_event(camera: Node, event: InputEvent, _event_position: Vecto
         if can_pickup && mouse_btn_evt.pressed && mouse_btn_evt.button_index == MOUSE_BUTTON_LEFT:
             __SignalBus.on_pickup_tool.emit(_type)
             InputCursorHelper.remove_node(self)
-
             get_viewport().set_input_as_handled()
 
+            _do_pickup()
+
             queue_free()
+
+
+func _do_pickup() -> void:
+    pass

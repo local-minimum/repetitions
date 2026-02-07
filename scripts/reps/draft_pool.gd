@@ -3,12 +3,34 @@ class_name DraftPool
 
 @export var _start_rooms: Array[DraftOption]
 @export var pool: Array[DraftOption]
+@export var _addables: Dictionary[ToolBlueprint.Blueprint, DraftOption]
+
+func _enter_tree() -> void:
+    if __SignalBus.on_pickup_tool_blueprint.connect(_handle_pickup_tool_blueprint) != OK:
+        push_error("Failed to connect pickup tool blueprint")
 
 func _ready() -> void:
     validate_integrity()
 
 var _exp: RegEx = RegEx.new()
 var _exp_compiled: bool
+
+func _handle_pickup_tool_blueprint(blueprint: ToolBlueprint.Blueprint) -> void:
+    if _addables.has(blueprint):
+        var opt: DraftOption = _addables.get(blueprint)
+        if opt != null && !pool.has(opt):
+            pool.append(opt)
+            print_debug("Adding %s to %s due to picking up %s" % [opt, pool, ToolBlueprint.Blueprint.find_key(blueprint)])
+        elif opt == null:
+            push_error("There was a null room draft option in the addables for %s" % [ToolBlueprint.Blueprint.find_key(blueprint)])
+        else:
+            push_error("There already was a %s in %s for %s" % [
+                opt,
+                pool,
+                ToolBlueprint.Blueprint.find_key(blueprint)
+            ])
+    else:
+        push_warning("We don't know of blueprint %s, only %s" % [ToolBlueprint.Blueprint.find_key(blueprint), _addables])
 
 func validate_integrity() -> void:
     var ids: Dictionary[DraftOption.RoomId, DraftOption]

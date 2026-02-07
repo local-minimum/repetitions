@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dh68rjdc2w0vf"]
+[gd_scene load_steps=19 format=3 uid="uid://dh68rjdc2w0vf"]
 
 [ext_resource type="Script" uid="uid://73wn6oety2kg" path="res://scripts/2d/grid2d.gd" id="1_n4crp"]
 [ext_resource type="Script" uid="uid://dpu4cq0swyq2p" path="res://scripts/reps/dungeon_planner.gd" id="1_ou8db"]
@@ -17,6 +17,7 @@
 [ext_resource type="Resource" uid="uid://pic7jy8114bc" path="res://scenes/rooms/room_corner.tres" id="16_il2o4"]
 [ext_resource type="Resource" uid="uid://bfwq5awreoag" path="res://scenes/rooms/cell_3.tres" id="16_nfhew"]
 [ext_resource type="Resource" uid="uid://btlo0fu3130eu" path="res://scenes/rooms/room_with_backroom.tres" id="18_fno32"]
+[ext_resource type="Resource" uid="uid://bhvvm6hnhr1qu" path="res://scenes/rooms/room_reactor.tres" id="18_nfhew"]
 
 [node name="Dungeon Planner" type="Node2D" node_paths=PackedStringArray("grid", "_rooms_root", "_icons_root", "options", "pool")]
 script = ExtResource("1_ou8db")
@@ -53,3 +54,6 @@ script = ExtResource("4_o3k1y")
 script = ExtResource("9_qcvmm")
 _start_rooms = Array[ExtResource("10_xsdx5")]([ExtResource("2_xsdx5")])
 pool = Array[ExtResource("10_xsdx5")]([ExtResource("11_fno32"), ExtResource("12_nfhew"), ExtResource("13_y0vac"), ExtResource("14_w7wwa"), ExtResource("15_rblym"), ExtResource("12_qcvmm"), ExtResource("16_il2o4"), ExtResource("16_nfhew"), ExtResource("18_fno32")])
+_addables = Dictionary[int, ExtResource("10_xsdx5")]({
+1: ExtResource("18_nfhew")
+})
