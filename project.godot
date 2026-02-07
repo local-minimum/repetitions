@@ -23,7 +23,7 @@ buses/default_bus_layout="uid://c6axwwre274f1"
 [autoload]
 
 __SignalBus="*res://scripts/reps/signal_bus.gd"
-__GlobalGameState="*res://scripts/global_game_state_core.gd"
+__GlobalGameState="*res://scripts/reps/global_game_state.gd"
 __AudioHub="*res://addons/minimum_convenience/scripts/audio_hub.gd"
 __BindingHints="*res://addons/minimum_convenience/scripts/utils/binding_hints.gd"
 

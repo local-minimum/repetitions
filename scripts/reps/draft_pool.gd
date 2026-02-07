@@ -10,6 +10,9 @@ func _enter_tree() -> void:
         push_error("Failed to connect pickup tool blueprint")
 
 func _ready() -> void:
+    for blueprint: ToolBlueprint.Blueprint in __GlobalGameState.added_blueprints:
+        _handle_pickup_tool_blueprint(blueprint)
+
     validate_integrity()
 
 var _exp: RegEx = RegEx.new()
