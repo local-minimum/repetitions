@@ -16,6 +16,7 @@ signal on_blueprint_room_placed(room: BlueprintRoom)
 signal on_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom])
 signal on_elevation_plan_sealed(elevation: int)
 
+signal on_pickup_tool_key(key: ToolKey.KeyVariant)
 signal on_pickup_tool_blueprint(blueprint: ToolBlueprint.Blueprint)
 signal on_pickup_tool(tool: Tool.ToolType)
 signal on_drop_tool(tool: Tool.ToolType)
