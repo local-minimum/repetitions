@@ -14,7 +14,10 @@ signal on_blueprint_room_position_updated(room: BlueprintRoom, coordinates: Vect
 signal on_blueprint_room_dropped(room: BlueprintRoom, drag_origin: Vector2, drag_origin_angle: float)
 signal on_blueprint_room_placed(room: BlueprintRoom)
 signal on_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom])
+signal on_spawn_room_placed(room: Room3D, room_coordinates: Vector3i, player_spawn_coordinates: Vector3i)
 signal on_elevation_plan_sealed(elevation: int)
+
+signal on_request_rest(bed: Node3D, coords: Vector3i)
 
 signal on_pickup_tool_key(key: ToolKey.KeyVariant)
 signal on_pickup_tool_blueprint(blueprint: ToolBlueprint.Blueprint)

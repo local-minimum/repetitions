@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://lsc34dmlfvyc"]
+[gd_scene load_steps=4 format=3 uid="uid://lsc34dmlfvyc"]
 
 [ext_resource type="PackedScene" uid="uid://b6em6evajjt8i" path="res://scenes/rooms/meshes/props/cellbed.blend" id="1_hm2v1"]
+[ext_resource type="Script" uid="uid://dgdxbhstll5op" path="res://scripts/reps/rest_interactable.gd" id="2_o8ej4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hm2v1"]
+size = Vector3(0.7807617, 0.34765625, 2.0482788)
 
 [node name="cellbed" instance=ExtResource("1_hm2v1")]
 
@@ -19,3 +23,12 @@ collision_mask = 7
 [node name="StaticBody3D" parent="Pillow " index="0"]
 collision_layer = 4
 collision_mask = 7
+
+[node name="Rest Interactable" type="StaticBody3D" parent="." index="4" node_paths=PackedStringArray("_bed")]
+collision_layer = 4
+script = ExtResource("2_o8ej4")
+_bed = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Rest Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0031738281, 0.059570313, 0.0030822754)
+shape = SubResource("BoxShape3D_hm2v1")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ck4qilcv3pmw3"]
+[gd_scene load_steps=21 format=3 uid="uid://ck4qilcv3pmw3"]
 
 [ext_resource type="Script" uid="uid://crh0uqgb4ags6" path="res://scripts/reps/dungeon_planner_ui.gd" id="1_c4wp1"]
 [ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_fpimf"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://ey6peb5lfj3o" path="res://scripts/reps/exploration_ui.gd" id="6_tkjml"]
 [ext_resource type="PackedScene" uid="uid://cgryxgwcumo58" path="res://scenes/trophy_ui.tscn" id="7_5hkx1"]
 [ext_resource type="Environment" uid="uid://dyvjkwni31khi" path="res://scenes/dungeon_environment.tres" id="8_6nb7m"]
+[ext_resource type="Script" uid="uid://c6efamqj751g3" path="res://scripts/reps/sleep_in_bed_dialog.gd" id="8_hh3g7"]
 [ext_resource type="Script" uid="uid://bu7vo1xyipwpf" path="res://addons/minimum_convenience/scripts/crosshair/adaptive_crosshair.gd" id="10_5hkx1"]
 [ext_resource type="Script" uid="uid://1a438hwonqsq" path="res://addons/minimum_convenience/scripts/crosshair/adaptive_crosshair_config.gd" id="11_7wjui"]
 [ext_resource type="Script" uid="uid://613q6o0xpnom" path="res://addons/minimum_convenience/scripts/crosshair/dot_crosshair_config.gd" id="12_7a5bf"]
@@ -133,6 +134,51 @@ script = ExtResource("6_tkjml")
 
 [node name="TrophyUI" parent="Exploration UI" instance=ExtResource("7_5hkx1")]
 
+[node name="Sleep in Bed Dialog" type="PanelContainer" parent="Exploration UI"]
+process_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_hh3g7")
+
+[node name="MarginContainer" type="MarginContainer" parent="Exploration UI/Sleep in Bed Dialog"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "UI_SLEEP_TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Body" type="Label" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+text = "UI_SLEEP_BODY"
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="Cancel Btn" type="Button" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "UI_CANCEL"
+
+[node name="Accept Btn" type="Button" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "UI_ACCEPT"
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("8_6nb7m")
 
@@ -168,3 +214,5 @@ metadata/_custom_type_script = "uid://bu7vo1xyipwpf"
 [connection signal="pressed" from="Dungeon Planning UI/MarginContainer/HBoxContainer/Layout Done Btn" to="Dungeon Planning UI" method="_on_layout_done_btn_pressed"]
 [connection signal="timeout" from="Dungeon Planning UI/Room Tooltip Manager/Delay Show" to="Dungeon Planning UI/Room Tooltip Manager" method="_on_delay_show_timeout"]
 [connection signal="timeout" from="Dungeon Planning UI/Room Tooltip Manager/Delay Hide" to="Dungeon Planning UI/Room Tooltip Manager" method="_on_delay_hide_timeout"]
+[connection signal="pressed" from="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer/HBoxContainer/Cancel Btn" to="Exploration UI/Sleep in Bed Dialog" method="_on_cancel_btn_pressed"]
+[connection signal="pressed" from="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer/HBoxContainer/Accept Btn" to="Exploration UI/Sleep in Bed Dialog" method="_on_accept_btn_pressed"]

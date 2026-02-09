@@ -1,6 +1,10 @@
 id,en,sv
+UI_CANCEL,Cancel,Avbryt
+UI_ACCEPT,OK,OK
 UI_DONE,Done,Klar
 UI_REMAINING_COUNT,Remaining: {remaining_count},Kvar: {remaining_count}
 UI_REMAINING_CREDITS_ROOMS,{remaining_count} room credits remain,{remaining_count} rum kvar att placera 
 UI_ELEVATION_SEALED,No more room placement possible,Inga fler rum kan placeras
 UI_REDRAW_ROOMS,Redraw (cost {cost}),Dra om (pris {cost})
+UI_SLEEP_TITLE,End day?,Avsluta dagen?
+UI_SLEEP_BODY,Are done with what you set out to achive today and progress to tomorrow?,Är du klar med det du hade planerat för dagen och redo att möta morgondagen?

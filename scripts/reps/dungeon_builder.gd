@@ -1,6 +1,8 @@
 extends Node3D
 class_name DungeonBuilder
 
+static var active_builder: DungeonBuilder
+
 @export var grid_size: Vector3 = Vector3(2.5, 2.5, 2.5)
 @export var player: PhysicsGridPlayerController
 @export var dirt_mag: DirtMagazine
@@ -13,12 +15,15 @@ var dirt_digouts: Dictionary[Vector3i, Array]
 var used_tiles: Array[Vector3i]
 
 func _enter_tree() -> void:
+    active_builder = self
     if __SignalBus.on_complete_dungeon_plan.connect(_handle_complete_dungeon_plan) != OK:
         push_error("Failed to connect complete dungeon plan")
     if __SignalBus.on_use_pickax.connect(_handle_use_pickax) != OK:
         push_error("Failed to connect use pickax")
 
 func _exit_tree() -> void:
+    if active_builder == self:
+        active_builder = null
     __SignalBus.on_complete_dungeon_plan.disconnect(_handle_complete_dungeon_plan)
     __SignalBus.on_use_pickax.disconnect(_handle_use_pickax)
 
@@ -134,10 +139,20 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
         _clear_out_dirt_in_new_room(room, elevation)
 
         if first_room && player != null:
-            var ppos: Vector2i = room.get_global_used_tiles()[0]
-            player.global_position = get_global_grid_position_from_2d_coordinates(ppos, elevation)
+            var beds: Array[RestInteractable] = []
+            beds.assign(room3d.find_children("", "RestInteractable"))
+            if beds.is_empty():
+                push_warning("Room %s does not have a bed" % [room3d])
+                var ppos: Vector2i = room.get_global_used_tiles()[0]
+                player.global_position = get_global_grid_position_from_2d_coordinates(ppos, elevation)
+            else:
+                var bed: RestInteractable = beds[0]
+                player.global_position = get_global_grid_position_from_coordinates(bed.coordinates)
+
+            player.set_rotation_away_from_wall(true)
             first_room = false
-            print_debug("Player located at %s at the center of %s" % [player.global_position, ppos])
+
+            __SignalBus.on_spawn_room_placed.emit(room3d, origin, get_closest_coordinates(player.global_position))
 
     if exposed_dirt:
         _populate_level_with_dirt(grid, elevation)

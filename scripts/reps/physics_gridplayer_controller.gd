@@ -2,6 +2,9 @@ extends CharacterBody3D
 class_name PhysicsGridPlayerController
 
 static var last_connected_player: PhysicsGridPlayerController
+static var last_connected_player_cinematic: bool:
+    get():
+        return last_connected_player != null && last_connected_player.cinematic
 
 var builder: DungeonBuilder
 var cinematic: bool:
@@ -366,6 +369,34 @@ func _attempt_turn(angle: float) -> void:
     var tween_func: Callable = QuaternionUtils.create_tween_rotation_method(self)
     _rotation_tween.tween_method(tween_func, global_transform.basis.get_rotation_quaternion(), target_global_rotation, _rotation_duration)
     @warning_ignore_restore("return_value_discarded")
+
+## Attempts to rotate the character so that it has a wall in the back and looking
+## out over an open area
+func set_rotation_away_from_wall(force_update: bool = false) -> void:
+    if force_update:
+        _forward.force_shapecast_update()
+        _backward.force_shapecast_update()
+        _left.force_shapecast_update()
+        _right.force_shapecast_update()
+
+    if !_forward.is_colliding() && _backward.is_colliding():
+        return
+    elif !_left.is_colliding() && _right.is_colliding():
+        rotate_z(0.5 * PI)
+    elif !_right.is_colliding() && _left.is_colliding():
+        rotate_z(-0.5 * PI)
+    elif !_backward.is_colliding() && _forward.is_colliding():
+        rotate_z(PI)
+    elif !_forward.is_colliding():
+        return
+    elif !_left.is_colliding():
+        rotate_z(0.5 * PI)
+    elif !_right.is_colliding():
+        rotate_z(-0.5 * PI)
+    elif !_backward.is_colliding():
+        rotate_z(PI)
+
+    # Were stuck in a 1x1 and no rotation will help
 
 static func find_player_in_tree(body: Node3D) -> PhysicsGridPlayerController:
     while body != null:

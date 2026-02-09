@@ -10,17 +10,17 @@ func _enter_tree() -> void:
         push_error("Failed to connect tool pickup")
     if __SignalBus.on_request_tool.connect(_handle_request_tool) != OK:
         push_error("Failed to connect request tool")
-    
+
 
 func _exit_tree() -> void:
     __SignalBus.on_pickup_tool.disconnect(_handle_pickup_tool)
     __SignalBus.on_request_tool.disconnect(_handle_request_tool)
-    
+
 func _handle_request_tool(tool_type: Tool.ToolType, reciever: Node3D) -> void:
     if tool_type == Tool.ToolType.TROPHY:
         if _trophies <= 0:
             return
-            
+
         _attempt_give_tool(tool_type, reciever)
         return
 
@@ -37,16 +37,16 @@ func _attempt_give_tool(tool_type: Tool.ToolType, reciever: Node3D) -> void:
         # TODO: Handle receiving tool to the floor?
         pass
     return
-              
+
 func _handle_pickup_tool(tool_type: Tool.ToolType) -> void:
     print_debug("Picked up %s " % [Tool.ToolType.find_key(tool_type)])
     if tool_type == Tool.ToolType.TROPHY:
         _trophies += 1
         return
-        
+
     if _tool_lookup.has(tool_type):
         if _active_tool != null:
             _active_tool.enabled = false
-        
+
         _active_tool = _tool_lookup[tool_type]
         _active_tool.enabled = true

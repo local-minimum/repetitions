@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cjduvtbggfby1"]
+[gd_scene load_steps=9 format=3 uid="uid://cjduvtbggfby1"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_mbk1p"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_rcr32"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="4_2lquy"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="5_nr7pi"]
 [ext_resource type="PackedScene" uid="uid://bhppd8cxmo4ig" path="res://scenes/dugneonbuilderterminal.tscn" id="7_2lquy"]
+[ext_resource type="PackedScene" uid="uid://lsc34dmlfvyc" path="res://scenes/rooms/meshes/props/cellbed.tscn" id="8_rcr32"]
 [ext_resource type="PackedScene" uid="uid://byswj0ob7y5no" path="res://scenes/rooms/parts/door_config_block_to_dirt.tscn" id="9_mgtto"]
 
 [node name="StartRoom3d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
@@ -272,3 +273,6 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 3, 1
 
 [node name="Door ConfigOptions4" parent="Geometry" instance=ExtResource("9_mgtto")]
 transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -6, 1, -1)
+
+[node name="cellbed" parent="." instance=ExtResource("8_rcr32")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.488968, 0.5518298, -1.8278263)

@@ -15,7 +15,6 @@ var rooms: Array[BlueprintRoom]
 @export var debug: bool
 
 @export var seed_room: DraftOption
-@export var seed_coordinates: Vector2i
 @export var seed_direction: CardinalDirections.CardinalDirection = CardinalDirections.CardinalDirection.NORTH
 @export var elevation: int = 0
 @export var redraw_cost: int = 2
@@ -148,7 +147,8 @@ func _draw_options() -> void:
     options.assign_grid(grid)
 
 func _seed_dungeon() -> bool:
-    if seed_room == null:
+    var spawn_coords: Vector3i = __GlobalGameState.next_room_spawn_coords
+    if seed_room == null || elevation != spawn_coords.y:
         return false
 
     if rooms.any(func (br: BlueprintRoom) -> bool: return br.option == seed_room):
@@ -160,7 +160,7 @@ func _seed_dungeon() -> bool:
 
     var blueprint: BlueprintRoom = seed_room.instantiate_blueprint_room()
     blueprint.grid = grid
-    blueprint.global_position = grid.get_global_point(seed_coordinates)
+    blueprint.global_position = grid.get_global_point(Vector2i(spawn_coords.x, spawn_coords.z))
     blueprint.global_rotation = CardinalDirections.direction_to_rotation_2d(direction)
     blueprint.placed = true
     blueprint.snap_to_grid()

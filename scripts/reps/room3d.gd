@@ -70,3 +70,12 @@ func _get_config_for_door_data(door: DoorData) -> DoorConfigurationOptions:
         ):
             return conf
     return null
+
+static func find_room(node: Node) -> Room3D:
+    if node is Room3D:
+        return node as Room3D
+
+    if node == null:
+        return null
+
+    return find_room(node.get_parent())
