@@ -84,3 +84,10 @@ func _handle_toggle_captured_cursor(active: bool) -> void:
         return
 
     _captured_cursor = active
+
+func next_day() -> void:
+    __GlobalGameState.clear_captured_cursor_toggle()
+    __GlobalGameState.game_paused = false
+    InputCursorHelper.reset()
+    if get_tree().reload_current_scene() != OK:
+        push_error("Failed to reload level")
