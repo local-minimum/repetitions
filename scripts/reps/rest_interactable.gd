@@ -2,6 +2,7 @@ extends StaticBody3D
 class_name RestInteractable
 
 @export var _interact_max_sq_dist: float = 4.0
+@export_range(-1.0, 1.0, 0.05) var _look_angle_dot_product_threshold: float = 0.0
 @export var _bed: Node3D
 
 var coordinates: Vector3i:
@@ -39,7 +40,17 @@ func valid_player_position() -> bool:
 
             var pt: Vector3 = CollisionShapeUtils.get_closest_point_on_surface_or_inside(player.global_position, cs)
             if pt.distance_squared_to(player.position) <= _interact_max_sq_dist:
-                return true
+                var dir: Vector3 = cs.global_position - player.global_position
+                dir.y = 0
+                dir = dir.normalized()
+                # print_debug("dir %s dot %s gives %s > %s" % [
+                #     dir,
+                #    -player.camera.global_basis.z,
+                #    dir.dot(-player.camera.global_basis.z),
+                #    _look_angle_dot_product_threshold
+                #])
+                if dir.dot(-player.camera.global_basis.z) > _look_angle_dot_product_threshold:
+                    return true
 
     return false
 
