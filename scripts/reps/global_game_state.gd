@@ -2,6 +2,8 @@ extends GlobalGameStateCore
 class_name GlobalGameState
 
 func _enter_tree() -> void:
+    process_mode = Node.PROCESS_MODE_ALWAYS
+
     if __SignalBus.on_pickup_tool_blueprint.connect(_handle_pickup_tool_blueprint) != OK:
         push_error("Failed to connect pickup tool blueprint")
     if __SignalBus.on_pickup_tool_key.connect(_handle_pickup_key) != OK:
@@ -10,6 +12,8 @@ func _enter_tree() -> void:
         push_error("Failed to connect request rest")
     if __SignalBus.on_spawn_room_placed.connect(_handle_spawn_room_placed) != OK:
         push_error("Failed to connect spawn room placed")
+    if __SignalBus.on_toggle_captured_cursor.connect(_handle_toggle_captured_cursor) != OK:
+        push_error("Failed to connect toggle captured cursor")
 
 var added_blueprints: Array[ToolBlueprint.Blueprint]
 var collected_keys: Array[ToolKey.KeyVariant]
@@ -30,9 +34,17 @@ var next_room_spawn_coords: Vector3i:
             return _request_rest_coords - room_to_player_coords_offset
         return _spawn_room_coords
 
+var game_paused: bool:
+    set(value):
+        game_paused = value
+        get_tree().paused = value
+        if _captured_cursor:
+            __SignalBus.on_toggle_captured_cursor.emit(!value)
+
 var _has_spawned: bool = false
 var _spawn_room: Room3D
 var _spawn_room_coords: Vector3i
+var _captured_cursor: bool
 
 var _request_rest_different_room: bool
 ## Only valid if a different room
@@ -63,3 +75,12 @@ func _handle_spawn_room_placed(room: Room3D, room_coords: Vector3i, player_coord
     _request_rest_coords = player_coords
     player_spawn_coords = player_coords
     _spawn_room_coords = room_coords
+
+func clear_captured_cursor_toggle() -> void:
+    _captured_cursor = false
+
+func _handle_toggle_captured_cursor(active: bool) -> void:
+    if game_paused:
+        return
+
+    _captured_cursor = active

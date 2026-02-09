@@ -7,4 +7,4 @@ UI_REMAINING_CREDITS_ROOMS,{remaining_count} room credits remain,{remaining_coun
 UI_ELEVATION_SEALED,No more room placement possible,Inga fler rum kan placeras
 UI_REDRAW_ROOMS,Redraw (cost {cost}),Dra om (pris {cost})
 UI_SLEEP_TITLE,End day?,Avsluta dagen?
-UI_SLEEP_BODY,Are done with what you set out to achive today and progress to tomorrow?,Är du klar med det du hade planerat för dagen och redo att möta morgondagen?
+UI_SLEEP_BODY,Are you done with what you set out to achive today and progress to tomorrow?,Är du klar med det du hade planerat för dagen och redo att möta morgondagen?

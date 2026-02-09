@@ -145,11 +145,21 @@ _forward = NodePath("Cast Forward")
 _left = NodePath("Cast Left")
 _right = NodePath("Cast Right")
 _backward = NodePath("Cast Backward")
+_translation_duration = null
+_rotation_duration = null
+_refuse_distance_forward = null
+_refuse_distance_other = null
 _gridless_translation_speed = 4.0
+_gridless_rotation_speed = null
 _gridless_friction = 100.0
 _mouse_sensitivity_yaw = 0.002
 _mouse_sensistivity_pitch = 0.005
+_gridless_camera_near = null
+_gridless_camera_fov = null
+_camera_transition_time = null
+_allow_vertical_movement = null
 _debug_shapes = [NodePath("Camera3D/Debug Cam Position"), NodePath("Camera3D/Debug Cam Look Direction"), NodePath("Player Collision Body/Debug Body Shape"), NodePath("Debug Step CollisionPt")]
+_show_debug_shapes = null
 
 [node name="Player Collision Body" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)

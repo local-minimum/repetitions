@@ -6,6 +6,14 @@ static var _forbidden: Array[Node]
 static var _hovered: Array[Node]
 static var _dragged: Array[Node]
 
+static func reset() -> void:
+    for node: Node in _hovered:
+        remove_node(node)
+    for node: Node in _dragged:
+        remove_node(node)
+    for node: Node in _forbidden:
+        remove_node(node)
+
 static func add_state(node: Node, state: State) -> void:
     match state:
         State.HOVER:
@@ -35,7 +43,7 @@ static func remove_state(node: Node, state: State) -> void:
             _dragged.erase(node)
         State.FORBIDDEN:
             _forbidden.erase(node)
-            
+
     _sync_cursor(node)
 
 

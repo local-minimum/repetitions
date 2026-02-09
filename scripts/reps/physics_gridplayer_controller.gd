@@ -80,7 +80,6 @@ var gridless: bool:
             velocity = Vector3.ZERO
 
             if value:
-                Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
                 _captured_pointer_eventer.active = true
                 if _cam_slide_tween && _cam_slide_tween.is_running():
                     _cam_slide_tween.kill()
@@ -91,7 +90,6 @@ var gridless: bool:
                 _cam_slide_tween.tween_property(_camera, "fov", _gridless_camera_fov, _camera_transition_time)
                 @warning_ignore_restore("return_value_discarded")
             else:
-                Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
                 _captured_pointer_eventer.active = false
                 if _cam_slide_tween && _cam_slide_tween.is_running():
                     _cam_slide_tween.kill()

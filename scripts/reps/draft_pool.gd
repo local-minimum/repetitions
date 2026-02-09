@@ -10,6 +10,9 @@ func _enter_tree() -> void:
         push_error("Failed to connect pickup tool blueprint")
 
 func _ready() -> void:
+    for opt: DraftOption in pool:
+        opt.drafted_count = 0
+
     for blueprint: ToolBlueprint.Blueprint in __GlobalGameState.added_blueprints:
         _handle_pickup_tool_blueprint(blueprint)
 
@@ -22,6 +25,7 @@ func _handle_pickup_tool_blueprint(blueprint: ToolBlueprint.Blueprint) -> void:
     if _addables.has(blueprint):
         var opt: DraftOption = _addables.get(blueprint)
         if opt != null && !pool.has(opt):
+            opt.drafted_count = 0
             pool.append(opt)
             print_debug("Adding %s to %s due to picking up %s" % [opt, pool, ToolBlueprint.Blueprint.find_key(blueprint)])
         elif opt == null:

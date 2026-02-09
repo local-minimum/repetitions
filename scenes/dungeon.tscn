@@ -198,6 +198,7 @@ metadata/_custom_type_script = "uid://dq7lbhrdci5ob"
 layer = 200
 
 [node name="AdaptiveCrosshair" type="Control" parent="CanvasLayer"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0

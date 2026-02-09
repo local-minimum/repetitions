@@ -8,13 +8,16 @@ func _ready() -> void:
     hide()
 
 func _handle_request_rest(_bed: Node3D, _coords: Vector3i) -> void:
-    get_tree().paused = true
+    __GlobalGameState.game_paused = true
     show()
 
 func _on_cancel_btn_pressed() -> void:
-    get_tree().paused = false
+    __GlobalGameState.game_paused = false
     hide()
 
 func _on_accept_btn_pressed() -> void:
-    get_tree().paused = false
-    get_tree().reload_current_scene()
+    __GlobalGameState.clear_captured_cursor_toggle()
+    __GlobalGameState.game_paused = false
+    InputCursorHelper.reset()
+    if get_tree().reload_current_scene() != OK:
+        push_error("Failed to reload level")

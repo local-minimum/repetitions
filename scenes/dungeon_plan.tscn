@@ -27,7 +27,6 @@ _icons_root = NodePath("Icons")
 options = NodePath("OptionsCatalogue")
 pool = NodePath("DraftPool")
 seed_room = ExtResource("2_xsdx5")
-seed_coordinates = Vector2i(20, 20)
 seed_direction = 0
 _terminal_scene = ExtResource("4_y0vac")
 _player_scene = ExtResource("4_w7wwa")

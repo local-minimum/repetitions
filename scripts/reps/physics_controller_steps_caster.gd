@@ -74,18 +74,21 @@ func _ready() -> void:
 
 func _sync_cast_origin() -> void:
     var b: PhysicsBody3D = body
-    if b == null:
+    if b == null || !is_instance_valid(b) || !b.is_inside_tree():
         return
 
     # Step checker
     var up_delta: Vector3 = up_global * (step_height_max + shape_half_height + min_clearing_above)
-    global_position = body.global_position + up_delta + global_step_direction * step_distance
+    global_position = b.global_position + up_delta + global_step_direction * step_distance
     target_position.y = -(step_height_max + step_down_max + min_clearing_above)
 
     # Sync translations checkers
     up_delta = up_global  * (step_height_max + shape_half_height)
 
     for tester: Node3D in _translation_testers:
+        if !is_instance_valid(tester) ||  !tester.is_inside_tree():
+            continue
+
         up_delta = tester.global_basis.y * (step_height_max + shape_half_height)
         tester.position.y = tester.to_local(up_delta + tester.global_position).y
 
