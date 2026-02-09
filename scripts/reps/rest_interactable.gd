@@ -25,6 +25,8 @@ func _enter_tree() -> void:
     if !input_event.is_connected(_handle_input_event) && input_event.connect(_handle_input_event) != OK:
         push_error("Failed to connect input event")
 
+    _hovered = false
+
 func valid_player_position() -> bool:
     var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
     if player == null:
@@ -55,14 +57,27 @@ func valid_player_position() -> bool:
     return false
 
 var _valid: bool
+var _hovered: bool:
+    set(value):
+        if value:
+            set_physics_process(true)
+        else:
+            set_physics_process(false)
+        _hovered = value
+
 func _handle_mouse_entered() -> void:
+    _hovered = true
     if valid_player_position():
         _valid = true
         InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
     else:
         _valid = false
 
+func _physics_process(_delta: float) -> void:
+    _update_pointer()
+
 func _handle_mouse_exited() -> void:
+    _hovered = false
     InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
 
 func _is_interaction(event: InputEvent) -> bool:
@@ -81,19 +96,22 @@ func _handle_input_event(_cam: Node, event: InputEvent, _event_position: Vector3
             InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
         return
 
-    if event is InputEventMouseButton || event is InputEventJoypadButton:
-        var valid: bool = valid_player_position()
-        if _valid != valid:
-            if valid:
-                _valid = true
-                InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
-            else:
-                _valid = false
-                InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
-
     if  _is_interaction(event):
         get_viewport().set_input_as_handled()
         _execute_interaction()
+
+func _update_pointer() -> void:
+    if PhysicsGridPlayerController.last_connected_player_cinematic:
+        return
+
+    var valid: bool = valid_player_position()
+    if _valid != valid:
+        if valid:
+            _valid = true
+            InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
+        else:
+            _valid = false
+            InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
 
 func _execute_interaction() -> void:
     if DungeonBuilder.active_builder == null:
