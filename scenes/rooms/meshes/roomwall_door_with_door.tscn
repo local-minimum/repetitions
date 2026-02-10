@@ -1,22 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://y1ffxoreajkp"]
+[gd_scene load_steps=6 format=3 uid="uid://y1ffxoreajkp"]
 
 [ext_resource type="PackedScene" uid="uid://4c4xlnfkrmmd" path="res://scenes/rooms/meshes/roomwall_door_with_door.blend" id="1_vka4u"]
 [ext_resource type="Script" uid="uid://bvkevtj83moe3" path="res://scripts/reps/swinging_door.gd" id="2_tcvdb"]
+[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="3_w4wn1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w4wn1"]
+size = Vector3(0.057617188, 2.0180054, 0.9751587)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tcvdb"]
 size = Vector3(0.067373276, 1.9832764, 0.9202881)
 
 [node name="roomwall_door_with_door" instance=ExtResource("1_vka4u")]
 
-[node name="Door " parent="." index="4" node_paths=PackedStringArray("_rotating_node", "_pos_side_area", "_neg_side_area", "_body", "_interaction_point", "_trigger_areas", "_ignore_colliders")]
+[node name="Door " parent="." index="4" node_paths=PackedStringArray("_rotating_node", "_pos_side_area", "_neg_side_area", "_trigger_areas", "_ignore_colliders")]
 script = ExtResource("2_tcvdb")
 _rotating_node = NodePath(".")
 _pos_side_area = NodePath("Pos Door Trigger Area")
 _neg_side_area = NodePath("Neg Door Trigger Area")
-_body = NodePath("StaticBody3D")
-_interaction_point = NodePath("Interaction Center")
 _trigger_areas = [NodePath("Neg Door Trigger Area"), NodePath("Pos Door Trigger Area")]
 _ignore_colliders = [NodePath("StaticBody3D"), NodePath("../DoorFrame /StaticBody3D"), NodePath("../Horzontal Support /StaticBody3D"), NodePath("../Vertical Support /StaticBody3D"), NodePath("../Wall /StaticBody3D")]
+
+[node name="StaticBody3D" parent="Door " index="0" node_paths=PackedStringArray("_root")]
+script = ExtResource("3_w4wn1")
+_interact_max_sq_dist = 6.0
+_root = NodePath("../..")
+
+[node name="CollisionShape3D" parent="Door /StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.029785156, 0.0025939941, -0.48481405)
+shape = SubResource("BoxShape3D_w4wn1")
 
 [node name="Neg Door Trigger Area" type="Area3D" parent="Door " index="1"]
 input_ray_pickable = false
@@ -35,3 +46,5 @@ shape = SubResource("BoxShape3D_tcvdb")
 
 [node name="Interaction Center" type="Node3D" parent="Door " index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.029399455, 0, -0.8663733)
+
+[connection signal="execute_interaction" from="Door /StaticBody3D" to="Door " method="_on_static_body_3d_execute_interaction"]

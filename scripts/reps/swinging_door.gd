@@ -241,3 +241,7 @@ func _interact(interactor: Node3D) -> void:
 func _tweener_func(progress: float) -> void:
     _tween_progress = progress
     _rotating_node.rotation_degrees = lerpf(_tween_start, _tween_target, (progress - _motion_block_progress) / (1.0 - _motion_block_progress)) * _local_rotation_axis
+
+
+func _on_static_body_3d_execute_interaction() -> void:
+    _interact(PhysicsGridPlayerController.last_connected_player)
