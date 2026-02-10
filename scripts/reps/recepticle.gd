@@ -1,5 +1,5 @@
 @abstract
-extends Node3D
+extends InteractionBody3D
 class_name Recepticle
 
 @abstract func receive(tool: Tool.ToolType) -> bool
