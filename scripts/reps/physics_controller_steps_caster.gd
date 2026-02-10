@@ -111,10 +111,10 @@ func can_step(data: Dictionary[StepData, Vector3] = {}) -> bool:
         return false
 
     var pt: Vector3 = get_collision_point(0)
-    if _debug_shape != null:
+    if _debug_shape != null && is_instance_valid(_debug_shape) && _debug_shape.is_inside_tree():
         _debug_shape.global_position = pt
 
-    if body != null:
+    if body != null && is_instance_valid(body) && body.is_inside_tree():
         var projection: float = (pt - body.global_position).dot(up_global)
         if projection <= ignore_step_height && projection >= -ignore_step_height || projection > step_height_max || projection < -step_down_max:
             if _debug_shape != null:
@@ -129,7 +129,7 @@ func can_step(data: Dictionary[StepData, Vector3] = {}) -> bool:
 
             return false
 
-    if _debug_shape != null:
+    if _debug_shape != null && is_instance_valid(_debug_shape) && _debug_shape.is_inside_tree():
         var mat: StandardMaterial3D = _debug_shape.get_active_material(0)
         mat.albedo_color = Color.WEB_GREEN
         _showing_debug_shape_status = true
