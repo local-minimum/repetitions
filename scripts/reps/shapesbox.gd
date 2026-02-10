@@ -54,3 +54,7 @@ func _inc_deposited_keys(key: ToolKey.KeyVariant) -> void:
     ) != OK:
         await get_tree().create_timer(_cylinder_rotation_duration).timeout
         __SignalBus.on_deposited_took_key.emit(_deposited_keys, key)
+
+
+func _on_interaction_body_execute_interaction() -> void:
+    print_debug("Do shit with the box object")

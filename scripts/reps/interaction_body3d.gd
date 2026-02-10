@@ -1,6 +1,8 @@
-@abstract
 extends StaticBody3D
 class_name InteractionBody3D
+
+## Emitted when a valid interaction happens
+signal execute_interaction
 
 @export var interactable: bool = true:
     set(value):
@@ -109,6 +111,7 @@ func _handle_input_event(_cam: Node, event: InputEvent, _event_position: Vector3
     if interactable && _is_interaction(event) && valid_player_position():
         get_viewport().set_input_as_handled()
         _execute_interaction()
+        execute_interaction.emit()
 
 func _update_pointer() -> void:
     if PhysicsGridPlayerController.last_connected_player_cinematic:
@@ -123,4 +126,6 @@ func _update_pointer() -> void:
             _valid = false
             InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
 
-@abstract func _execute_interaction() -> void
+## Implement this function to have a direct effect, or use the signal with the same name
+func _execute_interaction() -> void:
+    pass

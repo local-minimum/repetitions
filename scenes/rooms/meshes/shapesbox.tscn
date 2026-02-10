@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://doeo8ac0nh3yn"]
+[gd_scene load_steps=9 format=3 uid="uid://doeo8ac0nh3yn"]
 
 [ext_resource type="PackedScene" uid="uid://e38ols1galif" path="res://scenes/rooms/meshes/props/shapesbox.blend" id="1_7rgud"]
 [ext_resource type="Script" uid="uid://cpg7gwlkjehoc" path="res://scripts/reps/shapesbox.gd" id="2_xbwlp"]
 [ext_resource type="PackedScene" uid="uid://d4c40ocodslaq" path="res://scenes/loot/floppy.tscn" id="3_irpiq"]
+[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="4_5ffa1"]
 
 [sub_resource type="Animation" id="Animation_irpiq"]
 resource_name = "Deposit Floppy"
@@ -88,6 +89,9 @@ _data = {
 &"RESET": SubResource("Animation_5ffa1")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_xe875"]
+size = Vector3(0.4222412, 0.15893555, 0.16314697)
+
 [node name="shapesbox" node_paths=PackedStringArray("_cylinder", "_anim") instance=ExtResource("1_7rgud")]
 script = ExtResource("2_xbwlp")
 _cylinder = NodePath("Counting Cylinder")
@@ -110,3 +114,13 @@ _pickup_distance_sq = 0.0
 libraries = {
 &"": SubResource("AnimationLibrary_xe875")
 }
+
+[node name="InteractionBody" type="StaticBody3D" parent="." index="5" node_paths=PackedStringArray("_root")]
+script = ExtResource("4_5ffa1")
+_root = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionBody" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0037231445, 0.0018310547, -0.00039672852)
+shape = SubResource("BoxShape3D_xe875")
+
+[connection signal="execute_interaction" from="InteractionBody" to="." method="_on_interaction_body_execute_interaction"]
