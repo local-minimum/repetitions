@@ -108,7 +108,6 @@ transform = Transform3D(1, 0, 0, 0, 0.17741108, -0.9841368, 0, 0.9841368, 0.1774
 visible = false
 _variant = 0
 _type = 0
-_pickup_distance_sq = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 libraries = {

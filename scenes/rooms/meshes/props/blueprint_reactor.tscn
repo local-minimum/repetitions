@@ -1,17 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://duf1yh5vcnqvt"]
+[gd_scene load_steps=6 format=3 uid="uid://duf1yh5vcnqvt"]
 
 [ext_resource type="PackedScene" uid="uid://blyo6wvgh1yoa" path="res://scenes/rooms/meshes/props/blueprint.blend" id="1_0aubx"]
 [ext_resource type="Script" uid="uid://bnigd62eic41l" path="res://scripts/reps/tools/tool_blueprint.gd" id="2_hf3ub"]
 [ext_resource type="Texture2D" uid="uid://ccjuwixxqxs78" path="res://scenes/rooms/meshes/props/blueprint_reactor_texture.png" id="2_r0nqd"]
+[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="4_hf3ub"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hf3ub"]
 albedo_texture = ExtResource("2_r0nqd")
 
-[node name="blueprint" node_paths=PackedStringArray("_body") instance=ExtResource("1_0aubx")]
+[node name="blueprint" node_paths=PackedStringArray("_interaction_body") instance=ExtResource("1_0aubx")]
 script = ExtResource("2_hf3ub")
 _blueprint = 1
 _type = 3
-_body = NodePath("Blueprint /StaticBody3D")
+_interaction_body = NodePath("Blueprint /StaticBody3D")
 
 [node name="Blueprint " parent="." index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_hf3ub")
+
+[node name="StaticBody3D" parent="Blueprint " index="0" node_paths=PackedStringArray("_root")]
+script = ExtResource("4_hf3ub")
+_look_angle_dot_product_threshold = -1.0
+_root = NodePath("../..")
+
+[connection signal="execute_interaction" from="Blueprint /StaticBody3D" to="." method="_on_static_body_3d_execute_interaction"]

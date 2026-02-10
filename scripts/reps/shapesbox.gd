@@ -2,8 +2,9 @@ extends Node3D
 class_name ShapesBox
 
 @export var _cylinder: Node3D
-@export var _cylinder_rotation_axis: Vector3 = Vector3.LEFT
+@export var _cylinder_rotation_axis: Vector3 = Vector3.RIGHT
 @export var _cylinder_start_rotation_degrees: float = -270.0
+@export var _cylinder_rotation_per_key: float = -45.0
 @export var _cylinder_rotation_duration: float = 0.5
 
 @export var _anim: AnimationPlayer
@@ -18,10 +19,11 @@ func _ready() -> void:
 var _cylinder_target_rotation: Vector3:
     get():
         return _cylinder_rotation_axis * (
-            _cylinder_start_rotation_degrees + _deposited_keys * 45.00
+            _cylinder_start_rotation_degrees + _deposited_keys * _cylinder_rotation_per_key
         )
 
 func _sync_cylinder_rotation() -> void:
+    print_debug("Rotate to %s because of %s keys" % [_cylinder_target_rotation, _deposited_keys])
     _cylinder.rotation_degrees = _cylinder_target_rotation
 
 func deposit_key(key: ToolKey.KeyVariant) -> void:
