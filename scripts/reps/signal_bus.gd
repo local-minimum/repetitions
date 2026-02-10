@@ -20,6 +20,7 @@ signal on_elevation_plan_sealed(elevation: int)
 signal on_request_rest(bed: Node3D, coords: Vector3i)
 
 signal on_pickup_tool_key(key: ToolKey.KeyVariant)
+signal on_deposited_took_key(total_deposited: int, key: ToolKey.KeyVariant)
 signal on_pickup_tool_blueprint(blueprint: ToolBlueprint.Blueprint)
 signal on_pickup_tool(tool: Tool.ToolType)
 signal on_drop_tool(tool: Tool.ToolType)

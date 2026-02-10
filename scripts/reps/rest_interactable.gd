@@ -96,7 +96,7 @@ func _handle_input_event(_cam: Node, event: InputEvent, _event_position: Vector3
             InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
         return
 
-    if  _is_interaction(event):
+    if  _is_interaction(event) && valid_player_position():
         get_viewport().set_input_as_handled()
         _execute_interaction()
 

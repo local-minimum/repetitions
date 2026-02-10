@@ -1,0 +1,112 @@
+[gd_scene load_steps=7 format=3 uid="uid://doeo8ac0nh3yn"]
+
+[ext_resource type="PackedScene" uid="uid://e38ols1galif" path="res://scenes/rooms/meshes/props/shapesbox.blend" id="1_7rgud"]
+[ext_resource type="Script" uid="uid://cpg7gwlkjehoc" path="res://scripts/reps/shapesbox.gd" id="2_xbwlp"]
+[ext_resource type="PackedScene" uid="uid://d4c40ocodslaq" path="res://scenes/loot/floppy.tscn" id="3_irpiq"]
+
+[sub_resource type="Animation" id="Animation_irpiq"]
+resource_name = "Deposit Floppy"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("floppy:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("floppy:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5017776, 0.8013236, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.14003038, 0.26833192, -0.10017644), Vector3(-0.14003038, 0.12328608, -0.06899907), Vector3(-0.14003038, 0.07427174, -0.06290293), Vector3(-0.14003038, 0.011875965, -0.06290293)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("floppy:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5017776, 0.8013236),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1.3924412, 0, 0), Vector3(1.4470351, 0, 0), Vector3(1.5707964, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5ffa1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("floppy:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("floppy:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.14003038, 0.26833192, -0.10017644)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("floppy:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.3924412, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xe875"]
+_data = {
+&"Deposit Floppy": SubResource("Animation_irpiq"),
+&"RESET": SubResource("Animation_5ffa1")
+}
+
+[node name="shapesbox" node_paths=PackedStringArray("_cylinder", "_anim") instance=ExtResource("1_7rgud")]
+script = ExtResource("2_xbwlp")
+_cylinder = NodePath("Counting Cylinder")
+_anim = NodePath("AnimationPlayer")
+_key_2_anim = Dictionary[int, String]({
+1: "Deposit Floppy"
+})
+
+[node name="Counting Cylinder" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, -1, 0, 1, 1.1924881e-08, 0.1735231, 0.04422575, 0)
+
+[node name="floppy" parent="." index="3" instance=ExtResource("3_irpiq")]
+transform = Transform3D(1, 0, 0, 0, 0.17741108, -0.9841368, 0, 0.9841368, 0.17741108, -0.14003038, 0.26833192, -0.10017644)
+visible = false
+_variant = 0
+_type = 0
+_pickup_distance_sq = 0.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+libraries = {
+&"": SubResource("AnimationLibrary_xe875")
+}
