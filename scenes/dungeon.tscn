@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://ck4qilcv3pmw3"]
+[gd_scene load_steps=25 format=3 uid="uid://ck4qilcv3pmw3"]
 
 [ext_resource type="Script" uid="uid://crh0uqgb4ags6" path="res://scripts/reps/dungeon_planner_ui.gd" id="1_c4wp1"]
 [ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_fpimf"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://cidrqsh5h71bi" path="res://scripts/reps/ui_keys_container.gd" id="10_ea5hl"]
 [ext_resource type="Script" uid="uid://1a438hwonqsq" path="res://addons/minimum_convenience/scripts/crosshair/adaptive_crosshair_config.gd" id="11_7wjui"]
 [ext_resource type="Script" uid="uid://613q6o0xpnom" path="res://addons/minimum_convenience/scripts/crosshair/dot_crosshair_config.gd" id="12_7a5bf"]
+[ext_resource type="Script" uid="uid://b1copejyl8ot1" path="res://scripts/reps/complete_slice_dialog.gd" id="12_aumn5"]
 [ext_resource type="Script" uid="uid://cq13k5jqrlqw5" path="res://addons/minimum_convenience/scripts/crosshair/circ_lines_crosshair_config.gd" id="13_3afjq"]
 [ext_resource type="Script" uid="uid://cufotv8ogf1gx" path="res://addons/minimum_convenience/scripts/crosshair/combined_crosshair_config.gd" id="14_6nb7m"]
 
@@ -240,6 +241,36 @@ mouse_filter = 0
 texture = ExtResource("10_1o5ds")
 expand_mode = 3
 stretch_mode = 5
+
+[node name="Complete Slice Dialog" type="PanelContainer" parent="Exploration UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("12_aumn5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Exploration UI/Complete Slice Dialog"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Exploration UI/Complete Slice Dialog/VBoxContainer"]
+layout_mode = 2
+text = "Congrats!
+You solved one puzzle.
+That's all there is for now."
+horizontal_alignment = 1
+
+[node name="OK" type="Button" parent="Exploration UI/Complete Slice Dialog/VBoxContainer"]
+layout_mode = 2
+text = "UI_ACCEPT"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("8_6nb7m")

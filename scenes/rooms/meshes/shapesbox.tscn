@@ -114,12 +114,12 @@ libraries = {
 &"": SubResource("AnimationLibrary_xe875")
 }
 
-[node name="InteractionBody" type="StaticBody3D" parent="." index="5" node_paths=PackedStringArray("_root")]
+[node name="Shapes Box Body" type="StaticBody3D" parent="." index="5" node_paths=PackedStringArray("_root")]
 script = ExtResource("4_5ffa1")
 _root = NodePath("..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionBody" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Shapes Box Body" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0037231445, 0.0018310547, -0.00039672852)
 shape = SubResource("BoxShape3D_xe875")
 
-[connection signal="execute_interaction" from="InteractionBody" to="." method="_on_interaction_body_execute_interaction"]
+[connection signal="execute_interaction" from="Shapes Box Body" to="." method="_on_interaction_body_execute_interaction"]

@@ -10,9 +10,15 @@ signal execute_interaction
             _hovered = false
         interactable = value
 
+    get():
+        if !_readied:
+            return false
+        return interactable
+
 @export var _interact_max_sq_dist: float = 4.0
 @export_range(-1.0, 1.0, 0.05) var _look_angle_dot_product_threshold: float = 0.0
 @export var _root: Node3D
+@export var _interaction_delay_after_spawn: float = 2.0
 
 var coordinates: Vector3i:
     get():
@@ -26,6 +32,8 @@ var coordinates: Vector3i:
 
         return builder.get_closest_coordinates(_root.global_position)
 
+var _readied: bool = false
+
 func _enter_tree() -> void:
     if !mouse_entered.is_connected(_handle_mouse_entered) && mouse_entered.connect(_handle_mouse_entered) != OK:
         push_error("Failed to connect mouse entered")
@@ -35,6 +43,13 @@ func _enter_tree() -> void:
         push_error("Failed to connect input event")
 
     _hovered = false
+
+    if _interaction_delay_after_spawn > 0:
+        await get_tree().create_timer(_interaction_delay_after_spawn).timeout
+    _readied = true
+
+func _exit_tree() -> void:
+    InputCursorHelper.remove_node(self)
 
 func valid_player_position() -> bool:
     var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
@@ -72,6 +87,7 @@ var _hovered: bool:
             set_physics_process(true)
         else:
             set_physics_process(false)
+            InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
         _hovered = value
 
 func _handle_mouse_entered() -> void:
@@ -86,11 +102,12 @@ func _handle_mouse_entered() -> void:
         _valid = false
 
 func _physics_process(_delta: float) -> void:
-    _update_pointer()
+    if interactable:
+        _update_pointer()
 
 func _handle_mouse_exited() -> void:
     _hovered = false
-    InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
+
 
 func _is_interaction(event: InputEvent) -> bool:
     if event.is_action_pressed(&"crawl_search"):

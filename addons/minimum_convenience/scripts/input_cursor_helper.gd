@@ -9,13 +9,16 @@ static var _dragged: Array[Node]
 static func reset() -> void:
     for node: Node in _hovered:
         if is_instance_valid(node):
-            remove_node(node)
+            remove_node(node, false)
     for node: Node in _dragged:
         if is_instance_valid(node):
-            remove_node(node)
+            remove_node(node, false)
     for node: Node in _forbidden:
         if is_instance_valid(node):
-            remove_node(node)
+            remove_node(node, false)
+
+    Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+    __SignalBus.on_captured_cursor_change.emit(Input.CURSOR_ARROW)
 
 static func add_state(node: Node, state: State) -> void:
     match state:
@@ -32,13 +35,13 @@ static func add_state(node: Node, state: State) -> void:
     _sync_cursor(node)
 
 ## Removes all states for node
-static func remove_node(node: Node) -> void:
+static func remove_node(node: Node, emit: bool = true) -> void:
     _hovered.erase(node)
     _dragged.erase(node)
     _forbidden.erase(node)
-    _sync_cursor(node)
+    _sync_cursor(node, emit)
 
-static func remove_state(node: Node, state: State) -> void:
+static func remove_state(node: Node, state: State, emit: bool = true) -> void:
     match state:
         State.HOVER:
             _hovered.erase(node)
@@ -47,30 +50,34 @@ static func remove_state(node: Node, state: State) -> void:
         State.FORBIDDEN:
             _forbidden.erase(node)
 
-    _sync_cursor(node)
+    _sync_cursor(node, emit)
 
 
-static func _sync_cursor(node: Node) -> void:
+static func _sync_cursor(node: Node, emit: bool = true) -> void:
+    var shape: Input.CursorShape = Input.CURSOR_ARROW
+
     if !_forbidden.is_empty():
-        # print_debug("[Input Cursor Helper] -> Forbidden")
+        # print_debug("[Input Cursor Helper] -> Forbidden by %s" % [_forbidden])
         _sync_node_cursor(node, Control.CURSOR_FORBIDDEN)
-        Input.set_default_cursor_shape(Input.CURSOR_FORBIDDEN)
-        __SignalBus.on_captured_cursor_change.emit(Input.CURSOR_FORBIDDEN)
+        shape = Input.CURSOR_FORBIDDEN
+
     elif !_dragged.is_empty():
-        # print_debug("[Input Cursor Helper] -> Drag")
+        # print_debug("[Input Cursor Helper] -> Drag by %s" % [_dragged])
         _sync_node_cursor(node, Control.CURSOR_DRAG)
-        Input.set_default_cursor_shape(Input.CURSOR_DRAG)
-        __SignalBus.on_captured_cursor_change.emit(Input.CURSOR_DRAG)
+        shape = Input.CURSOR_DRAG
+
     elif !_hovered.is_empty():
-        # print_debug("[Input Cursor Helper] -> Hover")
+        # print_debug("[Input Cursor Helper] -> Hover by %s" % [_hovered])
         _sync_node_cursor(node, Control.CURSOR_POINTING_HAND)
-        Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
-        __SignalBus.on_captured_cursor_change.emit(Input.CURSOR_POINTING_HAND)
+        shape = Input.CURSOR_POINTING_HAND
+
     else:
         # print_debug("[Input Cursor Helper] -> Default")
         _sync_node_cursor(node, Control.CURSOR_ARROW)
-        Input.set_default_cursor_shape(Input.CURSOR_ARROW)
-        __SignalBus.on_captured_cursor_change.emit(Input.CURSOR_ARROW)
+
+    if emit:
+        Input.set_default_cursor_shape(shape)
+        __SignalBus.on_captured_cursor_change.emit(shape)
 
 static func _sync_node_cursor(node: Node, shape: Control.CursorShape) -> void:
     if node is Control:
