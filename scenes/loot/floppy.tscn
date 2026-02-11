@@ -51,6 +51,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_bpuxj")
 surface_material_override/1 = SubResource("StandardMaterial3D_ljhcl")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Floppy" index="4" node_paths=PackedStringArray("_root")]
+visible = false
 script = ExtResource("4_lf0gu")
 _look_angle_dot_product_threshold = -1.0
 _root = NodePath("../..")

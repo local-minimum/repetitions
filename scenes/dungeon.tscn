@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ck4qilcv3pmw3"]
+[gd_scene load_steps=24 format=3 uid="uid://ck4qilcv3pmw3"]
 
 [ext_resource type="Script" uid="uid://crh0uqgb4ags6" path="res://scripts/reps/dungeon_planner_ui.gd" id="1_c4wp1"]
 [ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_fpimf"]
@@ -12,7 +12,9 @@
 [ext_resource type="Environment" uid="uid://dyvjkwni31khi" path="res://scenes/dungeon_environment.tres" id="8_6nb7m"]
 [ext_resource type="Script" uid="uid://c6efamqj751g3" path="res://scripts/reps/sleep_in_bed_dialog.gd" id="8_hh3g7"]
 [ext_resource type="Script" uid="uid://dfe7akjq2pom" path="res://scripts/reps/pause_menu.gd" id="9_rfuge"]
+[ext_resource type="Texture2D" uid="uid://ctd8ptuyx4i1e" path="res://textures/floppy.png" id="10_1o5ds"]
 [ext_resource type="Script" uid="uid://bu7vo1xyipwpf" path="res://addons/minimum_convenience/scripts/crosshair/adaptive_crosshair.gd" id="10_5hkx1"]
+[ext_resource type="Script" uid="uid://cidrqsh5h71bi" path="res://scripts/reps/ui_keys_container.gd" id="10_ea5hl"]
 [ext_resource type="Script" uid="uid://1a438hwonqsq" path="res://addons/minimum_convenience/scripts/crosshair/adaptive_crosshair_config.gd" id="11_7wjui"]
 [ext_resource type="Script" uid="uid://613q6o0xpnom" path="res://addons/minimum_convenience/scripts/crosshair/dot_crosshair_config.gd" id="12_7a5bf"]
 [ext_resource type="Script" uid="uid://cq13k5jqrlqw5" path="res://addons/minimum_convenience/scripts/crosshair/circ_lines_crosshair_config.gd" id="13_3afjq"]
@@ -218,6 +220,26 @@ text = "UI_NEXT_DAY"
 [node name="Quit" type="Button" parent="Exploration UI/Pause Menu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "UI_QUIT"
+
+[node name="UI Keys Container" type="HBoxContainer" parent="Exploration UI" node_paths=PackedStringArray("floppy")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -70.0
+offset_right = 70.0
+offset_bottom = -10.0
+grow_vertical = 0
+mouse_filter = 2
+script = ExtResource("10_ea5hl")
+floppy = NodePath("Floppy Key")
+
+[node name="Floppy Key" type="TextureRect" parent="Exploration UI/UI Keys Container"]
+layout_mode = 2
+mouse_filter = 0
+texture = ExtResource("10_1o5ds")
+expand_mode = 3
+stretch_mode = 5
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("8_6nb7m")

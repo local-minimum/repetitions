@@ -8,6 +8,8 @@ func _enter_tree() -> void:
         push_error("Failed to connect pickup tool blueprint")
     if __SignalBus.on_pickup_tool_key.connect(_handle_pickup_key) != OK:
         push_error("Failed to connect pickup tool key")
+    if __SignalBus.on_deposited_tool_key.connect(_handle_tool_key_deposited) != OK:
+        push_error("Failed to connect deposited tool key")
     if __SignalBus.on_request_rest.connect(_handle_request_rest) != OK:
         push_error("Failed to connect request rest")
     if __SignalBus.on_spawn_room_placed.connect(_handle_spawn_room_placed) != OK:
@@ -15,8 +17,10 @@ func _enter_tree() -> void:
     if __SignalBus.on_toggle_captured_cursor.connect(_handle_toggle_captured_cursor) != OK:
         push_error("Failed to connect toggle captured cursor")
 
+
 var added_blueprints: Array[ToolBlueprint.Blueprint]
-var collected_keys: Array[ToolKey.KeyVariant]
+var carried_keys: Array[ToolKey.KeyVariant]
+var deposited_keys: Array[ToolKey.KeyVariant]
 
 var player_spawn_coords: Vector3i = Vector3i(22, 0, 22)
 var room_to_player_coords_offset: Vector3i:
@@ -55,8 +59,12 @@ func _handle_pickup_tool_blueprint(blueprint: ToolBlueprint.Blueprint) -> void:
         added_blueprints.append(blueprint)
 
 func _handle_pickup_key(key: ToolKey.KeyVariant) -> void:
-    if !collected_keys.has(key) && key != ToolKey.KeyVariant.NONE:
-        collected_keys.append(key)
+    if !carried_keys.has(key) && key != ToolKey.KeyVariant.NONE:
+        carried_keys.append(key)
+
+func _handle_tool_key_deposited(_total: int, key: ToolKey.KeyVariant) -> void:
+    carried_keys.erase(key)
+    deposited_keys.append(key)
 
 func _handle_request_rest(bed: Node3D, coords: Vector3i) -> void:
     var room: Room3D = Room3D.find_room(bed)
@@ -82,12 +90,13 @@ func clear_captured_cursor_toggle() -> void:
 func _handle_toggle_captured_cursor(active: bool) -> void:
     if game_paused:
         return
-
     _captured_cursor = active
 
 func next_day() -> void:
-    __GlobalGameState.clear_captured_cursor_toggle()
-    __GlobalGameState.game_paused = false
+    clear_captured_cursor_toggle()
+    game_paused = false
+    carried_keys.clear()
+
     InputCursorHelper.reset()
     if get_tree().reload_current_scene() != OK:
         push_error("Failed to reload level")

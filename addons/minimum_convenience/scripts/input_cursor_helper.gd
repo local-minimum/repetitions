@@ -8,11 +8,14 @@ static var _dragged: Array[Node]
 
 static func reset() -> void:
     for node: Node in _hovered:
-        remove_node(node)
+        if is_instance_valid(node):
+            remove_node(node)
     for node: Node in _dragged:
-        remove_node(node)
+        if is_instance_valid(node):
+            remove_node(node)
     for node: Node in _forbidden:
-        remove_node(node)
+        if is_instance_valid(node):
+            remove_node(node)
 
 static func add_state(node: Node, state: State) -> void:
     match state:

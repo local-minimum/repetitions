@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://duf1yh5vcnqvt"]
+[gd_scene load_steps=7 format=3 uid="uid://duf1yh5vcnqvt"]
 
 [ext_resource type="PackedScene" uid="uid://blyo6wvgh1yoa" path="res://scenes/rooms/meshes/props/blueprint.blend" id="1_0aubx"]
 [ext_resource type="Script" uid="uid://bnigd62eic41l" path="res://scripts/reps/tools/tool_blueprint.gd" id="2_hf3ub"]
@@ -7,6 +7,9 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hf3ub"]
 albedo_texture = ExtResource("2_r0nqd")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hf3ub"]
+size = Vector3(1, 0.02532959, 1)
 
 [node name="blueprint" node_paths=PackedStringArray("_interaction_body") instance=ExtResource("1_0aubx")]
 script = ExtResource("2_hf3ub")
@@ -21,5 +24,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_hf3ub")
 script = ExtResource("4_hf3ub")
 _look_angle_dot_product_threshold = -1.0
 _root = NodePath("../..")
+
+[node name="CollisionShape3D" parent="Blueprint /StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0047302246, 0)
+shape = SubResource("BoxShape3D_hf3ub")
 
 [connection signal="execute_interaction" from="Blueprint /StaticBody3D" to="." method="_on_static_body_3d_execute_interaction"]

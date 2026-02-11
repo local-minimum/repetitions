@@ -6,7 +6,7 @@ enum KeyVariant { NONE, FLOPPY_KEY}
 
 func _ready() -> void:
     if _type == ToolType.KEY && _variant != KeyVariant.NONE:
-        if __GlobalGameState.collected_keys.has(_variant):
+        if __GlobalGameState.deposited_keys.has(_variant):
             queue_free()
 
 func _do_pickup() -> void:
