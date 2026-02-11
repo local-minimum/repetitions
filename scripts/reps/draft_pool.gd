@@ -27,7 +27,7 @@ func _handle_pickup_tool_blueprint(blueprint: ToolBlueprint.Blueprint) -> void:
         if opt != null && !pool.has(opt):
             opt.drafted_count = 0
             pool.append(opt)
-            print_debug("Adding %s to %s due to picking up %s" % [opt, pool, ToolBlueprint.Blueprint.find_key(blueprint)])
+            #print_debug("Adding %s to %s due to picking up %s" % [opt, pool, ToolBlueprint.Blueprint.find_key(blueprint)])
         elif opt == null:
             push_error("There was a null room draft option in the addables for %s" % [ToolBlueprint.Blueprint.find_key(blueprint)])
         else:
@@ -108,7 +108,7 @@ func draft(count: int = 1) -> Array[DraftOption]:
             push_warning("Not enough options, returning everything %s" % [available])
         return available
 
-    print_debug("[Draft Pool] options: %s" % [available])
+    #print_debug("[Draft Pool] options: %s" % [available])
     var total_prob: float = 0.0
     var probs: Array[float] = []
     var idx: int = 0

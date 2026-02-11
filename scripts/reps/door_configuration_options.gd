@@ -49,8 +49,11 @@ func resolve_connected_doors(
     other_state = other_conf._get_random_to_door_state(own_room.blueprint.option)
 
     var own_state: DoorState = _resolve_own_to_door_state(other_state, other_room.blueprint.option)
+    print_debug("%s/%s: First check says they are %s and i'm %s" % [self, own_room, DoorState.find_key(other_state), DoorState.find_key(own_state)])
+
     if other_state == DoorState.UNDECIDED:
         other_state = other_conf._resolve_own_to_door_state(own_state, own_room.blueprint.option)
+        print_debug("%s/%s: They %s are undecided, so they picked %s at random" % [self, own_room, other_room, DoorState.find_key(other_state)])
 
     _implement_doorage(_state_to_door(own_state), true)
     other_conf._implement_doorage(other_conf._state_to_door(other_state ), true)
@@ -168,6 +171,7 @@ func resolve_panic(warn: bool = false) -> void:
     if door == null && warn:
         push_warning("There's no valid panic door option for %s" % [self])
 
+    print_debug("%s: Doing panic door resolution using %s from %s" % [self, door, DoorState.find_key(_panic_state)])
     _implement_doorage(door)
     _implement_special(_special_to_node(_panic_special))
     finalized = true
