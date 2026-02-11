@@ -313,3 +313,4 @@ metadata/_custom_type_script = "uid://bu7vo1xyipwpf"
 [connection signal="pressed" from="Exploration UI/Pause Menu/MarginContainer/VBoxContainer/Resume" to="Exploration UI/Pause Menu" method="_on_resume_pressed"]
 [connection signal="pressed" from="Exploration UI/Pause Menu/MarginContainer/VBoxContainer/Next Day" to="Exploration UI/Pause Menu" method="_on_next_day_pressed"]
 [connection signal="pressed" from="Exploration UI/Pause Menu/MarginContainer/VBoxContainer/Quit" to="Exploration UI/Pause Menu" method="_on_quit_pressed"]
+[connection signal="pressed" from="Exploration UI/Complete Slice Dialog/VBoxContainer/OK" to="Exploration UI/Complete Slice Dialog" method="_on_ok_pressed"]

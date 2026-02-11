@@ -10,3 +10,7 @@ func _ready() -> void:
 func _handle_deposit_key(total: int, _key: ToolKey.KeyVariant) -> void:
     if total > 0:
         show()
+
+
+func _on_ok_pressed() -> void:
+    hide()
