@@ -42,14 +42,18 @@ var camera: Camera3D:
 
 @export var _gridless_translation_speed: float = 5.0
 @export var _gridless_rotation_speed: float = 0.8
-@export var _gridless_friction: float = 0.5
-@export var _mouse_sensitivity_yaw: float = 1.0
-@export var _mouse_sensistivity_pitch: float = 1.0
+@export var _gridless_friction: float = 7.0
+@export var _mouse_sensitivity_yaw: float = 0.003
+@export var _mouse_sensistivity_pitch: float = 0.003
 @export var _gridless_camera_near: float = 0.05
 @export var _gridless_camera_fov: float = 70
 
-@export var _camera_transition_time: float = 0.2
+@export var _camera_to_gridless_time: float = 0.2
+@export var _camera_to_gridded_time: float = 1.5
 @export var _allow_vertical_movement: bool
+
+@export var _focus_default_distance: float = 0.75
+@export var _focus_fov: float = 60
 
 @export var _debug_shapes: Array[Node3D]
 @export var _show_debug_shapes: bool = false:
@@ -83,22 +87,22 @@ var gridless: bool:
                 _captured_pointer_eventer.active = true
                 if _cam_slide_tween && _cam_slide_tween.is_running():
                     _cam_slide_tween.kill()
-                _cam_slide_tween = create_tween()
+                _cam_slide_tween = create_tween().set_parallel()
                 @warning_ignore_start("return_value_discarded")
-                _cam_slide_tween.tween_property(_camera, "position", _gridless_cam_offset, _camera_transition_time)
-                _cam_slide_tween.tween_property(_camera, "near", _gridless_camera_near, _camera_transition_time)
-                _cam_slide_tween.tween_property(_camera, "fov", _gridless_camera_fov, _camera_transition_time)
+                _cam_slide_tween.tween_property(_camera, "position", _gridless_cam_offset, _camera_to_gridless_time)
+                _cam_slide_tween.tween_property(_camera, "near", _gridless_camera_near, _camera_to_gridless_time)
+                _cam_slide_tween.tween_property(_camera, "fov", _gridless_camera_fov, _camera_to_gridless_time)
                 @warning_ignore_restore("return_value_discarded")
             else:
                 _captured_pointer_eventer.active = false
                 if _cam_slide_tween && _cam_slide_tween.is_running():
                     _cam_slide_tween.kill()
-                _cam_slide_tween = create_tween()
+                _cam_slide_tween = create_tween().set_parallel()
                 @warning_ignore_start("return_value_discarded")
-                _cam_slide_tween.tween_property(_camera, "position", _gridded_cam_offset, _camera_transition_time)
-                _cam_slide_tween.tween_property(_camera, "near", _gridded_cam_near, _camera_transition_time)
-                _cam_slide_tween.tween_property(_camera, "fov", _gridded_cam_fov, _camera_transition_time)
-                _cam_slide_tween.tween_property(_camera, "rotation:x", 0, _camera_transition_time)
+                _cam_slide_tween.tween_property(_camera, "position", _gridded_cam_offset, _camera_to_gridded_time)
+                _cam_slide_tween.tween_property(_camera, "near", _gridded_cam_near, _camera_to_gridded_time)
+                _cam_slide_tween.tween_property(_camera, "fov", _gridded_cam_fov, _camera_to_gridded_time)
+                _cam_slide_tween.tween_property(_camera, "rotation:x", 0, _camera_to_gridded_time)
                 @warning_ignore_restore("return_value_discarded")
                 # Force alignment with grid.
                 # NOTE: move needs to happend before turn
@@ -189,6 +193,7 @@ func _release_movement(movement: Movement.MovementType) -> void:
         _translation_stack.erase(movement)
 
     _translation_pressed[movement] = false
+
 
 func _physics_process(delta: float) -> void:
     if cinematic:
@@ -395,6 +400,63 @@ func set_rotation_away_from_wall(force_update: bool = false) -> void:
         rotate_z(PI)
 
     # Were stuck in a 1x1 and no rotation will help
+
+var _focus_obj: Node3D
+
+func focus_on(
+    obj: Node3D,
+    distance: float = -1,
+    ease_duration: float = 0.2,
+    vertical_view_bias: float = 1.1,
+) -> void:
+    if obj == null:
+        return
+
+    _focus_obj = obj
+
+    distance = distance if distance > 0 else maxf(distance, _focus_default_distance)
+
+    if _cam_slide_tween != null && _cam_slide_tween.is_running():
+        _cam_slide_tween.kill()
+
+    var offset: Vector3 = (_camera.global_position - obj.global_position).normalized()
+    var up: Vector3 = offset.project(global_basis.y)
+    var lateral: Vector3 = offset - up
+
+    offset = (up.normalized() * vertical_view_bias + lateral.normalized()).normalized() * distance
+    var expected: Vector3 = obj.global_position + offset
+
+    var tw_rot_method: Callable = QuaternionUtils.create_tween_rotation_method(_camera)
+
+    _cam_slide_tween = create_tween().set_parallel()
+    @warning_ignore_start("return_value_discarded")
+    _cam_slide_tween.tween_property(_camera, "global_position", expected, ease_duration)
+    _cam_slide_tween.tween_property(_camera, "near", _gridless_camera_near, ease_duration)
+    _cam_slide_tween.tween_property(_camera, "fov", _focus_fov, ease_duration)
+    _cam_slide_tween.tween_method(tw_rot_method, _camera.global_basis.get_rotation_quaternion(), Basis.looking_at(-offset).get_rotation_quaternion(), ease_duration)
+    @warning_ignore_restore("return_value_discarded")
+
+
+func defocus_on(obj: Node3D, ease_duration: float = 0.2) -> void:
+    if _focus_obj != obj:
+        return
+
+    if _cam_slide_tween != null && _cam_slide_tween.is_running():
+        _cam_slide_tween.kill()
+
+    var expected_near: float = _gridless_camera_near if gridless else _gridded_cam_near
+    var expected_fov: float = _gridless_camera_fov if gridless else _gridded_cam_fov
+    var expected: Vector3 = _gridless_cam_offset if gridless else _gridded_cam_offset
+
+    _cam_slide_tween = create_tween().set_parallel()
+    @warning_ignore_start("return_value_discarded")
+    _cam_slide_tween.tween_property(_camera, "position", expected, ease_duration)
+    _cam_slide_tween.tween_property(_camera, "near", expected_near, ease_duration)
+    _cam_slide_tween.tween_property(_camera, "fov", expected_fov, ease_duration)
+    if !gridless:
+        var tw_rot_method: Callable = QuaternionUtils.create_tween_rotation_method(_camera, false)
+        _cam_slide_tween.tween_method(tw_rot_method, _camera.basis.get_rotation_quaternion(), Basis.IDENTITY.get_rotation_quaternion(), ease_duration)
+    @warning_ignore_restore("return_value_discarded")
 
 static func find_player_in_tree(body: Node3D) -> PhysicsGridPlayerController:
     while body != null:

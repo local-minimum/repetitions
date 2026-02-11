@@ -33,6 +33,7 @@ script = ExtResource("2_m36fk")
 _variant = 1
 _type = 4
 _interaction_body = NodePath("Floppy/StaticBody3D")
+_autofree = false
 
 [node name="Floppy" parent="." index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_p0sbx")

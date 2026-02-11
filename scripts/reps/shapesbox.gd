@@ -29,6 +29,8 @@ func _sync_cylinder_rotation() -> void:
 
 func deposit_key(key: ToolKey.KeyVariant) -> void:
     if _anim != null && _key_2_anim.has(key):
+        PhysicsGridPlayerController.last_connected_player.cinematic = true
+        PhysicsGridPlayerController.last_connected_player.focus_on(self)
         var clip: String = _key_2_anim[key]
         _anim.play(clip)
 
@@ -56,13 +58,25 @@ func _inc_deposited_keys(key: ToolKey.KeyVariant) -> void:
     if _cylinder_rotation_tween.finished.connect(
         func () -> void:
             __SignalBus.on_deposited_tool_key.emit(_deposited_keys, key)
+            await get_tree().create_timer(2).timeout
+            PhysicsGridPlayerController.last_connected_player.cinematic = false
+            PhysicsGridPlayerController.last_connected_player.defocus_on(self)
     ) != OK:
         await get_tree().create_timer(_cylinder_rotation_duration).timeout
         __SignalBus.on_deposited_tool_key.emit(_deposited_keys, key)
+        await get_tree().create_timer(3).timeout
+        PhysicsGridPlayerController.last_connected_player.cinematic = false
+        PhysicsGridPlayerController.last_connected_player.defocus_on(self)
+
 
 
 func _on_interaction_body_execute_interaction() -> void:
     if __GlobalGameState.carried_keys.is_empty():
-        print_debug("Do shit with the box object")
+        var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
+        player.cinematic = true
+        player.focus_on(self)
+        await get_tree().create_timer(2).timeout
+        player.defocus_on(self)
+        player.cinematic = false
     else:
         deposit_key(__GlobalGameState.carried_keys[0])

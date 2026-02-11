@@ -4,6 +4,7 @@ enum ToolType { NONE, PICKAX, TROPHY, BLUEPRINT, KEY }
 
 @export var _type: ToolType = ToolType.NONE
 @export var _interaction_body: InteractionBody3D
+@export var _autofree: bool = true
 
 func _enter_tree() -> void:
     if _type == ToolType.NONE:
@@ -12,7 +13,8 @@ func _enter_tree() -> void:
 func _on_static_body_3d_execute_interaction() -> void:
     __SignalBus.on_pickup_tool.emit(_type)
     _do_pickup()
-    queue_free()
+    if _autofree:
+        queue_free()
 
 func _do_pickup() -> void:
     pass
