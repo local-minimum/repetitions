@@ -423,7 +423,11 @@ func focus_on(
     var up: Vector3 = offset.project(global_basis.y)
     var lateral: Vector3 = offset - up
 
-    offset = (up.normalized() * vertical_view_bias + lateral.normalized()).normalized() * distance
+    offset = (
+        up.normalized() * vertical_view_bias +
+        lateral.normalized()
+    ).normalized() * distance
+
     var expected: Vector3 = obj.global_position + offset
 
     var tw_rot_method: Callable = QuaternionUtils.create_tween_rotation_method(_camera)

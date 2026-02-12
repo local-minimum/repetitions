@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dgdxbhstll5op" path="res://scripts/reps/rest_interactable.gd" id="2_o8ej4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hm2v1"]
-size = Vector3(0.7807617, 0.34765625, 2.0482788)
+size = Vector3(0.73327637, 0.18261719, 2.0208588)
 
 [node name="cellbed" instance=ExtResource("1_hm2v1")]
 
@@ -31,5 +31,5 @@ _look_angle_dot_product_threshold = -0.7
 _root = NodePath("..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Rest Interactable" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0031738281, 0.059570313, 0.0030822754)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.001159668, -0.022949219, 0.0014419556)
 shape = SubResource("BoxShape3D_hm2v1")
