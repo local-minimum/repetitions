@@ -1,16 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://jq56lhg4qvqv"]
+[gd_scene load_steps=8 format=3 uid="uid://jq56lhg4qvqv"]
 
 [ext_resource type="PackedScene" uid="uid://cs6q2uls8rdst" path="res://scenes/rooms/meshes/props/letter_cube.blend" id="1_gjm8n"]
 [ext_resource type="Texture2D" uid="uid://6ay33u56gc4j" path="res://scenes/rooms/meshes/props/letter_cube_albedo.png" id="2_se8ma"]
+[ext_resource type="Texture2D" uid="uid://81d5o6bsuym4" path="res://scenes/rooms/meshes/props/letter_cube_occlusion.png" id="3_1dycl"]
 [ext_resource type="Texture2D" uid="uid://1e85bgj3doos" path="res://scenes/rooms/meshes/props/letter_cube_height.png" id="3_se8ma"]
+[ext_resource type="Texture2D" uid="uid://cb26nerlym0sv" path="res://scenes/rooms/meshes/props/letter_cube_normal.png" id="5_b6mcp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ojx4o"]
 albedo_color = Color(0.689264, 0.6375575, 0.52391964, 1)
 albedo_texture = ExtResource("2_se8ma")
 metallic_specular = 0.16
 roughness = 0.51
-normal_texture = ExtResource("3_se8ma")
-heightmap_enabled = true
+normal_enabled = true
+normal_texture = ExtResource("5_b6mcp")
+ao_enabled = true
+ao_light_affect = 0.11
+ao_texture = ExtResource("3_1dycl")
 heightmap_texture = ExtResource("3_se8ma")
 heightmap_flip_texture = true
 
@@ -27,4 +32,3 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ojx4o")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
 shape = SubResource("BoxShape3D_gjm8n")
-debug_fill = false
