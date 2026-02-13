@@ -4,3 +4,4 @@
 ambient_light_color = Color(0.2440432, 0.16552716, 0.1601688, 1)
 ssao_enabled = true
 ssil_enabled = true
+glow_enabled = true

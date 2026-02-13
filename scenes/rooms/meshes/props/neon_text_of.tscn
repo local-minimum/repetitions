@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bspov4aqnnmii"]
+
+[ext_resource type="PackedScene" uid="uid://djyulah205m6n" path="res://scenes/rooms/meshes/props/neon_text_of.blend" id="1_ajm4u"]
+[ext_resource type="Material" uid="uid://btcib6ejqhifc" path="res://scenes/rooms/meshes/props/neon_pink.material" id="2_3chjn"]
+
+[node name="neon_text_of" instance=ExtResource("1_ajm4u")]
+
+[node name="Plane" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_3chjn")

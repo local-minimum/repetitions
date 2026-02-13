@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqpyr1rh42my1"]
+
+[ext_resource type="PackedScene" uid="uid://bmla5s2wijq8m" path="res://scenes/rooms/meshes/props/neon_text_proof.blend" id="1_0lq5r"]
+[ext_resource type="Material" uid="uid://btcib6ejqhifc" path="res://scenes/rooms/meshes/props/neon_pink.material" id="2_lob15"]
+
+[node name="neon_text_proof" instance=ExtResource("1_0lq5r")]
+
+[node name="Text" parent="." index="0"]
+surface_material_override/0 = ExtResource("2_lob15")

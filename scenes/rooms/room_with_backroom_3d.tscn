@@ -1,9 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://chkw5q3yhwuml"]
+[gd_scene load_steps=17 format=3 uid="uid://chkw5q3yhwuml"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_h2b07"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_wancy"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_uxsx7"]
-[ext_resource type="Texture2D" uid="uid://j3acsu13ngc5" path="res://textures/decals/proofofwork.png" id="3_o1vui"]
 [ext_resource type="PackedScene" uid="uid://e4340jfyjvua" path="res://scenes/rooms/meshes/roomwall_twosided.blend" id="5_41tem"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="5_wancy"]
 [ext_resource type="PackedScene" uid="uid://b8p8rq2akjh17" path="res://scenes/rooms/meshes/roomwall_twosided_window.blend" id="6_wancy"]
@@ -13,6 +12,10 @@
 [ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="9_47r7j"]
 [ext_resource type="PackedScene" uid="uid://88tejawrtsl3" path="res://scenes/rooms/meshes/props/storagebox.tscn" id="11_hnk0c"]
 [ext_resource type="PackedScene" uid="uid://d4c40ocodslaq" path="res://scenes/loot/floppy.tscn" id="12_o1vui"]
+[ext_resource type="PackedScene" uid="uid://bqpyr1rh42my1" path="res://scenes/rooms/meshes/props/neon_text_proof.tscn" id="13_ubbn1"]
+[ext_resource type="PackedScene" uid="uid://bspov4aqnnmii" path="res://scenes/rooms/meshes/props/neon_text_of.tscn" id="14_js4ot"]
+[ext_resource type="PackedScene" uid="uid://chu1gu8rxkp8x" path="res://scenes/rooms/meshes/props/neon_arrow.tscn" id="14_mhrwk"]
+[ext_resource type="PackedScene" uid="uid://cdnaup6tm4ub2" path="res://scenes/rooms/meshes/props/neon_text_work.tscn" id="15_mhrwk"]
 
 [node name="RoomCorner3d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_wancy")
@@ -46,13 +49,25 @@ transform = Transform3D(-1, 0, 1.3909066e-08, 0, 1, 0, -1.3909066e-08, 0, -1, 4,
 [node name="roomwall11" parent="Geometry" instance=ExtResource("1_h2b07")]
 transform = Transform3D(-1, 0, 1.3909066e-08, 0, 1, 0, -1.3909066e-08, 0, -1, 4, 0, -2)
 
-[node name="Decal" type="Decal" parent="Geometry/roomwall11"]
-transform = Transform3D(-5.7576216e-08, 1, 1.1084751e-09, -0.07969437, -3.4835508e-09, -0.9968193, -0.9968193, -5.7481422e-08, 0.07969437, 0.11392212, 1.3602561, -1.0202672)
-size = Vector3(1.5, 0.108, 1.5)
-texture_albedo = ExtResource("3_o1vui")
-texture_emission = ExtResource("3_o1vui")
-emission_energy = 0.28
-modulate = Color(1, 0.65, 0.65, 1)
+[node name="neon_text_proof2" parent="Geometry/roomwall11" instance=ExtResource("13_ubbn1")]
+transform = Transform3D(8.940697e-09, 0, 0.3, 0, 0.3, 0, -0.3, 0, 8.940697e-09, 0.18814135, 1.6870676, -1.0834932)
+
+[node name="neon_arrow2" parent="Geometry/roomwall11" instance=ExtResource("14_mhrwk")]
+transform = Transform3D(8.940695e-09, 0, 0.29999995, 0, 0.29999995, 0, -0.29999995, 0, 8.940695e-09, 0.1733756, 1.0600369, -1.1258256)
+
+[node name="neon_text_of2" parent="Geometry/roomwall11" instance=ExtResource("14_js4ot")]
+transform = Transform3D(8.940697e-09, 0, 0.3, 0, 0.3, 0, -0.3, 0, 8.940697e-09, 0.1733756, 1.3854868, -0.68244123)
+
+[node name="neon_text_work" parent="Geometry/roomwall11" instance=ExtResource("15_mhrwk")]
+transform = Transform3D(9.01322e-09, 7.745916e-10, 0.29999998, 0.055689692, 0.29478577, -2.4342737e-09, -0.29478577, 0.055689692, 8.7127745e-09, 0.18138313, 1.4354336, -1.3138528)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Geometry/roomwall11"]
+transform = Transform3D(-1, 0, -1.3909066e-08, 0, 1, 0, 1.3909066e-08, 0, -1, 0.20979619, 1.4409114, -1.0752273)
+light_color = Color(0.95830923, 0.5986964, 0.8451308, 1)
+light_energy = 0.01
+light_size = 7.0
+omni_range = 0.95002675
+omni_attenuation = 1.25
 
 [node name="roomwall12" parent="Geometry" instance=ExtResource("1_h2b07")]
 transform = Transform3D(-1, 0, 1.3909066e-08, 0, 1, 0, -1.3909066e-08, 0, -1, 4, 0, 0)
