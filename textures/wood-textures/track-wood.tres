@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" load_steps=6 format=3 uid="uid://c07yxcnw5ahtq"]
+
+[ext_resource type="Texture2D" uid="uid://cen1xvc3vr48n" path="res://textures/wood-textures/wood_baseColor.png" id="1_3x1l8"]
+[ext_resource type="Texture2D" uid="uid://85skn8d7sl68" path="res://textures/wood-textures/wood_occlusion.png" id="2_5l5vt"]
+[ext_resource type="Texture2D" uid="uid://dpeysufppu21v" path="res://textures/wood-textures/wood_metallic.png" id="3_8yp6y"]
+[ext_resource type="Texture2D" uid="uid://vjaajalrjhrt" path="res://textures/wood-textures/wood_normal.png" id="4_xx61t"]
+[ext_resource type="Texture2D" uid="uid://b2tflqec55bxf" path="res://textures/wood-textures/wood_roughness.png" id="5_67e57"]
+
+[resource]
+albedo_texture = ExtResource("1_3x1l8")
+metallic = 1.0
+metallic_texture = ExtResource("3_8yp6y")
+roughness_texture = ExtResource("5_67e57")
+normal_enabled = true
+normal_texture = ExtResource("4_xx61t")
+ao_enabled = true
+ao_texture = ExtResource("2_5l5vt")

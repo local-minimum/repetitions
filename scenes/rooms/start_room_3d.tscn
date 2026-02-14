@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cjduvtbggfby1"]
+[gd_scene load_steps=16 format=3 uid="uid://cjduvtbggfby1"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_mbk1p"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_rcr32"]
@@ -10,6 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://doeo8ac0nh3yn" path="res://scenes/rooms/meshes/shapesbox.tscn" id="9_3aeuo"]
 [ext_resource type="PackedScene" uid="uid://byswj0ob7y5no" path="res://scenes/rooms/parts/door_config_block_to_dirt.tscn" id="9_mgtto"]
 [ext_resource type="PackedScene" uid="uid://jq56lhg4qvqv" path="res://scenes/rooms/meshes/props/letter_cube_b.tscn" id="10_3aeuo"]
+[ext_resource type="Material" uid="uid://c07yxcnw5ahtq" path="res://textures/wood-textures/track-wood.tres" id="11_4bwta"]
+[ext_resource type="ArrayMesh" uid="uid://b0bosmlyilg72" path="res://scenes/rooms/meshes/props/train_track_cross.obj" id="11_cesw3"]
+[ext_resource type="ArrayMesh" uid="uid://d2jl4wr7f23pl" path="res://scenes/rooms/meshes/props/train_track_straight.obj" id="12_ykiog"]
+[ext_resource type="ArrayMesh" uid="uid://oob66sql271m" path="res://scenes/rooms/meshes/props/train_track_turn_left.obj" id="13_4bwta"]
+[ext_resource type="ArrayMesh" uid="uid://cjoy3pfwroyr" path="res://scenes/rooms/meshes/props/train_track_turn_right.obj" id="15_qi0mj"]
 
 [node name="StartRoom3d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_rcr32")
@@ -293,3 +298,43 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -1.0
 
 [node name="letter_cube_b4" parent="." instance=ExtResource("10_3aeuo")]
 transform = Transform3D(1.1692389e-08, 0.26749068, -0.96356046, 1, -4.371139e-08, 0, -4.2118565e-08, -0.96356046, -0.26749068, -1.0778778, 1.2675447, -0.25386125)
+
+[node name="TrainTrackCross" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.6773639, 0, -0.73564804, 0, 1, 0, 0.73564804, 0, 0.6773639, -2.8851852, 0.051392175, 0.8802129)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("11_cesw3")
+
+[node name="TrainTrackStraight" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.15527944, 0, 0.9878707, 0, 1, 0, -0.9878707, 0, 0.15527944, -4.8904824, 0.05590988, -0.26534963)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("12_ykiog")
+
+[node name="TrainTrackStraight2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.13191043, 0, 0.9912617, 0, 1, 0, -0.9912617, 0, 0.13191043, -0.8159627, 0.05590976, 1.9258089)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("12_ykiog")
+
+[node name="TrainTrackTurnLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1964253, 0, 0.9805189, 0, 1, 0, -0.9805189, 0, 0.1964253, -3.798558, 0.06786899, 0.109514)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("13_4bwta")
+
+[node name="TrainTrackTurnLeft2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.9916802, 0, -0.12872638, 0, 1, 0, 0.12872638, 0, 0.9916802, -2.1535623, 0.067237735, -0.0594849)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("13_4bwta")
+
+[node name="TrainTrackTurnRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.11408752, 0, 0.99347067, 0, 1, 0, -0.99347067, 0, 0.11408752, -1.9739096, 0.06446788, 1.592153)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("15_qi0mj")
+
+[node name="TrainTrackTurnRight3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.99123853, 0, -0.1320835, 0, 1, 0, 0.1320835, 0, 0.99123853, -1.620293, 0.06446788, -1.3324436)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("15_qi0mj")
+
+[node name="TrainTrackTurnRight2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.57351923, 0, 0.819192, 0, 1, 0, -0.819192, 0, -0.57351923, 0.32398367, 0.07744239, 1.8689387)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("15_qi0mj")
