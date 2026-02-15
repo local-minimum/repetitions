@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cjduvtbggfby1"]
+[gd_scene load_steps=19 format=3 uid="uid://cjduvtbggfby1"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_mbk1p"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_rcr32"]
@@ -15,6 +15,9 @@
 [ext_resource type="ArrayMesh" uid="uid://d2jl4wr7f23pl" path="res://scenes/rooms/meshes/props/train_track_straight.obj" id="12_ykiog"]
 [ext_resource type="ArrayMesh" uid="uid://oob66sql271m" path="res://scenes/rooms/meshes/props/train_track_turn_left.obj" id="13_4bwta"]
 [ext_resource type="ArrayMesh" uid="uid://cjoy3pfwroyr" path="res://scenes/rooms/meshes/props/train_track_turn_right.obj" id="15_qi0mj"]
+[ext_resource type="ArrayMesh" uid="uid://wp0ll48ral2d" path="res://scenes/rooms/meshes/props/train_track_branch_right.obj" id="16_5kki3"]
+[ext_resource type="ArrayMesh" uid="uid://bu3rtrk45k8qd" path="res://scenes/rooms/meshes/props/train_track_turn_right_short.obj" id="17_1simb"]
+[ext_resource type="ArrayMesh" uid="uid://dxbrmfbvxsvvu" path="res://scenes/rooms/meshes/props/train_track_turn_left_short.obj" id="17_pkgjf"]
 
 [node name="StartRoom3d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_rcr32")
@@ -324,6 +327,11 @@ transform = Transform3D(0.9916802, 0, -0.12872638, 0, 1, 0, 0.12872638, 0, 0.991
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("13_4bwta")
 
+[node name="TrainTrackTurnLeft3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.99632454, 0, -0.085660465, 0, 1, 0, 0.085660465, 0, 0.99632454, 0.14000216, 0.067237735, -3.3931205)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("13_4bwta")
+
 [node name="TrainTrackTurnRight" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.11408752, 0, 0.99347067, 0, 1, 0, -0.99347067, 0, 0.11408752, -1.9739096, 0.06446788, 1.592153)
 material_override = ExtResource("11_4bwta")
@@ -334,7 +342,37 @@ transform = Transform3D(0.99123853, 0, -0.1320835, 0, 1, 0, 0.1320835, 0, 0.9912
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("15_qi0mj")
 
-[node name="TrainTrackTurnRight2" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.57351923, 0, 0.819192, 0, 1, 0, -0.819192, 0, -0.57351923, 0.32398367, 0.07744239, 1.8689387)
+[node name="TrainTrackTurnRight4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.07168905, 0, -0.997427, 0, 1, 0, 0.997427, 0, -0.07168905, 0.673093, 0.06446788, -2.1307855)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("15_qi0mj")
+
+[node name="TrainTrackTurnRight5" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.674238, 0, -0.7385141, 0, 1, 0, 0.7385141, 0, -0.674238, 1.6239763, 0.06446788, -1.2205062)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("15_qi0mj")
+
+[node name="TrainTrackTurnRight6" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.9642668, 0, 0.26493356, 0, 1, 0, -0.26493356, 0, -0.9642668, 1.4075053, 0.06446788, 1.1474746)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("15_qi0mj")
+
+[node name="TrainTrackTurnRight2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.5630357, 0, 0.82643235, 0, 1, 0, -0.82643235, 0, -0.5630357, 0.32381004, 0.07744239, 1.8772817)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("15_qi0mj")
+
+[node name="TrainTrackBranchRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.6424934, 0, -0.7662912, 0, 1, 0, 0.7662912, 0, 0.6424934, -0.5050858, 0.060717, -2.2826576)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("16_5kki3")
+
+[node name="TrainTrackTurnRightShort" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.92612755, 0, 0.37721065, 0, 1, 0, -0.37721065, 0, -0.92612755, 1.8774881, 0.0668345, -0.03697291)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("17_1simb")
+
+[node name="TrainTrackTurnLeftShort" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.4021875, 0, 0.91555744, 0, 1, 0, -0.91555744, 0, -0.4021875, -5.9702153, 0.066834204, -0.32380396)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("17_pkgjf")

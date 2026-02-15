@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bu3rtrk45k8qd"
+path="res://.godot/imported/train_track_turn_right_short.obj-416141cb68f81136cecec53c94c262b3.mesh"
+
+[deps]
+
+files=["res://.godot/imported/train_track_turn_right_short.obj-416141cb68f81136cecec53c94c262b3.mesh"]
+
+source_file="res://scenes/rooms/meshes/props/train_track_turn_right_short.obj"
+dest_files=["res://.godot/imported/train_track_turn_right_short.obj-416141cb68f81136cecec53c94c262b3.mesh", "res://.godot/imported/train_track_turn_right_short.obj-416141cb68f81136cecec53c94c262b3.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(0.5, 0.5, 0.5)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
