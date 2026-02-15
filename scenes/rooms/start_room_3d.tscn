@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cjduvtbggfby1"]
+[gd_scene load_steps=21 format=3 uid="uid://cjduvtbggfby1"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_mbk1p"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_rcr32"]
@@ -18,6 +18,8 @@
 [ext_resource type="ArrayMesh" uid="uid://wp0ll48ral2d" path="res://scenes/rooms/meshes/props/train_track_branch_right.obj" id="16_5kki3"]
 [ext_resource type="ArrayMesh" uid="uid://bu3rtrk45k8qd" path="res://scenes/rooms/meshes/props/train_track_turn_right_short.obj" id="17_1simb"]
 [ext_resource type="ArrayMesh" uid="uid://dxbrmfbvxsvvu" path="res://scenes/rooms/meshes/props/train_track_turn_left_short.obj" id="17_pkgjf"]
+[ext_resource type="ArrayMesh" uid="uid://0pyerm2wjf2s" path="res://scenes/rooms/meshes/props/train_track_ramp.obj" id="19_7l70u"]
+[ext_resource type="ArrayMesh" uid="uid://blfmsbpic0cui" path="res://scenes/rooms/meshes/props/train_track_stop.obj" id="20_4w84r"]
 
 [node name="StartRoom3d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_rcr32")
@@ -376,3 +378,13 @@ mesh = ExtResource("17_1simb")
 transform = Transform3D(-0.4021875, 0, 0.91555744, 0, 1, 0, -0.91555744, 0, -0.4021875, -5.9702153, 0.066834204, -0.32380396)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("17_pkgjf")
+
+[node name="TrainTrackRamp" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.6779288, 0, -0.7351276, 0, 1, 0, 0.7351276, 0, 0.6779288, -3.2960353, 0.046221, 1.2540787)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("19_7l70u")
+
+[node name="TrainTrackStop" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.9975176, 0, -0.07041807, 0, 1, 0, 0.07041807, 0, 0.9975176, 0.3811195, 0.062198, -4.1998167)
+material_override = ExtResource("11_4bwta")
+mesh = ExtResource("20_4w84r")

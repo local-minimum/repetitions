@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://0pyerm2wjf2s"
+path="res://.godot/imported/train_track_ramp.obj-5ab360e06fb5092959a545626cd23fef.mesh"
+
+[deps]
+
+files=["res://.godot/imported/train_track_ramp.obj-5ab360e06fb5092959a545626cd23fef.mesh"]
+
+source_file="res://scenes/rooms/meshes/props/train_track_ramp.obj"
+dest_files=["res://.godot/imported/train_track_ramp.obj-5ab360e06fb5092959a545626cd23fef.mesh", "res://.godot/imported/train_track_ramp.obj-5ab360e06fb5092959a545626cd23fef.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(0.5, 0.5, 0.5)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
