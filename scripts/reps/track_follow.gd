@@ -41,7 +41,7 @@ func _sync_position(force: bool) -> void:
 
     global_position = _position.point + global_basis.y * vertical_offset
 
-    if !_position.at_end:
+    if !_position.at_edge:
         var gb: Basis = Basis.looking_at(
             _position.forward,
             global_basis.y,
