@@ -33,17 +33,20 @@ func snap_to_track(force: bool = false) -> void:
     _position = current_track.get_track_point_global(ref_position)
     _sync_position(force)
 
-func _sync_position(force: bool, ease: float = 1.0) -> void:
+func _sync_position(force: bool) -> void:
     var ref_position: Vector3 = global_position - global_basis.y * vertical_offset
 
     if !force && pow(offset_tolerance, 2) < ref_position.distance_squared_to(_position.point):
         return
 
-    global_position = global_position.lerp(_position.point + global_basis.y * vertical_offset, ease)
+    global_position = _position.point + global_basis.y * vertical_offset
 
-    var gb: Basis = Basis.looking_at(
-        _position.forward,
-        global_basis.y,
-    )
-    gb = gb.rotated(Vector3.UP, 0.0 if travel_forward else PI).orthonormalized()
-    global_basis = lerp(global_basis, gb, ease)
+    if !_position.at_end:
+        var gb: Basis = Basis.looking_at(
+            _position.forward,
+            global_basis.y,
+        )
+        gb = gb.rotated(Vector3.UP, 0.0 if travel_forward else PI).orthonormalized()
+
+
+        global_basis = gb
