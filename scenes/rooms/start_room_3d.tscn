@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cjduvtbggfby1"]
+[gd_scene load_steps=30 format=3 uid="uid://cjduvtbggfby1"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_mbk1p"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_rcr32"]
@@ -16,16 +16,26 @@
 [ext_resource type="ArrayMesh" uid="uid://oob66sql271m" path="res://scenes/rooms/meshes/props/train_track_turn_left.obj" id="13_4bwta"]
 [ext_resource type="ArrayMesh" uid="uid://cjoy3pfwroyr" path="res://scenes/rooms/meshes/props/train_track_turn_right.obj" id="15_qi0mj"]
 [ext_resource type="ArrayMesh" uid="uid://wp0ll48ral2d" path="res://scenes/rooms/meshes/props/train_track_branch_right.obj" id="16_5kki3"]
+[ext_resource type="Script" uid="uid://cfiu5ok0cmhx" path="res://scripts/reps/track.gd" id="16_skexp"]
 [ext_resource type="ArrayMesh" uid="uid://bu3rtrk45k8qd" path="res://scenes/rooms/meshes/props/train_track_turn_right_short.obj" id="17_1simb"]
 [ext_resource type="ArrayMesh" uid="uid://dxbrmfbvxsvvu" path="res://scenes/rooms/meshes/props/train_track_turn_left_short.obj" id="17_pkgjf"]
 [ext_resource type="ArrayMesh" uid="uid://0pyerm2wjf2s" path="res://scenes/rooms/meshes/props/train_track_ramp.obj" id="19_7l70u"]
 [ext_resource type="ArrayMesh" uid="uid://blfmsbpic0cui" path="res://scenes/rooms/meshes/props/train_track_stop.obj" id="20_4w84r"]
+[ext_resource type="PackedScene" uid="uid://ba501yapmfmai" path="res://scenes/rooms/meshes/props/train_engine.tscn" id="21_yaq8p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4w84r"]
 size = Vector3(0.35620117, 0.09100342, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yaq8p"]
 size = Vector3(0.35620117, 0.09100342, 0.2763672)
+
+[sub_resource type="Curve3D" id="Curve3D_yaq8p"]
+_data = {
+"points": PackedVector3Array(0.033, 0, -0.459, 0.395, 0, -0.054, 1.4528941, 8.3088875e-05, -1.2690918, 0.316, 0, -0.428, -0.316, 0, 0.428, 0.26530755, 0.00031858683, -0.58485705, 0.033, 0, -0.459, -0.033, 0, 0.459, -0.192, 0, 0.654, -0.189, 0, -0.39, 0.189, 0, 0.39, -0.006, 0, 1.803, -0.372, 0, -0.153, 0.372, 0, 0.153, 0.913, 0, 2.806, -0.473, 0, 0.046, 0.473, 0, -0.046, 2.261434, 6.181002e-05, 3.02712, -0.327, 0, 0.524, 0.3271749, 0.020608187, -0.5235064, 3.373, 0, 2.221),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 7
+up_vector_enabled = false
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_skexp"]
 size = Vector3(0.3585205, 0.1038208, 1.3967133)
@@ -659,6 +669,19 @@ shape = SubResource("BoxShape3D_yaq8p")
 transform = Transform3D(0.80153614, 0, -0.59794766, 0, 1, 0, 0.59794766, 0, 0.80153614, -0.20498937, 0.0073546395, 0.5302069)
 shape = SubResource("BoxShape3D_yaq8p")
 
+[node name="Train Track" type="Path3D" parent="Geometry"]
+transform = Transform3D(-0.9642666, 0, 0.26493344, 0, 1, 0, -0.26493344, 0, -0.9642666, 2.4075053, 0.10483372, 0.14747465)
+curve = SubResource("Curve3D_yaq8p")
+script = ExtResource("16_skexp")
+start_mode = 1
+end_mode = 1
+
+[node name="Train Engine" parent="Geometry" node_paths=PackedStringArray("current_track") instance=ExtResource("21_yaq8p")]
+transform = Transform3D(0.4164761, 1.0448052e-05, 0.9091467, 3.202595e-05, 1.0000101, -2.6162601e-05, -0.9091467, 4.0012957e-05, 0.4164761, 1.6574738, 0.05486789, -3.168851)
+current_track = NodePath("../Train Track")
+vertical_offset = -0.05
+travel_forward = false
+
 [node name="TrainTrackBranchRight" type="MeshInstance3D" parent="Geometry"]
 transform = Transform3D(0.6424934, 0, -0.7662912, 0, 1, 0, 0.7662912, 0, 0.6424934, 0.49491417, 0.060717, -3.2826576)
 material_override = ExtResource("11_4bwta")
@@ -780,6 +803,6 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0006098449, -0.008850113, -0.07128334)
 shape = SubResource("BoxShape3D_2bkd8")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTrackStop/StaticBody3D/CollisionShape3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0010376871, 0.15267944, -0.02610159)
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTrackStop/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00042787194, 0.14382933, -0.09738445)
 shape = SubResource("BoxShape3D_ig47d")
