@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cjduvtbggfby1"]
+[gd_scene load_steps=40 format=3 uid="uid://cjduvtbggfby1"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_mbk1p"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_rcr32"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="4_2lquy"]
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="5_nr7pi"]
 [ext_resource type="PackedScene" uid="uid://bhppd8cxmo4ig" path="res://scenes/dugneonbuilderterminal.tscn" id="7_2lquy"]
-[ext_resource type="PackedScene" uid="uid://lsc34dmlfvyc" path="res://scenes/rooms/meshes/props/cellbed.tscn" id="8_rcr32"]
 [ext_resource type="PackedScene" uid="uid://doeo8ac0nh3yn" path="res://scenes/rooms/meshes/shapesbox.tscn" id="9_3aeuo"]
 [ext_resource type="PackedScene" uid="uid://byswj0ob7y5no" path="res://scenes/rooms/parts/door_config_block_to_dirt.tscn" id="9_mgtto"]
 [ext_resource type="PackedScene" uid="uid://jq56lhg4qvqv" path="res://scenes/rooms/meshes/props/letter_cube_b.tscn" id="10_3aeuo"]
@@ -22,6 +21,8 @@
 [ext_resource type="ArrayMesh" uid="uid://0pyerm2wjf2s" path="res://scenes/rooms/meshes/props/train_track_ramp.obj" id="19_7l70u"]
 [ext_resource type="ArrayMesh" uid="uid://blfmsbpic0cui" path="res://scenes/rooms/meshes/props/train_track_stop.obj" id="20_4w84r"]
 [ext_resource type="PackedScene" uid="uid://ba501yapmfmai" path="res://scenes/rooms/meshes/props/train_engine.tscn" id="21_yaq8p"]
+[ext_resource type="ArrayMesh" uid="uid://b2arbjpfph4se" path="res://scenes/rooms/meshes/props/childbed.obj" id="22_skexp"]
+[ext_resource type="Script" uid="uid://dgdxbhstll5op" path="res://scripts/reps/rest_interactable.gd" id="23_2bkd8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2bkd8"]
 size = Vector3(0.35327148, 0.09753418, 0.49414063)
@@ -71,6 +72,26 @@ _data = {
 }
 point_count = 3
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_skexp"]
+albedo_color = Color(0.78941363, 0.87597615, 0.9298817, 1)
+metallic = 0.13
+roughness = 0.77
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p6dlg"]
+size = Vector3(0.6390381, 0.37445068, 1.4529724)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qsbhv"]
+size = Vector3(0.6548462, 0.26934814, 0.035888672)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q0osy"]
+size = Vector3(0.6548462, 0.4441223, 0.035888672)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nx0y2"]
+size = Vector3(0.49588013, 0.22458267, 0.022827148)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2tl6c"]
+size = Vector3(0.61743164, 0.2989502, 1.4292603)
+
 [node name="StartRoom3d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_rcr32")
 _managed_door_configs = [NodePath("Geometry/Door ConfigOptions"), NodePath("Geometry/Door ConfigOptions2"), NodePath("Geometry/Door ConfigOptions3"), NodePath("Geometry/Door ConfigOptions4")]
@@ -94,14 +115,11 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 3, 1
 [node name="Door ConfigOptions4" parent="Geometry" instance=ExtResource("9_mgtto")]
 transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -6, 1, -1)
 
-[node name="cellbed" parent="Geometry" instance=ExtResource("8_rcr32")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.488968, 0.5518298, -2.8278263)
+[node name="letter_cube_b bedside" parent="Geometry" instance=ExtResource("10_3aeuo")]
+transform = Transform3D(0.99995947, 0, -0.009005777, 0, 1, 0, 0.009005777, 0, 0.99995947, -2.9355922, 0.3, -3.5341105)
 
-[node name="shapesbox" parent="Geometry" instance=ExtResource("9_3aeuo")]
-transform = Transform3D(0.8239878, 0, -0.5666076, 0, 1, 0, 0.5666076, 0, 0.8239878, -2.8780878, 0.6171034, -3.5632086)
-
-[node name="letter_cube_b" parent="Geometry" instance=ExtResource("10_3aeuo")]
-transform = Transform3D(0.99995947, 0, -0.009005777, 0, 1, 0, 0.009005777, 0, 0.99995947, -2.8796687, 0.3, -3.5341105)
+[node name="shapesbox" parent="Geometry/letter_cube_b bedside" instance=ExtResource("9_3aeuo")]
+transform = Transform3D(0.82905716, 0, -0.559164, 0, 1, 0, 0.559164, 0, 0.82905716, -0.006206751, 0.3171034, -0.029043198)
 
 [node name="letter_cube_b2" parent="Geometry" instance=ExtResource("10_3aeuo")]
 transform = Transform3D(0.5528893, -0.83323985, -0.0049794354, 0.009005777, -4.371139e-08, 0.99995947, -0.83320606, -0.5529117, 0.0075039477, -0.07787776, 0.3, -1.2538612)
@@ -613,7 +631,6 @@ metadata/_custom_type_script = "uid://cfiu5ok0cmhx"
 [node name="Train Engine" parent="Geometry" node_paths=PackedStringArray("current_track") instance=ExtResource("21_yaq8p")]
 transform = Transform3D(-0.6744017, 4.091661e-05, 0.73836493, 3.2025957e-05, 1.0000101, -2.6162606e-05, -0.73836493, 6.0025386e-06, -0.6744017, -2.8156369, 0.02117848, 0.7368947)
 speed = 0.75
-delay_start = null
 current_track = NodePath("../TrainTracks/Track To Ramp")
 vertical_offset = -0.05
 travel_forward = false
@@ -861,3 +878,43 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.8, 0)
 
 [node name="simpleceiling22" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.8, 0)
+
+[node name="Childbed" type="MeshInstance3D" parent="Geometry"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5163412, 0, -2.9449012)
+mesh = ExtResource("22_skexp")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_skexp")
+
+[node name="Free movement collider" type="StaticBody3D" parent="Geometry/Childbed"]
+collision_layer = 4
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.005065918, 0.18807983, 0.020370483)
+shape = SubResource("BoxShape3D_p6dlg")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0018005371, 0.50979614, 0.7335205)
+shape = SubResource("BoxShape3D_qsbhv")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0018005371, 0.5971832, -0.7204988)
+shape = SubResource("BoxShape3D_q0osy")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.3141904, 0.4874134, -0.47342157)
+shape = SubResource("BoxShape3D_nx0y2")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.31822968, 0.4874134, -0.47342157)
+shape = SubResource("BoxShape3D_nx0y2")
+
+[node name="ClickZone" type="StaticBody3D" parent="Geometry/Childbed" node_paths=PackedStringArray("_root")]
+collision_layer = 4
+script = ExtResource("23_2bkd8")
+_look_angle_dot_product_threshold = -0.7
+_root = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Childbed/ClickZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0045166016, 0.3505249, 0.00033569336)
+shape = SubResource("BoxShape3D_2tl6c")
