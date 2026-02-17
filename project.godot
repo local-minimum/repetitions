@@ -153,7 +153,7 @@ blueprint_rotate_cw={
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://resources/ui.en.translation", "res://resources/ui.sv.translation", "res://resources/rooms.en.translation", "res://resources/rooms.sv.translation", "res://resources/enums.en.translation", "res://resources/enums.sv.translation")
+locale/translations=PackedStringArray("res://resources/ui.en.translation", "res://resources/ui.sv.translation", "res://resources/rooms.en.translation", "res://resources/rooms.sv.translation", "res://resources/enums.en.translation", "res://resources/enums.sv.translation", "res://resources/teddy.en.translation", "res://resources/teddy.sv.translation")
 
 [layer_names]
 

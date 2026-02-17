@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cnqfte2c642nb"
+
+[deps]
+
+files=["res://resources/teddy.en.translation", "res://resources/teddy.sv.translation"]
+
+source_file="res://resources/teddy.csv"
+dest_files=["res://resources/teddy.en.translation", "res://resources/teddy.sv.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

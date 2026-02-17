@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cjduvtbggfby1"]
+[gd_scene format=3 uid="uid://cjduvtbggfby1"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_mbk1p"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_rcr32"]
@@ -23,6 +23,8 @@
 [ext_resource type="PackedScene" uid="uid://ba501yapmfmai" path="res://scenes/rooms/meshes/props/train_engine.tscn" id="21_yaq8p"]
 [ext_resource type="ArrayMesh" uid="uid://b2arbjpfph4se" path="res://scenes/rooms/meshes/props/childbed.obj" id="22_skexp"]
 [ext_resource type="Script" uid="uid://dgdxbhstll5op" path="res://scripts/reps/rest_interactable.gd" id="23_2bkd8"]
+[ext_resource type="ArrayMesh" uid="uid://m3q05pb8v7wb" path="res://scenes/rooms/meshes/props/teddy.obj" id="24_ig47d"]
+[ext_resource type="Material" uid="uid://p4bi8vyf42b0" path="res://scenes/rooms/meshes/props/teddy.material" id="25_p6dlg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2bkd8"]
 size = Vector3(0.35327148, 0.09753418, 0.49414063)
@@ -90,511 +92,514 @@ size = Vector3(0.6548462, 0.4441223, 0.035888672)
 size = Vector3(0.49588013, 0.22458267, 0.022827148)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2tl6c"]
-size = Vector3(0.61743164, 0.2989502, 1.4292603)
+size = Vector3(0.61743164, 0.21697998, 1.4292603)
 
-[node name="StartRoom3d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_h14bm"]
+size = Vector3(0.08128357, 0.3173828, 0.2043457)
+
+[node name="StartRoom3d" type="Node3D" unique_id=1982129123 node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_rcr32")
 _managed_door_configs = [NodePath("Geometry/Door ConfigOptions"), NodePath("Geometry/Door ConfigOptions2"), NodePath("Geometry/Door ConfigOptions3"), NodePath("Geometry/Door ConfigOptions4")]
 metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
-[node name="Geometry" type="Node3D" parent="."]
+[node name="Geometry" type="Node3D" parent="." unique_id=258274191]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
 
-[node name="dugneonbuilderterminal2" parent="Geometry" instance=ExtResource("7_2lquy")]
+[node name="dugneonbuilderterminal2" parent="Geometry" unique_id=179266174 instance=ExtResource("7_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 
-[node name="Door ConfigOptions" parent="Geometry" instance=ExtResource("9_mgtto")]
+[node name="Door ConfigOptions" parent="Geometry" unique_id=1130199357 instance=ExtResource("9_mgtto")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 4)
 
-[node name="Door ConfigOptions2" parent="Geometry" instance=ExtResource("9_mgtto")]
+[node name="Door ConfigOptions2" parent="Geometry" unique_id=615608769 instance=ExtResource("9_mgtto")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8, 1, -3)
 
-[node name="Door ConfigOptions3" parent="Geometry" instance=ExtResource("9_mgtto")]
+[node name="Door ConfigOptions3" parent="Geometry" unique_id=1211750043 instance=ExtResource("9_mgtto")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 3, 1, -6)
 
-[node name="Door ConfigOptions4" parent="Geometry" instance=ExtResource("9_mgtto")]
+[node name="Door ConfigOptions4" parent="Geometry" unique_id=479545759 instance=ExtResource("9_mgtto")]
 transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -6, 1, -1)
 
-[node name="letter_cube_b bedside" parent="Geometry" instance=ExtResource("10_3aeuo")]
+[node name="letter_cube_b bedside" parent="Geometry" unique_id=1705494678 instance=ExtResource("10_3aeuo")]
 transform = Transform3D(0.99995947, 0, -0.009005777, 0, 1, 0, 0.009005777, 0, 0.99995947, -2.9355922, 0.3, -3.5341105)
 
-[node name="shapesbox" parent="Geometry/letter_cube_b bedside" instance=ExtResource("9_3aeuo")]
+[node name="shapesbox" parent="Geometry/letter_cube_b bedside" unique_id=1601224345 instance=ExtResource("9_3aeuo")]
 transform = Transform3D(0.82905716, 0, -0.559164, 0, 1, 0, 0.559164, 0, 0.82905716, -0.006206751, 0.3171034, -0.029043198)
 
-[node name="letter_cube_b2" parent="Geometry" instance=ExtResource("10_3aeuo")]
+[node name="letter_cube_b2" parent="Geometry" unique_id=1161315217 instance=ExtResource("10_3aeuo")]
 transform = Transform3D(0.5528893, -0.83323985, -0.0049794354, 0.009005777, -4.371139e-08, 0.99995947, -0.83320606, -0.5529117, 0.0075039477, -0.07787776, 0.3, -1.2538612)
 
-[node name="letter_cube_b3" parent="Geometry" instance=ExtResource("10_3aeuo")]
+[node name="letter_cube_b3" parent="Geometry" unique_id=1575219875 instance=ExtResource("10_3aeuo")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -0.07787776, 0.7839308, -1.2538612)
 
-[node name="letter_cube_b4" parent="Geometry" instance=ExtResource("10_3aeuo")]
+[node name="letter_cube_b4" parent="Geometry" unique_id=9682444 instance=ExtResource("10_3aeuo")]
 transform = Transform3D(1.1692389e-08, 0.26749068, -0.96356046, 1, -4.371139e-08, 0, -4.2118565e-08, -0.96356046, -0.26749068, -0.07787776, 1.2675447, -1.2538612)
 
-[node name="TrainTracks" type="Node3D" parent="Geometry"]
+[node name="TrainTracks" type="Node3D" parent="Geometry" unique_id=536357010]
 
-[node name="TrainTrackStop" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackStop" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=1817087905]
 transform = Transform3D(0.9975176, 0, -0.07041807, 0, 1, 0, 0.07041807, 0, 0.9975176, 1.3811195, 0.062198, -5.1998167)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("20_4w84r")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackStop"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackStop" unique_id=1028490011]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStop/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStop/StaticBody3D" unique_id=1678481249]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0006098449, -0.008850113, -0.07128334)
 shape = SubResource("BoxShape3D_2bkd8")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStop/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStop/StaticBody3D" unique_id=1563618090]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00042787194, 0.14382933, -0.09738445)
 shape = SubResource("BoxShape3D_ig47d")
 
-[node name="TrainTrackRamp" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackRamp" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=1374923943]
 transform = Transform3D(0.6779288, 0, -0.7351276, 0, 1, 0, 0.7351276, 0, 0.6779288, -2.2960353, 0.046221, 0.25407875)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("19_7l70u")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackRamp"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackRamp" unique_id=1729249120]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackRamp/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackRamp/StaticBody3D" unique_id=226867969]
 shape = SubResource("ConvexPolygonShape3D_4w84r")
 
-[node name="TrainTrackTurnLeftShort" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackTurnLeftShort" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=1637004169]
 transform = Transform3D(-0.4021875, 0, 0.91555744, 0, 1, 0, -0.91555744, 0, -0.4021875, -4.9702153, 0.066834204, -1.3238039)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("17_pkgjf")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort" unique_id=2115789909]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort/StaticBody3D" unique_id=623672239]
 transform = Transform3D(0.99937814, 0, -0.035265908, 0, 1, 0, 0.035265908, 0, 0.99937814, 0.16826457, 0.007354729, -0.5096009)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort/StaticBody3D" unique_id=355625352]
 transform = Transform3D(0.9812021, 0, -0.19298461, 0, 1, 0, 0.19298461, 0, 0.9812021, 0.13128686, 0.007354699, -0.2703495)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort/StaticBody3D"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort/StaticBody3D" unique_id=1367582826]
 transform = Transform3D(0.9442964, 0, -0.32909775, 0, 1, 0, 0.32909775, 0, 0.9442964, 0.07017887, 0.0073546395, -0.03638029)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort/StaticBody3D"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort/StaticBody3D" unique_id=1475754115]
 transform = Transform3D(0.90716946, 0, -0.42076707, 0, 1, 0, 0.42076707, 0, 0.90716946, -0.0082707405, 0.0073546395, 0.17018867)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort/StaticBody3D"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort/StaticBody3D" unique_id=656687142]
 transform = Transform3D(0.8547857, 0, -0.51898277, 0, 1, 0, 0.51898277, 0, 0.8547857, -0.09973854, 0.0073546395, 0.364038)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort/StaticBody3D"]
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort/StaticBody3D" unique_id=919042534]
 transform = Transform3D(0.80153614, 0, -0.59794766, 0, 1, 0, 0.59794766, 0, 0.80153614, -0.20498937, 0.0073546395, 0.5302069)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="TrainTrackTurnRightShort" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackTurnRightShort" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=2036240470]
 transform = Transform3D(-0.92612755, 0, 0.37721065, 0, 1, 0, -0.37721065, 0, -0.92612755, 2.8774881, 0.0668345, -1.0369729)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("17_1simb")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRightShort"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRightShort" unique_id=654075274]
 transform = Transform3D(-0.8405192, 0, -0.5417816, 0, 1, 0, 0.5417816, 0, -0.8405192, 0.0036919117, -0.017041624, -0.11345667)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRightShort/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRightShort/StaticBody3D" unique_id=1097979118]
 transform = Transform3D(0.99937814, 0, -0.035265908, 0, 1, 0, 0.035265908, 0, 0.99937814, 0.16826457, 0.007354729, -0.5096009)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRightShort/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRightShort/StaticBody3D" unique_id=1288766702]
 transform = Transform3D(0.9812021, 0, -0.19298461, 0, 1, 0, 0.19298461, 0, 0.9812021, 0.13128686, 0.007354699, -0.2703495)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRightShort/StaticBody3D"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRightShort/StaticBody3D" unique_id=1688685647]
 transform = Transform3D(0.95382756, 0, -0.30035657, 0, 1, 0, 0.30035657, 0, 0.95382756, 0.08939469, 0.0073546395, -0.04718411)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRightShort/StaticBody3D"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRightShort/StaticBody3D" unique_id=1322413521]
 transform = Transform3D(0.90716946, 0, -0.42076707, 0, 1, 0, 0.42076707, 0, 0.90716946, 0.013347983, 0.0073546395, 0.15198174)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRightShort/StaticBody3D"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRightShort/StaticBody3D" unique_id=304173256]
 transform = Transform3D(0.8741037, 0, -0.48574114, 0, 1, 0, 0.48574114, 0, 0.8741037, -0.07760048, 0.0073546395, 0.34103093)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="TrainTrackTurnRight2" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackTurnRight2" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=991482560]
 transform = Transform3D(-0.5630357, 0, 0.82643235, 0, 1, 0, -0.82643235, 0, -0.5630357, 1.3238101, 0.07744239, 0.87728167)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("15_qi0mj")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRight2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRight2" unique_id=1266851563]
 transform = Transform3D(-1, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, -1, -0.0060782433, -0.012707531, 0.03361559)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight2/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight2/StaticBody3D" unique_id=255583599]
 transform = Transform3D(0.99937814, 0, -0.035265908, 0, 1, 0, 0.035265908, 0, 0.99937814, 0.16826457, 0.007354729, -0.5096009)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight2/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight2/StaticBody3D" unique_id=554480251]
 transform = Transform3D(0.9812021, 0, -0.19298461, 0, 1, 0, 0.19298461, 0, 0.9812021, 0.13128686, 0.007354699, -0.2703495)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight2/StaticBody3D"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight2/StaticBody3D" unique_id=89671830]
 transform = Transform3D(0.9442964, 0, -0.32909775, 0, 1, 0, 0.32909775, 0, 0.9442964, 0.07017887, 0.0073546395, -0.03638029)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight2/StaticBody3D"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight2/StaticBody3D" unique_id=817111942]
 transform = Transform3D(0.90716946, 0, -0.42076707, 0, 1, 0, 0.42076707, 0, 0.90716946, -0.0082707405, 0.0073546395, 0.17018867)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight2/StaticBody3D"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight2/StaticBody3D" unique_id=615110689]
 transform = Transform3D(0.8547857, 0, -0.51898277, 0, 1, 0, 0.51898277, 0, 0.8547857, -0.09973854, 0.0073546395, 0.364038)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight2/StaticBody3D"]
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight2/StaticBody3D" unique_id=1904707796]
 transform = Transform3D(0.80153614, 0, -0.59794766, 0, 1, 0, 0.59794766, 0, 0.80153614, -0.20498937, 0.0073546395, 0.5302069)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="TrainTrackBranchRight" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackBranchRight" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=321737805]
 transform = Transform3D(0.6424934, 0, -0.7662912, 0, 1, 0, 0.7662912, 0, 0.6424934, 0.49491417, 0.060717, -3.2826576)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("16_5kki3")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackBranchRight"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackBranchRight" unique_id=633728936]
 transform = Transform3D(-0.9996995, 0, 0.024519354, 0, 1, 0, -0.024519354, 0, -0.9996995, -0.014660358, -0.009632349, 0.1806283)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackBranchRight/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackBranchRight/StaticBody3D" unique_id=1451558523]
 transform = Transform3D(0.99937814, 0, -0.035265908, 0, 1, 0, 0.035265908, 0, 0.99937814, 0.16826457, 0.007354729, -0.5096009)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackBranchRight/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackBranchRight/StaticBody3D" unique_id=567769373]
 transform = Transform3D(0.9812021, 0, -0.19298461, 0, 1, 0, 0.19298461, 0, 0.9812021, 0.13128686, 0.007354699, -0.2703495)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackBranchRight/StaticBody3D"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackBranchRight/StaticBody3D" unique_id=287185754]
 transform = Transform3D(0.9442964, 0, -0.32909775, 0, 1, 0, 0.32909775, 0, 0.9442964, 0.07017887, 0.0073546395, -0.03638029)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackBranchRight/StaticBody3D"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackBranchRight/StaticBody3D" unique_id=1882581420]
 transform = Transform3D(0.90716946, 0, -0.42076707, 0, 1, 0, 0.42076707, 0, 0.90716946, -0.0082707405, 0.0073546395, 0.17018867)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackBranchRight/StaticBody3D"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackBranchRight/StaticBody3D" unique_id=79897719]
 transform = Transform3D(0.8547857, 0, -0.51898277, 0, 1, 0, 0.51898277, 0, 0.8547857, -0.09973854, 0.0073546395, 0.364038)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackBranchRight/StaticBody3D"]
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackBranchRight/StaticBody3D" unique_id=856737109]
 transform = Transform3D(0.80153614, 0, -0.59794766, 0, 1, 0, 0.59794766, 0, 0.80153614, -0.20498937, 0.0073546395, 0.5302069)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D7" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackBranchRight/StaticBody3D"]
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackBranchRight/StaticBody3D" unique_id=870725776]
 transform = Transform3D(0.9995749, 0, 0.029142797, 0, 1, 0, -0.029142797, 0, 0.9995749, 0.17901659, -0.0015678555, 0.04591775)
 shape = SubResource("BoxShape3D_skexp")
 
-[node name="TrainTrackTurnRight6" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackTurnRight6" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=741198234]
 transform = Transform3D(-0.9642668, 0, 0.26493356, 0, 1, 0, -0.26493356, 0, -0.9642668, 2.4075053, 0.06446788, 0.14747465)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("15_qi0mj")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRight6"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRight6" unique_id=42885725]
 transform = Transform3D(-0.99999994, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, -0.99999994, -0.006078124, -0.017313719, 0.03361547)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight6/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight6/StaticBody3D" unique_id=169691222]
 transform = Transform3D(0.99937814, 0, -0.035265908, 0, 1, 0, 0.035265908, 0, 0.99937814, 0.16826457, 0.007354729, -0.5096009)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight6/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight6/StaticBody3D" unique_id=1825792570]
 transform = Transform3D(0.9812021, 0, -0.19298461, 0, 1, 0, 0.19298461, 0, 0.9812021, 0.13128686, 0.007354699, -0.2703495)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight6/StaticBody3D"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight6/StaticBody3D" unique_id=195259139]
 transform = Transform3D(0.9442964, 0, -0.32909775, 0, 1, 0, 0.32909775, 0, 0.9442964, 0.07017887, 0.0073546395, -0.03638029)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight6/StaticBody3D"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight6/StaticBody3D" unique_id=686456804]
 transform = Transform3D(0.90716946, 0, -0.42076707, 0, 1, 0, 0.42076707, 0, 0.90716946, -0.0082707405, 0.0073546395, 0.17018867)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight6/StaticBody3D"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight6/StaticBody3D" unique_id=1272231738]
 transform = Transform3D(0.8547857, 0, -0.51898277, 0, 1, 0, 0.51898277, 0, 0.8547857, -0.09973854, 0.0073546395, 0.364038)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight6/StaticBody3D"]
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight6/StaticBody3D" unique_id=1714312236]
 transform = Transform3D(0.80153614, 0, -0.59794766, 0, 1, 0, 0.59794766, 0, 0.80153614, -0.20498937, 0.0073546395, 0.5302069)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="TrainTrackTurnRight5" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackTurnRight5" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=619729732]
 transform = Transform3D(-0.674238, 0, -0.7385141, 0, 1, 0, 0.7385141, 0, -0.674238, 2.6239762, 0.06446788, -2.2205062)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("15_qi0mj")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRight5"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRight5" unique_id=83282160]
 transform = Transform3D(-1, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, -1, -0.006078005, -0.017041624, 0.03361565)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight5/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight5/StaticBody3D" unique_id=1453083276]
 transform = Transform3D(0.99937814, 0, -0.035265908, 0, 1, 0, 0.035265908, 0, 0.99937814, 0.16826457, 0.007354729, -0.5096009)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight5/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight5/StaticBody3D" unique_id=543774095]
 transform = Transform3D(0.9812021, 0, -0.19298461, 0, 1, 0, 0.19298461, 0, 0.9812021, 0.13128686, 0.007354699, -0.2703495)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight5/StaticBody3D"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight5/StaticBody3D" unique_id=538520043]
 transform = Transform3D(0.9442964, 0, -0.32909775, 0, 1, 0, 0.32909775, 0, 0.9442964, 0.07017887, 0.0073546395, -0.03638029)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight5/StaticBody3D"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight5/StaticBody3D" unique_id=403084143]
 transform = Transform3D(0.90716946, 0, -0.42076707, 0, 1, 0, 0.42076707, 0, 0.90716946, -0.0082707405, 0.0073546395, 0.17018867)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight5/StaticBody3D"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight5/StaticBody3D" unique_id=1565454133]
 transform = Transform3D(0.8547857, 0, -0.51898277, 0, 1, 0, 0.51898277, 0, 0.8547857, -0.09973854, 0.0073546395, 0.364038)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight5/StaticBody3D"]
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight5/StaticBody3D" unique_id=1684633115]
 transform = Transform3D(0.80153614, 0, -0.59794766, 0, 1, 0, 0.59794766, 0, 0.80153614, -0.20498937, 0.0073546395, 0.5302069)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="TrainTrackTurnRight4" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackTurnRight4" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=2121196328]
 transform = Transform3D(-0.07168905, 0, -0.997427, 0, 1, 0, 0.997427, 0, -0.07168905, 1.6730931, 0.06446788, -3.1307855)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("15_qi0mj")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRight4"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRight4" unique_id=225023050]
 transform = Transform3D(-1, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, -1, -0.0060782433, -0.015395731, 0.03361553)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight4/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight4/StaticBody3D" unique_id=1053862443]
 transform = Transform3D(0.99937814, 0, -0.035265908, 0, 1, 0, 0.035265908, 0, 0.99937814, 0.16826457, 0.007354729, -0.5096009)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight4/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight4/StaticBody3D" unique_id=1453377437]
 transform = Transform3D(0.9812021, 0, -0.19298461, 0, 1, 0, 0.19298461, 0, 0.9812021, 0.13128686, 0.007354699, -0.2703495)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight4/StaticBody3D"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight4/StaticBody3D" unique_id=1519098893]
 transform = Transform3D(0.9442964, 0, -0.32909775, 0, 1, 0, 0.32909775, 0, 0.9442964, 0.07017887, 0.0073546395, -0.03638029)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight4/StaticBody3D"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight4/StaticBody3D" unique_id=2013271099]
 transform = Transform3D(0.90716946, 0, -0.42076707, 0, 1, 0, 0.42076707, 0, 0.90716946, -0.0082707405, 0.0073546395, 0.17018867)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight4/StaticBody3D"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight4/StaticBody3D" unique_id=479886494]
 transform = Transform3D(0.8547857, 0, -0.51898277, 0, 1, 0, 0.51898277, 0, 0.8547857, -0.09973854, 0.0073546395, 0.364038)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight4/StaticBody3D"]
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight4/StaticBody3D" unique_id=1691930816]
 transform = Transform3D(0.80153614, 0, -0.59794766, 0, 1, 0, 0.59794766, 0, 0.80153614, -0.20498937, 0.0073546395, 0.5302069)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="TrainTrackTurnRight3" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackTurnRight3" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=305991648]
 transform = Transform3D(0.99123853, 0, -0.1320835, 0, 1, 0, 0.1320835, 0, 0.99123853, -0.620293, 0.06446788, -2.3324437)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("15_qi0mj")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRight3"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRight3" unique_id=1820838854]
 transform = Transform3D(-1, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, -1, -0.006078124, -0.014757961, 0.03361559)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight3/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight3/StaticBody3D" unique_id=522173293]
 transform = Transform3D(0.99937814, 0, -0.035265908, 0, 1, 0, 0.035265908, 0, 0.99937814, 0.16826457, 0.007354729, -0.5096009)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight3/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight3/StaticBody3D" unique_id=1394033949]
 transform = Transform3D(0.9812021, 0, -0.19298461, 0, 1, 0, 0.19298461, 0, 0.9812021, 0.13128686, 0.007354699, -0.2703495)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight3/StaticBody3D"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight3/StaticBody3D" unique_id=1355478745]
 transform = Transform3D(0.9442964, 0, -0.32909775, 0, 1, 0, 0.32909775, 0, 0.9442964, 0.07017887, 0.0073546395, -0.03638029)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight3/StaticBody3D"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight3/StaticBody3D" unique_id=143481683]
 transform = Transform3D(0.90716946, 0, -0.42076707, 0, 1, 0, 0.42076707, 0, 0.90716946, -0.0082707405, 0.0073546395, 0.17018867)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight3/StaticBody3D"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight3/StaticBody3D" unique_id=557172713]
 transform = Transform3D(0.8547857, 0, -0.51898277, 0, 1, 0, 0.51898277, 0, 0.8547857, -0.09973854, 0.0073546395, 0.364038)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight3/StaticBody3D"]
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight3/StaticBody3D" unique_id=338227735]
 transform = Transform3D(0.80153614, 0, -0.59794766, 0, 1, 0, 0.59794766, 0, 0.80153614, -0.20498937, 0.0073546395, 0.5302069)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="TrainTrackTurnRight" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackTurnRight" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=2109110787]
 transform = Transform3D(0.11408752, 0, 0.99347067, 0, 1, 0, -0.99347067, 0, 0.11408752, -0.9739096, 0.06446788, 0.59215295)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("15_qi0mj")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRight"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRight" unique_id=1832393250]
 transform = Transform3D(-1, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, -1, -0.006078005, -0.010165155, 0.03361559)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight/StaticBody3D" unique_id=198678524]
 transform = Transform3D(0.99937814, 0, -0.035265908, 0, 1, 0, 0.035265908, 0, 0.99937814, 0.16826457, 0.007354729, -0.5096009)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight/StaticBody3D" unique_id=1075073141]
 transform = Transform3D(0.9812021, 0, -0.19298461, 0, 1, 0, 0.19298461, 0, 0.9812021, 0.13128686, 0.007354699, -0.2703495)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight/StaticBody3D"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight/StaticBody3D" unique_id=2134366415]
 transform = Transform3D(0.9442964, 0, -0.32909775, 0, 1, 0, 0.32909775, 0, 0.9442964, 0.07017887, 0.0073546395, -0.03638029)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight/StaticBody3D"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight/StaticBody3D" unique_id=978192504]
 transform = Transform3D(0.90716946, 0, -0.42076707, 0, 1, 0, 0.42076707, 0, 0.90716946, -0.0082707405, 0.0073546395, 0.17018867)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight/StaticBody3D"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight/StaticBody3D" unique_id=96566050]
 transform = Transform3D(0.8547857, 0, -0.51898277, 0, 1, 0, 0.51898277, 0, 0.8547857, -0.09973854, 0.0073546395, 0.364038)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight/StaticBody3D"]
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight/StaticBody3D" unique_id=1522444442]
 transform = Transform3D(0.80153614, 0, -0.59794766, 0, 1, 0, 0.59794766, 0, 0.80153614, -0.20498937, 0.0073546395, 0.5302069)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="TrainTrackTurnLeft3" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackTurnLeft3" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=184118209]
 transform = Transform3D(0.99632454, 0, -0.085660465, 0, 1, 0, 0.085660465, 0, 0.99632454, 1.1400021, 0.067237735, -4.393121)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("13_4bwta")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft3"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft3" unique_id=99238257]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, -0.012698352, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft3/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft3/StaticBody3D" unique_id=884466467]
 transform = Transform3D(0.99937814, 0, -0.035265908, 0, 1, 0, 0.035265908, 0, 0.99937814, 0.16826457, 0.007354729, -0.5096009)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft3/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft3/StaticBody3D" unique_id=1222013363]
 transform = Transform3D(0.9812021, 0, -0.19298461, 0, 1, 0, 0.19298461, 0, 0.9812021, 0.13128686, 0.007354699, -0.2703495)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft3/StaticBody3D"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft3/StaticBody3D" unique_id=1687795149]
 transform = Transform3D(0.9442964, 0, -0.32909775, 0, 1, 0, 0.32909775, 0, 0.9442964, 0.07017887, 0.0073546395, -0.03638029)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft3/StaticBody3D"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft3/StaticBody3D" unique_id=331182406]
 transform = Transform3D(0.90716946, 0, -0.42076707, 0, 1, 0, 0.42076707, 0, 0.90716946, -0.0082707405, 0.0073546395, 0.17018867)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft3/StaticBody3D"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft3/StaticBody3D" unique_id=411156964]
 transform = Transform3D(0.8547857, 0, -0.51898277, 0, 1, 0, 0.51898277, 0, 0.8547857, -0.09973854, 0.0073546395, 0.364038)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft3/StaticBody3D"]
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft3/StaticBody3D" unique_id=384121006]
 transform = Transform3D(0.80153614, 0, -0.59794766, 0, 1, 0, 0.59794766, 0, 0.80153614, -0.20498937, 0.0073546395, 0.5302069)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="TrainTrackTurnLeft2" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackTurnLeft2" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=1958345715]
 transform = Transform3D(0.9916802, 0, -0.12872638, 0, 1, 0, 0.12872638, 0, 0.9916802, -1.1535623, 0.067237735, -1.059485)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("13_4bwta")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft2" unique_id=2054206675]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.015062511, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft2/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft2/StaticBody3D" unique_id=867214665]
 transform = Transform3D(0.99937814, 0, -0.035265908, 0, 1, 0, 0.035265908, 0, 0.99937814, 0.16826457, 0.007354729, -0.5096009)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft2/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft2/StaticBody3D" unique_id=1543951371]
 transform = Transform3D(0.9812021, 0, -0.19298461, 0, 1, 0, 0.19298461, 0, 0.9812021, 0.13128686, 0.007354699, -0.2703495)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft2/StaticBody3D"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft2/StaticBody3D" unique_id=329372031]
 transform = Transform3D(0.9442964, 0, -0.32909775, 0, 1, 0, 0.32909775, 0, 0.9442964, 0.07017887, 0.0073546395, -0.03638029)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft2/StaticBody3D"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft2/StaticBody3D" unique_id=138729019]
 transform = Transform3D(0.90716946, 0, -0.42076707, 0, 1, 0, 0.42076707, 0, 0.90716946, -0.0082707405, 0.0073546395, 0.17018867)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft2/StaticBody3D"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft2/StaticBody3D" unique_id=1311918804]
 transform = Transform3D(0.8547857, 0, -0.51898277, 0, 1, 0, 0.51898277, 0, 0.8547857, -0.09973854, 0.0073546395, 0.364038)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft2/StaticBody3D"]
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft2/StaticBody3D" unique_id=1043209730]
 transform = Transform3D(0.80153614, 0, -0.59794766, 0, 1, 0, 0.59794766, 0, 0.80153614, -0.20498937, 0.0073546395, 0.5302069)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="TrainTrackTurnLeft" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackTurnLeft" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=2038679030]
 transform = Transform3D(0.1964253, 0, 0.9805189, 0, 1, 0, -0.9805189, 0, 0.1964253, -2.798558, 0.06786899, -0.890486)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("13_4bwta")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft" unique_id=1238787996]
 transform = Transform3D(1, 0, -1.4901161e-08, 0, 1, 0, 1.4901161e-08, 0, 1, 0, -0.015654996, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft/StaticBody3D" unique_id=1315782150]
 transform = Transform3D(0.99937814, 0, -0.035265908, 0, 1, 0, 0.035265908, 0, 0.99937814, 0.16826457, 0.007354729, -0.5096009)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft/StaticBody3D" unique_id=1893906564]
 transform = Transform3D(0.9812021, 0, -0.19298461, 0, 1, 0, 0.19298461, 0, 0.9812021, 0.13128686, 0.007354699, -0.2703495)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft/StaticBody3D"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft/StaticBody3D" unique_id=964435314]
 transform = Transform3D(0.9442964, 0, -0.32909775, 0, 1, 0, 0.32909775, 0, 0.9442964, 0.07017887, 0.0073546395, -0.03638029)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft/StaticBody3D"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft/StaticBody3D" unique_id=1086469938]
 transform = Transform3D(0.90716946, 0, -0.42076707, 0, 1, 0, 0.42076707, 0, 0.90716946, -0.0082707405, 0.0073546395, 0.17018867)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft/StaticBody3D"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft/StaticBody3D" unique_id=2049539740]
 transform = Transform3D(0.8547857, 0, -0.51898277, 0, 1, 0, 0.51898277, 0, 0.8547857, -0.09973854, 0.0073546395, 0.364038)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft/StaticBody3D"]
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeft/StaticBody3D" unique_id=2139444603]
 transform = Transform3D(0.80153614, 0, -0.59794766, 0, 1, 0, 0.59794766, 0, 0.80153614, -0.20498937, 0.0073546395, 0.5302069)
 shape = SubResource("BoxShape3D_yaq8p")
 
-[node name="TrainTrackStraight2" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackStraight2" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=1672773483]
 transform = Transform3D(0.13191043, 0, 0.9912617, 0, 1, 0, -0.9912617, 0, 0.13191043, 0.18403733, 0.05590976, 0.9258089)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("12_ykiog")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackStraight2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackStraight2" unique_id=1066926381]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStraight2/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStraight2/StaticBody3D" unique_id=1508404158]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0020754337, 0.007354729, 1.1920929e-07)
 shape = SubResource("BoxShape3D_4w84r")
 
-[node name="TrainTrackStraight" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackStraight" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=611400368]
 transform = Transform3D(0.15527944, 0, 0.9878707, 0, 1, 0, -0.9878707, 0, 0.15527944, -3.8904824, 0.05590988, -1.2653496)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("12_ykiog")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackStraight"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackStraight" unique_id=2062272015]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStraight/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStraight/StaticBody3D" unique_id=433731840]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0020754337, 0.007354729, 1.1920929e-07)
 shape = SubResource("BoxShape3D_4w84r")
 
-[node name="TrainTrackCross" type="MeshInstance3D" parent="Geometry/TrainTracks"]
+[node name="TrainTrackCross" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=623771686]
 transform = Transform3D(0.6773639, 0, -0.73564804, 0, 1, 0, 0.73564804, 0, 0.6773639, -1.8851852, 0.051392175, -0.1197871)
 material_override = ExtResource("11_4bwta")
 mesh = ExtResource("11_cesw3")
 skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackCross"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackCross" unique_id=1388580985]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackCross/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackCross/StaticBody3D" unique_id=1008674854]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0020754337, 0.007354729, 1.1920929e-07)
 shape = SubResource("BoxShape3D_4w84r")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackCross/StaticBody3D"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackCross/StaticBody3D" unique_id=807769390]
 transform = Transform3D(-2.9802322e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -2.9802322e-08, 0.0020754337, 0.007354729, 0)
 shape = SubResource("BoxShape3D_4w84r")
 
-[node name="Track Loop" type="Path3D" parent="Geometry/TrainTracks" node_paths=PackedStringArray("start_connections", "end_connections")]
+[node name="Track Loop" type="Path3D" parent="Geometry/TrainTracks" unique_id=1597278241 node_paths=PackedStringArray("start_connections", "end_connections")]
 transform = Transform3D(-0.9642666, 0, 0.26493344, 0, 1, 0, -0.26493344, 0, -0.9642666, 2.4075053, 0.1186941, 0.14747465)
 curve = SubResource("Curve3D_yaq8p")
 script = ExtResource("16_skexp")
@@ -603,7 +608,7 @@ start_connections = [NodePath("../Track To Door")]
 end_mode = 2
 end_connections = [NodePath("../Track To Ramp")]
 
-[node name="Track To Door" type="Path3D" parent="Geometry/TrainTracks" node_paths=PackedStringArray("start_connections")]
+[node name="Track To Door" type="Path3D" parent="Geometry/TrainTracks" unique_id=1253435499 node_paths=PackedStringArray("start_connections")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.117691875, 0)
 curve = SubResource("Curve3D_skexp")
 script = ExtResource("16_skexp")
@@ -611,7 +616,7 @@ start_mode = 2
 start_connections = [NodePath("../Track Loop")]
 metadata/_custom_type_script = "uid://cfiu5ok0cmhx"
 
-[node name="Track To Ramp" type="Path3D" parent="Geometry/TrainTracks" node_paths=PackedStringArray("start_connections")]
+[node name="Track To Ramp" type="Path3D" parent="Geometry/TrainTracks" unique_id=1845121207 node_paths=PackedStringArray("start_connections")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9536347, 0.121178985, -0.733105)
 curve = SubResource("Curve3D_2bkd8")
 script = ExtResource("16_skexp")
@@ -619,7 +624,7 @@ start_mode = 2
 start_connections = [NodePath("../Track Loop"), NodePath("../Track To Stop")]
 metadata/_custom_type_script = "uid://cfiu5ok0cmhx"
 
-[node name="Track To Stop" type="Path3D" parent="Geometry/TrainTracks" node_paths=PackedStringArray("start_connections")]
+[node name="Track To Stop" type="Path3D" parent="Geometry/TrainTracks" unique_id=1405030008 node_paths=PackedStringArray("start_connections")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7825049, 0.108680725, -4.4923153)
 curve = SubResource("Curve3D_ig47d")
 script = ExtResource("16_skexp")
@@ -628,293 +633,309 @@ start_connections = [NodePath("../Track To Ramp")]
 end_mode = 1
 metadata/_custom_type_script = "uid://cfiu5ok0cmhx"
 
-[node name="Train Engine" parent="Geometry" node_paths=PackedStringArray("current_track") instance=ExtResource("21_yaq8p")]
+[node name="Train Engine" parent="Geometry" unique_id=2130841054 node_paths=PackedStringArray("current_track") instance=ExtResource("21_yaq8p")]
 transform = Transform3D(-0.6744017, 4.091661e-05, 0.73836493, 3.2025957e-05, 1.0000101, -2.6162606e-05, -0.73836493, 6.0025386e-06, -0.6744017, -2.8156369, 0.02117848, 0.7368947)
 speed = 0.75
 current_track = NodePath("../TrainTracks/Track To Ramp")
 vertical_offset = -0.05
 travel_forward = false
 
-[node name="RoomSides" type="Node3D" parent="Geometry"]
+[node name="RoomSides" type="Node3D" parent="Geometry" unique_id=1031423087]
 
-[node name="roomwall" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall" parent="Geometry/RoomSides" unique_id=1020591094 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
 
-[node name="roomwall4" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall4" parent="Geometry/RoomSides" unique_id=1103752724 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
-[node name="roomwall5" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall5" parent="Geometry/RoomSides" unique_id=844225662 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(2.9802322e-08, -3.2398052e-08, -1, 4.222196e-08, 1, -3.2398045e-08, 1, -4.2221956e-08, 2.9802322e-08, -6, 0, -2)
 
-[node name="roomwall6" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall6" parent="Geometry/RoomSides" unique_id=455398319 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(2.9802322e-08, -3.2398052e-08, -1, 4.222196e-08, 1, -3.2398045e-08, 1, -4.2221956e-08, 2.9802322e-08, -4, 0, -4)
 
-[node name="roomwall7" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall7" parent="Geometry/RoomSides" unique_id=1103784404 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(2.9802322e-08, -3.2398052e-08, -1, 4.222196e-08, 1, -3.2398045e-08, 1, -4.2221956e-08, 2.9802322e-08, -2, 0, -4)
 
-[node name="roomwall8" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall8" parent="Geometry/RoomSides" unique_id=1237310243 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(2.9802322e-08, -3.2398052e-08, -1, 4.222196e-08, 1, -3.2398045e-08, 1, -4.2221956e-08, 2.9802322e-08, 0, 0, -6)
 
-[node name="roomwall9" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall9" parent="Geometry/RoomSides" unique_id=794245919 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(2.9802322e-08, -3.2398052e-08, -1, 4.222196e-08, 1, -3.2398045e-08, 1, -4.2221956e-08, 2.9802322e-08, 4, 0, -6)
 
-[node name="roomwall10" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall10" parent="Geometry/RoomSides" unique_id=1814918046 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(2.9802322e-08, -3.2398052e-08, -1, 4.222196e-08, 1, -3.2398045e-08, 1, -4.2221956e-08, 2.9802322e-08, 6, 0, -6)
 
-[node name="roomwall11" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall11" parent="Geometry/RoomSides" unique_id=1677047345 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(-1, 4.2221956e-08, 1.3909066e-08, 4.222196e-08, 1, -3.2398045e-08, -1.3909066e-08, -3.2398052e-08, -1, 8, 0, -6)
 
-[node name="roomwall12" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall12" parent="Geometry/RoomSides" unique_id=172147470 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(-1, 4.2221956e-08, 1.3909066e-08, 4.222196e-08, 1, -3.2398045e-08, -1.3909066e-08, -3.2398052e-08, -1, 8, 0, -2)
 
-[node name="roomwall13" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall13" parent="Geometry/RoomSides" unique_id=1849972260 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(-1, 4.2221956e-08, 1.3909066e-08, 4.222196e-08, 1, -3.2398045e-08, -1.3909066e-08, -3.2398052e-08, -1, 6, 0, 0)
 
-[node name="roomwall14" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall14" parent="Geometry/RoomSides" unique_id=1277075056 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(-1, 4.2221956e-08, 1.3909066e-08, 4.222196e-08, 1, -3.2398045e-08, -1.3909066e-08, -3.2398052e-08, -1, 6, 0, 2)
 
-[node name="roomwall15" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall15" parent="Geometry/RoomSides" unique_id=116354480 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(5.7620454e-08, 3.239805e-08, 1, 4.222196e-08, 1, -3.2398045e-08, -1, 4.2221956e-08, 5.7620454e-08, 8, 0, 0)
 
-[node name="roomwall16" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall16" parent="Geometry/RoomSides" unique_id=2049990833 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(5.7620454e-08, 3.239805e-08, 1, 4.222196e-08, 1, -3.2398045e-08, -1, 4.2221956e-08, 5.7620454e-08, 6, 0, 4)
 
-[node name="roomwall17" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall17" parent="Geometry/RoomSides" unique_id=678428637 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(5.7620454e-08, 3.239805e-08, 1, 4.222196e-08, 1, -3.2398045e-08, -1, 4.2221956e-08, 5.7620454e-08, 2, 0, 4)
 
-[node name="roomwall18" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall18" parent="Geometry/RoomSides" unique_id=1388264153 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(5.7620454e-08, 3.239805e-08, 1, 4.222196e-08, 1, -3.2398045e-08, -1, 4.2221956e-08, 5.7620454e-08, 0, 0, 4)
 
-[node name="roomwall19" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall19" parent="Geometry/RoomSides" unique_id=1385161772 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(5.7620454e-08, 3.239805e-08, 1, 4.222196e-08, 1, -3.2398045e-08, -1, 4.2221956e-08, 5.7620454e-08, -2, 0, 4)
 
-[node name="roomwall20" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall20" parent="Geometry/RoomSides" unique_id=1372762834 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(5.7620454e-08, 3.239805e-08, 1, 4.222196e-08, 1, -3.2398045e-08, -1, 4.2221956e-08, 5.7620454e-08, -4, 0, 2)
 
-[node name="roomwall2" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall2" parent="Geometry/RoomSides" unique_id=1726666823 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 2)
 
-[node name="roomwall3" parent="Geometry/RoomSides" instance=ExtResource("1_mbk1p")]
+[node name="roomwall3" parent="Geometry/RoomSides" unique_id=1997674165 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
 
-[node name="roomwall_cornercap" parent="Geometry/RoomSides" instance=ExtResource("3_w6a1i")]
+[node name="roomwall_cornercap" parent="Geometry/RoomSides" unique_id=1713081530 instance=ExtResource("3_w6a1i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
 
-[node name="roomwall_cornercap2" parent="Geometry/RoomSides" instance=ExtResource("3_w6a1i")]
+[node name="roomwall_cornercap2" parent="Geometry/RoomSides" unique_id=1302878488 instance=ExtResource("3_w6a1i")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4, 0, -2)
 
-[node name="roomwall_cornercap3" parent="Geometry/RoomSides" instance=ExtResource("3_w6a1i")]
+[node name="roomwall_cornercap3" parent="Geometry/RoomSides" unique_id=122264712 instance=ExtResource("3_w6a1i")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -4)
 
-[node name="roomwall_cornercap4" parent="Geometry/RoomSides" instance=ExtResource("3_w6a1i")]
+[node name="roomwall_cornercap4" parent="Geometry/RoomSides" unique_id=2054299542 instance=ExtResource("3_w6a1i")]
 transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 6, 0, 0)
 
-[node name="simplefloor" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor" parent="Geometry/RoomSides" unique_id=351024476 instance=ExtResource("4_2lquy")]
 
-[node name="simplefloor2" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor2" parent="Geometry/RoomSides" unique_id=952727227 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
 
-[node name="simplefloor3" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor3" parent="Geometry/RoomSides" unique_id=2054750679 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
 
-[node name="simplefloor4" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor4" parent="Geometry/RoomSides" unique_id=236271710 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
 
-[node name="simplefloor5" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor5" parent="Geometry/RoomSides" unique_id=1237755773 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 2)
 
-[node name="simplefloor6" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor6" parent="Geometry/RoomSides" unique_id=873806446 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2)
 
-[node name="simplefloor7" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor7" parent="Geometry/RoomSides" unique_id=113087122 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
 
-[node name="simplefloor8" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor8" parent="Geometry/RoomSides" unique_id=1537580876 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
 
-[node name="simplefloor9" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor9" parent="Geometry/RoomSides" unique_id=390229797 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
 
-[node name="simplefloor10" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor10" parent="Geometry/RoomSides" unique_id=94001243 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 
-[node name="simplefloor11" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor11" parent="Geometry/RoomSides" unique_id=594084577 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
-[node name="simplefloor12" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor12" parent="Geometry/RoomSides" unique_id=1065542731 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
 
-[node name="simplefloor13" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor13" parent="Geometry/RoomSides" unique_id=818919966 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
 
-[node name="simplefloor14" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor14" parent="Geometry/RoomSides" unique_id=1626502035 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2)
 
-[node name="simplefloor15" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor15" parent="Geometry/RoomSides" unique_id=455779884 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
 
-[node name="simplefloor16" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor16" parent="Geometry/RoomSides" unique_id=1133543488 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
 
-[node name="simplefloor17" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor17" parent="Geometry/RoomSides" unique_id=2129388143 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
 
-[node name="simplefloor18" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor18" parent="Geometry/RoomSides" unique_id=1470487270 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
 
-[node name="simplefloor19" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor19" parent="Geometry/RoomSides" unique_id=97562855 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -2)
 
-[node name="simplefloor20" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor20" parent="Geometry/RoomSides" unique_id=9712470 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -4)
 
-[node name="simplefloor21" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor21" parent="Geometry/RoomSides" unique_id=1302369393 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
 
-[node name="simplefloor22" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor22" parent="Geometry/RoomSides" unique_id=2079606124 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2)
 
-[node name="simplefloor23" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor23" parent="Geometry/RoomSides" unique_id=622054698 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
 
-[node name="simplefloor24" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor24" parent="Geometry/RoomSides" unique_id=155814878 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4)
 
-[node name="simplefloor25" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor25" parent="Geometry/RoomSides" unique_id=651286367 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
-[node name="simplefloor26" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor26" parent="Geometry/RoomSides" unique_id=1039035531 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
-[node name="simplefloor27" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor27" parent="Geometry/RoomSides" unique_id=1089429749 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
 
-[node name="simplefloor28" parent="Geometry/RoomSides" instance=ExtResource("4_2lquy")]
+[node name="simplefloor28" parent="Geometry/RoomSides" unique_id=1360966518 instance=ExtResource("4_2lquy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
 
-[node name="simpleceiling" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling" parent="Geometry/RoomSides" unique_id=698712494 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2.8, 0)
 
-[node name="simpleceiling2" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling2" parent="Geometry/RoomSides" unique_id=656944851 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2.8, 2)
 
-[node name="simpleceiling3" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling3" parent="Geometry/RoomSides" unique_id=1583069965 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.8, -2)
 
-[node name="simpleceiling4" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling4" parent="Geometry/RoomSides" unique_id=1882133093 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.8, 0)
 
-[node name="simpleceiling5" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling5" parent="Geometry/RoomSides" unique_id=495848412 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.8, 2)
 
-[node name="simpleceiling6" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling6" parent="Geometry/RoomSides" unique_id=1638895019 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.8, 4)
 
-[node name="simpleceiling7" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling7" parent="Geometry/RoomSides" unique_id=1200639380 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, -2)
 
-[node name="simpleceiling8" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling8" parent="Geometry/RoomSides" unique_id=1085187764 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, 0)
 
-[node name="simpleceiling9" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling9" parent="Geometry/RoomSides" unique_id=1078316766 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, 2)
 
-[node name="simpleceiling10" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling10" parent="Geometry/RoomSides" unique_id=904644002 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, 4)
 
-[node name="simpleceiling11" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling11" parent="Geometry/RoomSides" unique_id=1239006487 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 4)
 
-[node name="simpleceiling12" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling12" parent="Geometry/RoomSides" unique_id=1286634406 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 2)
 
-[node name="simpleceiling13" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling13" parent="Geometry/RoomSides" unique_id=1005936422 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -2)
 
-[node name="simpleceiling23" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling23" parent="Geometry/RoomSides" unique_id=138496532 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.8, -2)
 
-[node name="simpleceiling24" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling24" parent="Geometry/RoomSides" unique_id=1237404290 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.8, -2)
 
-[node name="simpleceiling25" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling25" parent="Geometry/RoomSides" unique_id=1079466555 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.8, -2)
 
-[node name="simpleceiling26" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling26" parent="Geometry/RoomSides" unique_id=786956765 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -4)
 
-[node name="simpleceiling27" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling27" parent="Geometry/RoomSides" unique_id=834374472 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.8, -4)
 
-[node name="simpleceiling28" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling28" parent="Geometry/RoomSides" unique_id=2106293915 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.8, -4)
 
-[node name="simpleceiling29" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling29" parent="Geometry/RoomSides" unique_id=76490842 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.8, -4)
 
-[node name="simpleceiling14" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling14" parent="Geometry/RoomSides" unique_id=1220787757 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0)
 
-[node name="simpleceiling15" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling15" parent="Geometry/RoomSides" unique_id=576531622 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.8, 0)
 
-[node name="simpleceiling16" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling16" parent="Geometry/RoomSides" unique_id=519928532 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.8, 2)
 
-[node name="simpleceiling17" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling17" parent="Geometry/RoomSides" unique_id=699405450 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.8, 4)
 
-[node name="simpleceiling18" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling18" parent="Geometry/RoomSides" unique_id=106560288 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.8, 4)
 
-[node name="simpleceiling19" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling19" parent="Geometry/RoomSides" unique_id=1214537682 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.8, 2)
 
-[node name="simpleceiling20" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling20" parent="Geometry/RoomSides" unique_id=889606117 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.8, 0)
 
-[node name="simpleceiling21" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling21" parent="Geometry/RoomSides" unique_id=571390878 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.8, 0)
 
-[node name="simpleceiling22" parent="Geometry/RoomSides" instance=ExtResource("5_nr7pi")]
+[node name="simpleceiling22" parent="Geometry/RoomSides" unique_id=99668580 instance=ExtResource("5_nr7pi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2.8, 0)
 
-[node name="Childbed" type="MeshInstance3D" parent="Geometry"]
+[node name="Childbed" type="MeshInstance3D" parent="Geometry" unique_id=1413264740]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5163412, 0, -2.9449012)
 mesh = ExtResource("22_skexp")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_skexp")
 
-[node name="Free movement collider" type="StaticBody3D" parent="Geometry/Childbed"]
+[node name="Free movement collider" type="StaticBody3D" parent="Geometry/Childbed" unique_id=510722392]
 collision_layer = 4
 collision_mask = 7
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider" unique_id=1993370666]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.005065918, 0.18807983, 0.020370483)
 shape = SubResource("BoxShape3D_p6dlg")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider" unique_id=1368478029]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0018005371, 0.50979614, 0.7335205)
 shape = SubResource("BoxShape3D_qsbhv")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider" unique_id=2014829636]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0018005371, 0.5971832, -0.7204988)
 shape = SubResource("BoxShape3D_q0osy")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider"]
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider" unique_id=1579555418]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.3141904, 0.4874134, -0.47342157)
 shape = SubResource("BoxShape3D_nx0y2")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider"]
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Geometry/Childbed/Free movement collider" unique_id=40757458]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.31822968, 0.4874134, -0.47342157)
 shape = SubResource("BoxShape3D_nx0y2")
 
-[node name="ClickZone" type="StaticBody3D" parent="Geometry/Childbed" node_paths=PackedStringArray("_root")]
+[node name="ClickZone" type="StaticBody3D" parent="Geometry/Childbed" unique_id=473479548 node_paths=PackedStringArray("_root")]
 collision_layer = 4
 script = ExtResource("23_2bkd8")
 _look_angle_dot_product_threshold = -0.7
 _root = NodePath("..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Childbed/ClickZone"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0045166016, 0.3505249, 0.00033569336)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Childbed/ClickZone" unique_id=1419677922]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0045166016, 0.3095398, 0.00033569336)
 shape = SubResource("BoxShape3D_2tl6c")
+
+[node name="Teddy" type="MeshInstance3D" parent="Geometry/Childbed" unique_id=862739103]
+transform = Transform3D(-0.52614737, -0.0190553, 0.85017985, -0.05832377, 0.99820334, -0.013721607, -0.84839094, -0.056805287, -0.5263134, -0.15941048, 0.5410568, -0.4983952)
+mesh = ExtResource("24_ig47d")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("25_p6dlg")
+surface_material_override/1 = ExtResource("25_p6dlg")
+surface_material_override/2 = ExtResource("25_p6dlg")
+surface_material_override/3 = ExtResource("25_p6dlg")
+surface_material_override/4 = ExtResource("25_p6dlg")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/Childbed/Teddy" unique_id=1026566642]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Childbed/Teddy/StaticBody3D" unique_id=46945899]
+transform = Transform3D(1, -1.2517644e-06, 1.6928374e-05, 1.2517461e-06, 1, 1.0822603e-06, -1.6928376e-05, -1.0822391e-06, 1, -0.0061831474, 0.034895062, -0.0020771027)
+shape = SubResource("BoxShape3D_h14bm")
