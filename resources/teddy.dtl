@@ -1,0 +1,31 @@
+label wakup
+if {day} == 0.0:
+	[signal arg="look_at"]
+	[wait time="0.5"]
+	teddy: Oh, hey there! You are finally wake 😴 #id:11
+	set {Teddy.only_looked_last_time} = false
+elif {day}   >   2.0 and not {Teddy.said_sleeptalk} and {Teddy.rng} < 0.3:
+	[signal arg="look_at"]
+	[wait time="0.5"]
+	set {Teddy.said_sleeptalk} = true
+	teddy: Did you know you talk in your sleep?! 🫠 #id:12
+	teddy: Embarrasing!!! #id:14
+	set {Teddy.only_looked_last_time} = false
+elif not {Teddy.only_looked_last_time} and {day}  >  3 and {Teddy.rng} < 0.1:
+	[signal arg="look_at"]
+	[wait time="0.5"]
+	set {Teddy.only_looked_last_time} = true
+else:
+	set {Teddy.only_looked_last_time} = false
+[signal arg="look_away"]
+[end_timeline]
+label shape sorting toy
+if {Teddy.rng} < 0.1:
+	teddy: No! Don't touch that!
+elif {Teddy.rng} < 0.2:
+	teddy: We do not, absolutely not, play with that one
+elif {Teddy.rng} == 0.7:
+	teddy: Put IT back!
+else:
+	teddy: Nooo!! 🥹
+[end_timeline]

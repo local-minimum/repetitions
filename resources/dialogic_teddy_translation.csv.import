@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bfbq8hicqtko1"
+
+[deps]
+
+files=["res://resources/dialogic_teddy_translation.en.translation", "res://resources/dialogic_teddy_translation.sv.translation"]
+
+source_file="res://resources/dialogic_teddy_translation.csv"
+dest_files=["res://resources/dialogic_teddy_translation.en.translation", "res://resources/dialogic_teddy_translation.sv.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

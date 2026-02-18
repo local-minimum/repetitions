@@ -34,6 +34,8 @@ func deposit_key(key: ToolKey.KeyVariant) -> void:
         var clip: String = _key_2_anim[key]
         _anim.play(clip)
 
+        __SignalBus.on_deposited_tool_key.emit(_deposited_keys, key)
+
         var delay: float = _cylinder_rotation_delay.get(key, _cylidner_default_delay)
         await get_tree().create_timer(delay).timeout
 
@@ -72,6 +74,7 @@ func _inc_deposited_keys(key: ToolKey.KeyVariant) -> void:
 
 func _on_interaction_body_execute_interaction() -> void:
     if __GlobalGameState.carried_keys.is_empty():
+        __SignalBus.on_look_at_shapesbox.emit()
         var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
         player.cinematic = true
         player.focus_on(self)

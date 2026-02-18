@@ -1,9 +1,18 @@
 extends Node3D
 class_name Teddy
 
+@export var look_ease_duration: float = 0.6
+@export var look_away_ease_duration: float = 0.3
+
 func _enter_tree() -> void:
     if __SignalBus.on_physics_player_ready.connect(_handle_player_ready) != OK:
         push_error("Failed to connect physics player ready")
+
+    if __SignalBus.on_look_at_shapesbox.connect(_handle_look_at_shapesbox) != OK:
+        push_error("Failed to connect look at shapesbox")
+
+    if __SignalBus.on_before_deposited_tool_key.connect(_handle_before_deposit_key) != OK:
+        push_error("Failed to connect before deposited key")
 
 func _ready() -> void:
     _start_of_day_dialogues(PhysicsGridPlayerController.last_connected_player)
@@ -11,42 +20,50 @@ func _ready() -> void:
 func _handle_player_ready(player: PhysicsGridPlayerController) -> void:
     _start_of_day_dialogues(player)
 
+func _handle_look_at_shapesbox() -> void:
+    _setup_dialogic("shape sorting toy", PhysicsGridPlayerController.last_connected_player)
+
+func _handle_before_deposit_key(_total: int, _key: ToolKey.KeyVariant) -> void:
+    # TODO
+    pass
+
 var _greeted: bool
-static var _said_sleeptalker: bool
-static var _did_only_look_last_time: bool
 
 func _start_of_day_dialogues(player: PhysicsGridPlayerController) -> void:
     if _greeted || player == null:
         return
 
     _greeted = true
+    player.cinematic = true
+    _setup_dialogic("wakup", player)
 
-    if __GlobalGameState.game_day == 0:
-        _talk(player, [tr("TEDDY_FIRST_GREETING").format({"emoji": "😴"})])
-    elif !_said_sleeptalker && __GlobalGameState.game_day > 2 && randf() < 0.1:
-        _talk(player, [tr("TEDDY_SLEEPTALKING").format({"emoji": "🫠"})])
-        _said_sleeptalker = true
-    elif _did_only_look_last_time && randf() < 0.3:
-        _talk(player, [])
-        _did_only_look_last_time = true
+func _setup_dialogic(label: String, player: PhysicsGridPlayerController) -> void:
+    if !Dialogic.VAR.set_variable("Teddy.rng", randf()):
+        push_error("Failed to set variable")
 
-func _talk(player: PhysicsGridPlayerController, messages: Array[String]) -> void:
-        await _init_conversation(player)
+    if Dialogic.signal_event.connect(_handle_signal_event) != OK:
+        push_error("Failed to connect signal event")
 
-        await get_tree().create_timer(0.5).timeout
-        if !messages.is_empty():
-            print_debug(messages[0])
-            await get_tree().create_timer(1).timeout
+    if Dialogic.timeline_ended.connect(_end_conversation, CONNECT_ONE_SHOT) != OK:
+        push_error("Failed to connect end timeline")
 
-        _end_conversation()
+    if !Dialogic.start("teddy", label):
+        push_error("Failed to start dialog")
+        player.cinematic = false
 
-func _init_conversation(player: PhysicsGridPlayerController, look: bool = true, look_ease_duration: float = 0.6) -> void:
-        player.cinematic = true
-        if look:
-            player.focus_on(self, 0.7, look_ease_duration)
-        await get_tree().create_timer(look_ease_duration).timeout
+func _handle_signal_event(evt: Variant) -> void:
+    if evt is String:
+        match evt:
+            "look_at":
+                PhysicsGridPlayerController.last_connected_player.focus_on(self, 0.7, look_ease_duration)
+                Dialogic.paused = true
+                await get_tree().create_timer(look_ease_duration).timeout
+                Dialogic.paused = false
+            "look_away":
+                PhysicsGridPlayerController.last_connected_player.defocus_on(self, look_away_ease_duration)
 
 func _end_conversation() -> void:
     var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
-    player.defocus_on(self)
+    player.defocus_on(self, look_away_ease_duration)
     player.cinematic = false
+    Dialogic.signal_event.disconnect(_handle_signal_event)

@@ -94,6 +94,8 @@ func _handle_toggle_captured_cursor(active: bool) -> void:
 
 func go_to_next_day(days: int = 1) -> void:
     super.go_to_next_day(days)
+    if !Dialogic.VAR.set_variable("day", game_day):
+        print_debug("Failed to update day in dialogic")
 
     clear_captured_cursor_toggle()
     game_paused = false

@@ -16,4 +16,4 @@ func _on_cancel_btn_pressed() -> void:
     hide()
 
 func _on_accept_btn_pressed() -> void:
-    __GlobalGameState.next_day()
+    __GlobalGameState.go_to_next_day()

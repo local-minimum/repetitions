@@ -44,8 +44,12 @@ gdscript/warnings/return_value_discarded=1
 
 [dialogic]
 
-directories/dch_directory={}
-directories/dtl_directory={}
+directories/dch_directory={
+"teddy": "res://resources/teddy.dch"
+}
+directories/dtl_directory={
+"teddy": "res://resources/teddy.dtl"
+}
 layout/style_directory={}
 extensions_folder="res://addons/dialogic_additions"
 text/letter_speed=0.01
@@ -71,6 +75,34 @@ translation/file_mode=1
 translation/translation_folder="res://resources"
 translation/save_mode=0
 translation/add_separator=false
+text/autopauses={}
+audio/channel_defaults={
+"": {
+"audio_bus": "",
+"fade_length": 0.0,
+"loop": false,
+"volume": 0.0
+},
+"music": {
+"audio_bus": "",
+"fade_length": 0.0,
+"loop": true,
+"volume": 0.0
+}
+}
+variables={
+"Teddy": {
+"only_looked_last_time": false,
+"rng": 0.0,
+"said_sleeptalk": false
+},
+"day": 0
+}
+translation/intern/save_mode=0
+translation/intern/file_mode=1
+translation/intern/translation_folder="res://resources"
+translation/id_counter=20
+translation/locales=[]
 
 [display]
 
@@ -193,7 +225,7 @@ dialogic_default_action={
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://resources/ui.en.translation", "res://resources/ui.sv.translation", "res://resources/rooms.en.translation", "res://resources/rooms.sv.translation", "res://resources/enums.en.translation", "res://resources/enums.sv.translation", "res://resources/teddy.en.translation", "res://resources/teddy.sv.translation")
+locale/translations=PackedStringArray("res://resources/ui.en.translation", "res://resources/ui.sv.translation", "res://resources/rooms.en.translation", "res://resources/rooms.sv.translation", "res://resources/enums.en.translation", "res://resources/enums.sv.translation", "res://resources/teddy.en.translation", "res://resources/teddy.sv.translation", "res://resources/dialogic_teddy_translation.en.translation", "res://resources/dialogic_character_translations.en.translation", "res://resources/dialogic_character_translations.sv.translation", "res://resources/dialogic_teddy_translation.sv.translation")
 
 [layer_names]
 
