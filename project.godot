@@ -74,7 +74,7 @@ translation/original_locale="en"
 translation/file_mode=1
 translation/translation_folder="res://resources"
 translation/save_mode=0
-translation/add_separator=false
+translation/add_separator=true
 text/autopauses={}
 audio/channel_defaults={
 "": {
@@ -101,7 +101,7 @@ variables={
 translation/intern/save_mode=0
 translation/intern/file_mode=1
 translation/intern/translation_folder="res://resources"
-translation/id_counter=20
+translation/id_counter=26
 translation/locales=[]
 
 [display]

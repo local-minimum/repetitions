@@ -1,4 +1,4 @@
-label wakup
+label wakup (Wake Up) #id:15
 if {day} == 0.0:
 	[signal arg="look_at"]
 	[wait time="0.5"]
@@ -19,13 +19,13 @@ else:
 	set {Teddy.only_looked_last_time} = false
 [signal arg="look_away"]
 [end_timeline]
-label shape sorting toy
+label shape sorting toy (Shape Sorting Toy) #id:16
 if {Teddy.rng} < 0.1:
-	teddy: No! Don't touch that!
+	teddy: No! Don't touch that! #id:17
 elif {Teddy.rng} < 0.2:
-	teddy: We do not, absolutely not, play with that one
+	teddy: We do not, absolutely not, play with that one #id:18
 elif {Teddy.rng} == 0.7:
-	teddy: Put IT back!
+	teddy: Put IT back! #id:19
 else:
-	teddy: Nooo!! 🥹
+	teddy: Nooo!! 🥹 #id:1a
 [end_timeline]
