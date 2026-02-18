@@ -151,7 +151,7 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
 
             player.set_rotation_away_from_wall(true)
             first_room = false
-
+            __GlobalGameState.current_player_room = room3d
             __SignalBus.on_spawn_room_placed.emit(room3d, origin, get_closest_coordinates(player.global_position))
 
     if exposed_dirt:

@@ -11,6 +11,9 @@ enum SpecialState { NONE, ONE, TWO }
 @export var _special_one: Node3D
 @export var _special_two: Node3D
 
+@export var _inside_area: Area3D
+@export var _outside_area: Area3D
+
 @export var _panic_on_missing_door_node: bool = true
 
 @export var _to_wall_door: DoorState = DoorState.OPEN_DOOR
@@ -35,6 +38,22 @@ enum SpecialState { NONE, ONE, TWO }
 @export var _to_door_reactors: Array[ConnectionReaction]
 
 var finalized: bool
+
+func _enter_tree() -> void:
+    if _inside_area != null && _inside_area.body_entered.connect(_handle_enter_inside_area) != OK:
+        push_error("Failed to connect to body entered inside area")
+    if _outside_area != null && _outside_area.body_entered.connect(_handle_enter_outside_area) != OK:
+        push_error("Failed to connect to body entered outside area")
+
+func _handle_enter_inside_area(body3d: Node3D) -> void:
+    var room: Room3D = Room3D.find_room(self)
+    if PhysicsGridPlayerController.find_player_in_tree(body3d) != null:
+        __GlobalGameState.current_player_room = room
+
+func _handle_enter_outside_area(body3d: Node3D) -> void:
+    var room: Room3D = Room3D.find_room(self)
+    if PhysicsGridPlayerController.find_player_in_tree(body3d) != null && __GlobalGameState.current_player_room == room:
+        __GlobalGameState.current_player_room = null
 
 func resolve_connected_doors(
     own_room: Room3D,

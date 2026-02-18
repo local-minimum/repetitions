@@ -7,6 +7,10 @@ var origin: Vector3i
 
 @export var _managed_door_configs: Array[DoorConfigurationOptions]
 
+func _exit_tree() -> void:
+    if __GlobalGameState.current_player_room == self:
+        __GlobalGameState.current_player_room = null
+
 ## When room has already been placed we still have to check if something updated
 ## after new rooms got placed. We don't need to care for new door to door connections
 ## as this is handled by the newly placed room, but the status of some door leading

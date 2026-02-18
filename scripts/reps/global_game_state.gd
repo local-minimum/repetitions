@@ -45,6 +45,12 @@ var game_paused: bool:
         if _captured_cursor:
             __SignalBus.on_toggle_captured_cursor.emit(!value)
 
+var current_player_room: Room3D:
+    set(value):
+        if value != current_player_room:
+            current_player_room = value
+            print_debug("Player is now in room %s" % [value])
+
 var _has_spawned: bool = false
 var _spawn_room: Room3D
 var _spawn_room_coords: Vector3i
