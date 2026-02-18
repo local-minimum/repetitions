@@ -92,7 +92,9 @@ func _handle_toggle_captured_cursor(active: bool) -> void:
         return
     _captured_cursor = active
 
-func next_day() -> void:
+func go_to_next_day(days: int = 1) -> void:
+    super.go_to_next_day(days)
+
     clear_captured_cursor_toggle()
     game_paused = false
     carried_keys.clear()

@@ -25,6 +25,7 @@
 [ext_resource type="Script" uid="uid://dgdxbhstll5op" path="res://scripts/reps/rest_interactable.gd" id="23_2bkd8"]
 [ext_resource type="ArrayMesh" uid="uid://m3q05pb8v7wb" path="res://scenes/rooms/meshes/props/teddy.obj" id="24_ig47d"]
 [ext_resource type="Material" uid="uid://p4bi8vyf42b0" path="res://scenes/rooms/meshes/props/teddy.material" id="25_p6dlg"]
+[ext_resource type="Script" uid="uid://yd730fdkgbqd" path="res://scripts/reps/teddy.gd" id="26_qsbhv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2bkd8"]
 size = Vector3(0.35327148, 0.09753418, 0.49414063)
@@ -933,6 +934,7 @@ surface_material_override/1 = ExtResource("25_p6dlg")
 surface_material_override/2 = ExtResource("25_p6dlg")
 surface_material_override/3 = ExtResource("25_p6dlg")
 surface_material_override/4 = ExtResource("25_p6dlg")
+script = ExtResource("26_qsbhv")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Geometry/Childbed/Teddy" unique_id=1026566642]
 

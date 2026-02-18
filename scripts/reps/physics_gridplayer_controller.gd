@@ -440,7 +440,7 @@ func focus_on(
     _cam_slide_tween.tween_method(tw_rot_method, _camera.global_basis.get_rotation_quaternion(), Basis.looking_at(-offset).get_rotation_quaternion(), ease_duration)
     @warning_ignore_restore("return_value_discarded")
 
-
+## If obj is the one in focus then it eases away from it. If not, call is ignored
 func defocus_on(obj: Node3D, ease_duration: float = 0.2) -> void:
     if _focus_obj != obj:
         return

@@ -22,7 +22,7 @@ func _on_resume_pressed() -> void:
 
 func _on_next_day_pressed() -> void:
     hide()
-    __GlobalGameState.next_day()
+    __GlobalGameState.go_to_next_day()
 
 func _on_quit_pressed() -> void:
     get_tree().quit()

@@ -47,6 +47,7 @@ func set_credits(new_credits: int) -> void:
 #endregion Credits
 
 #region Calendar
+## Enumerator assuming the game starts at day 0
 var game_day: int = 0
 
 var day_of_month: int:

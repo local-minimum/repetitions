@@ -9,8 +9,6 @@ const _GAME_DAY_KEY: String = "day"
 func get_key() -> String:
     return _save_key
 
-
-
 func load_from_initial_if_save_missing() -> bool:
     return false
 
