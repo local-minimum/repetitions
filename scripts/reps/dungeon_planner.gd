@@ -59,10 +59,13 @@ func _exit_tree() -> void:
     __SignalBus.on_complete_dungeon_plan.disconnect(_handle_complete_dungeon_plan)
     __SignalBus.on_ready_planner.disconnect(_handle_ready_planner)
 
+var _player: PhysicsGridPlayerController
+
 func _handle_ready_planner(terminal: PlannerTerminal, player: PhysicsGridPlayerController, d_elevation: int, allowance: int) -> void:
     if elevation != d_elevation:
         return
 
+    _player = player
     if player == null:
         push_error("No player is known to %s so cannot show its position" % [self])
         _player_icon.hide()
@@ -92,7 +95,7 @@ func _handle_ready_planner(terminal: PlannerTerminal, player: PhysicsGridPlayerC
     _terminals[terminal].credits = allowance
 
     if player != null:
-        player.cinematic = true
+        player.add_cinematic_blocker(self)
 
     Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
@@ -326,4 +329,6 @@ func _draw() -> void:
 func complete_planning() -> void:
     hide()
     get_canvas_layer_node().hide()
+    if _player != null:
+        _player.last_connected_player.remove_cinematic_blocker(self)
     __SignalBus.on_complete_dungeon_plan.emit(elevation, rooms)

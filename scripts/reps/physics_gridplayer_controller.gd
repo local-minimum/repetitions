@@ -7,19 +7,45 @@ static var last_connected_player_cinematic: bool:
         return last_connected_player != null && last_connected_player.cinematic
 
 var builder: DungeonBuilder
+
 var cinematic: bool:
+    get():
+        return cinematic || !_cinematic_blockers.is_empty()
+
     set(value):
-        _translation_stack.clear()
-        _translation_pressed.clear()
-
-        if cinematic && !value && gridless:
-            Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-            _captured_pointer_eventer.active = true
-
-        elif !cinematic && value && gridless:
-            _captured_pointer_eventer.active = false
+        var _old_value = cinematic
+        if value:
+            push_warning("Setting cinematic this way means someone else can remove it, use add/remove cinematic blockers instead")
+        _update_cinematic(_old_value)
 
         cinematic = value
+
+var _cinematic_blockers: Array[Node]
+
+func _update_cinematic(old_value: bool) -> void:
+    _translation_stack.clear()
+    _translation_pressed.clear()
+
+    if !cinematic && old_value && gridless:
+        Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+        _captured_pointer_eventer.active = true
+
+    elif cinematic && !old_value && gridless:
+        _captured_pointer_eventer.active = false
+
+func add_cinematic_blocker(node: Node) -> void:
+    if !_cinematic_blockers.has(node):
+        var old_value: bool = cinematic
+        _cinematic_blockers.append(node)
+        _update_cinematic(old_value)
+
+func remove_cinematic_blocker(node: Node) -> void:
+    var old_value: bool = cinematic
+    _cinematic_blockers.erase(node)
+    if _cinematic_blockers.is_empty():
+        cinematic = false
+    else:
+        _update_cinematic(old_value)
 
 @export var _camera: Camera3D
 var camera: Camera3D:

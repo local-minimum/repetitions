@@ -34,7 +34,7 @@ func _start_of_day_dialogues(player: PhysicsGridPlayerController) -> void:
         return
 
     _greeted = true
-    player.cinematic = true
+    player.add_cinematic_blocker(self)
     _setup_dialogic("wakup", player)
 
 func _setup_dialogic(label: String, player: PhysicsGridPlayerController) -> void:
@@ -49,7 +49,7 @@ func _setup_dialogic(label: String, player: PhysicsGridPlayerController) -> void
 
     if !Dialogic.start("teddy", label):
         push_error("Failed to start dialog")
-        player.cinematic = false
+        player.remove_cinematic_blocker(self)
 
 func _handle_signal_event(evt: Variant) -> void:
     if evt is String:
@@ -65,5 +65,5 @@ func _handle_signal_event(evt: Variant) -> void:
 func _end_conversation() -> void:
     var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
     player.defocus_on(self, look_away_ease_duration)
-    player.cinematic = false
+    player.remove_cinematic_blocker(self)
     Dialogic.signal_event.disconnect(_handle_signal_event)

@@ -26,7 +26,7 @@ func _ax() -> void:
         return
 
     if _anim != null && !_anim_name.is_empty():
-        _player.cinematic = true
+        _player.add_cinematic_blocker(self)
         _anim.play(_anim_name)
 
         _busy = true
@@ -38,7 +38,7 @@ func _ax() -> void:
 func _ready_next_ax(anim_name: String) -> void:
     if _anim_name == anim_name:
         _busy = false
-        _player.cinematic = false
+        _player.remove_cinematic_blocker(self)
 
         if _caster.is_colliding():
             var col: Object = _caster.get_collider(0)

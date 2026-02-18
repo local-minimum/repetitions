@@ -28,7 +28,7 @@ func _exit_tree() -> void:
     __SignalBus.on_use_pickax.disconnect(_handle_use_pickax)
 
 func _ready() -> void:
-    player.cinematic = true
+    player.add_cinematic_blocker(self)
     player.global_position = get_closest_global_grid_position(player.global_position)
     player.builder = self
 
@@ -157,7 +157,7 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
     if exposed_dirt:
         _populate_level_with_dirt(grid, elevation)
 
-    player.cinematic = false
+    player.remove_cinematic_blocker(self)
 
 func _instantiate_3d_room(room: BlueprintRoom, origin: Vector3) -> Room3D:
     var room_3d: Room3D = room.option.instantiate_3d_room()
