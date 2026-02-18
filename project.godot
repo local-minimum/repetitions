@@ -92,6 +92,7 @@ audio/channel_defaults={
 }
 variables={
 "Teddy": {
+"attempted_blocked_doors": 0,
 "only_looked_last_time": false,
 "rng": 0.0,
 "said_sleeptalk": false

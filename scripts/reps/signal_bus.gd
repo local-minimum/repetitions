@@ -30,4 +30,6 @@ signal on_request_tool(tool: Tool.ToolType, receipient: Node3D)
 
 signal on_use_pickax(target: Node3D, hack_direction: CardinalDirections.CardinalDirection, point: Vector3)
 signal on_trophy_stolen_from_terminal(terminal: PlannerTerminal)
+
+signal on_blocked_door_interaction(interaction_body: InteractionBody3D)
 @warning_ignore_restore("unused_signal")

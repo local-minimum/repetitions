@@ -5,6 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://m55oio5nm4ps" path="res://scenes/rooms/meshes/props/plank2.blend" id="3_e8rg8"]
 [ext_resource type="PackedScene" uid="uid://b7lslbxgj6psm" path="res://scenes/rooms/meshes/roomwall_door.blend" id="3_i0bdy"]
 [ext_resource type="PackedScene" uid="uid://ck5ureajxc1ch" path="res://scenes/rooms/meshes/props/plank.blend" id="4_iweq6"]
+[ext_resource type="Script" uid="uid://csoftdhs2k5f8" path="res://scripts/reps/blocked_door_interaction.gd" id="6_e8rg8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iweq6"]
+size = Vector3(1.2468872, 1.4348145, 0.094177246)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i0bdy"]
 size = Vector3(2.0012207, 2.7120361, 1)
@@ -38,6 +42,15 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0
 
 [node name="plank" parent="Special One - Blocked" unique_id=667257584 instance=ExtResource("4_iweq6")]
 transform = Transform3D(-3.9909033e-08, -0.4079321, -0.91301227, -1.7831278e-08, 0.91301227, -0.4079321, 1, 0, -4.371139e-08, 0, 0, -0.21668911)
+
+[node name="InteractionBody3D" type="StaticBody3D" parent="Special One - Blocked" unique_id=435255240]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.20654678)
+script = ExtResource("6_e8rg8")
+metadata/_custom_type_script = "uid://dpwsunra0mkvn"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Special One - Blocked/InteractionBody3D" unique_id=1981069196]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.011138916, -0.006713867, 0.01260376)
+shape = SubResource("BoxShape3D_iweq6")
 
 [node name="Inside Area3D" type="Area3D" parent="." unique_id=555970785]
 collision_mask = 3

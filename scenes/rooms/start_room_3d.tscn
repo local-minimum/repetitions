@@ -941,20 +941,3 @@ script = ExtResource("26_qsbhv")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Childbed/Teddy/StaticBody3D" unique_id=46945899]
 transform = Transform3D(1, -1.2517644e-06, 1.6928374e-05, 1.2517461e-06, 1, 1.0822603e-06, -1.6928376e-05, -1.0822391e-06, 1, -0.0061831474, 0.034895062, -0.0020771027)
 shape = SubResource("BoxShape3D_h14bm")
-
-[node name="Teddy2" type="MeshInstance3D" parent="Geometry/Childbed" unique_id=1495879227]
-transform = Transform3D(-0.52614737, -0.0190553, 0.85017985, -0.05832377, 0.99820334, -0.013721607, -0.84839094, -0.056805287, -0.5263134, -0.15941048, 0.5410568, -0.4983952)
-mesh = ExtResource("24_ig47d")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("25_p6dlg")
-surface_material_override/1 = ExtResource("25_p6dlg")
-surface_material_override/2 = ExtResource("25_p6dlg")
-surface_material_override/3 = ExtResource("25_p6dlg")
-surface_material_override/4 = ExtResource("25_p6dlg")
-script = ExtResource("26_qsbhv")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/Childbed/Teddy2" unique_id=1397389905]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Childbed/Teddy2/StaticBody3D" unique_id=667343843]
-transform = Transform3D(1, -1.2517644e-06, 1.6928374e-05, 1.2517461e-06, 1, 1.0822603e-06, -1.6928376e-05, -1.0822391e-06, 1, -0.0061831474, 0.034895062, -0.0020771027)
-shape = SubResource("BoxShape3D_h14bm")

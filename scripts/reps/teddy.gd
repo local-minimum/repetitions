@@ -14,6 +14,9 @@ func _enter_tree() -> void:
     if __SignalBus.on_before_deposited_tool_key.connect(_handle_before_deposit_key) != OK:
         push_error("Failed to connect before deposited key")
 
+    if __SignalBus.on_blocked_door_interaction.connect(_handle_interact_with_blocked_door) != OK:
+        push_error("Failed to connec to blocked door interaction")
+
 func _ready() -> void:
     _start_of_day_dialogues(PhysicsGridPlayerController.last_connected_player)
 
@@ -27,6 +30,20 @@ func _handle_before_deposit_key(_total: int, _key: ToolKey.KeyVariant) -> void:
     # TODO
     pass
 
+func _handle_interact_with_blocked_door(door: InteractionBody3D) -> void:
+    if (
+        Room3D.find_room(door) == __GlobalGameState.current_player_room &&
+        __GlobalGameState.current_player_room == Room3D.find_room(self)
+    ):
+        var attempts: int = Dialogic.VAR.get_variable("Teddy.attempted_blocked_doors", 0)
+        if !Dialogic.VAR.set_variable(
+            "Teddy.attempted_blocked_doors",
+            attempts + 1,
+        ):
+            push_error("Failed to increment attempted blocked doors")
+
+        _setup_dialogic("blocked door", PhysicsGridPlayerController.last_connected_player)
+
 var _greeted: bool
 
 func _start_of_day_dialogues(player: PhysicsGridPlayerController) -> void:
@@ -34,10 +51,11 @@ func _start_of_day_dialogues(player: PhysicsGridPlayerController) -> void:
         return
 
     _greeted = true
-    player.add_cinematic_blocker(self)
     _setup_dialogic("wakup", player)
 
 func _setup_dialogic(label: String, player: PhysicsGridPlayerController) -> void:
+    player.add_cinematic_blocker(self)
+
     if !Dialogic.VAR.set_variable("Teddy.rng", randf()):
         push_error("Failed to set variable")
 
