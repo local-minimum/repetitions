@@ -32,7 +32,7 @@ else:
 label blocked door (Blocked Door)
 if {Teddy.attempted_blocked_doors} == 1.0:
 	teddy: Did you know... that door is blocked.
-	teddy: Who could have known those planks would be in the way
+	teddy: Who could have known those planks would be in the way??
 elif {Teddy.attempted_blocked_doors} == 2.0:
 	teddy: I know, I know. You want to go places and see the world and all that.
 	teddy: Well if you head over to the terminal, in the middle of the room, then I'm sure you'll figure it out.
