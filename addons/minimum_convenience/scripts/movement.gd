@@ -23,6 +23,9 @@ static func is_turn(movement: MovementType) -> bool:
 static func is_translation(movement: MovementType) -> bool:
     return movement != MovementType.NONE && !is_turn(movement)
 
+static func is_cardinal_translation(movement: MovementType) -> bool:
+    return movement != MovementType.NONE && !is_turn(movement) && movement != MovementType.CENTER
+
 static func to_direction(
     movement: MovementType,
     look_direction: CardinalDirections.CardinalDirection,

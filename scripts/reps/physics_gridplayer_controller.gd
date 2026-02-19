@@ -54,6 +54,7 @@ var camera: Camera3D:
 
 @export var _captured_pointer_eventer: CapturedMouseEventer
 
+@export var _caster_origin: Node3D
 @export var _stepper: PhysicsControllerStepCaster
 
 @export var _forward: ShapeCast3D
@@ -132,7 +133,7 @@ var gridless: bool:
                 @warning_ignore_restore("return_value_discarded")
                 # Force alignment with grid.
                 # NOTE: move needs to happend before turn
-                _attempt_translation(Movement.MovementType.NONE, null, Vector3.ZERO)
+                _attempt_gridded_translation(Movement.MovementType.NONE, null, Vector3.ZERO)
                 _attempt_turn(0.0)
 
         gridless = value
@@ -272,6 +273,7 @@ func _gridless_movement(delta: float) -> void:
     if move_and_slide() && direction.length_squared() > 0:
         # Collides with something
         var step_data: Dictionary[PhysicsControllerStepCaster.StepData, Vector3] = {}
+        _caster_origin.position = Vector3.ZERO
         _stepper.global_step_direction = direction
         _stepper.step_distance = (direction * velocity).length() * delta
 
@@ -289,13 +291,13 @@ func _gridfull_movement() -> void:
         var movement: Movement.MovementType = _translation_stack[0]
         match movement:
             Movement.MovementType.FORWARD:
-                _attempt_translation(movement, _forward, -global_basis.z)
+                _attempt_gridded_translation(movement, _forward, -global_basis.z)
             Movement.MovementType.STRAFE_LEFT:
-                _attempt_translation(movement, _left, -global_basis.x)
+                _attempt_gridded_translation(movement, _left, -global_basis.x)
             Movement.MovementType.STRAFE_RIGHT:
-                _attempt_translation(movement, _right, global_basis.x)
+                _attempt_gridded_translation(movement, _right, global_basis.x)
             Movement.MovementType.BACK:
-                _attempt_translation(movement, _backward, global_basis.z)
+                _attempt_gridded_translation(movement, _backward, global_basis.z)
             _:
                 push_error("Player %s's movement %s is not a valid translation" % [name, Movement.name(movement)])
 
@@ -312,24 +314,48 @@ func _calculate_grid_position(movement: Movement.MovementType = Movement.Movemen
     )
 
     var dir: Vector3 = target - global_position
+    _caster_origin.position = Vector3.ZERO
     _stepper.global_step_direction = dir
     _stepper.step_distance = dir.length()
 
-    var data: Dictionary[PhysicsControllerStepCaster.StepData, Vector3]
+    var completed: bool = false
+    while !completed:
+        var data: Dictionary[PhysicsControllerStepCaster.StepData, Vector3]
 
-    if _stepper.can_step(data):
-        return data[PhysicsControllerStepCaster.StepData.POINT]
+        if _stepper.can_step(data):
+            print_debug("Using stepper to move to %s" % [data])
+            var pt: Vector3 = data[PhysicsControllerStepCaster.StepData.POINT]
+            var delta: Vector3 = pt - global_position
+            delta.y = 0
 
+            _stepper.step_distance = maxf(_stepper.step_distance - delta.length(), 0)
+            if _stepper.step_distance < 0.05:
+
+                return global_position.lerp(
+                    pt,
+                    minf(1.0, target.distance_to(global_position) / pt.distance_to(global_position))
+                )
+            _caster_origin.global_position = pt
+
+        else:
+            return target
     return target
 
-func _attempt_translation(movement: Movement.MovementType, caster: ShapeCast3D, direction: Vector3) -> void:
+func _attempt_gridded_translation(movement: Movement.MovementType, caster: ShapeCast3D, direction: Vector3) -> void:
     if _translation_tween && _translation_tween.is_running() || _rotation_tween && _rotation_tween.is_running():
         return
 
-    if direction != Vector3.ZERO:
-        if !_allow_vertical_movement:
-            direction.y = 0
-        direction = direction.normalized()
+    if !_allow_vertical_movement && direction.y != 0.0:
+        print_debug("Removing y component of %s" % [direction])
+        direction.y = 0
+
+    if direction.length_squared() != 1.0:
+        print_debug("Direction %s needs normalization" % [direction])
+        if Movement.is_cardinal_translation(movement):
+            direction = VectorUtils.primary_directionf(direction)
+        else:
+            direction = direction.normalized()
+        print_debug("Normalized direction %s " % [direction])
 
     if caster != null && caster.is_colliding():
         _refuse_movement(movement, caster, direction)
@@ -337,6 +363,7 @@ func _attempt_translation(movement: Movement.MovementType, caster: ShapeCast3D, 
 
     var target: Vector3 = _calculate_grid_position(movement, direction)
 
+    print_debug("Resulting direction of movement %s" % [target - global_position])
     # print_debug("Moving %s in direction %s from %s to %s" % [
     #    CardinalDirections.name(CardinalDirections.vector_to_direction(direction.normalized())),
     #    direction,

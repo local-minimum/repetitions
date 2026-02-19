@@ -77,6 +77,19 @@ static func primary_direction(v: Vector3i) -> Vector3i:
 
     return Vector3i(0, 0, signi(v.z))
 
+static func primary_directionf(v: Vector3) -> Vector3:
+    var abs_x: float = absf(v.x)
+    var abs_y: float = absf(v.y)
+    var abs_z: float = absf(v.z)
+
+    if abs_x > abs_z && abs_x > abs_y:
+        return Vector3i(signf(v.x), 0, 0)
+
+    if abs_y > abs_z:
+        return Vector3i(0, signf(v.y), 0)
+
+    return Vector3i(0, 0, signf(v.z))
+
 static func all_dimensions_smaller(a: Vector3, b: Vector3) -> bool:
     return a.x < b.x && a.y < b.y && a.z < b.z
 
