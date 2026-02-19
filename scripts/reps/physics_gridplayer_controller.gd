@@ -472,19 +472,19 @@ func _attempt_gridded_translation2(movement: Movement.MovementType, direction: V
             )
         else:
             # We need stairs animation type
-            _translation_tween.set_parallel()
             _translation_tween.tween_property(
                 self,
                 "global_position:x",
                 pt.x,
                 part_duration,
-            ).set_trans(Tween.TRANS_SINE)
+            )
+            _translation_tween.set_parallel()
             _translation_tween.tween_property(
                 self,
                 "global_position:z",
                 pt.z,
                 part_duration,
-            ).set_trans(Tween.TRANS_SINE)
+            )
             _translation_tween.tween_property(
                 self,
                 "global_position:y",
