@@ -1,16 +1,11 @@
 extends PanelContainer
 
 func _enter_tree() -> void:
-    if __SignalBus.on_deposited_tool_key.connect(_handle_deposit_key) != OK:
-        push_error("Failed to connect deposit tool key")
+    if __SignalBus.on_demo_end.connect(show, CONNECT_ONE_SHOT) != OK:
+        push_error("Failed to connect demo end")
 
 func _ready() -> void:
     hide()
 
-func _handle_deposit_key(total: int, _key: ToolKey.KeyVariant) -> void:
-    if total > 0:
-        show()
-
-
 func _on_ok_pressed() -> void:
-    hide()
+    get_tree().quit()

@@ -51,3 +51,13 @@ elif {Teddy.engine_clicks} == 6.0:
 	teddy: Chuu-chuu motherfucker! [aa=1]
 else:
 	teddy: Oh trains! [aa=1]
+[end_timeline]
+label deposit key (Deposit Key)
+if {Teddy.deposited_key} == "FLOPPY_KEY":
+	teddy: You naughty, naughty child! [pause=0.5] That was locked away for a reason.
+	teddy: You shouldn't have done that. You really shouldn't have done that.
+if {Teddy.deposited_key} == 1.0:
+	teddy: I'm sorry. [pause=0.5] I wish it didn't have to come to this. [pause=0.5] But you made me do this...
+	teddy: ...YOU ARE GROUNDED! ☹️
+	[signal arg="grounded"]
+[end_timeline]

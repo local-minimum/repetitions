@@ -93,10 +93,12 @@ audio/channel_defaults={
 variables={
 "Teddy": {
 "attempted_blocked_doors": 0,
+"deposited_key": "",
 "engine_clicks": 0,
 "only_looked_last_time": false,
 "rng": 0.0,
-"said_sleeptalk": false
+"said_sleeptalk": false,
+"total_keys_deposited": 0
 },
 "day": 0
 }

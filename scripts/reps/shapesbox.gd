@@ -34,7 +34,7 @@ func deposit_key(key: ToolKey.KeyVariant) -> void:
         var clip: String = _key_2_anim[key]
         _anim.play(clip)
 
-        __SignalBus.on_deposited_tool_key.emit(_deposited_keys, key)
+        __SignalBus.on_before_deposited_tool_key.emit(_deposited_keys, key)
 
         var delay: float = _cylinder_rotation_delay.get(key, _cylidner_default_delay)
         await get_tree().create_timer(delay).timeout

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b8lqj7rv80ssv"]
+[gd_scene format=3 uid="uid://b8lqj7rv80ssv"]
 
 [ext_resource type="Shape3D" uid="uid://ccivye2pfod1q" path="res://scenes/player_cast_capsule.tres" id="1_52vux"]
 [ext_resource type="Script" uid="uid://gca7baymjcg6" path="res://scripts/reps/physics_gridplayer_controller.gd" id="1_reoop"]
@@ -133,7 +133,7 @@ material = SubResource("StandardMaterial3D_460ac")
 radius = 0.1
 height = 0.2
 
-[node name="Player3d" type="CharacterBody3D" node_paths=PackedStringArray("_camera", "_captured_pointer_eventer", "_stepper", "_forward", "_left", "_right", "_backward", "_debug_shapes")]
+[node name="Player3d" type="CharacterBody3D" unique_id=942295760 node_paths=PackedStringArray("_camera", "_captured_pointer_eventer", "_stepper", "_forward", "_left", "_right", "_backward", "_debug_shapes")]
 collision_layer = 2
 collision_mask = 7
 input_ray_pickable = false
@@ -149,90 +149,88 @@ _gridless_translation_speed = 3.0
 _gridless_friction = 9.0
 _debug_shapes = [NodePath("Camera3D/Debug Cam Position"), NodePath("Camera3D/Debug Cam Look Direction"), NodePath("Player Collision Body/Debug Body Shape"), NodePath("Debug Step CollisionPt")]
 
-[node name="Player Collision Body" type="CollisionShape3D" parent="."]
+[node name="Player Collision Body" type="CollisionShape3D" parent="." unique_id=249778954]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("CapsuleShape3D_reoop")
 
-[node name="Debug Body Shape" type="MeshInstance3D" parent="Player Collision Body"]
+[node name="Debug Body Shape" type="MeshInstance3D" parent="Player Collision Body" unique_id=517800321]
 visible = false
 layers = 524288
 mesh = SubResource("CapsuleMesh_0nu4v")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=652950801]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0697947, 0.65)
 cull_mask = 524287
 current = true
 near = 0.4
 
-[node name="CapturedMouseRay" type="RayCast3D" parent="Camera3D" node_paths=PackedStringArray("_camera")]
+[node name="CapturedMouseRay" type="RayCast3D" parent="Camera3D" unique_id=694970535 node_paths=PackedStringArray("_camera")]
 target_position = Vector3(0, 0, -20)
 collision_mask = 7
 script = ExtResource("2_sxlqi")
 _camera = NodePath("..")
 
-[node name="Debug Cam Position" type="MeshInstance3D" parent="Camera3D"]
+[node name="Debug Cam Position" type="MeshInstance3D" parent="Camera3D" unique_id=956402569]
 layers = 524288
 mesh = SubResource("SphereMesh_aoiyr")
 
-[node name="Debug Cam Look Direction" type="MeshInstance3D" parent="Camera3D"]
+[node name="Debug Cam Look Direction" type="MeshInstance3D" parent="Camera3D" unique_id=1056326842]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.19999999)
 layers = 524288
 mesh = SubResource("CylinderMesh_60w1x")
 
-[node name="Cast Forward" type="ShapeCast3D" parent="."]
+[node name="Cast Forward" type="ShapeCast3D" parent="." unique_id=428773777]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95000005, -0.4)
 shape = ExtResource("1_52vux")
 target_position = Vector3(0, 0, -1.4)
 
-[node name="Cast Left" type="ShapeCast3D" parent="."]
+[node name="Cast Left" type="ShapeCast3D" parent="." unique_id=220809817]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.95000005, 0)
 shape = ExtResource("1_52vux")
 target_position = Vector3(-1.4, 0, 0)
 
-[node name="Cast Backward" type="ShapeCast3D" parent="."]
+[node name="Cast Backward" type="ShapeCast3D" parent="." unique_id=1919981056]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95000005, 0.4)
 shape = ExtResource("1_52vux")
 target_position = Vector3(0, 0, 1.4)
 
-[node name="Cast Right" type="ShapeCast3D" parent="."]
+[node name="Cast Right" type="ShapeCast3D" parent="." unique_id=1454541202]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.95000005, 0)
 shape = ExtResource("1_52vux")
 target_position = Vector3(1.4, 0, 0)
 
-[node name="Toolbelt" type="Node3D" parent="." node_paths=PackedStringArray("_tool_lookup")]
+[node name="Toolbelt" type="Node3D" parent="." unique_id=1119354965 node_paths=PackedStringArray("_tool_lookup")]
 script = ExtResource("3_4jfb6")
 _tool_lookup = {
 1: NodePath("Pickax")
 }
 
-[node name="Pickax" type="Node3D" parent="Toolbelt" node_paths=PackedStringArray("_anim", "_caster", "_player")]
+[node name="Pickax" type="Node3D" parent="Toolbelt" unique_id=707417117 node_paths=PackedStringArray("_anim", "_caster", "_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5396133, 1.0443099, 0.0020033717)
 script = ExtResource("4_yevqy")
 _anim = NodePath("AnimationPlayer")
 _caster = NodePath("../../PickAxCast")
 _player = NodePath("../..")
 
-[node name="pickax" parent="Toolbelt/Pickax" instance=ExtResource("3_2djwe")]
-transform = Transform3D(0.9785364, 0, -0.20606756, 0.047923572, 0.9725813, 0.22757149, 0.20041719, -0.23256277, 0.9517077, 0, 0, 0.12537825)
+[node name="pickax" parent="Toolbelt/Pickax" unique_id=270627127 instance=ExtResource("3_2djwe")]
+transform = Transform3D(0.97853637, 0, -0.20606756, 0.04792357, 0.9725813, 0.22757149, 0.20041719, -0.23256277, 0.9517077, 0, 0, 0.12537825)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Toolbelt/Pickax"]
-libraries = {
-&"": SubResource("AnimationLibrary_460ac")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Toolbelt/Pickax" unique_id=692295408]
+libraries/ = SubResource("AnimationLibrary_460ac")
 
-[node name="PickAxCast" type="ShapeCast3D" parent="."]
+[node name="PickAxCast" type="ShapeCast3D" parent="." unique_id=1460132122]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.013127, -0.25996527)
 shape = SubResource("SphereShape3D_yevqy")
 target_position = Vector3(0, -0.4, -2.5)
 collision_mask = 7
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=2027711003]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1028626, 0.86164474)
 layers = 7
 light_color = Color(0.8043004, 0.5058316, 0.35971963, 1)
 light_energy = 0.6
 
-[node name="Step Caster" type="ShapeCast3D" parent="." node_paths=PackedStringArray("_translation_testers", "_debug_shape")]
+[node name="Step Caster" type="ShapeCast3D" parent="." unique_id=2081488253 node_paths=PackedStringArray("_translation_testers", "_debug_shape")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
 enabled = false
 shape = ExtResource("1_52vux")
@@ -243,7 +241,7 @@ step_distance = 0.25
 min_clearing_above = 0.15
 _debug_shape = NodePath("../Debug Step CollisionPt")
 
-[node name="Debug Step CollisionPt" type="MeshInstance3D" parent="."]
+[node name="Debug Step CollisionPt" type="MeshInstance3D" parent="." unique_id=881636487]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0.25)
 layers = 524288
 mesh = SubResource("SphereMesh_460ac")

@@ -29,9 +29,13 @@ func _handle_player_ready(player: PhysicsGridPlayerController) -> void:
 func _handle_look_at_shapesbox() -> void:
     _setup_dialogic("shape sorting toy", PhysicsGridPlayerController.last_connected_player)
 
-func _handle_before_deposit_key(_total: int, _key: ToolKey.KeyVariant) -> void:
-    # TODO
-    pass
+func _handle_before_deposit_key(total: int, key: ToolKey.KeyVariant) -> void:
+    if !Dialogic.VAR.set_variable("Teddy.total_keys_deposited", total):
+        push_error("failed to set total keys deposited")
+    if !Dialogic.VAR.set_variable("Teddy.deposited_key", ToolKey.KeyVariant.find_key(key)):
+        push_error("failed to set deposited key")
+
+    _setup_dialogic("deposit key", PhysicsGridPlayerController.last_connected_player)
 
 func _inc_teddy_int_variable(variable: String, default_value: int = 0) -> void:
     var value: int = Dialogic.VAR.get_variable("Teddy.%s" % variable, default_value)
@@ -90,9 +94,16 @@ func _handle_signal_event(evt: Variant) -> void:
                 Dialogic.paused = false
             "look_away":
                 PhysicsGridPlayerController.last_connected_player.defocus_on(self, look_away_ease_duration)
+            "grounded":
+                _show_demo_end = true
+
+var _show_demo_end: bool = false
 
 func _end_conversation() -> void:
     var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
     player.defocus_on(self, look_away_ease_duration)
     player.remove_cinematic_blocker(self)
     Dialogic.signal_event.disconnect(_handle_signal_event)
+
+    if _show_demo_end:
+        __SignalBus.on_demo_end.emit()
