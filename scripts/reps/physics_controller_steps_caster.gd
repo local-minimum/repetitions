@@ -104,7 +104,7 @@ func display_debug_not_hitting() -> void:
             var mat: StandardMaterial3D = _debug_shape.get_active_material(0)
             mat.albedo_color = Color.BLACK
 
-func can_step(data: Dictionary[StepData, Vector3] = {}) -> bool:
+func can_step(data: Dictionary[StepData, Vector3] = {}, include_flats: bool = false) -> bool:
     force_shapecast_update()
     if !is_colliding():
         display_debug_not_hitting()
@@ -116,7 +116,7 @@ func can_step(data: Dictionary[StepData, Vector3] = {}) -> bool:
 
     if body != null && is_instance_valid(body) && body.is_inside_tree():
         var projection: float = (pt - body.global_position).dot(up_global)
-        if projection <= ignore_step_height && projection >= -ignore_step_height || projection > step_height_max || projection < -step_down_max:
+        if (!include_flats && projection <= ignore_step_height && projection >= -ignore_step_height) || projection > step_height_max || projection < -step_down_max:
             if _debug_shape != null:
                 var mat: StandardMaterial3D = _debug_shape.get_active_material(0)
                 if projection <= -ignore_step_height:
