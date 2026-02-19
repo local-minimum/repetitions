@@ -29,35 +29,35 @@ elif {Teddy.rng} == 0.7:
 else:
 	teddy: Nooo!! 🥹 #id:1a
 [end_timeline]
-label blocked door (Blocked Door)
+label blocked door (Blocked Door) #id:1b
 if {Teddy.attempted_blocked_doors} == 1.0:
-	teddy: Did you know... that door is blocked.
-	teddy: Who could have known those planks would be in the way??
+	teddy: Did you know... that door is blocked. #id:1c
+	teddy: Who could have known those planks would be in the way?? #id:1d
 elif {Teddy.attempted_blocked_doors} == 2.0:
-	teddy: I know, I know. You want to go places and see the world and all that.
-	teddy: Well if you head over to the terminal, in the middle of the room, then I'm sure you'll figure it out.
+	teddy: I know, I know. You want to go places and see the world and all that. #id:1e
+	teddy: Well if you head over to the terminal, in the middle of the room, then I'm sure you'll figure it out. #id:1f
 else:
-	teddy: You know what to do, you just get a kick out of hitting your head against walls right?
+	teddy: You know what to do, you just get a kick out of hitting your head against walls right? #id:20
 [end_timeline]
-label train (Train)
+label train (Train) #id:21
 if {Teddy.engine_clicks} == 1.0:
-	teddy: Chuu-chuu [aa=1]
+	teddy: Chuu-chuu [aa=1] #id:22
 elif {Teddy.engine_clicks} == 2.0:
-	teddy: Trains are fun! Especially when they go backwards...
-	teddy: ...off a big cliff
+	teddy: Trains are fun! Especially when they go backwards... #id:23
+	teddy: ...off a big cliff #id:24
 elif {Teddy.engine_clicks} < 5.0:
-	teddy: Chuu-chuu [aa=1]
+	teddy: Chuu-chuu [aa=1] #id:25
 elif {Teddy.engine_clicks} == 6.0:
-	teddy: Chuu-chuu motherfucker! [aa=1]
+	teddy: Chuu-chuu motherfucker! [aa=1] #id:26
 else:
-	teddy: Oh trains! [aa=1]
+	teddy: Oh trains! [aa=1] #id:27
 [end_timeline]
-label deposit key (Deposit Key)
+label deposit key (Deposit Key) #id:28
 if {Teddy.deposited_key} == "FLOPPY_KEY":
-	teddy: You naughty, naughty child! [pause=0.5] That was locked away for a reason.
-	teddy: You shouldn't have done that. You really shouldn't have done that.
+	teddy: You naughty, naughty child! [pause=0.5] That was locked away for a reason. #id:29
+	teddy: You shouldn't have done that. You really shouldn't have done that. #id:2a
 if {Teddy.deposited_key} == 1.0:
-	teddy: I'm sorry. [pause=0.5] I wish it didn't have to come to this. [pause=0.5] But you made me do this...
-	teddy: ...YOU ARE GROUNDED! ☹️
+	teddy: I'm sorry. [pause=0.5] I wish it didn't have to come to this. [pause=0.5] But you made me do this... #id:2b
+	teddy: ...YOU ARE GROUNDED! ☹️ #id:2c
 	[signal arg="grounded"]
 [end_timeline]

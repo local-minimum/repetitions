@@ -5,6 +5,24 @@ Text/12/text,Did you know you talk in your sleep?! 🫠,Har du koll på att du p
 Text/14/text,Embarrasing!!!,Pinsamt!!!
 Label/16/display_name,Shape Sorting Toy,Klossorteringsleksak
 Text/17/text,No! Don't touch that!,Nej! Låt den vara!
-Text/18/text,"We do not, absolutely not, play with that one","Vi leker absolut inte med den där"
+Text/18/text,"We do not, absolutely not, play with that one",Vi leker absolut inte med den där
 Text/19/text,Put IT back!,Lägg tillbaka den!
 Text/1a/text,Nooo!! 🥹,Neeej!! 🥹
+Label/1b/display_name,Blocked Door,Blockerad dörr
+Text/1c/text,Did you know...[paused=0.5] that door is blocked.,Jag vet inte om du märkte...[pause=0.5] men den dörren är blockerad.
+Text/1d/text,Who could have known those planks would be in the way??,Vem skulle kunnat tro att dom plankorna skulle blockera vägen.
+Text/1e/text,"I know, I know. You want to go places and see the world and all that.","Jag vet, jag vet. Du vill ta dig ut, upptäcka världen och allt det där."
+Text/1f/text,"Well if you head over to the terminal, in the middle of the room, then I'm sure you'll figure it out.","OK, men om du makar dig över till terminalen i mitten av rummet så är jag säker på att du kan klura ut det."
+Text/20/text,"You know what to do, you just get a kick out of hitting your head against walls right?","Du vet vad du behöver göra. Du bara gillar att springa med huvet rakt in i väggen, eller hur?"
+Label/21/display_name,Train,Tåg
+Text/22/text,Chuu-chuu [aa=1],Tuut-tuut [aa=1]
+Text/23/text,Trains are fun! Especially when they go backwards...,Tåg är så roliga! Särskilt när de åker baklänges...
+Text/24/text,...off a big cliff,...ut för ett högt stup
+Text/25/text,Chuu-chuu [aa=1],Tuut-tuut [aa=1]
+Text/26/text,Chuu-chuu motherfucker! [aa=1],Tuut-tuut skitstövel! [aa=1]
+Text/27/text,Oh trains! [aa=1],Ååh tåg! [aa=1]
+Label/28/display_name,Deposit Key,Lämna Nyckel
+Text/29/text,"You naughty, naughty child! [pause=0.5] That was locked away for a reason.","Ditt olydiga, olydiga barn! [pause=0.5] Det där va undanlåst av en anledning."
+Text/2a/text,You shouldn't have done that. You really shouldn't have done that.,Du borde inte gjort det där. Du borde verkligen inte ha gjort det där.
+Text/2b/text,I'm sorry. [pause=0.5] I wish it didn't have to come to this. [pause=0.5] But you made me do this...,Jag e verkligen ledsen. [pause=0.5] Jag önskar att jag inte hade behövt göra det här. [pause=0.5] Men du tvingar mig...
+Text/2c/text,...YOU ARE GROUNDED! ☹️,,...DU HAR UTEGÅNGSFÖRBUD! ☹️,
