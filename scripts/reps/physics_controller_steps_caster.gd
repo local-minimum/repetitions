@@ -108,6 +108,7 @@ func can_step(data: Dictionary[StepData, Vector3] = {}, include_flats: bool = fa
     force_shapecast_update()
     if !is_colliding():
         display_debug_not_hitting()
+        print_debug("Hit nothing")
         return false
 
     var pt: Vector3 = get_collision_point(0)

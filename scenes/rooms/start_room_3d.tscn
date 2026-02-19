@@ -640,6 +640,7 @@ speed = 0.75
 current_track = NodePath("../TrainTracks/Track To Ramp")
 vertical_offset = -0.05
 travel_forward = false
+travel_in_reverse = false
 
 [node name="RoomSides" type="Node3D" parent="Geometry" unique_id=1031423087]
 

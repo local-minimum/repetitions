@@ -67,6 +67,8 @@ var camera: Camera3D:
 @export_range(0, 1) var _refuse_distance_forward: float = 0.2
 @export_range(0, 1) var _refuse_distance_other: float = 0.1
 
+@export var _gridded_fudge_distance: float = 0.25
+
 @export var _gridless_translation_speed: float = 5.0
 @export var _gridless_rotation_speed: float = 0.8
 @export var _gridless_friction: float = 7.0
@@ -367,6 +369,38 @@ func _normalize_gridded_translation_direction(movement: Movement.MovementType, d
 
 const _FLATNESS_THRESHOLD: float = 0.1 * PI
 
+func _test_step(
+    step_data:  Dictionary[PhysicsControllerStepCaster.StepData, Vector3],
+    planar_delta: Vector3,
+    fudge: float = 0.0
+) -> bool:
+    if _stepper.can_step(step_data, true):
+        if step_data[PhysicsControllerStepCaster.StepData.NORMAL].angle_to(Vector3.UP) > floor_max_angle:
+            if fudge > 0.0:
+                _caster_origin.global_position -= planar_delta.normalized() * fudge
+                if _test_step(step_data, planar_delta, 0.0):
+                    return true
+            print_debug("Failed step from %s at %s due to angle %s, player at %s" % [
+                _caster_origin.global_position,
+                step_data,
+                step_data[PhysicsControllerStepCaster.StepData.NORMAL].angle_to(Vector3.UP),
+                global_position
+            ])
+            return false
+
+
+        _caster_origin.global_position.y = step_data[PhysicsControllerStepCaster.StepData.POINT].y
+    else:
+        if fudge > 0.0:
+            _caster_origin.global_position -= planar_delta.normalized() * fudge
+            # Attempt lenient position but no iterative fudging
+            return _test_step(step_data, planar_delta, 0.0)
+
+        print_debug("Failed step from %s, player at %s" % [_caster_origin.global_position, global_position])
+        return false
+
+    return true
+
 func _attempt_gridded_translation2(movement: Movement.MovementType, direction: Vector3, resolution: int = 6) -> void:
     if _translation_tween && _translation_tween.is_running() || _rotation_tween && _rotation_tween.is_running():
         return
@@ -393,31 +427,20 @@ func _attempt_gridded_translation2(movement: Movement.MovementType, direction: V
     _caster_origin.position = Vector3.ZERO
     var y: float = global_position.y
     var failed: bool = false
+    var fudge: float = minf(_gridded_fudge_distance, (0.8 * planar_delta / float(resolution)).length())
     for idx: int in resolution:
         var step_data:  Dictionary[PhysicsControllerStepCaster.StepData, Vector3]
         _caster_origin.global_position = global_position + planar_delta * float(idx + 1) / float(resolution)
         _caster_origin.global_position.y = y
-
-        if _stepper.can_step(step_data, true):
-            if step_data[PhysicsControllerStepCaster.StepData.NORMAL].angle_to(Vector3.UP) > floor_max_angle:
-                failed = true
-                print_debug("Failed step from %s (#%s) at %s due to angle %s, player at %s" % [
-                    _caster_origin.global_position,
-                    idx,
-                    step_data,
-                    step_data[PhysicsControllerStepCaster.StepData.NORMAL].angle_to(Vector3.UP),
-                    global_position
-                ])
-                break
-
+        if _test_step(step_data, planar_delta, fudge if idx == resolution - 1 else 0.0):
             steps.append(step_data)
-            y = step_data[PhysicsControllerStepCaster.StepData.POINT].y
+            y = _caster_origin.global_position.y
         else:
             failed = true
-            print_debug("Failed step from %s (#%s), player at %s" % [_caster_origin.global_position, idx, global_position])
             break
 
     _caster_origin.position = Vector3.ZERO
+
     if failed:
         if steps.size() < 2:
             target = steps[-1][PhysicsControllerStepCaster.StepData.POINT]
@@ -440,6 +463,7 @@ func _attempt_gridded_translation2(movement: Movement.MovementType, direction: V
             norm.angle_to(Vector3.UP) > _FLATNESS_THRESHOLD ||
             prev_norm.angle_to(Vector3.UP) > _FLATNESS_THRESHOLD
         ):
+            # Flat or slope walk
             _translation_tween.tween_property(
                 self,
                 "global_position",

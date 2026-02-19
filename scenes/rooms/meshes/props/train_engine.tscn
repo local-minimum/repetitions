@@ -10,7 +10,7 @@
 albedo_color = Color(0.7, 0.14699998, 0.14699998, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lhet1"]
-size = Vector3(0.21601868, 0.40808105, 0.48529053)
+size = Vector3(0.21601868, 0.5713196, 0.48529053)
 
 [node name="Train Engine" type="Node3D" unique_id=2041730240 node_paths=PackedStringArray("_interaction_body")]
 script = ExtResource("1_0yx8r")
@@ -27,7 +27,7 @@ script = ExtResource("3_dtqq4")
 _root = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TrainEngineBody/StaticBody3D" unique_id=114420846]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00035858154, 0.19830322, -0.004486084)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00035858154, 0.2799225, -0.004486084)
 shape = SubResource("BoxShape3D_lhet1")
 
 [node name="TrainEngineWheel" type="MeshInstance3D" parent="." unique_id=717429835]

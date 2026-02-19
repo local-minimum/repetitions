@@ -44,7 +44,7 @@ if {Teddy.engine_clicks} == 1.0:
 	teddy: Chuu-chuu [aa=1]
 elif {Teddy.engine_clicks} == 2.0:
 	teddy: Trains are fun! Especially when they go backwards...
-	teddy: ...out over a big cliff
+	teddy: ...off a big cliff
 elif {Teddy.engine_clicks} < 5.0:
 	teddy: Chuu-chuu [aa=1]
 elif {Teddy.engine_clicks} == 6.0:
