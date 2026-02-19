@@ -79,3 +79,8 @@ func get_offset_overshoot(offset: float) -> float:
 
 func get_offset_from_end(offset: float) -> float:
     return curve.get_baked_length() - offset
+
+func get_connection_mode(point: PointData) -> ConnectionMode:
+    if point.at_edge:
+        return start_mode if point.at_start else end_mode
+    return ConnectionMode.NONE

@@ -9,9 +9,16 @@ class_name TrackFollow
         snap_to_track()
 
 @export var offset_tolerance: float = 0.1
+## If the thing is moving forwards along the track direction or not
 @export var travel_forward: bool = true:
     set(value):
         travel_forward = value
+        snap_to_track()
+
+## If the thing is backing or going forward relative to its own direction
+@export var travel_in_reverse: bool = false:
+    set(value):
+        travel_in_reverse = value
         snap_to_track()
 
 var _position: Track.PointData
@@ -46,7 +53,7 @@ func _sync_position(force: bool) -> void:
             _position.forward,
             global_basis.y,
         )
-        gb = gb.rotated(Vector3.UP, 0.0 if travel_forward else PI).orthonormalized()
+        gb = gb.rotated(Vector3.UP, 0.0 if travel_forward == !travel_in_reverse else PI).orthonormalized()
 
 
         global_basis = gb

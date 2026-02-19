@@ -13,7 +13,7 @@ var cinematic: bool:
         return cinematic || !_cinematic_blockers.is_empty()
 
     set(value):
-        var _old_value = cinematic
+        var _old_value: bool = cinematic
         if value:
             push_warning("Setting cinematic this way means someone else can remove it, use add/remove cinematic blockers instead")
         _update_cinematic(_old_value)

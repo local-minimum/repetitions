@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://ba501yapmfmai"]
+[gd_scene format=3 uid="uid://ba501yapmfmai"]
 
 [ext_resource type="Script" uid="uid://cg01phtebwgpd" path="res://scripts/reps/track_engine.gd" id="1_0yx8r"]
 [ext_resource type="ArrayMesh" uid="uid://b3k3fjdw08152" path="res://scenes/rooms/meshes/props/train_engine_body.obj" id="1_ecvkw"]
 [ext_resource type="ArrayMesh" uid="uid://cngehil7v550b" path="res://scenes/rooms/meshes/props/train_engine_wheel.obj" id="2_lhet1"]
+[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="3_dtqq4"]
 [ext_resource type="Material" uid="uid://clle4123a7bt" path="res://scenes/rooms/meshes/props/train_engine_wheel.material" id="3_lhet1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lhet1"]
@@ -11,46 +12,50 @@ albedo_color = Color(0.7, 0.14699998, 0.14699998, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_lhet1"]
 size = Vector3(0.21601868, 0.40808105, 0.48529053)
 
-[node name="Node3D" type="Node3D"]
+[node name="Train Engine" type="Node3D" unique_id=2041730240 node_paths=PackedStringArray("_interaction_body")]
 script = ExtResource("1_0yx8r")
+_interaction_body = NodePath("TrainEngineBody/StaticBody3D")
+travel_in_reverse = null
 metadata/_custom_type_script = "uid://kv6fuadcww5"
 
-[node name="TrainEngineBody" type="MeshInstance3D" parent="."]
+[node name="TrainEngineBody" type="MeshInstance3D" parent="." unique_id=1677898846]
 mesh = ExtResource("1_ecvkw")
 surface_material_override/0 = SubResource("StandardMaterial3D_lhet1")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="TrainEngineBody"]
+[node name="StaticBody3D" type="StaticBody3D" parent="TrainEngineBody" unique_id=1010942013 node_paths=PackedStringArray("_root")]
+script = ExtResource("3_dtqq4")
+_root = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainEngineBody/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainEngineBody/StaticBody3D" unique_id=114420846]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00035858154, 0.19830322, -0.004486084)
 shape = SubResource("BoxShape3D_lhet1")
 
-[node name="TrainEngineWheel" type="MeshInstance3D" parent="."]
+[node name="TrainEngineWheel" type="MeshInstance3D" parent="." unique_id=717429835]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.104738206, 0.069717586, 0)
 mesh = ExtResource("2_lhet1")
 surface_material_override/0 = ExtResource("3_lhet1")
 
-[node name="TrainEngineWheel2" type="MeshInstance3D" parent="."]
+[node name="TrainEngineWheel2" type="MeshInstance3D" parent="." unique_id=1435798407]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.104738206, 0.069717586, 0.18886808)
 mesh = ExtResource("2_lhet1")
 surface_material_override/0 = ExtResource("3_lhet1")
 
-[node name="TrainEngineWheel3" type="MeshInstance3D" parent="."]
+[node name="TrainEngineWheel3" type="MeshInstance3D" parent="." unique_id=754886425]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.104738206, 0.069717586, -0.18736789)
 mesh = ExtResource("2_lhet1")
 surface_material_override/0 = ExtResource("3_lhet1")
 
-[node name="TrainEngineWheel4" type="MeshInstance3D" parent="."]
+[node name="TrainEngineWheel4" type="MeshInstance3D" parent="." unique_id=947712872]
 transform = Transform3D(-1, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, -1, -0.10599439, 0.069717586, 0.0010001316)
 mesh = ExtResource("2_lhet1")
 surface_material_override/0 = ExtResource("3_lhet1")
 
-[node name="TrainEngineWheel5" type="MeshInstance3D" parent="."]
+[node name="TrainEngineWheel5" type="MeshInstance3D" parent="." unique_id=519327707]
 transform = Transform3D(-1, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, -1, -0.1059944, 0.069717586, -0.18786795)
 mesh = ExtResource("2_lhet1")
 surface_material_override/0 = ExtResource("3_lhet1")
 
-[node name="TrainEngineWheel6" type="MeshInstance3D" parent="."]
+[node name="TrainEngineWheel6" type="MeshInstance3D" parent="." unique_id=456770252]
 transform = Transform3D(-1, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, -1, -0.10599437, 0.069717586, 0.18836802)
 mesh = ExtResource("2_lhet1")
 surface_material_override/0 = ExtResource("3_lhet1")

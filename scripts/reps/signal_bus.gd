@@ -32,4 +32,6 @@ signal on_use_pickax(target: Node3D, hack_direction: CardinalDirections.Cardinal
 signal on_trophy_stolen_from_terminal(terminal: PlannerTerminal)
 
 signal on_blocked_door_interaction(interaction_body: InteractionBody3D)
+signal on_train_interaction(engine: TrackEngine)
+
 @warning_ignore_restore("unused_signal")

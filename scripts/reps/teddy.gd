@@ -15,7 +15,10 @@ func _enter_tree() -> void:
         push_error("Failed to connect before deposited key")
 
     if __SignalBus.on_blocked_door_interaction.connect(_handle_interact_with_blocked_door) != OK:
-        push_error("Failed to connec to blocked door interaction")
+        push_error("Failed to connect to blocked door interaction")
+
+    if __SignalBus.on_train_interaction.connect(_handle_train_interaction) != OK:
+        push_error("Failed to connect train interaction")
 
 func _ready() -> void:
     _start_of_day_dialogues(PhysicsGridPlayerController.last_connected_player)
@@ -30,18 +33,26 @@ func _handle_before_deposit_key(_total: int, _key: ToolKey.KeyVariant) -> void:
     # TODO
     pass
 
+func _inc_teddy_int_variable(variable: String, default_value: int = 0) -> void:
+    var value: int = Dialogic.VAR.get_variable("Teddy.%s" % variable, default_value)
+    if !Dialogic.VAR.set_variable(
+        "Teddy.%s" % variable,
+        value + 1,
+    ):
+        push_error("Failed to increment Teddy.%s" % variable)
+
+func _handle_train_interaction(engine: TrackEngine) -> void:
+    #print_debug("I spy a train %s in %s" % [__GlobalGameState.current_player_room, Room3D.find_room(self)])
+    if engine.running && __GlobalGameState.current_player_room == Room3D.find_room(self):
+        _inc_teddy_int_variable("engine_clicks")
+        _setup_dialogic("train", PhysicsGridPlayerController.last_connected_player)
+
 func _handle_interact_with_blocked_door(door: InteractionBody3D) -> void:
     if (
         Room3D.find_room(door) == __GlobalGameState.current_player_room &&
         __GlobalGameState.current_player_room == Room3D.find_room(self)
     ):
-        var attempts: int = Dialogic.VAR.get_variable("Teddy.attempted_blocked_doors", 0)
-        if !Dialogic.VAR.set_variable(
-            "Teddy.attempted_blocked_doors",
-            attempts + 1,
-        ):
-            push_error("Failed to increment attempted blocked doors")
-
+        _inc_teddy_int_variable("attempted_blocked_doors")
         _setup_dialogic("blocked door", PhysicsGridPlayerController.last_connected_player)
 
 var _greeted: bool
