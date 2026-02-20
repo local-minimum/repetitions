@@ -52,52 +52,32 @@ var camera: Camera3D:
     get():
         return _camera
 
+@export var _gridless_controller: GridlessController
+@export var _gridded_controller: GriddedController
+
 @export var _captured_pointer_eventer: CapturedMouseEventer
 
-@export var _caster_origin: Node3D
-@export var _stepper: PhysicsControllerStepCaster
+@export var caster_origin: Node3D
+@export var stepper: PhysicsControllerStepCaster
 
 @export var _forward: ShapeCast3D
 @export var _left: ShapeCast3D
 @export var _right: ShapeCast3D
 @export var _backward: ShapeCast3D
 
-@export_range(0, 1) var _translation_duration: float = 0.3
-@export_range(0, 1) var _rotation_duration: float = 0.25
-@export_range(0, 1) var _refuse_distance_forward: float = 0.2
-@export_range(0, 1) var _refuse_distance_other: float = 0.1
-
-@export var _gridded_fudge_distance: float = 0.25
-
-@export var _gridless_translation_speed: float = 5.0
-@export var _gridless_rotation_speed: float = 0.8
-@export var _gridless_friction: float = 7.0
-@export var _mouse_sensitivity_yaw: float = 0.003
-@export var _mouse_sensistivity_pitch: float = 0.003
-@export var _gridless_camera_near: float = 0.05
-@export var _gridless_camera_fov: float = 70
-
 @export var _camera_to_gridless_time: float = 0.2
 @export var _camera_to_gridded_time: float = 1.5
-@export var _allow_vertical_movement: bool
 
 @export var _focus_default_distance: float = 0.75
 @export var _focus_fov: float = 60
 
 @export var _debug_shapes: Array[Node3D]
-@export var _show_debug_shapes: bool = false:
+@export var show_debug_shapes: bool = false:
     set(value):
-        _show_debug_shapes = value
+        show_debug_shapes = value
         _sync_debug_shape_visibilities()
 
-var _gridded_cam_offset: Vector3
-var _gridless_cam_offset: Vector3
-var _gridded_cam_near: float
-var _gridded_cam_fov: float
-
 var _cam_slide_tween: Tween
-var _translation_tween: Tween
-var _rotation_tween: Tween
 
 var _translation_stack: Array[Movement.MovementType]
 var _translation_pressed: Dictionary[Movement.MovementType, bool]
@@ -118,9 +98,9 @@ var gridless: bool:
                     _cam_slide_tween.kill()
                 _cam_slide_tween = create_tween().set_parallel()
                 @warning_ignore_start("return_value_discarded")
-                _cam_slide_tween.tween_property(_camera, "position", _gridless_cam_offset, _camera_to_gridless_time)
-                _cam_slide_tween.tween_property(_camera, "near", _gridless_camera_near, _camera_to_gridless_time)
-                _cam_slide_tween.tween_property(_camera, "fov", _gridless_camera_fov, _camera_to_gridless_time)
+                _cam_slide_tween.tween_property(_camera, "position", _gridless_controller.cam_offset, _camera_to_gridless_time)
+                _cam_slide_tween.tween_property(_camera, "near", _gridless_controller.camera_near, _camera_to_gridless_time)
+                _cam_slide_tween.tween_property(_camera, "fov", _gridless_controller.camera_fov, _camera_to_gridless_time)
                 @warning_ignore_restore("return_value_discarded")
             else:
                 _captured_pointer_eventer.active = false
@@ -128,28 +108,17 @@ var gridless: bool:
                     _cam_slide_tween.kill()
                 _cam_slide_tween = create_tween().set_parallel()
                 @warning_ignore_start("return_value_discarded")
-                _cam_slide_tween.tween_property(_camera, "position", _gridded_cam_offset, _camera_to_gridded_time)
-                _cam_slide_tween.tween_property(_camera, "near", _gridded_cam_near, _camera_to_gridded_time)
-                _cam_slide_tween.tween_property(_camera, "fov", _gridded_cam_fov, _camera_to_gridded_time)
+                _cam_slide_tween.tween_property(_camera, "position", _gridded_controller.cam_offset, _camera_to_gridded_time)
+                _cam_slide_tween.tween_property(_camera, "near", _gridded_controller.cam_near, _camera_to_gridded_time)
+                _cam_slide_tween.tween_property(_camera, "fov", _gridded_controller.cam_fov, _camera_to_gridded_time)
                 _cam_slide_tween.tween_property(_camera, "rotation:x", 0, _camera_to_gridded_time)
                 @warning_ignore_restore("return_value_discarded")
-                # Force alignment with grid.
-                # NOTE: move needs to happend before turn
-                _attempt_transition_to_gridded_translation()
-                _attempt_turn(0.0)
+                _gridded_controller.transition_into_gridded()
+
 
         gridless = value
 
 func _ready() -> void:
-    _gridded_cam_offset = _camera.position
-
-    _gridless_cam_offset = _camera.position
-    _gridless_cam_offset.x = 0
-    _gridless_cam_offset.z = 0
-
-    _gridded_cam_fov = _camera.fov
-    _gridded_cam_near = _camera.near
-
     __SignalBus.on_physics_player_ready.emit(self)
     _captured_pointer_eventer.active = gridless
     _sync_debug_shape_visibilities()
@@ -196,15 +165,13 @@ func _input(event: InputEvent) -> void:
     if handled && !cinematic:
         get_viewport().set_input_as_handled()
 
-    if gridless && event is InputEventMouseMotion && !cinematic:
-        var mouse: InputEventMouseMotion = event
-        rotation.y -= mouse.relative.x * _mouse_sensitivity_yaw
-        var new_pitch: float = _camera.rotation.x - mouse.relative.y * _mouse_sensistivity_pitch
-        _camera.rotation.x = clampf(new_pitch, -PI * 2/3, PI * 2/3)
+    if gridless && !cinematic:
+        _gridless_controller.handle_turn(event)
+
 
 func _sync_debug_shape_visibilities() -> void:
     for shape: Node3D in _debug_shapes:
-        shape.visible = _show_debug_shapes
+        shape.visible = show_debug_shapes
 
 func _push_ontop_of_movement_stack(movement: Movement.MovementType) -> void:
     if cinematic:
@@ -229,283 +196,18 @@ func _physics_process(delta: float) -> void:
         return
 
     if gridless:
-        _gridless_movement(delta)
+        _gridless_controller.handle_movement(delta, _translation_stack)
     else:
-        _gridfull_movement()
+        _gridded_controller.handle_movement(_translation_stack)
 
-func _gridless_movement(delta: float) -> void:
-    var direction: Vector3 = Vector3.ZERO
-    if !_translation_stack.is_empty():
+func reset_caster_origin() -> void:
+    stepper.step_distance = 0
+    stepper.global_step_direction = Vector3.ZERO
+    caster_origin.position = Vector3.ZERO
 
-        for movement: Movement.MovementType in _translation_stack:
-            match movement:
-                Movement.MovementType.FORWARD:
-                    direction += -basis.z
-                Movement.MovementType.STRAFE_LEFT:
-                    direction += -basis.x
-                Movement.MovementType.STRAFE_RIGHT:
-                    direction += basis.x
-                Movement.MovementType.BACK:
-                    direction += basis.z
-                _:
-                    push_error("Player %s's movement %s is not a valid translation" % [name, Movement.name(movement)])
-        if direction.length_squared() > 1.0:
-            direction = direction.normalized()
-
-        if direction.length_squared() > 0.0:
-
-            var v: Vector3 = direction * _gridless_translation_speed
-            velocity.x = v.x
-            velocity.z = v.z
-
-    else:
-        var v: Vector3 = velocity.lerp(Vector3.ZERO, _gridless_friction * delta)
-        velocity.x = v.x
-        velocity.z = v.z
-
-    var angle: float = 0.0
-    if Input.is_action_pressed("crawl_turn_left"):
-        angle = TAU * delta * _gridless_rotation_speed
-    elif Input.is_action_pressed("crawl_turn_right"):
-        angle = -TAU * delta * _gridless_rotation_speed
-
-    if angle != 0.0:
-        basis = transform.rotated(Vector3.UP, angle).basis
-
-    if move_and_slide() && direction.length_squared() > 0:
-        # Collides with something
-        var step_data: Dictionary[PhysicsControllerStepCaster.StepData, Vector3] = {}
-        _caster_origin.position = Vector3.ZERO
-        _stepper.global_step_direction = direction
-        _stepper.step_distance = (direction * velocity).length() * delta
-
-        if _stepper.can_step_up(step_data):
-            global_position = step_data[PhysicsControllerStepCaster.StepData.CENTER_POINT]
-
-    elif _show_debug_shapes:
-        _stepper.display_debug_not_hitting()
-
-    if !is_on_floor():
-        velocity += get_gravity()
-
-func _gridfull_movement() -> void:
-    if !_translation_stack.is_empty():
-        var movement: Movement.MovementType = _translation_stack[0]
-        match movement:
-            Movement.MovementType.FORWARD:
-                _attempt_gridded_translation(movement, -global_basis.z)
-            Movement.MovementType.STRAFE_LEFT:
-                _attempt_gridded_translation(movement, -global_basis.x)
-            Movement.MovementType.STRAFE_RIGHT:
-                _attempt_gridded_translation(movement, global_basis.x)
-            Movement.MovementType.BACK:
-                _attempt_gridded_translation(movement, global_basis.z)
-            _:
-                push_error("Player %s's movement %s is not a valid translation" % [name, Movement.name(movement)])
-
-    if Input.is_action_just_pressed("crawl_turn_left"):
-        _attempt_turn(PI * 0.5)
-    elif Input.is_action_just_pressed("crawl_turn_right"):
-        _attempt_turn(-PI * 0.5)
-
-func _calculate_estimated_gridded_translation_target(
-    movement: Movement.MovementType = Movement.MovementType.NONE,
-    direction: Vector3 = Vector3.ZERO,
-) -> Vector3:
-    return(
-        builder.get_closest_global_neighbour_position(global_position, CardinalDirections.vector_to_direction(direction))
-        if movement != Movement.MovementType.NONE else
-        builder.get_closest_global_grid_position(global_position)
-    )
-
-func _normalize_gridded_translation_direction(movement: Movement.MovementType, direction: Vector3) -> Vector3:
-    if !_allow_vertical_movement && direction.y != 0.0:
-        print_debug("Removing y component of %s" % [direction])
-        direction.y = 0
-
-    if direction.length_squared() != 1.0:
-        print_debug("Direction %s needs normalization" % [direction])
-        if Movement.is_cardinal_translation(movement):
-            direction = VectorUtils.primary_directionf(direction)
-        else:
-            direction = direction.normalized()
-        print_debug("Normalized direction %s " % [direction])
-
-    return direction
-
-const _FLATNESS_THRESHOLD: float = 0.1 * PI
-
-func _test_step(
-    step_data:  Dictionary[PhysicsControllerStepCaster.StepData, Vector3],
-    planar_delta: Vector3,
-    fudge: float = 0.0
-) -> bool:
-    if _stepper.can_step(step_data, true):
-        if step_data[PhysicsControllerStepCaster.StepData.NORMAL].angle_to(Vector3.UP) > floor_max_angle:
-            if fudge > 0.0:
-                _caster_origin.global_position -= planar_delta.normalized() * fudge
-                if _test_step(step_data, planar_delta, 0.0):
-                    return true
-            print_debug("Failed step from %s at %s due to angle %s, player at %s" % [
-                _caster_origin.global_position,
-                step_data,
-                step_data[PhysicsControllerStepCaster.StepData.NORMAL].angle_to(Vector3.UP),
-                global_position
-            ])
-            return false
-
-
-        _caster_origin.global_position.y = step_data[PhysicsControllerStepCaster.StepData.CENTER_POINT].y
-    else:
-        if fudge > 0.0:
-            _caster_origin.global_position -= planar_delta.normalized() * fudge
-            # Attempt lenient position but no iterative fudging
-            return _test_step(step_data, planar_delta, 0.0)
-
-        print_debug("Failed step from %s, player at %s" % [_caster_origin.global_position, global_position])
-        return false
-
-    return true
-
-func _attempt_gridded_translation(movement: Movement.MovementType, direction: Vector3, resolution: int = 6) -> void:
-    if _translation_tween && _translation_tween.is_running() || _rotation_tween && _rotation_tween.is_running():
-        return
-
-    direction = _normalize_gridded_translation_direction(movement, direction)
-    var target: Vector3 = _calculate_estimated_gridded_translation_target(movement, direction)
-    direction = target - global_position
-    # Make direction planar, we'll deal with slopes later on
-    direction.y = 0
-
-    var planar_delta: Vector3 = Vector3(direction)
-    direction = direction.normalized()
-
-    print_debug("Attempting %s -> %s" % [global_position, target])
-    var steps: Array = [
-        {
-            PhysicsControllerStepCaster.StepData.POINT: global_position,
-            PhysicsControllerStepCaster.StepData.CENTER_POINT: global_position,
-            PhysicsControllerStepCaster.StepData.NORMAL: Vector3.UP,
-        }
-    ]
-
-    _stepper.step_distance = 0
-    _stepper.global_step_direction = direction
-    _caster_origin.position = Vector3.ZERO
-    var y: float = global_position.y
-    var failed: bool = false
-    var fudge: float = minf(_gridded_fudge_distance, (0.8 * planar_delta / float(resolution)).length())
-    for idx: int in resolution:
-        var step_data:  Dictionary[PhysicsControllerStepCaster.StepData, Vector3]
-        _caster_origin.global_position = global_position + planar_delta * float(idx + 1) / float(resolution)
-        _caster_origin.global_position.y = y
-        if _test_step(step_data, planar_delta, fudge if idx == resolution - 1 else 0.0):
-            steps.append(step_data)
-            y = _caster_origin.global_position.y
-        else:
-            failed = true
-            break
-
-    _caster_origin.position = Vector3.ZERO
-
-    if failed:
-        if steps.size() < 2:
-            target = steps[-1][PhysicsControllerStepCaster.StepData.CENTER_POINT]
-        var mid: Vector3 = global_position.lerp(target, _refuse_distance_forward if movement == Movement.MovementType.FORWARD else _refuse_distance_other)
-        _animate_refused_movement(movement, mid)
-        return
-
-    var part_duration: float = _translation_duration / (steps.size() - 1)
-    _translation_tween = create_tween()
-    var prev_norm: Vector3 = Vector3.UP
-    var prev_pt: Vector3 = global_position
-
-    @warning_ignore_start("return_value_discarded")
-    print_debug(steps)
-    for step: Dictionary in steps:
-        var pt: Vector3 = step[PhysicsControllerStepCaster.StepData.CENTER_POINT]
-        var norm: Vector3 = step[PhysicsControllerStepCaster.StepData.NORMAL]
-        if (
-            absf(pt.y - prev_pt.y) < _stepper.ignore_step_height ||
-            norm.angle_to(Vector3.UP) > _FLATNESS_THRESHOLD ||
-            prev_norm.angle_to(Vector3.UP) > _FLATNESS_THRESHOLD
-        ):
-            # Flat or slope walk
-            _translation_tween.tween_property(
-                self,
-                "global_position",
-                pt,
-                part_duration,
-            )
-        else:
-            # We need stairs animation type
-            _translation_tween.tween_property(
-                self,
-                "global_position:x",
-                pt.x,
-                part_duration,
-            )
-            _translation_tween.set_parallel()
-            _translation_tween.tween_property(
-                self,
-                "global_position:z",
-                pt.z,
-                part_duration,
-            )
-            _translation_tween.tween_property(
-                self,
-                "global_position:y",
-                pt.y,
-                part_duration,
-            ).set_ease(Tween.EASE_OUT if prev_pt.y < pt.y else Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
-            _translation_tween.set_parallel(false)
-
-    @warning_ignore_restore("return_value_discarded")
-    if _translation_tween.finished.connect(_handle_translation_end.bind(movement)) != OK:
-        push_warning("Failed to connect end of movement")
-        _handle_translation_end(movement)
-
-func _attempt_transition_to_gridded_translation() -> void:
-    if _translation_tween && _translation_tween.is_running() || _rotation_tween && _rotation_tween.is_running():
-        return
-
-    var target: Vector3 = _calculate_estimated_gridded_translation_target()
-
-    _translation_tween = create_tween()
-    @warning_ignore_start("return_value_discarded")
-    _translation_tween.tween_property(self, "global_position", target, _translation_duration)
-    @warning_ignore_restore("return_value_discarded")
-    if _translation_tween.finished.connect(_handle_translation_end.bind(Movement.MovementType.CENTER)) != OK:
-        push_warning("Failed to connect end of movement")
-        _handle_translation_end(Movement.MovementType.CENTER)
-
-func _handle_translation_end(movement: Movement.MovementType) -> void:
+func handle_translation_end(movement: Movement.MovementType) -> void:
     if !_translation_pressed.get(movement, false):
         _translation_stack.erase(movement)
-
-func _animate_refused_movement(movement: Movement.MovementType, mid: Vector3) -> void:
-    _translation_tween = create_tween()
-    @warning_ignore_start("return_value_discarded")
-    _translation_tween.tween_property(self, "global_position", mid, _translation_duration * 0.5)
-    _translation_tween.tween_property(self, "global_position", global_position, _translation_duration * 0.5)
-    @warning_ignore_restore("return_value_discarded")
-
-    if _translation_tween.finished.connect(_handle_translation_end.bind(movement)) != OK:
-        push_error("Failed to connect to translation tween end")
-        _handle_translation_end(movement)
-
-func _attempt_turn(angle: float) -> void:
-    if  _rotation_tween && _rotation_tween.is_running():
-        return
-
-    var t: Transform3D = global_transform.rotated(Vector3.UP, angle)
-    var target_global_rotation: Quaternion = builder.get_cardial_rotation(t.basis.get_rotation_quaternion())
-
-    _rotation_tween = create_tween()
-    @warning_ignore_start("return_value_discarded")
-    var tween_func: Callable = QuaternionUtils.create_tween_rotation_method(self)
-    _rotation_tween.tween_method(tween_func, global_transform.basis.get_rotation_quaternion(), target_global_rotation, _rotation_duration)
-    @warning_ignore_restore("return_value_discarded")
 
 ## Attempts to rotate the character so that it has a wall in the back and looking
 ## out over an open area
@@ -569,7 +271,7 @@ func focus_on(
     _cam_slide_tween = create_tween().set_parallel()
     @warning_ignore_start("return_value_discarded")
     _cam_slide_tween.tween_property(_camera, "global_position", expected, ease_duration)
-    _cam_slide_tween.tween_property(_camera, "near", _gridless_camera_near, ease_duration)
+    _cam_slide_tween.tween_property(_camera, "near", _gridless_controller.camera_near, ease_duration)
     _cam_slide_tween.tween_property(_camera, "fov", _focus_fov, ease_duration)
     _cam_slide_tween.tween_method(tw_rot_method, _camera.global_basis.get_rotation_quaternion(), Basis.looking_at(-offset).get_rotation_quaternion(), ease_duration)
     @warning_ignore_restore("return_value_discarded")
@@ -582,9 +284,9 @@ func defocus_on(obj: Node3D, ease_duration: float = 0.2) -> void:
     if _cam_slide_tween != null && _cam_slide_tween.is_running():
         _cam_slide_tween.kill()
 
-    var expected_near: float = _gridless_camera_near if gridless else _gridded_cam_near
-    var expected_fov: float = _gridless_camera_fov if gridless else _gridded_cam_fov
-    var expected: Vector3 = _gridless_cam_offset if gridless else _gridded_cam_offset
+    var expected_near: float = _gridless_controller.camera_near if gridless else _gridded_controller.cam_near
+    var expected_fov: float = _gridless_controller.camera_fov if gridless else _gridded_controller.cam_fov
+    var expected: Vector3 = _gridless_controller.cam_offset if gridless else _gridded_controller.cam_offset
 
     _cam_slide_tween = create_tween().set_parallel()
     @warning_ignore_start("return_value_discarded")

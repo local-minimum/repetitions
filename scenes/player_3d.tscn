@@ -2,9 +2,11 @@
 
 [ext_resource type="Shape3D" uid="uid://ccivye2pfod1q" path="res://scenes/player_cast_capsule.tres" id="1_52vux"]
 [ext_resource type="Script" uid="uid://gca7baymjcg6" path="res://scripts/reps/physics_gridplayer_controller.gd" id="1_reoop"]
+[ext_resource type="Script" uid="uid://cfju75ai11m4n" path="res://scripts/reps/gridless_controller.gd" id="2_ali1n"]
 [ext_resource type="Script" uid="uid://vbs5gbbsn6tv" path="res://addons/minimum_convenience/scripts/captured_mouse_eventer.gd" id="2_sxlqi"]
 [ext_resource type="PackedScene" uid="uid://j0cos57lmqyb" path="res://scenes/rooms/meshes/props/pickax.blend" id="3_2djwe"]
 [ext_resource type="Script" uid="uid://qk83bjxufdn0" path="res://scripts/reps/tools/toolbelt.gd" id="3_4jfb6"]
+[ext_resource type="Script" uid="uid://5qkpcuqohaaw" path="res://scripts/reps/gridded_controller.gd" id="3_aoiyr"]
 [ext_resource type="Script" uid="uid://d3kx3hrrig5b" path="res://scripts/reps/tools/equipped_pickax.gd" id="4_yevqy"]
 [ext_resource type="Script" uid="uid://x6uxf7lr5f1b" path="res://scripts/reps/physics_controller_steps_caster.gd" id="7_460ac"]
 
@@ -133,22 +135,30 @@ material = SubResource("StandardMaterial3D_460ac")
 radius = 0.1
 height = 0.2
 
-[node name="Player3d" type="CharacterBody3D" unique_id=942295760 node_paths=PackedStringArray("_camera", "_captured_pointer_eventer", "_caster_origin", "_stepper", "_forward", "_left", "_right", "_backward", "_debug_shapes")]
+[node name="Player3d" type="CharacterBody3D" unique_id=942295760 node_paths=PackedStringArray("_camera", "_gridless_controller", "_gridded_controller", "_captured_pointer_eventer", "caster_origin", "stepper", "_forward", "_left", "_right", "_backward", "_debug_shapes")]
 collision_layer = 2
 collision_mask = 7
 input_ray_pickable = false
 script = ExtResource("1_reoop")
 _camera = NodePath("Camera3D")
+_gridless_controller = NodePath("GridlessController")
+_gridded_controller = NodePath("GriddedController")
 _captured_pointer_eventer = NodePath("Camera3D/CapturedMouseRay")
-_caster_origin = NodePath("Casting Origin")
-_stepper = NodePath("Casting Origin/Step Caster")
+caster_origin = NodePath("Casting Origin")
+stepper = NodePath("Casting Origin/Step Caster")
 _forward = NodePath("Casting Origin/Cast Forward")
 _left = NodePath("Casting Origin/Cast Left")
 _right = NodePath("Casting Origin/Cast Right")
 _backward = NodePath("Casting Origin/Cast Backward")
-_gridless_translation_speed = 3.0
-_gridless_friction = 9.0
-_debug_shapes = [NodePath("Camera3D/Debug Cam Position"), NodePath("Camera3D/Debug Cam Look Direction"), NodePath("Player Collision Body/Debug Body Shape"), NodePath("Debug Step CollisionPt")]
+_debug_shapes = [NodePath("Debug Step CollisionPt"), NodePath("Player Collision Body/Debug Body Shape"), NodePath("Camera3D/Debug Cam Position"), NodePath("Camera3D/Debug Cam Look Direction")]
+
+[node name="GridlessController" type="Node" parent="." unique_id=651669008 node_paths=PackedStringArray("_player")]
+script = ExtResource("2_ali1n")
+_player = NodePath("..")
+
+[node name="GriddedController" type="Node" parent="." unique_id=1745718286 node_paths=PackedStringArray("_player")]
+script = ExtResource("3_aoiyr")
+_player = NodePath("..")
 
 [node name="Player Collision Body" type="CollisionShape3D" parent="." unique_id=249778954]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
