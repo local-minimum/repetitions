@@ -491,7 +491,7 @@ func _attempt_gridded_translation2(movement: Movement.MovementType, direction: V
                 "global_position:y",
                 pt.y,
                 part_duration,
-            ).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+            ).set_ease(Tween.EASE_OUT if prev_pt.y < pt.y else Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
             _translation_tween.set_parallel(false)
 
     @warning_ignore_restore("return_value_discarded")
