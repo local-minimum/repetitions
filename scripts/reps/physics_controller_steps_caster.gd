@@ -92,7 +92,7 @@ func _sync_cast_origin() -> void:
         up_delta = tester.global_basis.y * (step_height_max + shape_half_height)
         tester.position.y = tester.to_local(up_delta + tester.global_position).y
 
-enum StepData { POINT, NORMAL }
+enum StepData { POINT, NORMAL, CENTER_POINT }
 
 var _showing_debug_shape_status: bool
 func display_debug_not_hitting() -> void:
@@ -136,6 +136,7 @@ func can_step(data: Dictionary[StepData, Vector3] = {}, include_flats: bool = fa
         _showing_debug_shape_status = true
 
     data[StepData.POINT] = pt
+    data[StepData.CENTER_POINT] = (pt - global_position).project(up_global) + global_position
     data[StepData.NORMAL] = get_collision_normal(0)
 
     return true

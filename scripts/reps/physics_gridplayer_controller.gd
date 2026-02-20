@@ -280,7 +280,7 @@ func _gridless_movement(delta: float) -> void:
         _stepper.step_distance = (direction * velocity).length() * delta
 
         if _stepper.can_step_up(step_data):
-            global_position = step_data[PhysicsControllerStepCaster.StepData.POINT]
+            global_position = step_data[PhysicsControllerStepCaster.StepData.CENTER_POINT]
 
     elif _show_debug_shapes:
         _stepper.display_debug_not_hitting()
@@ -335,7 +335,7 @@ func _calculate_grid_position(
 
         if _stepper.can_step(data):
             print_debug("Using stepper to move to %s" % [data])
-            var pt: Vector3 = data[PhysicsControllerStepCaster.StepData.POINT]
+            var pt: Vector3 = data[PhysicsControllerStepCaster.StepData.CENTER_POINT]
             var delta: Vector3 = pt - global_position
             delta.y = 0
 
@@ -389,7 +389,7 @@ func _test_step(
             return false
 
 
-        _caster_origin.global_position.y = step_data[PhysicsControllerStepCaster.StepData.POINT].y
+        _caster_origin.global_position.y = step_data[PhysicsControllerStepCaster.StepData.CENTER_POINT].y
     else:
         if fudge > 0.0:
             _caster_origin.global_position -= planar_delta.normalized() * fudge
@@ -418,6 +418,7 @@ func _attempt_gridded_translation2(movement: Movement.MovementType, direction: V
     var steps: Array = [
         {
             PhysicsControllerStepCaster.StepData.POINT: global_position,
+            PhysicsControllerStepCaster.StepData.CENTER_POINT: global_position,
             PhysicsControllerStepCaster.StepData.NORMAL: Vector3.UP,
         }
     ]
@@ -443,7 +444,7 @@ func _attempt_gridded_translation2(movement: Movement.MovementType, direction: V
 
     if failed:
         if steps.size() < 2:
-            target = steps[-1][PhysicsControllerStepCaster.StepData.POINT]
+            target = steps[-1][PhysicsControllerStepCaster.StepData.CENTER_POINT]
         var mid: Vector3 = global_position.lerp(target, _refuse_distance_forward if movement == Movement.MovementType.FORWARD else _refuse_distance_other)
         _animate_refused_movement(movement, mid)
         return
@@ -456,7 +457,7 @@ func _attempt_gridded_translation2(movement: Movement.MovementType, direction: V
     @warning_ignore_start("return_value_discarded")
     print_debug(steps)
     for step: Dictionary in steps:
-        var pt: Vector3 = step[PhysicsControllerStepCaster.StepData.POINT]
+        var pt: Vector3 = step[PhysicsControllerStepCaster.StepData.CENTER_POINT]
         var norm: Vector3 = step[PhysicsControllerStepCaster.StepData.NORMAL]
         if (
             absf(pt.y - prev_pt.y) < _stepper.ignore_step_height ||

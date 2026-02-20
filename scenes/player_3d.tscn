@@ -194,7 +194,7 @@ _caster = NodePath("../../PickAxCast")
 _player = NodePath("../..")
 
 [node name="pickax" parent="Toolbelt/Pickax" unique_id=270627127 instance=ExtResource("3_2djwe")]
-transform = Transform3D(0.97853637, 0, -0.20606756, 0.04792357, 0.9725813, 0.22757149, 0.20041719, -0.23256277, 0.9517077, 0, 0, 0.12537825)
+transform = Transform3D(0.97853637, 0, -0.20606756, 0.04792357, 0.9725813, 0.22757149, 0.20041718, -0.23256277, 0.9517077, 0, 0, 0.12537825)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Toolbelt/Pickax" unique_id=692295408]
 libraries/ = SubResource("AnimationLibrary_460ac")
@@ -221,22 +221,22 @@ skeleton = NodePath("../Casting Origin/Step Caster")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 
 [node name="Cast Forward" type="ShapeCast3D" parent="Casting Origin" unique_id=428773777]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15000004, -0.4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95000005, -0.4)
 shape = ExtResource("1_52vux")
 target_position = Vector3(0, 0, -1.4)
 
 [node name="Cast Left" type="ShapeCast3D" parent="Casting Origin" unique_id=220809817]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.15000004, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.95000005, 0)
 shape = ExtResource("1_52vux")
 target_position = Vector3(-1.4, 0, 0)
 
 [node name="Cast Backward" type="ShapeCast3D" parent="Casting Origin" unique_id=1919981056]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15000004, 0.4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95000005, 0.4)
 shape = ExtResource("1_52vux")
 target_position = Vector3(0, 0, 1.4)
 
 [node name="Cast Right" type="ShapeCast3D" parent="Casting Origin" unique_id=1454541202]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.15000004, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.95000005, 0)
 shape = ExtResource("1_52vux")
 target_position = Vector3(1.4, 0, 0)
 
