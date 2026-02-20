@@ -135,7 +135,7 @@ var gridless: bool:
                 @warning_ignore_restore("return_value_discarded")
                 # Force alignment with grid.
                 # NOTE: move needs to happend before turn
-                _attempt_gridded_translation(Movement.MovementType.NONE, null, Vector3.ZERO)
+                _attempt_transition_to_gridded_translation()
                 _attempt_turn(0.0)
 
         gridless = value
@@ -293,13 +293,13 @@ func _gridfull_movement() -> void:
         var movement: Movement.MovementType = _translation_stack[0]
         match movement:
             Movement.MovementType.FORWARD:
-                _attempt_gridded_translation2(movement, -global_basis.z)
+                _attempt_gridded_translation(movement, -global_basis.z)
             Movement.MovementType.STRAFE_LEFT:
-                _attempt_gridded_translation2(movement, -global_basis.x)
+                _attempt_gridded_translation(movement, -global_basis.x)
             Movement.MovementType.STRAFE_RIGHT:
-                _attempt_gridded_translation2(movement, global_basis.x)
+                _attempt_gridded_translation(movement, global_basis.x)
             Movement.MovementType.BACK:
-                _attempt_gridded_translation2(movement, global_basis.z)
+                _attempt_gridded_translation(movement, global_basis.z)
             _:
                 push_error("Player %s's movement %s is not a valid translation" % [name, Movement.name(movement)])
 
@@ -317,40 +317,6 @@ func _calculate_estimated_gridded_translation_target(
         if movement != Movement.MovementType.NONE else
         builder.get_closest_global_grid_position(global_position)
     )
-
-func _calculate_grid_position(
-    movement: Movement.MovementType = Movement.MovementType.NONE,
-    direction: Vector3 = Vector3.ZERO,
-) -> Vector3:
-    var target: Vector3 = _calculate_estimated_gridded_translation_target(movement, direction)
-
-    var dir: Vector3 = target - global_position
-    _caster_origin.position = Vector3.ZERO
-    _stepper.global_step_direction = dir
-    _stepper.step_distance = dir.length()
-
-    var completed: bool = false
-    while !completed:
-        var data: Dictionary[PhysicsControllerStepCaster.StepData, Vector3]
-
-        if _stepper.can_step(data):
-            print_debug("Using stepper to move to %s" % [data])
-            var pt: Vector3 = data[PhysicsControllerStepCaster.StepData.CENTER_POINT]
-            var delta: Vector3 = pt - global_position
-            delta.y = 0
-
-            _stepper.step_distance = maxf(_stepper.step_distance - delta.length(), 0)
-            if _stepper.step_distance < 0.05:
-
-                return global_position.lerp(
-                    pt,
-                    minf(1.0, target.distance_to(global_position) / pt.distance_to(global_position))
-                )
-            _caster_origin.global_position = pt
-
-        else:
-            return target
-    return target
 
 func _normalize_gridded_translation_direction(movement: Movement.MovementType, direction: Vector3) -> Vector3:
     if !_allow_vertical_movement && direction.y != 0.0:
@@ -401,7 +367,7 @@ func _test_step(
 
     return true
 
-func _attempt_gridded_translation2(movement: Movement.MovementType, direction: Vector3, resolution: int = 6) -> void:
+func _attempt_gridded_translation(movement: Movement.MovementType, direction: Vector3, resolution: int = 6) -> void:
     if _translation_tween && _translation_tween.is_running() || _rotation_tween && _rotation_tween.is_running():
         return
 
@@ -499,58 +465,23 @@ func _attempt_gridded_translation2(movement: Movement.MovementType, direction: V
         push_warning("Failed to connect end of movement")
         _handle_translation_end(movement)
 
-func _attempt_gridded_translation(movement: Movement.MovementType, caster: ShapeCast3D, direction: Vector3) -> void:
+func _attempt_transition_to_gridded_translation() -> void:
     if _translation_tween && _translation_tween.is_running() || _rotation_tween && _rotation_tween.is_running():
         return
 
-    direction = _normalize_gridded_translation_direction(movement, direction)
-
-    if caster != null && caster.is_colliding():
-        _refuse_movement(movement, caster, direction)
-        return
-
-    var target: Vector3 = _calculate_grid_position(movement, direction)
-
-    print_debug("Resulting direction of movement %s" % [target - global_position])
-    # print_debug("Moving %s in direction %s from %s to %s" % [
-    #    CardinalDirections.name(CardinalDirections.vector_to_direction(direction.normalized())),
-    #    direction,
-    #    global_position,
-    #    builder.get_closest_global_neighbour_position(global_position, CardinalDirections.vector_to_direction(direction)),
-    #])
+    var target: Vector3 = _calculate_estimated_gridded_translation_target()
 
     _translation_tween = create_tween()
     @warning_ignore_start("return_value_discarded")
     _translation_tween.tween_property(self, "global_position", target, _translation_duration)
     @warning_ignore_restore("return_value_discarded")
-    if _translation_tween.finished.connect(_handle_translation_end.bind(movement)) != OK:
+    if _translation_tween.finished.connect(_handle_translation_end.bind(Movement.MovementType.CENTER)) != OK:
         push_warning("Failed to connect end of movement")
-        _handle_translation_end(movement)
+        _handle_translation_end(Movement.MovementType.CENTER)
 
 func _handle_translation_end(movement: Movement.MovementType) -> void:
     if !_translation_pressed.get(movement, false):
         _translation_stack.erase(movement)
-
-func _refuse_movement(movement: Movement.MovementType, caster: ShapeCast3D, direction: Vector3) -> void:
-    print_debug("Refusing movement %s because %s hits %s of %s" % [
-        Movement.name(movement),
-        caster,
-        caster.get_collider(0) if caster else null,
-        (caster.get_collider(0) as Node3D).get_parent_node_3d(),
-    ])
-    var target: Vector3 = _calculate_grid_position(movement, direction)
-
-    var pt: Vector3 = caster.get_collision_point(0)
-
-    var l: float = global_position.distance_to(pt)
-    l = minf(l, global_position.distance_to(target))
-    if movement == Movement.MovementType.FORWARD:
-        l *= _refuse_distance_forward
-    else:
-        l *= _refuse_distance_other
-
-    var mid: Vector3 = global_position + l * (target - global_position)
-    _animate_refused_movement(movement, mid)
 
 func _animate_refused_movement(movement: Movement.MovementType, mid: Vector3) -> void:
     _translation_tween = create_tween()
