@@ -24,19 +24,22 @@ func _sync_gridless() -> void:
     _gridless_btn.button_pressed = _player.gridless
 
 func _sync_debug_shapes() -> void:
-    _debug_shapes_btn.button_pressed = _player._show_debug_shapes
+    _debug_shapes_btn.button_pressed = _player.show_debug_shapes
 
 func _on_cinematic_btn_pressed() -> void:
+    var was_cine: bool = _player.cinematic
     _player.cinematic = !_player.cinematic
-    _sync_cinematic()
+    if was_cine && _player.cinematic:
+        _player._cinematic_blockers.clear()
 
+    _sync_cinematic()
 
 func _on_gridless_btn_pressed() -> void:
     _player.gridless = !_player.gridless
     _sync_gridless()
 
 func _on_debug_shapes_btn_pressed() -> void:
-    _player._show_debug_shapes = !_player._show_debug_shapes
+    _player.show_debug_shapes = !_player.show_debug_shapes
     _sync_debug_shapes()
 
 
