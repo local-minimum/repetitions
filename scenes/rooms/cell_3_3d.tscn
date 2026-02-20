@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dvud7c3q5eeda"]
+[gd_scene format=3 uid="uid://dvud7c3q5eeda"]
 
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_70a0j"]
 [ext_resource type="PackedScene" uid="uid://8qqqf4tvfy1l" path="res://scenes/rooms/meshes/roughwall.blend" id="1_ys88f"]
@@ -14,49 +14,52 @@
 [ext_resource type="Script" uid="uid://d4mu737x18spn" path="res://scripts/reps/scientific_cell_despawner.gd" id="12_mqvr4"]
 [ext_resource type="PackedScene" uid="uid://duf1yh5vcnqvt" path="res://scenes/rooms/meshes/props/blueprint_reactor.tscn" id="13_hyjgd"]
 
-[node name="Cell33d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_hyjgd"]
+size = Vector3(0.13061523, 2.3056946, 0.15673828)
+
+[node name="Cell33d" type="Node3D" unique_id=1227957706 node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_70a0j")
 _managed_door_configs = [NodePath("Geometry/Door ConfigOptions")]
 metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
-[node name="Geometry" type="Node3D" parent="."]
+[node name="Geometry" type="Node3D" parent="." unique_id=1687748506]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
 
-[node name="roughwall" parent="Geometry" instance=ExtResource("1_ys88f")]
+[node name="roughwall" parent="Geometry" unique_id=1269259807 instance=ExtResource("1_ys88f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
 
-[node name="roughwall2" parent="Geometry" instance=ExtResource("1_ys88f")]
+[node name="roughwall2" parent="Geometry" unique_id=1528683756 instance=ExtResource("1_ys88f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
 
-[node name="roughwall3" parent="Geometry" instance=ExtResource("1_ys88f")]
+[node name="roughwall3" parent="Geometry" unique_id=2102619158 instance=ExtResource("1_ys88f")]
 transform = Transform3D(-4.371139e-08, -4.371139e-08, -1, 4.371139e-08, 1, -4.371139e-08, 1, -4.371139e-08, -4.3711385e-08, -2, 0, -4)
 
-[node name="roughwall4" parent="Geometry" instance=ExtResource("1_ys88f")]
+[node name="roughwall4" parent="Geometry" unique_id=1668431879 instance=ExtResource("1_ys88f")]
 transform = Transform3D(-4.371139e-08, -4.371139e-08, -1, 4.371139e-08, 1, -4.371139e-08, 1, -4.371139e-08, -4.3711385e-08, 0, 0, -4)
 
-[node name="roughwall5" parent="Geometry" instance=ExtResource("1_ys88f")]
+[node name="roughwall5" parent="Geometry" unique_id=1508686022 instance=ExtResource("1_ys88f")]
 transform = Transform3D(-1, 4.371139e-08, 8.742278e-08, 4.371139e-08, 1, -4.371139e-08, -8.742278e-08, -4.371139e-08, -1, 2, 0, -4)
 
-[node name="roughwall6" parent="Geometry" instance=ExtResource("1_ys88f")]
+[node name="roughwall6" parent="Geometry" unique_id=823344236 instance=ExtResource("1_ys88f")]
 transform = Transform3D(-1, 4.371139e-08, 8.742278e-08, 4.371139e-08, 1, -4.371139e-08, -8.742278e-08, -4.371139e-08, -1, 2, 0, -2)
 
-[node name="roughwall7" parent="Geometry" instance=ExtResource("1_ys88f")]
+[node name="roughwall7" parent="Geometry" unique_id=199479170 instance=ExtResource("1_ys88f")]
 transform = Transform3D(-1, 4.371139e-08, 8.742278e-08, 4.371139e-08, 1, -4.371139e-08, -8.742278e-08, -4.371139e-08, -1, 2, 0, 0)
 
-[node name="Decal" type="Decal" parent="Geometry/roughwall7"]
+[node name="Decal" type="Decal" parent="Geometry/roughwall7" unique_id=943387340]
 transform = Transform3D(-8.404241e-08, 1, 3.7519943e-08, 0.07212406, 4.3483713e-08, -0.99739563, -0.99739563, -8.111753e-08, -0.07212406, 0.41019344, 1.2084385, -0.678436)
 size = Vector3(1.5, 0.068, 1.5)
 texture_albedo = ExtResource("3_pvbl0")
 emission_energy = 1.75
 modulate = Color(1, 0.80784315, 1, 1)
 
-[node name="roughwall8" parent="Geometry" instance=ExtResource("1_ys88f")]
+[node name="roughwall8" parent="Geometry" unique_id=114659941 instance=ExtResource("1_ys88f")]
 transform = Transform3D(1.3113416e-07, 4.3711385e-08, 1, 4.371139e-08, 1, -4.371139e-08, -1, 4.3711392e-08, 1.3113416e-07, 2, 0, 2)
 
-[node name="roughwall9" parent="Geometry" instance=ExtResource("1_ys88f")]
+[node name="roughwall9" parent="Geometry" unique_id=191468392 instance=ExtResource("1_ys88f")]
 transform = Transform3D(1.3113416e-07, 4.3711385e-08, 1, 4.371139e-08, 1, -4.371139e-08, -1, 4.3711392e-08, 1.3113416e-07, 0, 0, 2)
 
-[node name="Door ConfigOptions" type="Node3D" parent="Geometry" node_paths=PackedStringArray("_door_open_root", "_door_locked_root", "_to_door_reactors")]
+[node name="Door ConfigOptions" type="Node3D" parent="Geometry" unique_id=1187105665 node_paths=PackedStringArray("_door_open_root", "_door_locked_root", "_to_door_reactors")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 1)
 script = ExtResource("3_jnptr")
 _door_open_root = NodePath("Door Broken")
@@ -72,64 +75,75 @@ ExtResource("5_pvbl0"): 2
 _to_door_reactors = [NodePath("../../ScientificCellDespawner")]
 metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
 
-[node name="Door" parent="Geometry/Door ConfigOptions" instance=ExtResource("2_wrj36")]
+[node name="Door" parent="Geometry/Door ConfigOptions" unique_id=1657794271 instance=ExtResource("2_wrj36")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 1)
+visible = false
+
+[node name="Door Broken" parent="Geometry/Door ConfigOptions" unique_id=2108111732 instance=ExtResource("5_ynnqa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 1)
 
-[node name="Door Broken" parent="Geometry/Door ConfigOptions" instance=ExtResource("5_ynnqa")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 1)
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/Door ConfigOptions/Door Broken" unique_id=201476921]
 
-[node name="simplefloor" parent="Geometry" instance=ExtResource("3_6tomx")]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Door ConfigOptions/Door Broken/StaticBody3D" unique_id=1134811755]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19354725, 1.1537018, -0.5040598)
+shape = SubResource("BoxShape3D_hyjgd")
 
-[node name="simplefloor2" parent="Geometry" instance=ExtResource("3_6tomx")]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Geometry/Door ConfigOptions/Door Broken/StaticBody3D" unique_id=1215822573]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19354725, 1.1537018, -1.4563324)
+shape = SubResource("BoxShape3D_hyjgd")
+
+[node name="simplefloor" parent="Geometry" unique_id=2097684141 instance=ExtResource("3_6tomx")]
+
+[node name="simplefloor2" parent="Geometry" unique_id=1711247950 instance=ExtResource("3_6tomx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
 
-[node name="simplefloor3" parent="Geometry" instance=ExtResource("3_6tomx")]
+[node name="simplefloor3" parent="Geometry" unique_id=1740089669 instance=ExtResource("3_6tomx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
 
-[node name="simplefloor4" parent="Geometry" instance=ExtResource("3_6tomx")]
+[node name="simplefloor4" parent="Geometry" unique_id=411285456 instance=ExtResource("3_6tomx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
-[node name="simplefloor5" parent="Geometry" instance=ExtResource("3_6tomx")]
+[node name="simplefloor5" parent="Geometry" unique_id=780060116 instance=ExtResource("3_6tomx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 
-[node name="simplefloor6" parent="Geometry" instance=ExtResource("3_6tomx")]
+[node name="simplefloor6" parent="Geometry" unique_id=452458227 instance=ExtResource("3_6tomx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
 
-[node name="simpleceiling" parent="Geometry" instance=ExtResource("4_wkh6p")]
+[node name="simpleceiling" parent="Geometry" unique_id=292993303 instance=ExtResource("4_wkh6p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 0)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Geometry/simpleceiling"]
+[node name="OmniLight3D" type="OmniLight3D" parent="Geometry/simpleceiling" unique_id=404199722]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3023634, -0.3137219, -0.07836872)
 light_color = Color(1, 1, 0.3764706, 1)
 light_energy = 0.1
 light_bake_mode = 1
 omni_range = 2.2
 
-[node name="simpleceiling2" parent="Geometry" instance=ExtResource("4_wkh6p")]
+[node name="simpleceiling2" parent="Geometry" unique_id=1636470469 instance=ExtResource("4_wkh6p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, 0)
 
-[node name="simpleceiling3" parent="Geometry" instance=ExtResource("4_wkh6p")]
+[node name="simpleceiling3" parent="Geometry" unique_id=795375636 instance=ExtResource("4_wkh6p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, -2)
 
-[node name="simpleceiling4" parent="Geometry" instance=ExtResource("4_wkh6p")]
+[node name="simpleceiling4" parent="Geometry" unique_id=370418135 instance=ExtResource("4_wkh6p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -2)
 
-[node name="simpleceiling5" parent="Geometry" instance=ExtResource("4_wkh6p")]
+[node name="simpleceiling5" parent="Geometry" unique_id=630687293 instance=ExtResource("4_wkh6p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 2)
 
-[node name="simpleceiling6" parent="Geometry" instance=ExtResource("4_wkh6p")]
+[node name="simpleceiling6" parent="Geometry" unique_id=1172944176 instance=ExtResource("4_wkh6p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.8, 2)
 
-[node name="cellbed" parent="Geometry" instance=ExtResource("10_vxii2")]
+[node name="cellbed" parent="Geometry" unique_id=1766633846 instance=ExtResource("10_vxii2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2361791, 0.5, -2.5)
 
-[node name="cellbed2" parent="Geometry" instance=ExtResource("10_vxii2")]
+[node name="cellbed2" parent="Geometry" unique_id=1251151954 instance=ExtResource("10_vxii2")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.2395504, 0.5, -2.5)
 
-[node name="blueprint" parent="Geometry" instance=ExtResource("13_hyjgd")]
+[node name="blueprint" parent="Geometry" unique_id=792274991 instance=ExtResource("13_hyjgd")]
 transform = Transform3D(0.49749824, 1.0040537e-09, 0.04995495, 0.04995495, -2.0048883e-08, -0.49749824, 1.0040537e-09, 0.5, -2.0048883e-08, -0.012331247, 1.3409498, -3.5941863)
 
-[node name="ScientificCellDespawner" type="Node" parent="." node_paths=PackedStringArray("_despawns")]
+[node name="ScientificCellDespawner" type="Node" parent="." unique_id=1302227107 node_paths=PackedStringArray("_despawns")]
 script = ExtResource("12_mqvr4")
 _despawn_if_blueprint = ExtResource("5_pvbl0")
 _despawns = [NodePath("../Geometry/roughwall7/Decal"), NodePath("../Geometry/blueprint")]

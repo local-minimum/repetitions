@@ -172,6 +172,7 @@ func can_step_up(data: Dictionary[StepData, Vector3] = {}) -> bool:
         _showing_debug_shape_status = true
 
     data[StepData.POINT] = pt
+    data[StepData.CENTER_POINT] = (pt - global_position).project(up_global) + global_position
     data[StepData.NORMAL] = get_collision_normal(0)
 
     return true
