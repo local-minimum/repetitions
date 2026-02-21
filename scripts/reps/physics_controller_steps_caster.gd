@@ -122,7 +122,7 @@ func can_step(data: Dictionary[StepData, Vector3], include_flats: bool = false) 
     var projection: Vector3 = (pt - global_position).project(up_global)
     var step_height: float = cast_height_origin - projection.length()
 
-    print_debug("Step height %s" % [step_height])
+    #print_debug("Step height %s" % [step_height])
     if (
         !include_flats &&
         step_height <= ignore_step_height &&
