@@ -135,8 +135,8 @@ material = SubResource("StandardMaterial3D_460ac")
 radius = 0.1
 height = 0.2
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_aoiyr"]
-radius = 0.25
+[sub_resource type="BoxShape3D" id="BoxShape3D_aoiyr"]
+size = Vector3(0.1, 0.1, 0.1)
 
 [node name="Player3d" type="CharacterBody3D" unique_id=942295760 node_paths=PackedStringArray("_camera", "_gridless_controller", "_gridded_controller", "_captured_pointer_eventer", "caster_origin", "stepper", "_forward", "_left", "_right", "_backward", "_debug_shapes")]
 collision_layer = 2
@@ -255,7 +255,7 @@ target_position = Vector3(1.4, 0, 0)
 [node name="Step Caster" type="ShapeCast3D" parent="Casting Origin" unique_id=2081488253 node_paths=PackedStringArray("_debug_shape")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8089126, 0)
 enabled = false
-shape = SubResource("SphereShape3D_aoiyr")
+shape = SubResource("BoxShape3D_aoiyr")
 target_position = Vector3(0, -1.1, 0)
 script = ExtResource("7_460ac")
 step_distance = 0.25

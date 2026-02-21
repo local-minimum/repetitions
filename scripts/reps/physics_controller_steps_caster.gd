@@ -141,6 +141,11 @@ func can_step(data: Dictionary[StepData, Vector3], include_flats: bool = false) 
         return false
 
     var center_point: Vector3 = (pt - global_position).project(up_global) + global_position
+
+    data[StepData.POINT] = pt
+    data[StepData.CENTER_POINT] = center_point
+    data[StepData.NORMAL] = get_collision_normal(0)
+
     if projection.length() < min_clearing_above:
         global_position = center_point
         target_position.y = min_clearing_above
@@ -152,10 +157,6 @@ func can_step(data: Dictionary[StepData, Vector3], include_flats: bool = false) 
         _sync_cast_down_origin()
 
     _set_debug_shape(Color.WEB_GREEN, pt)
-
-    data[StepData.POINT] = pt
-    data[StepData.CENTER_POINT] = center_point
-    data[StepData.NORMAL] = get_collision_normal(0)
 
     return true
 
