@@ -6,12 +6,14 @@ class_name GridlessController
 @export var _mouse_sensitivity_yaw: float = 0.003
 @export var _mouse_sensistivity_pitch: float = 0.003
 
-@export var _gridless_translation_speed: float = 3.0
-@export var _gridless_rotation_speed: float = 0.8
-@export var _gridless_friction: float = 9.0
+@export var _translation_speed: float = 3.0
+@export var _rotation_speed: float = 0.8
+@export var _friction: float = 9.0
 
 @export var camera_near: float = 0.05
 @export var camera_fov: float = 70
+
+@export var _step_check_distance_factor: float = 5
 
 var cam_offset: Vector3
 
@@ -48,20 +50,20 @@ func handle_movement(delta: float, translation_stack: Array[Movement.MovementTyp
 
         if direction.length_squared() > 0.0:
 
-            var v: Vector3 = direction * _gridless_translation_speed
+            var v: Vector3 = direction * _translation_speed
             _player.velocity.x = v.x
             _player.velocity.z = v.z
 
     else:
-        var v: Vector3 = _player.velocity.lerp(Vector3.ZERO, _gridless_friction * delta)
+        var v: Vector3 = _player.velocity.lerp(Vector3.ZERO, _friction * delta)
         _player.velocity.x = v.x
         _player.velocity.z = v.z
 
     var angle: float = 0.0
     if Input.is_action_pressed("crawl_turn_left"):
-        angle = TAU * delta * _gridless_rotation_speed
+        angle = TAU * delta * _rotation_speed
     elif Input.is_action_pressed("crawl_turn_right"):
-        angle = -TAU * delta * _gridless_rotation_speed
+        angle = -TAU * delta * _rotation_speed
 
     if angle != 0.0:
         _player.basis = _player.transform.rotated(Vector3.UP, angle).basis
@@ -70,10 +72,8 @@ func handle_movement(delta: float, translation_stack: Array[Movement.MovementTyp
         # Collides with something
         var step_data: Dictionary[PhysicsControllerStepCaster.StepData, Vector3] = {}
         _player.caster_origin.position = Vector3.ZERO
-        _player.stepper.global_step_direction = direction
-        _player.stepper.step_distance = (direction * _player.velocity).length() * delta
 
-        if _player.stepper.can_step_up(step_data):
+        if _player.stepper.can_step_up(direction * delta * _step_check_distance_factor, step_data):
             _player.global_position = step_data[PhysicsControllerStepCaster.StepData.CENTER_POINT]
 
     elif _player.show_debug_shapes:

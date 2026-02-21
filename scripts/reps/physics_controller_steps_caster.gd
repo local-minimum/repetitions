@@ -87,7 +87,6 @@ func _sync_cast_down_origin() -> void:
     )
 
     target_position.y = -(cast_height_origin + step_down_max + 0.1)
-    print_debug("Testing from %s with target %s" % [position, target_position])
 
 enum StepData { POINT, NORMAL, CENTER_POINT }
 
@@ -108,7 +107,7 @@ func _set_debug_shape(color: Color, point: Vector3) -> void:
         _showing_debug_shape_status = true
         _debug_shape.global_position = point
 
-func can_step(data: Dictionary[StepData, Vector3] = {}, include_flats: bool = false) -> bool:
+func can_step(data: Dictionary[StepData, Vector3], include_flats: bool = false) -> bool:
     if body == null && !is_instance_valid(body) && !body.is_inside_tree():
         return false
 
@@ -160,7 +159,9 @@ func can_step(data: Dictionary[StepData, Vector3] = {}, include_flats: bool = fa
 
     return true
 
-func can_step_up(data: Dictionary[StepData, Vector3] = {}) -> bool:
+func can_step_up(step_offset: Vector3, data: Dictionary[StepData, Vector3]) -> bool:
+    global_step_direction = step_offset
+    step_distance = (global_step_direction * step_offset).length()
     if can_step(data):
         return data[StepData.CENTER_POINT].y > body.global_position.y + ignore_step_height
     return false
