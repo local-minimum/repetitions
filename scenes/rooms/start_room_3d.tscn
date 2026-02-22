@@ -916,9 +916,11 @@ shape = SubResource("BoxShape3D_nx0y2")
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.31822968, 0.4874134, -0.47342157)
 shape = SubResource("BoxShape3D_nx0y2")
 
-[node name="ClickZone" type="StaticBody3D" parent="Geometry/Childbed" unique_id=473479548 node_paths=PackedStringArray("_root")]
+[node name="ClickZone" type="StaticBody3D" parent="Geometry/Childbed" unique_id=473479548 node_paths=PackedStringArray("_teddy", "_root")]
 collision_layer = 4
 script = ExtResource("23_2bkd8")
+_teddy = NodePath("../Teddy")
+_teddy_event = 1
 _look_angle_dot_product_threshold = -0.7
 _root = NodePath("..")
 

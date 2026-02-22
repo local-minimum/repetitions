@@ -16,4 +16,10 @@ func _on_cancel_btn_pressed() -> void:
     hide()
 
 func _on_accept_btn_pressed() -> void:
+    if !Dialogic.VAR.set_variable(
+        "slept_in_own_bed",
+        false,
+    ):
+        push_error("Failed to unset slept_in_own_bed")
+
     __GlobalGameState.go_to_next_day()

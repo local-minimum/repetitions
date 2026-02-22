@@ -61,3 +61,17 @@ if {Teddy.deposited_key} == 1.0:
 	teddy: ...YOU ARE GROUNDED! ☹️ #id:2c
 	[signal arg="grounded"]
 [end_timeline]
+label bed_time (Sleepy Time)
+if {slept_in_own_bed} == false:
+	teddy: Where were you last night, you had me really worried?
+	teddy: Am I good enough for you this time? Is it time for a little nappy?
+elif {Teddy.sleeps_in_own_bed} == 0.0:
+	teddy: Sleepyhead is feeling tired?
+elif {Teddy.sleeps_in_own_bed} == 1.0:
+	teddy: Got everything done today already?
+else:
+	teddy: Time for bed?
+- Yes
+	[signal arg="sleep"]
+- No, I'm not done yet
+[end_timeline]

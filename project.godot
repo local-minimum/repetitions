@@ -98,9 +98,11 @@ variables={
 "only_looked_last_time": false,
 "rng": 0.0,
 "said_sleeptalk": false,
+"sleeps_in_own_bed": 0,
 "total_keys_deposited": 0
 },
-"day": 0
+"day": 0,
+"slept_in_own_bed": true
 }
 translation/intern/save_mode=0
 translation/intern/file_mode=1

@@ -4,6 +4,8 @@ class_name Teddy
 @export var look_ease_duration: float = 0.6
 @export var look_away_ease_duration: float = 0.3
 
+enum TeddySpecialEvent { NONE, BED_TIME }
+
 func _enter_tree() -> void:
     if __SignalBus.on_physics_player_ready.connect(_handle_player_ready) != OK:
         push_error("Failed to connect physics player ready")
@@ -96,6 +98,23 @@ func _handle_signal_event(evt: Variant) -> void:
                 PhysicsGridPlayerController.last_connected_player.defocus_on(self, look_away_ease_duration)
             "grounded":
                 _show_demo_end = true
+            "sleep":
+                if !Dialogic.VAR.set_variable(
+                    "slept_in_own_bed",
+                    true,
+                ):
+                    push_error("Failed to set slept_in_own_bed")
+
+                if !Dialogic.VAR.set_variable(
+                    "Teddy.sleeps_in_own_bed",
+                    Dialogic.VAR.get_variable(
+                        "Teddy.sleeps_in_own_bed",
+                        0,
+                    ) + 1,
+                ):
+                    push_error("Failed to increment Teddy.sleeps_in_own_bed")
+
+                __GlobalGameState.go_to_next_day()
 
 var _show_demo_end: bool = false
 
@@ -107,3 +126,9 @@ func _end_conversation() -> void:
 
     if _show_demo_end:
         __SignalBus.on_demo_end.emit()
+
+func run_event(event: TeddySpecialEvent) -> void:
+    match event:
+        TeddySpecialEvent.BED_TIME:
+            print_debug("Run bed_time")
+            _setup_dialogic("bed_time", PhysicsGridPlayerController.last_connected_player)
