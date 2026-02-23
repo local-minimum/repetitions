@@ -3,7 +3,7 @@ class_name GriddedController
 
 @export var _player: PhysicsGridPlayerController
 
-@export_range(5, 10) var _translation_resolution: int = 6
+@export_range(5, 15) var _translation_resolution: int = 6
 @export_range(0, 1) var _translation_duration: float = 0.3
 @export_range(0, 1) var _rotation_duration: float = 0.25
 
