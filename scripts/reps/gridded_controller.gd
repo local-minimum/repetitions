@@ -3,11 +3,13 @@ class_name GriddedController
 
 @export var _player: PhysicsGridPlayerController
 
+@export_range(5, 10) var _translation_resolution: int = 6
 @export_range(0, 1) var _translation_duration: float = 0.3
 @export_range(0, 1) var _rotation_duration: float = 0.25
 
 @export_range(0, 1) var _refuse_distance_forward: float = 0.2
 @export_range(0, 1) var _refuse_distance_other: float = 0.1
+
 
 @export var _fudge_distance: float = 0.25
 
@@ -31,13 +33,13 @@ func handle_movement(translation_stack: Array[Movement.MovementType]) -> void:
         var movement: Movement.MovementType = translation_stack[0]
         match movement:
             Movement.MovementType.FORWARD:
-                _attempt_gridded_translation(movement, -_player.global_basis.z)
+                _attempt_gridded_translation(movement, -_player.global_basis.z, _translation_resolution)
             Movement.MovementType.STRAFE_LEFT:
-                _attempt_gridded_translation(movement, -_player.global_basis.x)
+                _attempt_gridded_translation(movement, -_player.global_basis.x, _translation_resolution)
             Movement.MovementType.STRAFE_RIGHT:
-                _attempt_gridded_translation(movement, _player.global_basis.x)
+                _attempt_gridded_translation(movement, _player.global_basis.x, _translation_resolution)
             Movement.MovementType.BACK:
-                _attempt_gridded_translation(movement, _player.global_basis.z)
+                _attempt_gridded_translation(movement, _player.global_basis.z, _translation_resolution)
             _:
                 push_error("Player %s's movement %s is not a valid translation" % [name, Movement.name(movement)])
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://qohy6ektieft"]
+[gd_scene format=3 uid="uid://qohy6ektieft"]
 
 [ext_resource type="PackedScene" uid="uid://bnadm2gr0ggsi" path="res://scenes/rooms/meshes/hallwall.blend" id="1_ouga3"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_u8775"]
@@ -23,216 +23,212 @@ despawners = Array[NodePath]([NodePath("../Geomoetry/hallwall_wall_alcove")])
 weight = 2.0
 metadata/_custom_type_script = "uid://cno413aixewp1"
 
-[node name="Hall23d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
+[node name="Hall23d" type="Node3D" unique_id=967008272 node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_u8775")
-_managed_door_configs = [NodePath("Geomoetry/Door 1 ConfigOptions"), NodePath("Geomoetry/Door 2 ConfigOptions")]
+_managed_door_configs = [NodePath("Geomoetry/Door 1 ConfigOptions"), NodePath("Geomoetry/Door 2 ConfigOptions"), NodePath("Geomoetry/Door 3 ConfigOptions")]
 metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
-[node name="ProbabilityDeSpawner" type="Node" parent="."]
+[node name="ProbabilityDeSpawner" type="Node" parent="." unique_id=587660915]
 script = ExtResource("8_u8775")
 _options = Array[ExtResource("9_k8ayc")]([SubResource("Resource_u8775"), SubResource("Resource_cji5a")])
 
-[node name="Geomoetry" type="Node3D" parent="."]
+[node name="Geomoetry" type="Node3D" parent="." unique_id=15803515]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
 
-[node name="hallwall" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall" parent="Geomoetry" unique_id=390887545 instance=ExtResource("1_ouga3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
 
-[node name="hallwall2" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall2" parent="Geomoetry" unique_id=1082832758 instance=ExtResource("1_ouga3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
 
-[node name="hallwall6" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall6" parent="Geomoetry" unique_id=143726718 instance=ExtResource("1_ouga3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
 
-[node name="hallwall22" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall22" parent="Geomoetry" unique_id=1391349370 instance=ExtResource("1_ouga3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 
-[node name="hallwall7" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall7" parent="Geomoetry" unique_id=853521728 instance=ExtResource("1_ouga3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
 
-[node name="hallwall8" parent="Geomoetry" instance=ExtResource("1_ouga3")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, 0, 0)
-
-[node name="hallwall9" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall9" parent="Geomoetry" unique_id=654802785 instance=ExtResource("1_ouga3")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 2)
 
-[node name="hallwall20" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall20" parent="Geomoetry" unique_id=1493955328 instance=ExtResource("1_ouga3")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2, 0, -4)
 
-[node name="hallwall10" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall10" parent="Geomoetry" unique_id=898114681 instance=ExtResource("1_ouga3")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 4, 0, 0)
 
-[node name="hallwall11" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall11" parent="Geomoetry" unique_id=1329717113 instance=ExtResource("1_ouga3")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 4, 0, 2)
 
-[node name="hallwall12" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall12" parent="Geomoetry" unique_id=2019169631 instance=ExtResource("1_ouga3")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, 4)
 
-[node name="hallwall21" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall21" parent="Geomoetry" unique_id=69424969 instance=ExtResource("1_ouga3")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, 6)
 
-[node name="hallwall13" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall13" parent="Geomoetry" unique_id=430381344 instance=ExtResource("1_ouga3")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="hallwall14" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall14" parent="Geomoetry" unique_id=262914161 instance=ExtResource("1_ouga3")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, -2)
 
-[node name="hallwall15" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall15" parent="Geomoetry" unique_id=776477273 instance=ExtResource("1_ouga3")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, -4)
 
-[node name="hallwall16" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall16" parent="Geomoetry" unique_id=517376892 instance=ExtResource("1_ouga3")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, -6)
 
-[node name="hallwall17" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall17" parent="Geomoetry" unique_id=1713194868 instance=ExtResource("1_ouga3")]
 transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 2, 0, -2)
 
-[node name="hallwall18" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall18" parent="Geomoetry" unique_id=728220489 instance=ExtResource("1_ouga3")]
 transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 4, 0, 4)
 
-[node name="hallwall19" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall19" parent="Geomoetry" unique_id=729443636 instance=ExtResource("1_ouga3")]
 transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 0, 0, 4)
 
-[node name="hallwall3" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall3" parent="Geomoetry" unique_id=483076615 instance=ExtResource("1_ouga3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
 
-[node name="hallwall4" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall4" parent="Geomoetry" unique_id=84166748 instance=ExtResource("1_ouga3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
 
-[node name="hallwall5" parent="Geomoetry" instance=ExtResource("1_ouga3")]
+[node name="hallwall5" parent="Geomoetry" unique_id=967209870 instance=ExtResource("1_ouga3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
-[node name="hallwall_cornercap" parent="Geomoetry" instance=ExtResource("2_ejlae")]
+[node name="hallwall_cornercap" parent="Geomoetry" unique_id=67001444 instance=ExtResource("2_ejlae")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 2)
 
-[node name="hallwall_cornercap2" parent="Geomoetry" instance=ExtResource("2_ejlae")]
+[node name="hallwall_cornercap2" parent="Geomoetry" unique_id=1614409648 instance=ExtResource("2_ejlae")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, 0, 2)
 
-[node name="hallwall_cornercap3" parent="Geomoetry" instance=ExtResource("2_ejlae")]
+[node name="hallwall_cornercap3" parent="Geomoetry" unique_id=1761486441 instance=ExtResource("2_ejlae")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -4)
 
-[node name="hallwall_cornercap4" parent="Geomoetry" instance=ExtResource("2_ejlae")]
+[node name="hallwall_cornercap4" parent="Geomoetry" unique_id=1434425506 instance=ExtResource("2_ejlae")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
-[node name="hallwall_cornercap5" parent="Geomoetry" instance=ExtResource("2_ejlae")]
+[node name="hallwall_cornercap5" parent="Geomoetry" unique_id=1482048061 instance=ExtResource("2_ejlae")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, 4)
 
-[node name="hallwall_cornercap6" parent="Geomoetry" instance=ExtResource("2_ejlae")]
+[node name="hallwall_cornercap6" parent="Geomoetry" unique_id=2080902850 instance=ExtResource("2_ejlae")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, -2)
 
-[node name="hallwall_cornercap7" parent="Geomoetry" instance=ExtResource("2_ejlae")]
+[node name="hallwall_cornercap7" parent="Geomoetry" unique_id=672163013 instance=ExtResource("2_ejlae")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.8, 0, -2.1999998)
 
-[node name="hallwall_cornercap10" parent="Geomoetry" instance=ExtResource("2_ejlae")]
+[node name="hallwall_cornercap10" parent="Geomoetry" unique_id=1541662685 instance=ExtResource("2_ejlae")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.8, 0, 3.8000002)
 
-[node name="hallwall_cornercap11" parent="Geomoetry" instance=ExtResource("2_ejlae")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 3.8, 0, 0.20000017)
-
-[node name="hallwall_cornercap12" parent="Geomoetry" instance=ExtResource("2_ejlae")]
+[node name="hallwall_cornercap12" parent="Geomoetry" unique_id=2119127501 instance=ExtResource("2_ejlae")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8000001, 0, 3.8000002)
 
-[node name="hallwall_cornercap8" parent="Geomoetry" instance=ExtResource("2_ejlae")]
+[node name="hallwall_cornercap8" parent="Geomoetry" unique_id=2028636738 instance=ExtResource("2_ejlae")]
 transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -1.8000001, 0, -3.7999997)
 
-[node name="hallwall_cornercap9" parent="Geomoetry" instance=ExtResource("2_ejlae")]
-transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 2.1999998, 0, 0.20000029)
-
-[node name="simplefloor" parent="Geomoetry" instance=ExtResource("3_m1eep")]
+[node name="simplefloor" parent="Geomoetry" unique_id=180272175 instance=ExtResource("3_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
 
-[node name="simplefloor2" parent="Geomoetry" instance=ExtResource("3_m1eep")]
+[node name="simplefloor2" parent="Geomoetry" unique_id=1315930371 instance=ExtResource("3_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
 
-[node name="simplefloor3" parent="Geomoetry" instance=ExtResource("3_m1eep")]
+[node name="simplefloor3" parent="Geomoetry" unique_id=216000475 instance=ExtResource("3_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
 
-[node name="simplefloor4" parent="Geomoetry" instance=ExtResource("3_m1eep")]
+[node name="simplefloor4" parent="Geomoetry" unique_id=890455793 instance=ExtResource("3_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
-[node name="simplefloor5" parent="Geomoetry" instance=ExtResource("3_m1eep")]
+[node name="simplefloor5" parent="Geomoetry" unique_id=855348709 instance=ExtResource("3_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
-[node name="simplefloor6" parent="Geomoetry" instance=ExtResource("3_m1eep")]
+[node name="simplefloor6" parent="Geomoetry" unique_id=214984708 instance=ExtResource("3_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
 
-[node name="simplefloor7" parent="Geomoetry" instance=ExtResource("3_m1eep")]
+[node name="simplefloor7" parent="Geomoetry" unique_id=47704425 instance=ExtResource("3_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
 
-[node name="simplefloor8" parent="Geomoetry" instance=ExtResource("3_m1eep")]
+[node name="simplefloor8" parent="Geomoetry" unique_id=131919696 instance=ExtResource("3_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4)
 
-[node name="simplefloor9" parent="Geomoetry" instance=ExtResource("3_m1eep")]
+[node name="simplefloor9" parent="Geomoetry" unique_id=628304357 instance=ExtResource("3_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
-[node name="simplefloor10" parent="Geomoetry" instance=ExtResource("3_m1eep")]
+[node name="simplefloor10" parent="Geomoetry" unique_id=680854612 instance=ExtResource("3_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
 
-[node name="simplefloor11" parent="Geomoetry" instance=ExtResource("3_m1eep")]
+[node name="simplefloor11" parent="Geomoetry" unique_id=1214300181 instance=ExtResource("3_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 
-[node name="hallceiling" parent="Geomoetry" instance=ExtResource("4_m1eep")]
+[node name="hallceiling" parent="Geomoetry" unique_id=222884231 instance=ExtResource("4_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 6)
 
-[node name="hallceiling11" parent="Geomoetry" instance=ExtResource("4_m1eep")]
+[node name="hallceiling11" parent="Geomoetry" unique_id=713999185 instance=ExtResource("4_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 8)
 
-[node name="hallceiling2" parent="Geomoetry" instance=ExtResource("4_m1eep")]
+[node name="hallceiling2" parent="Geomoetry" unique_id=1206373770 instance=ExtResource("4_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4)
 
-[node name="hallceiling3" parent="Geomoetry" instance=ExtResource("4_m1eep")]
+[node name="hallceiling3" parent="Geomoetry" unique_id=1267742828 instance=ExtResource("4_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 4)
 
-[node name="hallceiling4" parent="Geomoetry" instance=ExtResource("4_m1eep")]
+[node name="hallceiling4" parent="Geomoetry" unique_id=855999412 instance=ExtResource("4_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 2)
 
-[node name="hallceiling5" parent="Geomoetry" instance=ExtResource("4_m1eep")]
+[node name="hallceiling5" parent="Geomoetry" unique_id=1996906452 instance=ExtResource("4_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 4)
 
-[node name="hallceiling6" parent="Geomoetry" instance=ExtResource("4_m1eep")]
+[node name="hallceiling6" parent="Geomoetry" unique_id=1093774558 instance=ExtResource("4_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 2)
 
-[node name="hallceiling7" parent="Geomoetry" instance=ExtResource("4_m1eep")]
+[node name="hallceiling7" parent="Geomoetry" unique_id=1180090709 instance=ExtResource("4_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 0)
 
-[node name="hallceiling8" parent="Geomoetry" instance=ExtResource("4_m1eep")]
+[node name="hallceiling8" parent="Geomoetry" unique_id=100650773 instance=ExtResource("4_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, -2)
 
-[node name="hallceiling9" parent="Geomoetry" instance=ExtResource("4_m1eep")]
+[node name="hallceiling9" parent="Geomoetry" unique_id=1371246861 instance=ExtResource("4_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2)
 
-[node name="hallceiling10" parent="Geomoetry" instance=ExtResource("4_m1eep")]
+[node name="hallceiling10" parent="Geomoetry" unique_id=660541957 instance=ExtResource("4_m1eep")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -4)
 
-[node name="hallceiling_blocker2" parent="Geomoetry" instance=ExtResource("5_ejr1r")]
+[node name="hallceiling_blocker2" parent="Geomoetry" unique_id=808544366 instance=ExtResource("5_ejr1r")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 2, 2.2)
 
-[node name="hallceiling_blocker3" parent="Geomoetry" instance=ExtResource("5_ejr1r")]
+[node name="hallceiling_blocker3" parent="Geomoetry" unique_id=1576396802 instance=ExtResource("5_ejr1r")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2, 2, -3.8000002)
 
-[node name="hallceiling_blocker4" parent="Geomoetry" instance=ExtResource("5_ejr1r")]
+[node name="hallceiling_blocker4" parent="Geomoetry" unique_id=151167125 instance=ExtResource("5_ejr1r")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, 2, 0.19999981)
 
-[node name="hallceiling_blocker5" parent="Geomoetry" instance=ExtResource("5_ejr1r")]
+[node name="hallceiling_blocker5" parent="Geomoetry" unique_id=1858450183 instance=ExtResource("5_ejr1r")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2, 2, 3.7999997)
 
-[node name="hallceiling_blocker6" parent="Geomoetry" instance=ExtResource("5_ejr1r")]
+[node name="hallceiling_blocker6" parent="Geomoetry" unique_id=1494812237 instance=ExtResource("5_ejr1r")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2, 2, 3.7999997)
 
-[node name="hallceiling_blocker7" parent="Geomoetry" instance=ExtResource("5_ejr1r")]
+[node name="hallceiling_blocker7" parent="Geomoetry" unique_id=1255017661 instance=ExtResource("5_ejr1r")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 2, -2.2000003)
 
-[node name="hallwall_wall_alcove" parent="Geomoetry" instance=ExtResource("6_nwusr")]
+[node name="hallwall_wall_alcove" parent="Geomoetry" unique_id=2034195331 instance=ExtResource("6_nwusr")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
-[node name="dugneonbuilderterminal" parent="Geomoetry/hallwall_wall_alcove" instance=ExtResource("7_k8ayc")]
+[node name="dugneonbuilderterminal" parent="Geomoetry/hallwall_wall_alcove" unique_id=791934779 instance=ExtResource("7_k8ayc")]
 transform = Transform3D(-4.371138e-08, 0, 1, 0, 1, 0, -1, 0, -4.371138e-08, 0.33395347, 0, -0.99132097)
 
-[node name="Door 1 ConfigOptions" type="Node3D" parent="Geomoetry"]
+[node name="Door 1 ConfigOptions" type="Node3D" parent="Geomoetry" unique_id=1693030550]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 8)
 script = ExtResource("11_cji5a")
 metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
 
-[node name="Door 2 ConfigOptions" type="Node3D" parent="Geomoetry"]
+[node name="Door 2 ConfigOptions" type="Node3D" parent="Geomoetry" unique_id=95191582]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -6)
+script = ExtResource("11_cji5a")
+metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
+
+[node name="Door 3 ConfigOptions" type="Node3D" parent="Geomoetry" unique_id=1554654413]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 0)
 script = ExtResource("11_cji5a")
 metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"

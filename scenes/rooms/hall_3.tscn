@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=4 uid="uid://d3nsed3fmdpi1"]
+[gd_scene format=4 uid="uid://d3nsed3fmdpi1"]
 
 [ext_resource type="Script" uid="uid://7ob51r0hj6yw" path="res://scripts/reps/blueprint_room.gd" id="1_y1g3u"]
 [ext_resource type="Resource" uid="uid://dmhfnjqm6ww3d" path="res://scenes/rooms/room_tileset_doors_directions.tres" id="2_3jt5k"]
@@ -11,7 +11,7 @@ rotate_clockwise_action = "blueprint_rotate_cw"
 rotate_counter_clockwise_action = "blueprint_rotate_ccw"
 metadata/_custom_type_script = "uid://8gfxxyx4bmsv"
 
-[node name="Hall 3" type="Area2D" node_paths=PackedStringArray("outline", "doors", "collision")]
+[node name="Hall 3" type="Area2D" unique_id=2059780654 node_paths=PackedStringArray("outline", "doors", "collision")]
 z_index = 3
 script = ExtResource("1_y1g3u")
 outline = NodePath("Outline")
@@ -20,25 +20,25 @@ doors_directions = ExtResource("2_3jt5k")
 collision = NodePath("CollisionPolygon2D")
 draggable = SubResource("Resource_6afpx")
 
-[node name="Outline" type="TileMapLayer" parent="."]
+[node name="Outline" type="TileMapLayer" parent="." unique_id=1549577479]
 z_index = -1
 texture_filter = 1
 texture_repeat = 1
 position = Vector2(-8, -8)
-tile_map_data = PackedByteArray("AAABAAAAAAADAAIAAAAAAAAAAAAGAAEAAAD//wAAAAADAAQAAAAAAAEAAAACAAMAAAAAAP//AAAEAAMAAAD+/wEAAAAGAAIAAAD+/wAAAAAEAAYAAAD+////AAAGAAAAAAABAAIAAAAHAAEAAAAAAAIAAAAGAAcAAAD//wIAAAAFAAEAAAACAAEAAAAGAAIAAAACAAAAAAAFAAYAAAACAP//AAAGAAAAAAABAP7/AAAHAAEAAAAAAP7/AAAGAAYAAAD///7/AAAFAAEAAAA=")
+tile_map_data = PackedByteArray("AAABAAAAAAADAAIAAAAAAAAAAAAGAAEAAAD//wAAAAADAAQAAAAAAAEAAAACAAMAAAAAAP//AAAEAAMAAAD+/wEAAAAGAAIAAAD+/wAAAAAEAAYAAAD+////AAACAAMAAAABAAIAAAAHAAEAAAAAAAIAAAAGAAcAAAD//wIAAAAFAAEAAAACAAEAAAAGAAIAAAACAAAAAAAFAAYAAAACAP//AAACAAMAAAABAP7/AAADAAIAAAAAAP7/AAAGAAYAAAD///7/AAADAAQAAAD+//7/AAACAAIAAAACAP7/AAAEAAIAAAA=")
 tile_set = ExtResource("4_giqj8")
 collision_enabled = false
 navigation_enabled = false
 
-[node name="Doors" type="TileMapLayer" parent="."]
+[node name="Doors" type="TileMapLayer" parent="." unique_id=403739738]
 z_index = -1
 texture_filter = 1
 texture_repeat = 1
 position = Vector2(-8, -8)
-tile_map_data = PackedByteArray("AAACAAEAAAAEAAcAAAAAAP7/AAAFAAcAAAA=")
+tile_map_data = PackedByteArray("AAACAAEAAAAEAAcAAAAAAP7/AAAFAAcAAAD//wIAAAACAAcAAAA=")
 tile_set = ExtResource("4_giqj8")
 collision_enabled = false
 navigation_enabled = false
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=525588799]
 polygon = PackedVector2Array(-48, -48, -48, 48, 48, 48, 48, -48)

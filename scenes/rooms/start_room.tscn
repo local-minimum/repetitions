@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=4 uid="uid://ctcvff10ujxfr"]
+[gd_scene format=4 uid="uid://ctcvff10ujxfr"]
 
 [ext_resource type="TileSet" uid="uid://b3kjmbfkqhmld" path="res://scenes/rooms/room_tileset.tres" id="1_f8a4q"]
 [ext_resource type="Script" uid="uid://7ob51r0hj6yw" path="res://scripts/reps/blueprint_room.gd" id="1_kbl62"]
@@ -11,7 +11,7 @@ rotate_clockwise_action = "blueprint_rotate_cw"
 rotate_counter_clockwise_action = "blueprint_rotate_ccw"
 metadata/_custom_type_script = "uid://8gfxxyx4bmsv"
 
-[node name="Room" type="Area2D" node_paths=PackedStringArray("outline", "doors", "collision")]
+[node name="Room" type="Area2D" unique_id=97192511 node_paths=PackedStringArray("outline", "doors", "collision")]
 z_index = 3
 script = ExtResource("1_kbl62")
 outline = NodePath("Outline")
@@ -20,7 +20,7 @@ doors_directions = ExtResource("2_qr66m")
 collision = NodePath("CollisionPolygon2D")
 draggable = SubResource("Resource_6afpx")
 
-[node name="Outline" type="TileMapLayer" parent="."]
+[node name="Outline" type="TileMapLayer" parent="." unique_id=1774673866]
 z_index = -1
 texture_filter = 1
 texture_repeat = 1
@@ -30,15 +30,15 @@ tile_set = ExtResource("1_f8a4q")
 collision_enabled = false
 navigation_enabled = false
 
-[node name="Doors" type="TileMapLayer" parent="."]
+[node name="Doors" type="TileMapLayer" parent="." unique_id=1205535986]
 z_index = -1
 texture_filter = 1
 texture_repeat = 1
 position = Vector2(-8, -8)
-tile_map_data = PackedByteArray("AAABAAIAAAADAAcAAAD9/wAAAAACAAcAAAADAP//AAAEAAcAAAABAP7/AAAFAAcAAAA=")
+tile_map_data = PackedByteArray("AAABAAIAAAADAAcAAAD9/wAAAAACAAcAAAA=")
 tile_set = ExtResource("1_f8a4q")
 collision_enabled = false
 navigation_enabled = false
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1273305596]
 polygon = PackedVector2Array(-64, -48, -64, 48, 64, 48, 64, -48)

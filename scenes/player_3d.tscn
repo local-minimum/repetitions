@@ -162,6 +162,7 @@ _player = NodePath("..")
 [node name="GriddedController" type="Node" parent="." unique_id=1745718286 node_paths=PackedStringArray("_player")]
 script = ExtResource("3_aoiyr")
 _player = NodePath("..")
+_translation_resolution = 10
 
 [node name="Player Collision Body" type="CollisionShape3D" parent="." unique_id=249778954]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
@@ -253,14 +254,13 @@ shape = ExtResource("1_52vux")
 target_position = Vector3(1.4, 0, 0)
 
 [node name="Step Caster" type="ShapeCast3D" parent="Casting Origin" unique_id=2081488253 node_paths=PackedStringArray("_debug_shape")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8089126, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 enabled = false
 shape = SubResource("BoxShape3D_aoiyr")
-target_position = Vector3(0, -1.1, 0)
+target_position = Vector3(0, -1.4, 0)
 script = ExtResource("7_460ac")
 step_distance = 0.25
 step_height_max = 0.45
 step_down_max = 0.5
 min_clearing_above = 0.15
-cast_height_origin = null
 _debug_shape = NodePath("../../Debug Step CollisionPt")
