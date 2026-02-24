@@ -12,6 +12,7 @@
 [ext_resource type="ArrayMesh" uid="uid://dxbrmfbvxsvvu" path="res://scenes/rooms/meshes/props/train_track_turn_left_short.obj" id="10_sb3vj"]
 [ext_resource type="ArrayMesh" uid="uid://cjoy3pfwroyr" path="res://scenes/rooms/meshes/props/train_track_turn_right.obj" id="11_ylisv"]
 [ext_resource type="PackedScene" uid="uid://d2lnbaf3mlgh1" path="res://scenes/rooms/meshes/roomwall_train_tunnel.blend" id="12_vk3mw"]
+[ext_resource type="Script" uid="uid://cfiu5ok0cmhx" path="res://scripts/reps/track.gd" id="13_kho2a"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xd5uw"]
 size = Vector3(0.34762573, 0.10650635, 0.982666)
@@ -21,6 +22,13 @@ data = PackedVector3Array(-0.0396, 0.048699997, 0.2377, -0.0396, -0.048699997, 0
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ylisv"]
 data = PackedVector3Array(-0.1704, 0.048699997, 0.1704, -0.1704, -0.048699997, 0.1704, -0.0931, 0.048699997, -0.4279, -0.0931, 0.048699997, -0.4279, -0.1704, -0.048699997, 0.1704, -0.0931, -0.048699997, -0.4279, -0.0931, 0.048699997, -0.4279, -0.0931, -0.048699997, -0.4279, 0.1099, 0.048699997, -0.9104, 0.1099, 0.048699997, -0.9104, -0.0931, -0.048699997, -0.4279, 0.1099, -0.048699997, -0.9104, 0.23189999, 0.048699997, -0.3256, 0.23189999, -0.048699997, -0.3256, 0.1704, 0.048699997, 0.1704, 0.1704, 0.048699997, 0.1704, 0.23189999, -0.048699997, -0.3256, 0.1704, -0.048699997, 0.1704, 0.1704, 0.048699997, 0.1704, 0.1704, -0.048699997, 0.1704, -0.1704, 0.048699997, 0.1704, -0.1704, 0.048699997, 0.1704, 0.1704, -0.048699997, 0.1704, -0.1704, -0.048699997, 0.1704, 0.23189999, -0.048699997, -0.3256, -0.0931, -0.048699997, -0.4279, 0.1704, -0.048699997, 0.1704, 0.1704, -0.048699997, 0.1704, -0.0931, -0.048699997, -0.4279, -0.1704, -0.048699997, 0.1704, -0.0931, -0.048699997, -0.4279, 0.23189999, -0.048699997, -0.3256, 0.1099, -0.048699997, -0.9104, 0.1099, -0.048699997, -0.9104, 0.23189999, -0.048699997, -0.3256, 0.3987, -0.048699997, -0.72959995, 0.1099, -0.048699997, -0.9104, 0.3987, -0.048699997, -0.72959995, 0.3317, -0.048699997, -1.2174, 0.3317, -0.048699997, -1.2174, 0.3987, -0.048699997, -0.72959995, 0.5974, -0.048699997, -1.0041, -0.0931, 0.048699997, -0.4279, 0.23189999, 0.048699997, -0.3256, -0.1704, 0.048699997, 0.1704, -0.1704, 0.048699997, 0.1704, 0.23189999, 0.048699997, -0.3256, 0.1704, 0.048699997, 0.1704, 0.23189999, 0.048699997, -0.3256, -0.0931, 0.048699997, -0.4279, 0.3987, 0.048699997, -0.72959995, 0.3987, 0.048699997, -0.72959995, -0.0931, 0.048699997, -0.4279, 0.1099, 0.048699997, -0.9104, 0.3987, 0.048699997, -0.72959995, 0.1099, 0.048699997, -0.9104, 0.5974, 0.048699997, -1.0041, 0.5974, 0.048699997, -1.0041, 0.1099, 0.048699997, -0.9104, 0.3317, 0.048699997, -1.2174, 0.23189999, -0.048699997, -0.3256, 0.23189999, 0.048699997, -0.3256, 0.3987, -0.048699997, -0.72959995, 0.3987, -0.048699997, -0.72959995, 0.23189999, 0.048699997, -0.3256, 0.3987, 0.048699997, -0.72959995, 0.3317, 0.048699997, -1.2174, 0.3317, -0.048699997, -1.2174, 0.5974, 0.048699997, -1.0041, 0.5974, 0.048699997, -1.0041, 0.3317, -0.048699997, -1.2174, 0.5974, -0.048699997, -1.0041, 0.1099, 0.048699997, -0.9104, 0.1099, -0.048699997, -0.9104, 0.3317, 0.048699997, -1.2174, 0.3317, 0.048699997, -1.2174, 0.1099, -0.048699997, -0.9104, 0.3317, -0.048699997, -1.2174, 0.3987, -0.048699997, -0.72959995, 0.3987, 0.048699997, -0.72959995, 0.5974, -0.048699997, -1.0041, 0.5974, -0.048699997, -1.0041, 0.3987, 0.048699997, -0.72959995, 0.5974, 0.048699997, -1.0041)
+
+[sub_resource type="Curve3D" id="Curve3D_57el1"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.06, 0.11, 4.256, 0, 0, 0, 0, 0, 0, 0.582, 0.11, 1.32, 0.248, 0.11, 0.598, 0, 0, 0, 0.425, 0.11, 0.146, 0, 0, 0, 0, 0, 0, -0.006, 0.11, -0.775, -0.22, 0.11, 0.623, 0, 0, 0, -0.128, 0.11, -2.119, 0, 0, 0, 0, 0, 0, 0.114, 0.11, -3.089),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
 
 [node name="RoomCorner3d" type="Node3D" unique_id=1643020392 node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_5l0uy")
@@ -164,82 +172,99 @@ _panic_state = 3
 _to_door_if_other_no_door = 3
 _to_door_default = 3
 
-[node name="TrainTrackStraight" type="MeshInstance3D" parent="." unique_id=1182357709]
+[node name="roomwall_train_tunnel" parent="Geometry" unique_id=2146398056 instance=ExtResource("12_vk3mw")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -4)
+
+[node name="TrainTracks" type="Node3D" parent="Geometry" unique_id=2004876819]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+
+[node name="TrainTrackStraight" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=1182357709]
 transform = Transform3D(0.98482895, 0, -0.17352787, 0, 1, 0, 0.17352787, 0, 0.98482895, 0.14737986, 0.05, 3.7761812)
 material_override = ExtResource("8_xd5uw")
 mesh = ExtResource("8_ovqid")
+skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="TrainTrackStraight" unique_id=229371834]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackStraight" unique_id=229371834]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainTrackStraight/StaticBody3D" unique_id=1721847366]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStraight/StaticBody3D" unique_id=1721847366]
 transform = Transform3D(1.000006, 0, -2.3841858e-07, 0, 1, 0, 2.3841858e-07, 0, 1.000006, -0.0028524399, 0.0074157678, 0.006225586)
 shape = SubResource("BoxShape3D_xd5uw")
 
-[node name="TrainTrackStraight2" type="MeshInstance3D" parent="." unique_id=810414553]
+[node name="TrainTrackStraight2" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=810414553]
 transform = Transform3D(0.98482895, 0, -0.17352787, 0, 1, 0, 0.17352787, 0, 0.98482895, 0.31432515, 0.05, 2.7957206)
 material_override = ExtResource("8_xd5uw")
 mesh = ExtResource("8_ovqid")
+skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="TrainTrackStraight2" unique_id=943608339]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackStraight2" unique_id=943608339]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainTrackStraight2/StaticBody3D" unique_id=2133765233]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStraight2/StaticBody3D" unique_id=2133765233]
 transform = Transform3D(1.000006, 0, -2.3841858e-07, 0, 1, 0, 2.3841858e-07, 0, 1.000006, -0.0028524399, 0.0074157678, 0.006225586)
 shape = SubResource("BoxShape3D_xd5uw")
 
-[node name="TrainTrackStraight3" type="MeshInstance3D" parent="." unique_id=469250455]
+[node name="TrainTrackStraight3" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=469250455]
 transform = Transform3D(0.98482895, 0, -0.17352787, 0, 1, 0, 0.17352787, 0, 0.98482895, 0.483625, 0.05, 1.805125)
 material_override = ExtResource("8_xd5uw")
 mesh = ExtResource("8_ovqid")
+skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="TrainTrackStraight3" unique_id=1472724992]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackStraight3" unique_id=1472724992]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainTrackStraight3/StaticBody3D" unique_id=455375836]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStraight3/StaticBody3D" unique_id=455375836]
 transform = Transform3D(1.000006, 0, -2.3841858e-07, 0, 1, 0, 2.3841858e-07, 0, 1.000006, -0.0028524399, 0.0074157678, 0.006225586)
 shape = SubResource("BoxShape3D_xd5uw")
 
-[node name="TrainTrackStraight4" type="MeshInstance3D" parent="." unique_id=1665592103]
+[node name="TrainTrackStraight4" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=1665592103]
 transform = Transform3D(0.9068013, 0, 0.42155814, 0, 1, 0, -0.42155814, 0, 0.9068013, 0.19805434, 0.05, -0.3068315)
 material_override = ExtResource("8_xd5uw")
 mesh = ExtResource("8_ovqid")
+skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="TrainTrackStraight4" unique_id=1182962366]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackStraight4" unique_id=1182962366]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainTrackStraight4/StaticBody3D" unique_id=471261153]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStraight4/StaticBody3D" unique_id=471261153]
 transform = Transform3D(1.000006, 0, -2.3841858e-07, 0, 1, 0, 2.3841858e-07, 0, 1.000006, -0.0028524399, 0.0074157678, 0.006225586)
 shape = SubResource("BoxShape3D_xd5uw")
 
-[node name="TrainTrackStraight5" type="MeshInstance3D" parent="." unique_id=2133625747]
+[node name="TrainTrackStraight5" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=2133625747]
 transform = Transform3D(0.970725, 0, -0.2401941, 0, 1, 0, 0.2401941, 0, 0.970725, -0.008755356, 0.05, -2.6025493)
 material_override = ExtResource("8_xd5uw")
 mesh = ExtResource("8_ovqid")
+skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="TrainTrackStraight5" unique_id=1571287610]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackStraight5" unique_id=1571287610]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainTrackStraight5/StaticBody3D" unique_id=823701362]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStraight5/StaticBody3D" unique_id=823701362]
 transform = Transform3D(1.000006, 0, -2.3841858e-07, 0, 1, 0, 2.3841858e-07, 0, 1.000006, -0.0028524399, 0.0074157678, 0.006225586)
 shape = SubResource("BoxShape3D_xd5uw")
 
-[node name="TrainTrackTurnLeftShort" type="MeshInstance3D" parent="." unique_id=58007978]
+[node name="TrainTrackTurnLeftShort" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=58007978]
 transform = Transform3D(0.9091271, 0, 0.4165188, 0, 1, 0, -0.4165188, 0, 0.9091271, 0.5446324, 0.0668345, 0.7279807)
 material_override = ExtResource("8_xd5uw")
 mesh = ExtResource("10_sb3vj")
+skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="TrainTrackTurnLeftShort" unique_id=159337752]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort" unique_id=159337752]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainTrackTurnLeftShort/StaticBody3D" unique_id=1327125401]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnLeftShort/StaticBody3D" unique_id=1327125401]
 transform = Transform3D(-0.8230673, 0, 0.56794435, 0, 1, 0, -0.56794435, 0, -0.8230673, 0.13069257, -0.018119503, -0.4090225)
 shape = SubResource("ConcavePolygonShape3D_vk3mw")
 
-[node name="TrainTrackTurnRight" type="MeshInstance3D" parent="." unique_id=241377550]
+[node name="TrainTrackTurnRight" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=241377550]
 transform = Transform3D(0.90957016, 0, 0.41555074, 0, 1, 0, -0.41555074, 0, 0.90957016, -0.12795326, 0.064468, -1.4644661)
 material_override = ExtResource("8_xd5uw")
 mesh = ExtResource("11_ylisv")
+skeleton = NodePath("../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="TrainTrackTurnRight" unique_id=1513708837]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTracks/TrainTrackTurnRight" unique_id=1513708837]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainTrackTurnRight/StaticBody3D" unique_id=856178193]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackTurnRight/StaticBody3D" unique_id=856178193]
 transform = Transform3D(0.9999876, 0, -0.0049565732, 0, 1, 0, 0.0049565732, 0, 0.9999876, -0.18663049, -0.015752997, 0.51686645)
 shape = SubResource("ConcavePolygonShape3D_ylisv")
 
-[node name="roomwall_train_tunnel" parent="." unique_id=2146398056 instance=ExtResource("12_vk3mw")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1, 0, -3)
+[node name="Track" type="Path3D" parent="Geometry/TrainTracks" unique_id=226215494]
+curve = SubResource("Curve3D_57el1")
+script = ExtResource("13_kho2a")
+start_mode = 2
+end_mode = 2
+metadata/_custom_type_script = "uid://cfiu5ok0cmhx"
