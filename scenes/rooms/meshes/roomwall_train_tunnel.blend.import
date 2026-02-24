@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://kf6tycunr25q"
-path="res://.godot/imported/roomwall.blend-bf25a7b3f79104de0f91eeb2f54c416f.scn"
+uid="uid://d2lnbaf3mlgh1"
+path="res://.godot/imported/roomwall_train_tunnel.blend-2600b534ceb5281a45f61580fb857bae.scn"
 
 [deps]
 
-source_file="res://scenes/rooms/meshes/roomwall.blend"
-dest_files=["res://.godot/imported/roomwall.blend-bf25a7b3f79104de0f91eeb2f54c416f.scn"]
+source_file="res://scenes/rooms/meshes/roomwall_train_tunnel.blend"
+dest_files=["res://.godot/imported/roomwall_train_tunnel.blend-2600b534ceb5281a45f61580fb857bae.scn"]
 
 [params]
 

@@ -223,10 +223,10 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 8)
 
 [node name="StartRoom3d" parent="." unique_id=1034094910 instance=ExtResource("14_8qey6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 18)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4, 0, 20)
 
 [node name="RoomReactor3d" parent="." unique_id=1282606392 instance=ExtResource("15_iyhq1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 28)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -6, 0, 26)
 
 [connection signal="pressed" from="DebugControls/HBoxContainer/Cinematic Btn" to="DebugControls" method="_on_cinematic_btn_pressed"]
 [connection signal="pressed" from="DebugControls/HBoxContainer/Gridless Btn" to="DebugControls" method="_on_gridless_btn_pressed"]

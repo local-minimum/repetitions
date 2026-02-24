@@ -157,6 +157,7 @@ _debug_shapes = [NodePath("Debug Step CollisionPt"), NodePath("Player Collision 
 [node name="GridlessController" type="Node" parent="." unique_id=651669008 node_paths=PackedStringArray("_player")]
 script = ExtResource("2_ali1n")
 _player = NodePath("..")
+_step_check_distance_factor = 20.0
 
 [node name="GriddedController" type="Node" parent="." unique_id=1745718286 node_paths=PackedStringArray("_player")]
 script = ExtResource("3_aoiyr")

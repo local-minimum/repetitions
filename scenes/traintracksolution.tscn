@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://8hu6pcjxtnhp"]
+
+[ext_resource type="PackedScene" uid="uid://cjduvtbggfby1" path="res://scenes/rooms/start_room_3d.tscn" id="1_va7fd"]
+[ext_resource type="PackedScene" uid="uid://hpel2to4u6wx" path="res://scenes/rooms/room_corner_3d.tscn" id="2_va7fd"]
+[ext_resource type="ArrayMesh" uid="uid://bu3rtrk45k8qd" path="res://scenes/rooms/meshes/props/train_track_turn_right_short.obj" id="3_cxjua"]
+
+[node name="Node3D" type="Node3D" unique_id=1848198409]
+
+[node name="StartRoom3d" parent="." unique_id=1982129123 instance=ExtResource("1_va7fd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="RoomCorner3d" parent="." unique_id=2133369707 instance=ExtResource("2_va7fd")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -1)
+
+[node name="TrainTrackTurnRightShort" type="MeshInstance3D" parent="." unique_id=180591522]
+transform = Transform3D(0.17258243, 0, 0.98499507, 0, 1, 0, -0.98499507, 0, 0.17258243, -7.1314387, 0.0639221, -1.0804498)
+mesh = ExtResource("3_cxjua")
