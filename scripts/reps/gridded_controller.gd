@@ -81,24 +81,27 @@ func _normalize_gridded_translation_direction(movement: Movement.MovementType, d
 
 const _FLATNESS_THRESHOLD: float = 0.1 * PI
 
+enum StepOutcome { FLAT, ELEVATION_CHANGE, TOO_STEEP, TOO_LARGE_ELEVATION, BLOCKED }
+
 func _test_step(
     step_data:  Dictionary[PhysicsControllerStepCaster.StepData, Vector3],
     planar_delta: Vector3,
     fudge: float = 0.0
-) -> bool:
+) -> StepOutcome:
     if _player.stepper.can_step(step_data, true):
         if step_data[PhysicsControllerStepCaster.StepData.NORMAL].angle_to(Vector3.UP) > _player.floor_max_angle:
             if fudge > 0.0:
                 _player.caster_origin.global_position -= planar_delta.normalized() * fudge
-                if _test_step(step_data, planar_delta, 0.0):
-                    return true
+                var outcome: StepOutcome = _test_step(step_data, planar_delta, 0.0)
+                if outcome != StepOutcome.TOO_STEEP && outcome != StepOutcome.TOO_LARGE_ELEVATION:
+                    return outcome
             print_debug("Failed step from %s at %s due to angle %s, player at %s" % [
                 _player.caster_origin.global_position,
                 step_data,
                 step_data[PhysicsControllerStepCaster.StepData.NORMAL].angle_to(Vector3.UP),
                 _player.global_position
             ])
-            return false
+            return StepOutcome.TOO_STEEP
 
 
         _player.caster_origin.global_position.y = step_data[PhysicsControllerStepCaster.StepData.CENTER_POINT].y
@@ -109,9 +112,13 @@ func _test_step(
             return _test_step(step_data, planar_delta, 0.0)
 
         print_debug("Failed step from %s, player at %s" % [_player.caster_origin.global_position, _player.global_position])
-        return false
+        if step_data[PhysicsControllerStepCaster.StepData.CLEARING].length() < _player.stepper.min_clearing_above:
+            return StepOutcome.BLOCKED
+        return StepOutcome.TOO_LARGE_ELEVATION
 
-    return true
+    if step_data[PhysicsControllerStepCaster.StepData.VERTICAL_DELTA].length() < _player.stepper.ignore_step_height:
+        return StepOutcome.FLAT
+    return StepOutcome.ELEVATION_CHANGE
 
 func _attempt_gridded_translation(movement: Movement.MovementType, direction: Vector3, resolution: int = 6) -> void:
     if _translation_tween && _translation_tween.is_running() || _rotation_tween && _rotation_tween.is_running():
@@ -127,12 +134,16 @@ func _attempt_gridded_translation(movement: Movement.MovementType, direction: Ve
     direction = direction.normalized()
 
     print_debug("Attempting %s -> %s" % [_player.global_position, target])
-    var steps: Array = [
-        {
+    var prev_data: Dictionary[PhysicsControllerStepCaster.StepData, Vector3] = {
             PhysicsControllerStepCaster.StepData.POINT: _player.global_position,
             PhysicsControllerStepCaster.StepData.CENTER_POINT: _player.global_position,
+            PhysicsControllerStepCaster.StepData.VERTICAL_DELTA: Vector3.ZERO,
             PhysicsControllerStepCaster.StepData.NORMAL: Vector3.UP,
-        }
+            PhysicsControllerStepCaster.StepData.CLEARING: Vector3.UP * _player.stepper.min_clearing_above,
+    }
+
+    var steps: Array = [
+        prev_data,
     ]
 
     _player.reset_caster_origin()
@@ -140,16 +151,51 @@ func _attempt_gridded_translation(movement: Movement.MovementType, direction: Ve
     var y: float = _player.global_position.y
     var failed: bool = false
     var fudge: float = minf(_fudge_distance, (0.8 * planar_delta / float(resolution)).length())
+    var prev_step: StepOutcome = StepOutcome.FLAT
+
     for idx: int in resolution:
         var step_data:  Dictionary[PhysicsControllerStepCaster.StepData, Vector3]
         _player.caster_origin.global_position = _player.global_position + planar_delta * float(idx + 1) / float(resolution)
         _player.caster_origin.global_position.y = y
-        if _test_step(step_data, planar_delta, fudge if idx == resolution - 1 else 0.0):
-            steps.append(step_data)
-            y = _player.caster_origin.global_position.y
-        else:
-            failed = true
-            break
+        var cur_step: StepOutcome = _test_step(step_data, planar_delta, fudge if idx == resolution - 1 else 0.0)
+        match cur_step:
+            StepOutcome.BLOCKED:
+                failed = true
+                break
+
+            StepOutcome.TOO_STEEP:
+                if idx == resolution - 1:
+                    failed = true
+                    break
+
+            StepOutcome.TOO_LARGE_ELEVATION:
+                # If it isn't the last step and we had valid ground the last step we just walk over it
+                if (
+                    idx != resolution - 1 &&
+                    prev_step != StepOutcome.TOO_STEEP &&
+                    prev_step != StepOutcome.TOO_LARGE_ELEVATION &&
+                    step_data.size() > 0 &&
+                    step_data[PhysicsControllerStepCaster.StepData.VERTICAL_DELTA].dot(Vector3.DOWN) > 1
+                ):
+                    if prev_step == StepOutcome.FLAT && idx != 1:
+                        steps.append(prev_data)
+                else:
+                    failed = true
+                    break
+
+            StepOutcome.FLAT:
+                if idx == resolution - 1:
+                    steps.append(step_data)
+
+            StepOutcome.ELEVATION_CHANGE:
+                if prev_step == StepOutcome.FLAT && idx != 1:
+                    steps.append(prev_data)
+                steps.append(step_data)
+
+        y = _player.caster_origin.global_position.y
+        prev_step = cur_step
+        prev_data = step_data
+
 
     _player.reset_caster_origin()
 
@@ -164,46 +210,53 @@ func _attempt_gridded_translation(movement: Movement.MovementType, direction: Ve
     _translation_tween = create_tween()
     var prev_norm: Vector3 = Vector3.UP
     var prev_pt: Vector3 = _player.global_position
-
+    var idx: int = 0
     @warning_ignore_start("return_value_discarded")
-    print_debug(steps)
+    print_debug("Transition in %s steps: %s" % [steps.size(), steps])
+
     for step: Dictionary in steps:
         var pt: Vector3 = step[PhysicsControllerStepCaster.StepData.CENTER_POINT]
         var norm: Vector3 = step[PhysicsControllerStepCaster.StepData.NORMAL]
-        if (
-            absf(pt.y - prev_pt.y) < _player.stepper.ignore_step_height ||
-            norm.angle_to(Vector3.UP) > _FLATNESS_THRESHOLD ||
-            prev_norm.angle_to(Vector3.UP) > _FLATNESS_THRESHOLD
-        ):
-            # Flat or slope walk
-            _translation_tween.tween_property(
-                _player,
-                "global_position",
-                pt,
-                part_duration,
-            )
-        else:
-            # We need stairs animation type
-            _translation_tween.tween_property(
-                _player,
-                "global_position:x",
-                pt.x,
-                part_duration,
-            )
-            _translation_tween.set_parallel()
-            _translation_tween.tween_property(
-                _player,
-                "global_position:z",
-                pt.z,
-                part_duration,
-            )
-            _translation_tween.tween_property(
-                _player,
-                "global_position:y",
-                pt.y,
-                part_duration,
-            ).set_ease(Tween.EASE_OUT if prev_pt.y < pt.y else Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
-            _translation_tween.set_parallel(false)
+
+        if idx > 0:
+            if (
+                absf(pt.y - prev_pt.y) < _player.stepper.ignore_step_height ||
+                norm.angle_to(Vector3.UP) > _FLATNESS_THRESHOLD ||
+                prev_norm.angle_to(Vector3.UP) > _FLATNESS_THRESHOLD
+            ):
+                # Flat or slope walk
+                _translation_tween.tween_property(
+                    _player,
+                    "global_position",
+                    pt,
+                    part_duration,
+                )
+            else:
+                # We need stairs animation type
+                _translation_tween.tween_property(
+                    _player,
+                    "global_position:x",
+                    pt.x,
+                    part_duration,
+                )
+                _translation_tween.set_parallel()
+                _translation_tween.tween_property(
+                    _player,
+                    "global_position:z",
+                    pt.z,
+                    part_duration,
+                )
+                _translation_tween.tween_property(
+                    _player,
+                    "global_position:y",
+                    pt.y,
+                    part_duration,
+                ).set_ease(Tween.EASE_OUT if prev_pt.y < pt.y else Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+                _translation_tween.set_parallel(false)
+
+        prev_pt = pt
+        prev_norm = norm
+        idx += 1
 
     @warning_ignore_restore("return_value_discarded")
     if _translation_tween.finished.connect(_player.handle_translation_end.bind(movement)) != OK:
