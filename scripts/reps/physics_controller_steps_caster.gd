@@ -2,37 +2,21 @@
 extends ShapeCast3D
 class_name PhysicsControllerStepCaster
 
-## Note: Normalizes and removes component parallell to up_global
-@export var global_step_direction: Vector3:
-    set(value):
-        value -= value.project(up_global)
-        global_step_direction = value.normalized()
-        _sync_cast_down_origin_and_target()
-
-@export var step_distance: float = 0.2:
-    set(value):
-        step_distance = value
-        _sync_cast_down_origin_and_target()
-
 @export var step_height_max: float = 0.35:
     set(value):
         step_height_max = value
-        _sync_cast_down_origin_and_target()
 
 @export var step_down_max: float = 0.35:
     set(value):
         step_down_max = value
-        _sync_cast_down_origin_and_target()
 
 @export var min_clearing_above: float = 0.8:
     set(value):
         min_clearing_above = value
-        _sync_cast_down_origin_and_target()
 
 @export var cast_height_origin: float = 0.8:
     set(value):
         cast_height_origin = value
-        _sync_cast_down_origin_and_target()
 
 @export var ignore_step_height: float = 0.05
 
@@ -73,26 +57,6 @@ var shape_half_height: float:
 
 func _ready() -> void:
     enabled = false
-    _sync_cast_down_origin_and_target()
-
-func _sync_cast_down_origin_and_target() -> void:
-    var b: PhysicsBody3D = body
-    if b == null || !is_instance_valid(b) || !b.is_inside_tree():
-        return
-
-    global_position = (
-        b.global_position +
-        up_global * cast_height_origin +
-        step_distance * global_step_direction
-    )
-    _sync_target()
-
-func _sync_target() -> void:
-    target_position = Vector3(
-        0,
-        -(cast_height_origin + step_down_max + 0.1),
-        0
-    )
 
 enum StepData { POINT, NORMAL, CENTER_POINT, VERTICAL_DELTA, CLEARING }
 
@@ -113,17 +77,23 @@ func _set_debug_shape(color: Color, point: Vector3) -> void:
         _showing_debug_shape_status = true
         _debug_shape.global_position = point
 
-func can_translate_between_steps(target: Vector3) -> bool:
-    target_position = to_local(target + up_global * min_clearing_above * 0.5)
+func can_translate_between_steps(from: Vector3, target: Vector3) -> bool:
+    global_position = from + up_global * cast_height_origin
+    target_position = to_local(target + up_global * cast_height_origin)
+    #print_debug("Checking cast forward from %s to %s with global %s target_position %s" % [from, target, global_position, target_position])
     force_shapecast_update()
     return !is_colliding()
 
-func can_step(data: Dictionary[StepData, Vector3], include_flats: bool = false) -> bool:
+func can_step(from: Vector3, step_offset: Vector3, data: Dictionary[StepData, Vector3], include_flats: bool = false) -> bool:
     if body == null && !is_instance_valid(body) && !body.is_inside_tree():
         data[StepData.CLEARING] = Vector3.ZERO
         return false
 
+    global_position = from + step_offset + up_global * cast_height_origin
+    target_position = up_global * -(cast_height_origin + step_down_max + 0.1)
+    #print_debug("Step from %s in direction %s casting from %s with target %s" % [from, step_offset, global_position, target_position])
     force_shapecast_update()
+
     if !is_colliding():
         display_debug_not_hitting()
         print_debug("Hit nothing")
@@ -150,7 +120,7 @@ func can_step(data: Dictionary[StepData, Vector3], include_flats: bool = false) 
         step_height <= ignore_step_height &&
         step_height >= -ignore_step_height
     ):
-        print_debug("This is flat, not a step")
+        print_debug("This is flat, not a step from %s and offset %s ended up at %s with height %s" % [from, step_offset, data[StepData.CENTER_POINT], step_height])
         _set_debug_shape(Color.AQUA, pt)
         return false
     elif step_height < -step_down_max:
@@ -167,20 +137,18 @@ func can_step(data: Dictionary[StepData, Vector3], include_flats: bool = false) 
 
     if projection.length() < min_clearing_above:
         global_position += projection
-        target_position.y = min_clearing_above
+        target_position = min_clearing_above * up_global
         force_shapecast_update()
         if is_colliding():
             global_position -= projection
-            _sync_target()
             # TODO: This isn't really true
             data[StepData.CLEARING] = Vector3.ZERO
             return false
 
         global_position -= projection
-        _sync_target()
 
-    if !can_translate_between_steps(data[StepData.CENTER_POINT]):
-        _sync_target()
+
+    if !can_translate_between_steps(from, data[StepData.CENTER_POINT]):
         # TODO: This isn't really true
         data[StepData.CLEARING] = Vector3.ZERO
         print_debug("Something blocks")
@@ -188,13 +156,9 @@ func can_step(data: Dictionary[StepData, Vector3], include_flats: bool = false) 
         return false
 
     _set_debug_shape(Color.WEB_GREEN, pt)
-    _sync_target()
     return true
 
-func can_step_up(step_offset: Vector3, data: Dictionary[StepData, Vector3]) -> bool:
-    global_step_direction = step_offset
-    step_distance = (global_step_direction * step_offset).length()
-
-    if can_step(data):
+func can_step_up(from: Vector3, step_offset: Vector3, data: Dictionary[StepData, Vector3]) -> bool:
+    if can_step(from, step_offset, data):
         return data[StepData.CENTER_POINT].y > body.global_position.y + ignore_step_height
     return false

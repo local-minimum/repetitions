@@ -138,7 +138,7 @@ height = 0.2
 [sub_resource type="BoxShape3D" id="BoxShape3D_aoiyr"]
 size = Vector3(0.1, 0.1, 0.1)
 
-[node name="Player3d" type="CharacterBody3D" unique_id=942295760 node_paths=PackedStringArray("_camera", "_gridless_controller", "_gridded_controller", "_captured_pointer_eventer", "caster_origin", "stepper", "_forward", "_left", "_right", "_backward", "_debug_shapes")]
+[node name="Player3d" type="CharacterBody3D" unique_id=942295760 node_paths=PackedStringArray("_camera", "_gridless_controller", "_gridded_controller", "_captured_pointer_eventer", "stepper", "_forward", "_left", "_right", "_backward", "_debug_shapes")]
 collision_layer = 2
 collision_mask = 7
 input_ray_pickable = false
@@ -147,7 +147,6 @@ _camera = NodePath("Camera3D")
 _gridless_controller = NodePath("GridlessController")
 _gridded_controller = NodePath("GriddedController")
 _captured_pointer_eventer = NodePath("Camera3D/CapturedMouseRay")
-caster_origin = NodePath("Casting Origin")
 stepper = NodePath("Casting Origin/Step Caster")
 _forward = NodePath("Casting Origin/Cast Forward")
 _left = NodePath("Casting Origin/Cast Left")
@@ -259,7 +258,6 @@ enabled = false
 shape = SubResource("BoxShape3D_aoiyr")
 target_position = Vector3(0, -1.4, 0)
 script = ExtResource("7_460ac")
-step_distance = 0.25
 step_height_max = 0.45
 step_down_max = 0.5
 min_clearing_above = 0.15

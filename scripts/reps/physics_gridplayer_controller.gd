@@ -57,7 +57,6 @@ var camera: Camera3D:
 
 @export var _captured_pointer_eventer: CapturedMouseEventer
 
-@export var caster_origin: Node3D
 @export var stepper: PhysicsControllerStepCaster
 
 @export var _forward: ShapeCast3D
@@ -199,11 +198,6 @@ func _physics_process(delta: float) -> void:
         _gridless_controller.handle_movement(delta, _translation_stack)
     else:
         _gridded_controller.handle_movement(_translation_stack)
-
-func reset_caster_origin() -> void:
-    stepper.step_distance = 0
-    stepper.global_step_direction = Vector3.ZERO
-    caster_origin.position = Vector3.ZERO
 
 func handle_translation_end(movement: Movement.MovementType) -> void:
     if !_translation_pressed.get(movement, false):

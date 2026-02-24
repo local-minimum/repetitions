@@ -71,9 +71,8 @@ func handle_movement(delta: float, translation_stack: Array[Movement.MovementTyp
     if _player.move_and_slide() && direction.length_squared() > 0:
         # Collides with something
         var step_data: Dictionary[PhysicsControllerStepCaster.StepData, Vector3] = {}
-        _player.caster_origin.position = Vector3.ZERO
 
-        if _player.stepper.can_step_up(direction * delta * _step_check_distance_factor, step_data):
+        if _player.stepper.can_step_up(_player.global_position, direction * delta * _step_check_distance_factor, step_data):
             _player.global_position = step_data[PhysicsControllerStepCaster.StepData.CENTER_POINT]
 
     elif _player.show_debug_shapes:

@@ -84,34 +84,31 @@ const _FLATNESS_THRESHOLD: float = 0.1 * PI
 enum StepOutcome { FLAT, ELEVATION_CHANGE, TOO_STEEP, TOO_LARGE_ELEVATION, BLOCKED }
 
 func _test_step(
+    from: Vector3,
+    step_offset: Vector3,
     step_data:  Dictionary[PhysicsControllerStepCaster.StepData, Vector3],
-    planar_delta: Vector3,
     fudge: float = 0.0
 ) -> StepOutcome:
-    if _player.stepper.can_step(step_data, true):
+    if _player.stepper.can_step(from, step_offset, step_data, true):
         if step_data[PhysicsControllerStepCaster.StepData.NORMAL].angle_to(Vector3.UP) > _player.floor_max_angle:
             if fudge > 0.0:
-                _player.caster_origin.global_position -= planar_delta.normalized() * fudge
-                var outcome: StepOutcome = _test_step(step_data, planar_delta, 0.0)
+                var outcome: StepOutcome = _test_step(from, step_offset, step_data, 0.0)
                 if outcome != StepOutcome.TOO_STEEP && outcome != StepOutcome.TOO_LARGE_ELEVATION:
                     return outcome
             print_debug("Failed step from %s at %s due to angle %s, player at %s" % [
-                _player.caster_origin.global_position,
+                from,
                 step_data,
                 step_data[PhysicsControllerStepCaster.StepData.NORMAL].angle_to(Vector3.UP),
                 _player.global_position
             ])
             return StepOutcome.TOO_STEEP
 
-
-        _player.caster_origin.global_position.y = step_data[PhysicsControllerStepCaster.StepData.CENTER_POINT].y
     else:
         if fudge > 0.0:
-            _player.caster_origin.global_position -= planar_delta.normalized() * fudge
             # Attempt lenient position but no iterative fudging
-            return _test_step(step_data, planar_delta, 0.0)
+            return _test_step(from, step_offset - step_offset.normalized() * fudge, step_data, 0.0)
 
-        print_debug("Failed step from %s, player at %s" % [_player.caster_origin.global_position, _player.global_position])
+        print_debug("Failed step from %s, player at %s" % [from, _player.global_position])
         if step_data[PhysicsControllerStepCaster.StepData.CLEARING].length() < _player.stepper.min_clearing_above:
             return StepOutcome.BLOCKED
         return StepOutcome.TOO_LARGE_ELEVATION
@@ -146,18 +143,17 @@ func _attempt_gridded_translation(movement: Movement.MovementType, direction: Ve
         prev_data,
     ]
 
-    _player.reset_caster_origin()
-
     var y: float = _player.global_position.y
     var failed: bool = false
     var fudge: float = minf(_fudge_distance, (0.8 * planar_delta / float(resolution)).length())
     var prev_step: StepOutcome = StepOutcome.FLAT
+    var step_offset: Vector3 = planar_delta / float(resolution)
 
     for idx: int in resolution:
         var step_data:  Dictionary[PhysicsControllerStepCaster.StepData, Vector3]
-        _player.caster_origin.global_position = _player.global_position + planar_delta * float(idx + 1) / float(resolution)
-        _player.caster_origin.global_position.y = y
-        var cur_step: StepOutcome = _test_step(step_data, planar_delta, fudge if idx == resolution - 1 else 0.0)
+        var from: Vector3 = _player.global_position + planar_delta * float(idx + 1) / float(resolution)
+        from.y = y
+        var cur_step: StepOutcome = _test_step(from, step_offset, step_data, fudge if idx == resolution - 1 else 0.0)
         match cur_step:
             StepOutcome.BLOCKED:
                 failed = true
@@ -191,13 +187,10 @@ func _attempt_gridded_translation(movement: Movement.MovementType, direction: Ve
                 if prev_step == StepOutcome.FLAT && idx != 1:
                     steps.append(prev_data)
                 steps.append(step_data)
+                y = step_data[PhysicsControllerStepCaster.StepData.CENTER_POINT].y
 
-        y = _player.caster_origin.global_position.y
         prev_step = cur_step
         prev_data = step_data
-
-
-    _player.reset_caster_origin()
 
     if failed:
         if steps.size() < 2:
