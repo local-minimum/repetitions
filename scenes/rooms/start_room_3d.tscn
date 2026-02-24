@@ -147,6 +147,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 4)
 
 [node name="Door ConfigOptions4" parent="Geometry" unique_id=479545759 instance=ExtResource("9_mgtto")]
 transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -6, 1, -1)
+_to_wall_door = 3
+_panic_state = 3
+_to_door_if_other_no_door = 3
+_to_door_default = 3
 
 [node name="letter_cube_b bedside" parent="Geometry" unique_id=1705494678 instance=ExtResource("10_3aeuo")]
 transform = Transform3D(0.99995947, 0, -0.009005777, 0, 1, 0, 0.009005777, 0, 0.99995947, -2.9355922, 0.3, -3.5341105)
@@ -426,70 +430,70 @@ travel_in_reverse = false
 
 [node name="RoomSides" type="Node3D" parent="Geometry" unique_id=1031423087]
 
-[node name="roomwall" parent="Geometry/RoomSides" unique_id=1020591094 instance=ExtResource("1_mbk1p")]
+[node name="roomwall" parent="Geometry/RoomSides" unique_id=612441652 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
 
-[node name="roomwall4" parent="Geometry/RoomSides" unique_id=1103752724 instance=ExtResource("1_mbk1p")]
+[node name="roomwall4" parent="Geometry/RoomSides" unique_id=1740433041 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
 
-[node name="roomwall5" parent="Geometry/RoomSides" unique_id=844225662 instance=ExtResource("1_mbk1p")]
+[node name="roomwall5" parent="Geometry/RoomSides" unique_id=498470165 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(2.9802322e-08, -3.2398052e-08, -1, 4.222196e-08, 1, -3.2398045e-08, 1, -4.2221956e-08, 2.9802322e-08, -6, 0, -2)
 
-[node name="roomwall6" parent="Geometry/RoomSides" unique_id=455398319 instance=ExtResource("1_mbk1p")]
+[node name="roomwall6" parent="Geometry/RoomSides" unique_id=457101411 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(2.9802322e-08, -3.2398052e-08, -1, 4.222196e-08, 1, -3.2398045e-08, 1, -4.2221956e-08, 2.9802322e-08, -4, 0, -4)
 
-[node name="roomwall7" parent="Geometry/RoomSides" unique_id=1103784404 instance=ExtResource("1_mbk1p")]
+[node name="roomwall7" parent="Geometry/RoomSides" unique_id=1497798860 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(2.9802322e-08, -3.2398052e-08, -1, 4.222196e-08, 1, -3.2398045e-08, 1, -4.2221956e-08, 2.9802322e-08, -2, 0, -4)
 
-[node name="roomwall8" parent="Geometry/RoomSides" unique_id=1237310243 instance=ExtResource("1_mbk1p")]
+[node name="roomwall8" parent="Geometry/RoomSides" unique_id=1606999087 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(2.9802322e-08, -3.2398052e-08, -1, 4.222196e-08, 1, -3.2398045e-08, 1, -4.2221956e-08, 2.9802322e-08, 0, 0, -6)
 
-[node name="roomwall9" parent="Geometry/RoomSides" unique_id=794245919 instance=ExtResource("1_mbk1p")]
+[node name="roomwall9" parent="Geometry/RoomSides" unique_id=162188712 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(2.9802322e-08, -3.2398052e-08, -1, 4.222196e-08, 1, -3.2398045e-08, 1, -4.2221956e-08, 2.9802322e-08, 4, 0, -6)
 
-[node name="roomwall21" parent="Geometry/RoomSides" unique_id=1270848509 instance=ExtResource("1_mbk1p")]
+[node name="roomwall21" parent="Geometry/RoomSides" unique_id=5842359 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(2.9802322e-08, -3.2398052e-08, -1, 4.222196e-08, 1, -3.2398045e-08, 1, -4.2221956e-08, 2.9802322e-08, 2, 0, -6)
 
-[node name="roomwall10" parent="Geometry/RoomSides" unique_id=1814918046 instance=ExtResource("1_mbk1p")]
+[node name="roomwall10" parent="Geometry/RoomSides" unique_id=1473688797 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(2.9802322e-08, -3.2398052e-08, -1, 4.222196e-08, 1, -3.2398045e-08, 1, -4.2221956e-08, 2.9802322e-08, 6, 0, -6)
 
-[node name="roomwall11" parent="Geometry/RoomSides" unique_id=1677047345 instance=ExtResource("1_mbk1p")]
+[node name="roomwall11" parent="Geometry/RoomSides" unique_id=918392547 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(-1, 4.2221956e-08, 1.3909066e-08, 4.222196e-08, 1, -3.2398045e-08, -1.3909066e-08, -3.2398052e-08, -1, 8, 0, -6)
 
-[node name="roomwall22" parent="Geometry/RoomSides" unique_id=516149699 instance=ExtResource("1_mbk1p")]
+[node name="roomwall22" parent="Geometry/RoomSides" unique_id=756416852 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(-1, 4.2221956e-08, 1.3909066e-08, 4.222196e-08, 1, -3.2398045e-08, -1.3909066e-08, -3.2398052e-08, -1, 8, 0, -4)
 
-[node name="roomwall12" parent="Geometry/RoomSides" unique_id=172147470 instance=ExtResource("1_mbk1p")]
+[node name="roomwall12" parent="Geometry/RoomSides" unique_id=1248907461 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(-1, 4.2221956e-08, 1.3909066e-08, 4.222196e-08, 1, -3.2398045e-08, -1.3909066e-08, -3.2398052e-08, -1, 8, 0, -2)
 
-[node name="roomwall13" parent="Geometry/RoomSides" unique_id=1849972260 instance=ExtResource("1_mbk1p")]
+[node name="roomwall13" parent="Geometry/RoomSides" unique_id=1473567591 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(-1, 4.2221956e-08, 1.3909066e-08, 4.222196e-08, 1, -3.2398045e-08, -1.3909066e-08, -3.2398052e-08, -1, 6, 0, 0)
 
-[node name="roomwall14" parent="Geometry/RoomSides" unique_id=1277075056 instance=ExtResource("1_mbk1p")]
+[node name="roomwall14" parent="Geometry/RoomSides" unique_id=1288958479 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(-1, 4.2221956e-08, 1.3909066e-08, 4.222196e-08, 1, -3.2398045e-08, -1.3909066e-08, -3.2398052e-08, -1, 6, 0, 2)
 
-[node name="roomwall15" parent="Geometry/RoomSides" unique_id=116354480 instance=ExtResource("1_mbk1p")]
+[node name="roomwall15" parent="Geometry/RoomSides" unique_id=1995286856 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(5.7620454e-08, 3.239805e-08, 1, 4.222196e-08, 1, -3.2398045e-08, -1, 4.2221956e-08, 5.7620454e-08, 8, 0, 0)
 
-[node name="roomwall16" parent="Geometry/RoomSides" unique_id=2049990833 instance=ExtResource("1_mbk1p")]
+[node name="roomwall16" parent="Geometry/RoomSides" unique_id=1656598254 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(5.7620454e-08, 3.239805e-08, 1, 4.222196e-08, 1, -3.2398045e-08, -1, 4.2221956e-08, 5.7620454e-08, 6, 0, 4)
 
-[node name="roomwall17" parent="Geometry/RoomSides" unique_id=678428637 instance=ExtResource("1_mbk1p")]
+[node name="roomwall17" parent="Geometry/RoomSides" unique_id=305920031 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(5.7620454e-08, 3.239805e-08, 1, 4.222196e-08, 1, -3.2398045e-08, -1, 4.2221956e-08, 5.7620454e-08, 2, 0, 4)
 
-[node name="roomwall18" parent="Geometry/RoomSides" unique_id=1388264153 instance=ExtResource("1_mbk1p")]
+[node name="roomwall18" parent="Geometry/RoomSides" unique_id=588836573 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(5.7620454e-08, 3.239805e-08, 1, 4.222196e-08, 1, -3.2398045e-08, -1, 4.2221956e-08, 5.7620454e-08, 0, 0, 4)
 
-[node name="roomwall19" parent="Geometry/RoomSides" unique_id=1385161772 instance=ExtResource("1_mbk1p")]
+[node name="roomwall19" parent="Geometry/RoomSides" unique_id=1200693727 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(5.7620454e-08, 3.239805e-08, 1, 4.222196e-08, 1, -3.2398045e-08, -1, 4.2221956e-08, 5.7620454e-08, -2, 0, 4)
 
-[node name="roomwall20" parent="Geometry/RoomSides" unique_id=1372762834 instance=ExtResource("1_mbk1p")]
+[node name="roomwall20" parent="Geometry/RoomSides" unique_id=11232363 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(5.7620454e-08, 3.239805e-08, 1, 4.222196e-08, 1, -3.2398045e-08, -1, 4.2221956e-08, 5.7620454e-08, -4, 0, 2)
 
-[node name="roomwall2" parent="Geometry/RoomSides" unique_id=1726666823 instance=ExtResource("1_mbk1p")]
+[node name="roomwall2" parent="Geometry/RoomSides" unique_id=292927361 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 2)
 
-[node name="roomwall3" parent="Geometry/RoomSides" unique_id=1997674165 instance=ExtResource("1_mbk1p")]
+[node name="roomwall3" parent="Geometry/RoomSides" unique_id=1848523806 instance=ExtResource("1_mbk1p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 4)
 
 [node name="roomwall_cornercap" parent="Geometry/RoomSides" unique_id=1713081530 instance=ExtResource("3_w6a1i")]

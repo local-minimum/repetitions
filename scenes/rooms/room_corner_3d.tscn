@@ -160,6 +160,9 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4, 
 
 [node name="Door Config Options2" parent="Geometry" unique_id=760502344 instance=ExtResource("7_5l0uy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 4)
+_panic_state = 3
+_to_door_if_other_no_door = 3
+_to_door_default = 3
 
 [node name="TrainTrackStraight" type="MeshInstance3D" parent="." unique_id=1182357709]
 transform = Transform3D(0.98482895, 0, -0.17352787, 0, 1, 0, 0.17352787, 0, 0.98482895, 0.14737986, 0.05, 3.7761812)
@@ -238,5 +241,5 @@ mesh = ExtResource("11_ylisv")
 transform = Transform3D(0.9999876, 0, -0.0049565732, 0, 1, 0, 0.0049565732, 0, 0.9999876, -0.18663049, -0.015752997, 0.51686645)
 shape = SubResource("ConcavePolygonShape3D_ylisv")
 
-[node name="roomwall_train_tunnel" parent="." unique_id=1995150349 instance=ExtResource("12_vk3mw")]
+[node name="roomwall_train_tunnel" parent="." unique_id=2146398056 instance=ExtResource("12_vk3mw")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1, 0, -3)
