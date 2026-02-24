@@ -44,8 +44,8 @@ func remove_cinematic_blocker(node: Node) -> void:
     _cinematic_blockers.erase(node)
     if _cinematic_blockers.is_empty():
         cinematic = false
-    else:
-        _update_cinematic(old_value)
+
+    _update_cinematic(old_value)
 
 @export var _camera: Camera3D
 var camera: Camera3D:
