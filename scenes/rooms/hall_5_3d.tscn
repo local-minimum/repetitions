@@ -1,145 +1,176 @@
-[gd_scene load_steps=9 format=3 uid="uid://rn1k76ploxul"]
+[gd_scene format=3 uid="uid://rn1k76ploxul"]
 
 [ext_resource type="PackedScene" uid="uid://bnadm2gr0ggsi" path="res://scenes/rooms/meshes/hallwall.blend" id="1_estw6"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_jemjs"]
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="2_jemjs"]
 [ext_resource type="Texture2D" uid="uid://b783hgilj4um7" path="res://textures/decals/science1.png" id="3_lrage"]
 [ext_resource type="PackedScene" uid="uid://c0dvojglp1sb0" path="res://scenes/rooms/meshes/hallwall_cornercap.blend" id="3_palvg"]
+[ext_resource type="Material" uid="uid://c07yxcnw5ahtq" path="res://textures/wood-textures/track-wood.tres" id="4_6uw34"]
 [ext_resource type="PackedScene" uid="uid://dm1qptotoe08" path="res://scenes/rooms/meshes/hallceiling.blend" id="4_lrage"]
+[ext_resource type="ArrayMesh" uid="uid://d2jl4wr7f23pl" path="res://scenes/rooms/meshes/props/train_track_straight.obj" id="5_gwg1b"]
 [ext_resource type="PackedScene" uid="uid://uwl325qn0fde" path="res://scenes/rooms/meshes/hallceiling_blocker.blend" id="5_sx2bb"]
 [ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="6_palvg"]
 
-[node name="Hall53d" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_l0mhd"]
+size = Vector3(0.34762573, 0.10650635, 0.982666)
+
+[node name="Hall53d" type="Node3D" unique_id=1519766862 node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_jemjs")
 _managed_door_configs = [NodePath("Geometry/Door 1 ConfigOptions"), NodePath("Geometry/Door 2 ConfigOptions"), NodePath("Geometry/Door 3 ConfigOptions"), NodePath("Geometry/Door 4 ConfigOptions"), NodePath("Geometry/Door 5 ConfigOptions")]
 metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
-[node name="Geometry" type="Node3D" parent="."]
+[node name="Geometry" type="Node3D" parent="." unique_id=37415579]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -3)
 
-[node name="hallwall" parent="Geometry" instance=ExtResource("1_estw6")]
+[node name="Door 1 ConfigOptions" type="Node3D" parent="Geometry" unique_id=1500547921]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 10)
+script = ExtResource("6_palvg")
+metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
+
+[node name="Door 2 ConfigOptions" type="Node3D" parent="Geometry" unique_id=433055154]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 3)
+script = ExtResource("6_palvg")
+metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
+metadata/special_science_cell_connection = true
+
+[node name="hallwall_cornercap6" parent="Geometry/Door 2 ConfigOptions" unique_id=1679035990 instance=ExtResource("3_palvg")]
+transform = Transform3D(1.3113416e-07, 3.821371e-15, 1, -8.742278e-08, 1, 7.642742e-15, -1, -8.742278e-08, 1.3113416e-07, 0, -1, 1)
+
+[node name="hallwall_cornercap7" parent="Geometry/Door 2 ConfigOptions" unique_id=1371227350 instance=ExtResource("3_palvg")]
+transform = Transform3D(-1, -8.742278e-08, 8.742277e-08, -8.742278e-08, 1, 7.642742e-15, -8.742277e-08, 2.1175824e-21, -1, 0, -1, -1)
+
+[node name="Door 3 ConfigOptions" type="Node3D" parent="Geometry" unique_id=1035837997]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, -3)
+script = ExtResource("6_palvg")
+metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
+
+[node name="hallwall_cornercap5" parent="Geometry/Door 3 ConfigOptions" unique_id=875151078 instance=ExtResource("3_palvg")]
+transform = Transform3D(1.3113416e-07, 3.821371e-15, 1, -8.742278e-08, 1, 7.642742e-15, -1, -8.742278e-08, 1.3113416e-07, 0, -1, 1)
+
+[node name="Door 4 ConfigOptions" type="Node3D" parent="Geometry" unique_id=1935300494]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3)
+script = ExtResource("6_palvg")
+metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
+
+[node name="hallwall_cornercap" parent="Geometry/Door 4 ConfigOptions" unique_id=374457547 instance=ExtResource("3_palvg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 1)
+
+[node name="Door 5 ConfigOptions" type="Node3D" parent="Geometry" unique_id=1929607430]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3)
+script = ExtResource("6_palvg")
+metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
+
+[node name="hallwall_cornercap2" parent="Geometry/Door 5 ConfigOptions" unique_id=1939917662 instance=ExtResource("3_palvg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 1)
+
+[node name="hallwall_cornercap3" parent="Geometry/Door 5 ConfigOptions" unique_id=2057182373 instance=ExtResource("3_palvg")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -1, -1)
+
+[node name="TrainTrackStraight7" type="MeshInstance3D" parent="Geometry" unique_id=1959200208]
+transform = Transform3D(0.12753184, 0, 0.9918344, 0, 1, 0, -0.9918344, 0, 0.12753184, 0.8738278, 0.05, -3.031434)
+material_override = ExtResource("4_6uw34")
+mesh = ExtResource("5_gwg1b")
+skeleton = NodePath("../../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTrackStraight7" unique_id=6058840]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTrackStraight7/StaticBody3D" unique_id=547504491]
+transform = Transform3D(1.000006, 0, -2.3841858e-07, 0, 1, 0, 2.3841858e-07, 0, 1.000006, -0.0028524399, 0.0074157678, 0.006225586)
+shape = SubResource("BoxShape3D_l0mhd")
+
+[node name="TrainTrackStraight8" type="MeshInstance3D" parent="Geometry" unique_id=2011133944]
+transform = Transform3D(0.12103762, 0, 0.9926479, 0, 1, 0, -0.9926479, 0, 0.12103762, -0.12116587, 0.05, -3.1557765)
+material_override = ExtResource("4_6uw34")
+mesh = ExtResource("5_gwg1b")
+skeleton = NodePath("../../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTrackStraight8" unique_id=1544892341]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTrackStraight8/StaticBody3D" unique_id=1234879157]
+transform = Transform3D(1.000006, 0, -2.3841858e-07, 0, 1, 0, 2.3841858e-07, 0, 1.000006, -0.0028524399, 0.0074157678, 0.006225586)
+shape = SubResource("BoxShape3D_l0mhd")
+
+[node name="Base" type="Node3D" parent="Geometry" unique_id=522733613]
+
+[node name="hallwall" parent="Geometry/Base" unique_id=1461699436 instance=ExtResource("1_estw6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 
-[node name="hallwall3" parent="Geometry" instance=ExtResource("1_estw6")]
+[node name="hallwall3" parent="Geometry/Base" unique_id=1174242142 instance=ExtResource("1_estw6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
 
-[node name="hallwall4" parent="Geometry" instance=ExtResource("1_estw6")]
+[node name="hallwall4" parent="Geometry/Base" unique_id=12187672 instance=ExtResource("1_estw6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 
-[node name="hallwall5" parent="Geometry" instance=ExtResource("1_estw6")]
+[node name="hallwall5" parent="Geometry/Base" unique_id=1948453105 instance=ExtResource("1_estw6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
 
-[node name="hallwall6" parent="Geometry" instance=ExtResource("1_estw6")]
+[node name="hallwall6" parent="Geometry/Base" unique_id=1600982893 instance=ExtResource("1_estw6")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, 8)
 
-[node name="hallwall7" parent="Geometry" instance=ExtResource("1_estw6")]
+[node name="hallwall7" parent="Geometry/Base" unique_id=1362935979 instance=ExtResource("1_estw6")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, 6)
 
-[node name="hallwall8" parent="Geometry" instance=ExtResource("1_estw6")]
+[node name="hallwall8" parent="Geometry/Base" unique_id=885330110 instance=ExtResource("1_estw6")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, 4)
 
-[node name="Decal" type="Decal" parent="Geometry/hallwall8"]
+[node name="Decal" type="Decal" parent="Geometry/Base/hallwall8" unique_id=1647326326]
 transform = Transform3D(-8.742278e-08, 1, 4.3711395e-08, -8.940697e-08, 4.371139e-08, -1, -1, -8.742278e-08, 8.940696e-08, 0.2800085, 0.9446081, -0.9443061)
 size = Vector3(0.5, 0.068481445, 0.5)
 texture_albedo = ExtResource("3_lrage")
 emission_energy = 1.75
 modulate = Color(1, 0.80784315, 1, 1)
 
-[node name="hallwall9" parent="Geometry" instance=ExtResource("1_estw6")]
+[node name="hallwall9" parent="Geometry/Base" unique_id=2141408858 instance=ExtResource("1_estw6")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, 0)
 
-[node name="hallwall10" parent="Geometry" instance=ExtResource("1_estw6")]
+[node name="hallwall10" parent="Geometry/Base" unique_id=1428292667 instance=ExtResource("1_estw6")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0, -2)
 
-[node name="hallwall11" parent="Geometry" instance=ExtResource("1_estw6")]
+[node name="hallwall11" parent="Geometry/Base" unique_id=1085488315 instance=ExtResource("1_estw6")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -4)
 
-[node name="hallwall2" parent="Geometry" instance=ExtResource("1_estw6")]
+[node name="hallwall2" parent="Geometry/Base" unique_id=1427848275 instance=ExtResource("1_estw6")]
 
-[node name="simplefloor" parent="Geometry" instance=ExtResource("2_jemjs")]
+[node name="simplefloor" parent="Geometry/Base" unique_id=287081870 instance=ExtResource("2_jemjs")]
 
-[node name="simplefloor2" parent="Geometry" instance=ExtResource("2_jemjs")]
+[node name="simplefloor2" parent="Geometry/Base" unique_id=1887647024 instance=ExtResource("2_jemjs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
-[node name="simplefloor3" parent="Geometry" instance=ExtResource("2_jemjs")]
+[node name="simplefloor3" parent="Geometry/Base" unique_id=107661393 instance=ExtResource("2_jemjs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 
-[node name="simplefloor4" parent="Geometry" instance=ExtResource("2_jemjs")]
+[node name="simplefloor4" parent="Geometry/Base" unique_id=1971365569 instance=ExtResource("2_jemjs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
 
-[node name="simplefloor5" parent="Geometry" instance=ExtResource("2_jemjs")]
+[node name="simplefloor5" parent="Geometry/Base" unique_id=49048051 instance=ExtResource("2_jemjs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
 
-[node name="simplefloor6" parent="Geometry" instance=ExtResource("2_jemjs")]
+[node name="simplefloor6" parent="Geometry/Base" unique_id=1717651078 instance=ExtResource("2_jemjs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 
-[node name="simplefloor7" parent="Geometry" instance=ExtResource("2_jemjs")]
+[node name="simplefloor7" parent="Geometry/Base" unique_id=1512395893 instance=ExtResource("2_jemjs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
 
-[node name="hallceiling" parent="Geometry" instance=ExtResource("4_lrage")]
+[node name="hallceiling" parent="Geometry/Base" unique_id=1747589061 instance=ExtResource("4_lrage")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2)
 
-[node name="hallceiling2" parent="Geometry" instance=ExtResource("4_lrage")]
+[node name="hallceiling2" parent="Geometry/Base" unique_id=1985832564 instance=ExtResource("4_lrage")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
-[node name="hallceiling3" parent="Geometry" instance=ExtResource("4_lrage")]
+[node name="hallceiling3" parent="Geometry/Base" unique_id=1906312391 instance=ExtResource("4_lrage")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2)
 
-[node name="hallceiling4" parent="Geometry" instance=ExtResource("4_lrage")]
+[node name="hallceiling4" parent="Geometry/Base" unique_id=1464103515 instance=ExtResource("4_lrage")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4)
 
-[node name="hallceiling5" parent="Geometry" instance=ExtResource("4_lrage")]
+[node name="hallceiling5" parent="Geometry/Base" unique_id=1688043010 instance=ExtResource("4_lrage")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 6)
 
-[node name="hallceiling6" parent="Geometry" instance=ExtResource("4_lrage")]
+[node name="hallceiling6" parent="Geometry/Base" unique_id=493240365 instance=ExtResource("4_lrage")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 8)
 
-[node name="hallceiling7" parent="Geometry" instance=ExtResource("4_lrage")]
+[node name="hallceiling7" parent="Geometry/Base" unique_id=401755679 instance=ExtResource("4_lrage")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 10)
 
-[node name="hallceiling_blocker2" parent="Geometry" instance=ExtResource("5_sx2bb")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 2, -3.8)
-
-[node name="Door 1 ConfigOptions" type="Node3D" parent="Geometry"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 10)
-script = ExtResource("6_palvg")
-metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
-
-[node name="Door 2 ConfigOptions" type="Node3D" parent="Geometry"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 3)
-script = ExtResource("6_palvg")
-metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
-metadata/special_science_cell_connection = true
-
-[node name="hallwall_cornercap6" parent="Geometry/Door 2 ConfigOptions" instance=ExtResource("3_palvg")]
-transform = Transform3D(1.3113416e-07, 3.821371e-15, 1, -8.742278e-08, 1, 7.642742e-15, -1, -8.742278e-08, 1.3113416e-07, 0, -1, 1)
-
-[node name="hallwall_cornercap7" parent="Geometry/Door 2 ConfigOptions" instance=ExtResource("3_palvg")]
-transform = Transform3D(-1, -8.742278e-08, 8.742277e-08, -8.742278e-08, 1, 7.642742e-15, -8.742277e-08, 2.1175824e-21, -1, 0, -1, -1)
-
-[node name="Door 3 ConfigOptions" type="Node3D" parent="Geometry"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, -3)
-script = ExtResource("6_palvg")
-metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
-
-[node name="hallwall_cornercap5" parent="Geometry/Door 3 ConfigOptions" instance=ExtResource("3_palvg")]
-transform = Transform3D(1.3113416e-07, 3.821371e-15, 1, -8.742278e-08, 1, 7.642742e-15, -1, -8.742278e-08, 1.3113416e-07, 0, -1, 1)
-
-[node name="Door 4 ConfigOptions" type="Node3D" parent="Geometry"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3)
-script = ExtResource("6_palvg")
-metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
-
-[node name="hallwall_cornercap" parent="Geometry/Door 4 ConfigOptions" instance=ExtResource("3_palvg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 1)
-
-[node name="Door 5 ConfigOptions" type="Node3D" parent="Geometry"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3)
-script = ExtResource("6_palvg")
-metadata/_custom_type_script = "uid://cxnqlqwyj3fbf"
-
-[node name="hallwall_cornercap2" parent="Geometry/Door 5 ConfigOptions" instance=ExtResource("3_palvg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 1)
-
-[node name="hallwall_cornercap3" parent="Geometry/Door 5 ConfigOptions" instance=ExtResource("3_palvg")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, -1, -1)
+[node name="hallceiling_blocker2" parent="Geometry/Base" unique_id=1116524210 instance=ExtResource("5_sx2bb")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 2, -3.8000002)
