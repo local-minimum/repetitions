@@ -73,3 +73,12 @@ func _process(delta: float) -> void:
                 travel_forward = !travel_forward
 
     _sync_position(true)
+
+static func find_in_parent(node: Node) -> TrackEngine:
+    if node == null:
+        return null
+
+    if node is TrackEngine:
+        return node
+
+    return find_in_parent(node.get_parent())

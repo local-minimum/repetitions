@@ -10,12 +10,16 @@
 [ext_resource type="ArrayMesh" uid="uid://d2jl4wr7f23pl" path="res://scenes/rooms/meshes/props/train_track_straight.obj" id="8_ovqid"]
 [ext_resource type="Material" uid="uid://c07yxcnw5ahtq" path="res://textures/wood-textures/track-wood.tres" id="8_xd5uw"]
 [ext_resource type="ArrayMesh" uid="uid://dxbrmfbvxsvvu" path="res://scenes/rooms/meshes/props/train_track_turn_left_short.obj" id="10_sb3vj"]
+[ext_resource type="Script" uid="uid://g3ceed76t0c0" path="res://scripts/reps/tracks_auto_connector.gd" id="11_57el1"]
 [ext_resource type="ArrayMesh" uid="uid://cjoy3pfwroyr" path="res://scenes/rooms/meshes/props/train_track_turn_right.obj" id="11_ylisv"]
 [ext_resource type="PackedScene" uid="uid://d2lnbaf3mlgh1" path="res://scenes/rooms/meshes/roomwall_train_tunnel.blend" id="12_vk3mw"]
 [ext_resource type="Script" uid="uid://cfiu5ok0cmhx" path="res://scripts/reps/track.gd" id="13_kho2a"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xd5uw"]
 size = Vector3(0.34762573, 0.10650635, 0.982666)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kho2a"]
+size = Vector3(0.38000488, 0.11752319, 0.24311829)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_vk3mw"]
 data = PackedVector3Array(-0.0396, 0.048699997, 0.2377, -0.0396, -0.048699997, 0.2377, -0.3023, 0.048699997, -0.3015, -0.3023, 0.048699997, -0.3015, -0.0396, -0.048699997, 0.2377, -0.3023, -0.048699997, -0.3015, -0.3023, 0.048699997, -0.3015, -0.3023, -0.048699997, -0.3015, -0.3909, 0.048699997, -0.6935, -0.3909, 0.048699997, -0.6935, -0.3023, -0.048699997, -0.3015, -0.3909, -0.048699997, -0.6935, 0.021699999, 0.048699997, -0.40719998, 0.021699999, -0.048699997, -0.40719998, 0.2377, 0.048699997, 0.0396, 0.2377, 0.048699997, 0.0396, 0.021699999, -0.048699997, -0.40719998, 0.2377, -0.048699997, 0.0396, 0.2377, 0.048699997, 0.0396, 0.2377, -0.048699997, 0.0396, -0.0396, 0.048699997, 0.2377, -0.0396, 0.048699997, 0.2377, 0.2377, -0.048699997, 0.0396, -0.0396, -0.048699997, 0.2377, 0.021699999, -0.048699997, -0.40719998, -0.3023, -0.048699997, -0.3015, 0.2377, -0.048699997, 0.0396, 0.2377, -0.048699997, 0.0396, -0.3023, -0.048699997, -0.3015, -0.0396, -0.048699997, 0.2377, -0.3023, -0.048699997, -0.3015, 0.021699999, -0.048699997, -0.40719998, -0.3909, -0.048699997, -0.6935, -0.3909, -0.048699997, -0.6935, 0.021699999, -0.048699997, -0.40719998, -0.050699998, -0.048699997, -0.7143, -0.3909, -0.048699997, -0.6935, -0.050699998, -0.048699997, -0.7143, -0.4173, -0.048699997, -0.9906, -0.4173, -0.048699997, -0.9906, -0.050699998, -0.048699997, -0.7143, -0.0766, -0.048699997, -0.9895, -0.3023, 0.048699997, -0.3015, 0.021699999, 0.048699997, -0.40719998, -0.0396, 0.048699997, 0.2377, -0.0396, 0.048699997, 0.2377, 0.021699999, 0.048699997, -0.40719998, 0.2377, 0.048699997, 0.0396, 0.021699999, 0.048699997, -0.40719998, -0.3023, 0.048699997, -0.3015, -0.050699998, 0.048699997, -0.7143, -0.050699998, 0.048699997, -0.7143, -0.3023, 0.048699997, -0.3015, -0.3909, 0.048699997, -0.6935, -0.050699998, 0.048699997, -0.7143, -0.3909, 0.048699997, -0.6935, -0.0766, 0.048699997, -0.9895, -0.0766, 0.048699997, -0.9895, -0.3909, 0.048699997, -0.6935, -0.4173, 0.048699997, -0.9906, 0.021699999, -0.048699997, -0.40719998, 0.021699999, 0.048699997, -0.40719998, -0.050699998, -0.048699997, -0.7143, -0.050699998, -0.048699997, -0.7143, 0.021699999, 0.048699997, -0.40719998, -0.050699998, 0.048699997, -0.7143, -0.4173, 0.048699997, -0.9906, -0.4173, -0.048699997, -0.9906, -0.0766, 0.048699997, -0.9895, -0.0766, 0.048699997, -0.9895, -0.4173, -0.048699997, -0.9906, -0.0766, -0.048699997, -0.9895, -0.3909, 0.048699997, -0.6935, -0.3909, -0.048699997, -0.6935, -0.4173, 0.048699997, -0.9906, -0.4173, 0.048699997, -0.9906, -0.3909, -0.048699997, -0.6935, -0.4173, -0.048699997, -0.9906, -0.050699998, -0.048699997, -0.7143, -0.050699998, 0.048699997, -0.7143, -0.0766, -0.048699997, -0.9895, -0.0766, -0.048699997, -0.9895, -0.050699998, 0.048699997, -0.7143, -0.0766, 0.048699997, -0.9895)
@@ -237,6 +241,19 @@ skeleton = NodePath("../../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStraight5/StaticBody3D" unique_id=823701362]
 transform = Transform3D(1.000006, 0, -2.3841858e-07, 0, 1, 0, 2.3841858e-07, 0, 1.000006, -0.0028524399, 0.0074157678, 0.006225586)
 shape = SubResource("BoxShape3D_xd5uw")
+
+[node name="Auto Connector" type="Area3D" parent="Geometry/TrainTracks/TrainTrackStraight5" unique_id=1515192051 node_paths=PackedStringArray("track")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00047320127, 0, -0.50525784)
+collision_layer = 8
+collision_mask = 8
+input_ray_pickable = false
+script = ExtResource("11_57el1")
+connection_id = "corner room to cell"
+track = NodePath("../../Track")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/TrainTrackStraight5/Auto Connector" unique_id=2056359902]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0020138025, 0.015884396, 0.003011942)
+shape = SubResource("BoxShape3D_kho2a")
 
 [node name="TrainTrackTurnLeftShort" type="MeshInstance3D" parent="Geometry/TrainTracks" unique_id=58007978]
 transform = Transform3D(0.9091271, 0, 0.4165188, 0, 1, 0, -0.4165188, 0, 0.9091271, 0.5446324, 0.0668345, 0.7279807)

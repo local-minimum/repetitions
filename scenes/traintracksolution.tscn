@@ -3,15 +3,35 @@
 [ext_resource type="PackedScene" uid="uid://cjduvtbggfby1" path="res://scenes/rooms/start_room_3d.tscn" id="1_va7fd"]
 [ext_resource type="PackedScene" uid="uid://hpel2to4u6wx" path="res://scenes/rooms/room_corner_3d.tscn" id="2_va7fd"]
 [ext_resource type="ArrayMesh" uid="uid://bu3rtrk45k8qd" path="res://scenes/rooms/meshes/props/train_track_turn_right_short.obj" id="3_cxjua"]
+[ext_resource type="PackedScene" uid="uid://b7vca186klo1f" path="res://scenes/rooms/cell_1_3d.tscn" id="4_5mrjm"]
+[ext_resource type="PackedScene" uid="uid://rn1k76ploxul" path="res://scenes/rooms/hall_5_3d.tscn" id="5_l5ix7"]
+[ext_resource type="PackedScene" uid="uid://qohy6ektieft" path="res://scenes/rooms/hall_2_3d.tscn" id="6_h7ses"]
+[ext_resource type="PackedScene" uid="uid://ckoe4bi03k0e1" path="res://scenes/rooms/hall_1_3d.tscn" id="7_oi23a"]
+[ext_resource type="PackedScene" uid="uid://b7hwxdxx78shu" path="res://scenes/rooms/cell_2_3d.tscn" id="8_oi23a"]
 
 [node name="Node3D" type="Node3D" unique_id=1848198409]
 
 [node name="StartRoom3d" parent="." unique_id=1982129123 instance=ExtResource("1_va7fd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
-[node name="RoomCorner3d" parent="." unique_id=2133369707 instance=ExtResource("2_va7fd")]
+[node name="RoomCorner3d" parent="." unique_id=1643020392 instance=ExtResource("2_va7fd")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -1)
 
 [node name="TrainTrackTurnRightShort" type="MeshInstance3D" parent="." unique_id=180591522]
 transform = Transform3D(0.17258243, 0, 0.98499507, 0, 1, 0, -0.98499507, 0, 0.17258243, -7.1314387, 0.0639221, -1.0804498)
 mesh = ExtResource("3_cxjua")
+
+[node name="Cell13d" parent="." unique_id=1771311022 instance=ExtResource("4_5mrjm")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -18, 0, -1)
+
+[node name="Hall53d" parent="." unique_id=1095174193 instance=ExtResource("5_l5ix7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 5)
+
+[node name="Hall23d" parent="." unique_id=967008272 instance=ExtResource("6_h7ses")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -14, 0, 11)
+
+[node name="Hall13d" parent="." unique_id=2047678079 instance=ExtResource("7_oi23a")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -22, 0, 19)
+
+[node name="Cell23d" parent="." unique_id=105179798 instance=ExtResource("8_oi23a")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -26, 0, -3)

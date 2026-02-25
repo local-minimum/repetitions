@@ -15,7 +15,6 @@ size = Vector3(0.21601868, 0.5713196, 0.48529053)
 [node name="Train Engine" type="Node3D" unique_id=2041730240 node_paths=PackedStringArray("_interaction_body")]
 script = ExtResource("1_0yx8r")
 _interaction_body = NodePath("TrainEngineBody/StaticBody3D")
-travel_in_reverse = null
 metadata/_custom_type_script = "uid://kv6fuadcww5"
 
 [node name="TrainEngineBody" type="MeshInstance3D" parent="." unique_id=1677898846]

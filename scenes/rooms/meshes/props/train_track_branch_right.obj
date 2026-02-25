@@ -1,5 +1,6 @@
 # Blender 5.0.1
 # www.blender.org
+mtllib train_track_branch_right.mtl
 o Branch_Right_Final
 v 0.687782 -0.121434 -1.078016
 v 0.687782 0.078566 -1.078016
@@ -1324,6 +1325,7 @@ vt 0.478452 0.013106
 vt 0.530703 0.727126
 vt 0.541050 0.661994
 s 1
+usemtl Material
 f 2/1/1 3/2/2 1/3/3
 f 4/4/2 5/5/4 3/2/2
 f 6/6/4 7/7/5 5/5/4

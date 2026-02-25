@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://csu31v823a5yf"
+path="res://.godot/imported/train_track_branch_left_col.obj-19a5c486a26dcaa0ba7b68011e1a8189.mesh"
+
+[deps]
+
+files=["res://.godot/imported/train_track_branch_left_col.obj-19a5c486a26dcaa0ba7b68011e1a8189.mesh"]
+
+source_file="res://scenes/rooms/meshes/props/train_track_branch_left_col.obj"
+dest_files=["res://.godot/imported/train_track_branch_left_col.obj-19a5c486a26dcaa0ba7b68011e1a8189.mesh", "res://.godot/imported/train_track_branch_left_col.obj-19a5c486a26dcaa0ba7b68011e1a8189.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(0.5, 0.5, 0.5)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
