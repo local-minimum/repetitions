@@ -5,6 +5,9 @@ class_name TrackEngine
 
 @export var speed: float = 0.25
 @export var _interaction_body: InteractionBody3D
+
+@export var downstream_carriage: TrackCarriage
+
 var _running: bool = false
 var running: bool:
     get():
@@ -63,16 +66,29 @@ func _process(delta: float) -> void:
                     _running = false
             Track.ConnectionMode.STOP:
                 # We hit an end of track, lets reverse direction and stop
-                _running = false
-                travel_in_reverse = !travel_in_reverse
-                travel_forward = !travel_forward
+                stop_engine()
             Track.ConnectionMode.NONE:
                 # We left the track, don't know what more to do
-                _running = false
-                travel_in_reverse = !travel_in_reverse
-                travel_forward = !travel_forward
+                stop_engine()
 
     _sync_position(true)
+
+    if downstream_carriage != null:
+        var next_track_off_distance: float = global_distance_to_downstream_connector + downstream_carriage.global_distance_to_upstream_connector
+        if travel_forward != travel_in_reverse:
+            next_track_off_distance *= -1
+
+        print_debug("Asking %s to place itself at off %s (delta %s)" % [downstream_carriage, off + next_track_off_distance, next_track_off_distance])
+
+        downstream_carriage.calculate_position_and_rotation(
+            current_track,
+            off + next_track_off_distance
+        )
+
+func stop_engine() -> void:
+    _running = false
+    travel_in_reverse = !travel_in_reverse
+    travel_forward = !travel_forward
 
 static func find_in_parent(node: Node) -> TrackEngine:
     if node == null:

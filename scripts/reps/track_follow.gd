@@ -21,6 +21,21 @@ class_name TrackFollow
         travel_in_reverse = value
         snap_to_track()
 
+@export var upstream_connector: Node3D
+@export var downstream_connector: Node3D
+
+var global_distance_to_upstream_connector: float:
+    get():
+        var global_delta: Vector3 = upstream_connector.global_position - global_position
+        global_delta -= global_delta.project(global_basis.y)
+        return global_delta.length()
+
+var global_distance_to_downstream_connector: float:
+    get():
+        var global_delta: Vector3 = downstream_connector.global_position - global_position
+        global_delta -= global_delta.project(global_basis.y)
+        return global_delta.length()
+
 var _position: Track.PointData
 
 @warning_ignore_start("unused_private_class_variable")
@@ -54,6 +69,5 @@ func _sync_position(force: bool) -> void:
             global_basis.y,
         )
         gb = gb.rotated(Vector3.UP, 0.0 if travel_forward == !travel_in_reverse else PI).orthonormalized()
-
 
         global_basis = gb

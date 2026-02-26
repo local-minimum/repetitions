@@ -12,9 +12,11 @@ albedo_color = Color(0.7, 0.14699998, 0.14699998, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_lhet1"]
 size = Vector3(0.21601868, 0.5713196, 0.48529053)
 
-[node name="Train Engine" type="Node3D" unique_id=2041730240 node_paths=PackedStringArray("_interaction_body")]
+[node name="Train Engine" type="Node3D" unique_id=2041730240 node_paths=PackedStringArray("_interaction_body", "downstream_connector")]
 script = ExtResource("1_0yx8r")
+speed = 1.5
 _interaction_body = NodePath("TrainEngineBody/StaticBody3D")
+downstream_connector = NodePath("Connector Center")
 metadata/_custom_type_script = "uid://kv6fuadcww5"
 
 [node name="TrainEngineBody" type="MeshInstance3D" parent="." unique_id=1677898846]
@@ -58,3 +60,6 @@ surface_material_override/0 = ExtResource("3_lhet1")
 transform = Transform3D(-1, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, -1, -0.10599437, 0.069717586, 0.18836802)
 mesh = ExtResource("2_lhet1")
 surface_material_override/0 = ExtResource("3_lhet1")
+
+[node name="Connector Center" type="Node3D" parent="." unique_id=1117686970]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09776875, -0.3152156)
