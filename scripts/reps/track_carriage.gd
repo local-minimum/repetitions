@@ -53,7 +53,7 @@ func calculate_position_and_rotation(track: Track, off: float) -> void:
                     global_basis = global_basis.rotated(global_basis.x, a * 0.1)
 
                     var transl: Vector3 = upstream_follow.downstream_connector.global_position - upstream_connector.global_position
-                    print_debug("To align our connectors %s needs to move %s" % [self, transl])
+                    #print_debug("To align our connectors %s needs to move %s" % [self, transl])
                     global_position += transl
                     sync_position = false
 

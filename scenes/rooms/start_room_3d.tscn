@@ -423,7 +423,7 @@ metadata/_custom_type_script = "uid://cfiu5ok0cmhx"
 
 [node name="Train Engine" parent="Geometry" unique_id=2130841054 node_paths=PackedStringArray("downstream_carriage", "current_track") instance=ExtResource("21_yaq8p")]
 transform = Transform3D(-0.6744017, 4.091661e-05, 0.73836493, 3.2025957e-05, 1.0000101, -2.6162606e-05, -0.73836493, 6.0025386e-06, -0.6744017, -2.8156369, 0.02117848, 0.7368947)
-speed = 0.75
+speed = 0.2
 downstream_carriage = NodePath("../TrainCartBody")
 current_track = NodePath("../TrainTracks/Track To Ramp")
 vertical_offset = -0.05

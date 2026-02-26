@@ -66,8 +66,8 @@ func _sync_position(force: bool) -> void:
     if !_position.at_edge:
         var gb: Basis = Basis.looking_at(
             _position.forward,
-            global_basis.y,
+            _position.up,
         )
-        gb = gb.rotated(Vector3.UP, 0.0 if travel_forward == !travel_in_reverse else PI).orthonormalized()
+        gb = gb.rotated(_position.up, 0.0 if travel_forward == !travel_in_reverse else PI).orthonormalized()
 
         global_basis = gb

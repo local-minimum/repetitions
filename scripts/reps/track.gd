@@ -13,6 +13,7 @@ class PointData:
     var point: Vector3
     var offset_distance: float
     var forward: Vector3
+    var up: Vector3
     var at_edge: bool
 
     var at_start: bool:
@@ -20,11 +21,12 @@ class PointData:
             return at_edge && offset_distance <= 0
 
     @warning_ignore_start("shadowed_variable")
-    func _init(point: Vector3, offset_distance: float, at_edge: bool, forward: Vector3) -> void:
+    func _init(point: Vector3, offset_distance: float, at_edge: bool, forward: Vector3, up: Vector3) -> void:
         @warning_ignore_restore("shadowed_variable")
         self.point = point
         self.offset_distance = offset_distance
         self.forward = forward
+        self.up = up
         self.at_edge = at_edge
 
 func get_track_point_global(global_point: Vector3) -> PointData:
@@ -32,23 +34,27 @@ func get_track_point_global(global_point: Vector3) -> PointData:
     var offset: float = curve.get_closest_offset(local)
     var trans: Transform3D = curve.sample_baked_with_rotation(offset)
     var forward: Vector3 = trans.basis.z
+    var up: Vector3 = trans.basis.y
 
     return PointData.new(
         to_global(trans.origin),
         offset,
         offset <= 0 || offset >= curve.get_baked_length(),
         (to_global(forward) - global_position).normalized(),
+        (to_global(up) - global_position).normalized(),
     )
 
 func get_offset_position_global(offset: float, cubic: bool = false) -> PointData:
     var trans: Transform3D = curve.sample_baked_with_rotation(offset, cubic)
     var forward: Vector3 = trans.basis.z
+    var up: Vector3 = trans.basis.y
 
     return PointData.new(
         to_global(trans.origin),
         offset,
         offset <= 0 || offset >= curve.get_baked_length(),
         (to_global(forward) - global_position).normalized(),
+        (to_global(up) - global_position).normalized(),
     )
 
 func get_next_track(at_start: bool) -> Track:
