@@ -19,6 +19,7 @@
 [ext_resource type="ArrayMesh" uid="uid://bu3rtrk45k8qd" path="res://scenes/rooms/meshes/props/train_track_turn_right_short.obj" id="17_1simb"]
 [ext_resource type="ArrayMesh" uid="uid://dxbrmfbvxsvvu" path="res://scenes/rooms/meshes/props/train_track_turn_left_short.obj" id="17_pkgjf"]
 [ext_resource type="ArrayMesh" uid="uid://0pyerm2wjf2s" path="res://scenes/rooms/meshes/props/train_track_ramp.obj" id="19_7l70u"]
+[ext_resource type="PackedScene" uid="uid://wevcbdvb3d6h" path="res://scenes/rooms/meshes/props/train_cart_2.tscn" id="19_nx0y2"]
 [ext_resource type="ArrayMesh" uid="uid://blfmsbpic0cui" path="res://scenes/rooms/meshes/props/train_track_stop.obj" id="20_4w84r"]
 [ext_resource type="PackedScene" uid="uid://ba501yapmfmai" path="res://scenes/rooms/meshes/props/train_engine.tscn" id="21_yaq8p"]
 [ext_resource type="ArrayMesh" uid="uid://b2arbjpfph4se" path="res://scenes/rooms/meshes/props/childbed.obj" id="22_skexp"]
@@ -26,7 +27,6 @@
 [ext_resource type="ArrayMesh" uid="uid://m3q05pb8v7wb" path="res://scenes/rooms/meshes/props/teddy.obj" id="24_ig47d"]
 [ext_resource type="Material" uid="uid://p4bi8vyf42b0" path="res://scenes/rooms/meshes/props/teddy.material" id="25_p6dlg"]
 [ext_resource type="Script" uid="uid://yd730fdkgbqd" path="res://scripts/reps/teddy.gd" id="26_qsbhv"]
-[ext_resource type="PackedScene" uid="uid://dbu3gixyls5s7" path="res://scenes/rooms/meshes/props/train_cart.tscn" id="27_q0osy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2bkd8"]
 size = Vector3(0.35327148, 0.09753418, 0.49414063)
@@ -424,15 +424,15 @@ metadata/_custom_type_script = "uid://cfiu5ok0cmhx"
 [node name="Train Engine" parent="Geometry" unique_id=2130841054 node_paths=PackedStringArray("downstream_carriage", "current_track") instance=ExtResource("21_yaq8p")]
 transform = Transform3D(-0.6744017, 4.091661e-05, 0.73836493, 3.2025957e-05, 1.0000101, -2.6162606e-05, -0.73836493, 6.0025386e-06, -0.6744017, -2.8156369, 0.02117848, 0.7368947)
 speed = 0.2
-downstream_carriage = NodePath("../TrainCartBody")
+downstream_carriage = NodePath("../Train Cart")
 current_track = NodePath("../TrainTracks/Track To Ramp")
 vertical_offset = -0.05
-travel_forward = false
+moving_in_track_forwards_direction = false
 
-[node name="TrainCartBody" parent="Geometry" unique_id=756743578 node_paths=PackedStringArray("upstream_follow") instance=ExtResource("27_q0osy")]
-transform = Transform3D(-0.81273484, 0, 0.58263373, 0, 1, 0, -0.58263373, 0, -0.81273484, -3.2301478, 0.17703226, 1.2057796)
-skeleton = NodePath("../..")
+[node name="Train Cart" parent="Geometry" unique_id=231170509 node_paths=PackedStringArray("upstream_follow") instance=ExtResource("19_nx0y2")]
+transform = Transform3D(0.81013376, 0, -0.5862452, 0, 1, 0, 0.5862452, 0, 0.81013376, -3.2301478, 0.17703226, 1.2057796)
 upstream_follow = NodePath("../Train Engine")
+vertical_offset = 0.11
 
 [node name="RoomSides" type="Node3D" parent="Geometry" unique_id=1031423087]
 
