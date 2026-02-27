@@ -13,7 +13,7 @@ albedo_color = Color(0.69409746, 0.39076325, 0.1569525, 1)
 size = Vector3(0.2, 0.2, 0.6)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_krrr0"]
-size = Vector3(0.325, 0.045, 0.52)
+size = Vector3(0.325, 0.4731836, 0.52)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_txkpk"]
 size = Vector3(0.34814453, 0.24975586, 0.65185547)
@@ -58,13 +58,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.061391063, 0.31864914)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.061391063, -0.31362405)
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="MeshInstance3D" unique_id=937290459]
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D2" unique_id=1711555870]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.055530638, 0)
 shape = SubResource("BoxShape3D_18neo")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D2" unique_id=1514731826]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04877234, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.26286414, 0)
 shape = SubResource("BoxShape3D_krrr0")
 
 [node name="InteractionBody2" type="StaticBody3D" parent="MeshInstance3D" unique_id=343080847 node_paths=PackedStringArray("_root")]
