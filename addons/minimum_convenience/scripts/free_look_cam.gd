@@ -22,7 +22,18 @@ var _keyboard_direction: Vector2 = Vector2.ZERO
 var _total_yaw: float = 0
 var _total_pitch: float = 0
 var _easeback_tween: Tween
-var _allow: bool = true
+
+@export var enabled: bool = true:
+    set(value):
+        enabled = value
+        if _looking && !value:
+            _looking = false
+
+var _allow: bool:
+    get():
+        return !_paused && enabled
+
+var _paused: bool = false
 var _looking: bool:
     set(value):
         _looking = value
@@ -44,7 +55,7 @@ func _handle_level_pause(paused: bool) -> void:
     elif _looking && paused:
         Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
-    _allow = !paused
+    _paused = paused
 
 func _handle_toggle_freelook_camera(active: bool, _cause: ToggleCause) -> void:
     if active != _looking:

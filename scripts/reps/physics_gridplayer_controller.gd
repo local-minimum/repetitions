@@ -52,6 +52,8 @@ var camera: Camera3D:
     get():
         return _camera
 
+@export var _freelook_cam: FreeLookCam
+
 @export var _gridless_controller: GridlessController
 @export var _gridded_controller: GriddedController
 
@@ -101,6 +103,7 @@ var gridless: bool:
                 _cam_slide_tween.tween_property(_camera, "near", _gridless_controller.camera_near, _camera_to_gridless_time)
                 _cam_slide_tween.tween_property(_camera, "fov", _gridless_controller.camera_fov, _camera_to_gridless_time)
                 @warning_ignore_restore("return_value_discarded")
+                _freelook_cam.enabled = false
             else:
                 _captured_pointer_eventer.active = false
                 if _cam_slide_tween && _cam_slide_tween.is_running():
@@ -113,7 +116,7 @@ var gridless: bool:
                 _cam_slide_tween.tween_property(_camera, "rotation:x", 0, _camera_to_gridded_time)
                 @warning_ignore_restore("return_value_discarded")
                 _gridded_controller.transition_into_gridded()
-
+                _freelook_cam.enabled = true
 
         gridless = value
 

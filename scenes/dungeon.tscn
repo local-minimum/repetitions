@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://ck4qilcv3pmw3"]
+[gd_scene format=3 uid="uid://ck4qilcv3pmw3"]
 
 [ext_resource type="Script" uid="uid://crh0uqgb4ags6" path="res://scripts/reps/dungeon_planner_ui.gd" id="1_c4wp1"]
 [ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_fpimf"]
@@ -46,21 +46,21 @@ script = ExtResource("14_6nb7m")
 _configs = Array[ExtResource("11_7wjui")]([SubResource("Resource_hh3g7"), SubResource("Resource_rfuge")])
 metadata/_custom_type_script = "uid://cufotv8ogf1gx"
 
-[node name="Dungeon Level" type="Node3D"]
+[node name="Dungeon Level" type="Node3D" unique_id=1917467308]
 
-[node name="3D Builder" type="Node3D" parent="." node_paths=PackedStringArray("player", "dirt_mag")]
+[node name="3D Builder" type="Node3D" parent="." unique_id=1760216642 node_paths=PackedStringArray("player", "dirt_mag")]
 script = ExtResource("1_fpimf")
 grid_size = Vector3(2, 3, 2)
 player = NodePath("../Player3d")
 dirt_mag = NodePath("../DirtMagazine")
 
-[node name="Dungeon Planning UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("counter_label", "message_label", "redraw_btn")]
+[node name="Dungeon Planning UI" type="CanvasLayer" parent="." unique_id=1098115073 node_paths=PackedStringArray("counter_label", "message_label", "redraw_btn")]
 script = ExtResource("1_c4wp1")
 counter_label = NodePath("MarginContainer/Countdown")
 message_label = NodePath("MarginContainer/Status Label")
 redraw_btn = NodePath("MarginContainer/HBoxContainer/Redraw Rooms Btn")
 
-[node name="Backdrop" type="ColorRect" parent="Dungeon Planning UI"]
+[node name="Backdrop" type="ColorRect" parent="Dungeon Planning UI" unique_id=1385004242]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -68,11 +68,11 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(2.5268645e-07, 0.20128122, 0.20394182, 1)
 
-[node name="Dungeon Planner" parent="Dungeon Planning UI" node_paths=PackedStringArray("_builder") instance=ExtResource("2_fpimf")]
+[node name="Dungeon Planner" parent="Dungeon Planning UI" unique_id=1468388595 node_paths=PackedStringArray("_builder") instance=ExtResource("2_fpimf")]
 _builder = NodePath("../../3D Builder")
 seed_direction = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="Dungeon Planning UI"]
+[node name="MarginContainer" type="MarginContainer" parent="Dungeon Planning UI" unique_id=938381780]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -83,40 +83,40 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="Countdown" type="Label" parent="Dungeon Planning UI/MarginContainer"]
+[node name="Countdown" type="Label" parent="Dungeon Planning UI/MarginContainer" unique_id=1460388208]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "Remaining: 4"
 horizontal_alignment = 1
 
-[node name="Status Label" type="Label" parent="Dungeon Planning UI/MarginContainer"]
+[node name="Status Label" type="Label" parent="Dungeon Planning UI/MarginContainer" unique_id=880518170]
 custom_minimum_size = Vector2(160, 200)
 layout_mode = 2
 size_flags_horizontal = 8
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Dungeon Planning UI/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Dungeon Planning UI/MarginContainer" unique_id=721188930]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 mouse_filter = 2
 alignment = 2
 
-[node name="Redraw Rooms Btn" type="Button" parent="Dungeon Planning UI/MarginContainer/HBoxContainer"]
+[node name="Redraw Rooms Btn" type="Button" parent="Dungeon Planning UI/MarginContainer/HBoxContainer" unique_id=1671320139]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "Redraw (Cost 2)"
 
-[node name="Layout Done Btn" type="Button" parent="Dungeon Planning UI/MarginContainer/HBoxContainer"]
+[node name="Layout Done Btn" type="Button" parent="Dungeon Planning UI/MarginContainer/HBoxContainer" unique_id=939707218]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "UI_DONE"
 
-[node name="Room Tooltip Manager" type="Control" parent="Dungeon Planning UI" node_paths=PackedStringArray("_tooltip", "_show_timer", "_hide_timer")]
+[node name="Room Tooltip Manager" type="Control" parent="Dungeon Planning UI" unique_id=149554913 node_paths=PackedStringArray("_tooltip", "_show_timer", "_hide_timer")]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("4_hsn05")
@@ -124,21 +124,21 @@ _tooltip = NodePath("../Room Tooltip")
 _show_timer = NodePath("Delay Show")
 _hide_timer = NodePath("Delay Hide")
 
-[node name="Delay Show" type="Timer" parent="Dungeon Planning UI/Room Tooltip Manager"]
+[node name="Delay Show" type="Timer" parent="Dungeon Planning UI/Room Tooltip Manager" unique_id=1123171502]
 wait_time = 0.7
 
-[node name="Delay Hide" type="Timer" parent="Dungeon Planning UI/Room Tooltip Manager"]
+[node name="Delay Hide" type="Timer" parent="Dungeon Planning UI/Room Tooltip Manager" unique_id=1222298171]
 wait_time = 0.5
 
-[node name="Room Tooltip" parent="Dungeon Planning UI" instance=ExtResource("5_etlrv")]
+[node name="Room Tooltip" parent="Dungeon Planning UI" unique_id=802460061 instance=ExtResource("5_etlrv")]
 z_index = 1000
 
-[node name="Exploration UI" type="CanvasLayer" parent="."]
+[node name="Exploration UI" type="CanvasLayer" parent="." unique_id=1052475419]
 script = ExtResource("6_tkjml")
 
-[node name="TrophyUI" parent="Exploration UI" instance=ExtResource("7_5hkx1")]
+[node name="TrophyUI" parent="Exploration UI" unique_id=111601769 instance=ExtResource("7_5hkx1")]
 
-[node name="Sleep in Bed Dialog" type="PanelContainer" parent="Exploration UI"]
+[node name="Sleep in Bed Dialog" type="PanelContainer" parent="Exploration UI" unique_id=961707316]
 process_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -153,37 +153,37 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("8_hh3g7")
 
-[node name="MarginContainer" type="MarginContainer" parent="Exploration UI/Sleep in Bed Dialog"]
+[node name="MarginContainer" type="MarginContainer" parent="Exploration UI/Sleep in Bed Dialog" unique_id=1311816550]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer" unique_id=2013763227]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer" unique_id=1540073444]
 layout_mode = 2
 text = "UI_SLEEP_TITLE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Body" type="Label" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer"]
+[node name="Body" type="Label" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer" unique_id=383733672]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 text = "UI_SLEEP_BODY"
 autowrap_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer" unique_id=1540421410]
 layout_mode = 2
 alignment = 2
 
-[node name="Cancel Btn" type="Button" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Cancel Btn" type="Button" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer/HBoxContainer" unique_id=472574624]
 layout_mode = 2
 text = "UI_CANCEL"
 
-[node name="Accept Btn" type="Button" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Accept Btn" type="Button" parent="Exploration UI/Sleep in Bed Dialog/MarginContainer/VBoxContainer/HBoxContainer" unique_id=511176768]
 layout_mode = 2
 text = "UI_ACCEPT"
 
-[node name="Pause Menu" type="PanelContainer" parent="Exploration UI"]
+[node name="Pause Menu" type="PanelContainer" parent="Exploration UI" unique_id=990417022]
 process_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -198,31 +198,31 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_rfuge")
 
-[node name="MarginContainer" type="MarginContainer" parent="Exploration UI/Pause Menu"]
+[node name="MarginContainer" type="MarginContainer" parent="Exploration UI/Pause Menu" unique_id=2039024074]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Exploration UI/Pause Menu/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Exploration UI/Pause Menu/MarginContainer" unique_id=985881336]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="Exploration UI/Pause Menu/MarginContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="Exploration UI/Pause Menu/MarginContainer/VBoxContainer" unique_id=1522041146]
 layout_mode = 2
 text = "UI_GAME_PAUSED"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Resume" type="Button" parent="Exploration UI/Pause Menu/MarginContainer/VBoxContainer"]
+[node name="Resume" type="Button" parent="Exploration UI/Pause Menu/MarginContainer/VBoxContainer" unique_id=328554749]
 layout_mode = 2
 text = "UI_RESUME"
 
-[node name="Next Day" type="Button" parent="Exploration UI/Pause Menu/MarginContainer/VBoxContainer"]
+[node name="Next Day" type="Button" parent="Exploration UI/Pause Menu/MarginContainer/VBoxContainer" unique_id=588799262]
 layout_mode = 2
 text = "UI_NEXT_DAY"
 
-[node name="Quit" type="Button" parent="Exploration UI/Pause Menu/MarginContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="Exploration UI/Pause Menu/MarginContainer/VBoxContainer" unique_id=161198911]
 layout_mode = 2
 text = "UI_QUIT"
 
-[node name="UI Keys Container" type="HBoxContainer" parent="Exploration UI" node_paths=PackedStringArray("floppy")]
+[node name="UI Keys Container" type="HBoxContainer" parent="Exploration UI" unique_id=1443736920 node_paths=PackedStringArray("floppy")]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -235,14 +235,14 @@ mouse_filter = 2
 script = ExtResource("10_ea5hl")
 floppy = NodePath("Floppy Key")
 
-[node name="Floppy Key" type="TextureRect" parent="Exploration UI/UI Keys Container"]
+[node name="Floppy Key" type="TextureRect" parent="Exploration UI/UI Keys Container" unique_id=1252735968]
 layout_mode = 2
 mouse_filter = 0
 texture = ExtResource("10_1o5ds")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="Complete Slice Dialog" type="PanelContainer" parent="Exploration UI"]
+[node name="Complete Slice Dialog" type="PanelContainer" parent="Exploration UI" unique_id=2060247230]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -258,26 +258,26 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("12_aumn5")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Exploration UI/Complete Slice Dialog"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Exploration UI/Complete Slice Dialog" unique_id=974587234]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Exploration UI/Complete Slice Dialog/VBoxContainer"]
+[node name="Label" type="Label" parent="Exploration UI/Complete Slice Dialog/VBoxContainer" unique_id=1778318906]
 layout_mode = 2
 text = "Congrats!
 You solved one puzzle.
 That's all there is for now."
 horizontal_alignment = 1
 
-[node name="OK" type="Button" parent="Exploration UI/Complete Slice Dialog/VBoxContainer"]
+[node name="OK" type="Button" parent="Exploration UI/Complete Slice Dialog/VBoxContainer" unique_id=1782684683]
 layout_mode = 2
 text = "UI_ACCEPT"
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2050674169]
 environment = ExtResource("8_6nb7m")
 
-[node name="Player3d" parent="." instance=ExtResource("4_0wj4k")]
+[node name="Player3d" parent="." unique_id=1355093079 instance=ExtResource("4_0wj4k")]
 
-[node name="DirtMagazine" type="Node" parent="."]
+[node name="DirtMagazine" type="Node" parent="." unique_id=387155804]
 script = ExtResource("5_fvacq")
 _block_solid_path = "uid://cihs04opsmiy8"
 _block_dug_one_path = "uid://bclui8nnjmoh"
@@ -287,10 +287,10 @@ _block_dug_three_path = "uid://c524ln2q266q"
 _block_dug_four_path = "uid://ckdk2uh7rdouf"
 metadata/_custom_type_script = "uid://dq7lbhrdci5ob"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=317302888]
 layer = 200
 
-[node name="AdaptiveCrosshair" type="Control" parent="CanvasLayer"]
+[node name="AdaptiveCrosshair" type="Control" parent="CanvasLayer" unique_id=2122343632]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 0

@@ -10,12 +10,15 @@
 albedo_color = Color(0.7, 0.14699998, 0.14699998, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lhet1"]
-size = Vector3(0.21601868, 0.5713196, 0.48529053)
+size = Vector3(0.21601868, 0.44330597, 0.48529053)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dtqq4"]
+size = Vector3(0.21601868, 0.64987564, 0.48529053)
 
 [node name="Train Engine" type="Node3D" unique_id=2041730240 node_paths=PackedStringArray("_interaction_body", "downstream_connector")]
 script = ExtResource("1_0yx8r")
 speed = 1.5
-_interaction_body = NodePath("TrainEngineBody/StaticBody3D")
+_interaction_body = NodePath("TrainEngineBody/InteractionBody")
 downstream_connector = NodePath("Connector Center")
 metadata/_custom_type_script = "uid://kv6fuadcww5"
 
@@ -23,13 +26,20 @@ metadata/_custom_type_script = "uid://kv6fuadcww5"
 mesh = ExtResource("1_ecvkw")
 surface_material_override/0 = SubResource("StandardMaterial3D_lhet1")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="TrainEngineBody" unique_id=1010942013 node_paths=PackedStringArray("_root")]
+[node name="InteractionBody" type="StaticBody3D" parent="TrainEngineBody" unique_id=1010942013 node_paths=PackedStringArray("_root")]
 script = ExtResource("3_dtqq4")
 _root = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainEngineBody/StaticBody3D" unique_id=114420846]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00035858154, 0.2799225, -0.004486084)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainEngineBody/InteractionBody" unique_id=114420846]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00035858154, 0.21591568, -0.004486084)
 shape = SubResource("BoxShape3D_lhet1")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="TrainEngineBody" unique_id=508648844]
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainEngineBody/StaticBody3D" unique_id=807336999]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00035858154, 0.31951332, -0.004486084)
+shape = SubResource("BoxShape3D_dtqq4")
 
 [node name="TrainEngineWheel" type="MeshInstance3D" parent="." unique_id=717429835]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.104738206, 0.069717586, 0)

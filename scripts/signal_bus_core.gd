@@ -47,6 +47,7 @@ signal on_scene_transition_new_scene_ready()
 
 # Exploration
 # -> Level
+signal on_level_pause(paused: bool)
 signal on_critical_level_corrupt(level_id: String)
 
 # -> Keys

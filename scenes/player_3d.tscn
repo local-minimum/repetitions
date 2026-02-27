@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://j0cos57lmqyb" path="res://scenes/rooms/meshes/props/pickax.blend" id="3_2djwe"]
 [ext_resource type="Script" uid="uid://qk83bjxufdn0" path="res://scripts/reps/tools/toolbelt.gd" id="3_4jfb6"]
 [ext_resource type="Script" uid="uid://5qkpcuqohaaw" path="res://scripts/reps/gridded_controller.gd" id="3_aoiyr"]
+[ext_resource type="Script" uid="uid://yjtiqbwbqcdd" path="res://addons/minimum_convenience/scripts/free_look_cam.gd" id="4_60w1x"]
 [ext_resource type="Script" uid="uid://d3kx3hrrig5b" path="res://scripts/reps/tools/equipped_pickax.gd" id="4_yevqy"]
 [ext_resource type="Script" uid="uid://x6uxf7lr5f1b" path="res://scripts/reps/physics_controller_steps_caster.gd" id="7_460ac"]
 
@@ -138,12 +139,13 @@ height = 0.2
 [sub_resource type="BoxShape3D" id="BoxShape3D_aoiyr"]
 size = Vector3(0.1, 0.1, 0.1)
 
-[node name="Player3d" type="CharacterBody3D" unique_id=942295760 node_paths=PackedStringArray("_camera", "_gridless_controller", "_gridded_controller", "_captured_pointer_eventer", "stepper", "_forward", "_left", "_right", "_backward", "_debug_shapes")]
+[node name="Player3d" type="CharacterBody3D" unique_id=942295760 node_paths=PackedStringArray("_camera", "_freelook_cam", "_gridless_controller", "_gridded_controller", "_captured_pointer_eventer", "stepper", "_forward", "_left", "_right", "_backward", "_debug_shapes")]
 collision_layer = 2
 collision_mask = 7
 input_ray_pickable = false
 script = ExtResource("1_reoop")
 _camera = NodePath("Camera3D")
+_freelook_cam = NodePath("Camera3D")
 _gridless_controller = NodePath("GridlessController")
 _gridded_controller = NodePath("GriddedController")
 _captured_pointer_eventer = NodePath("Camera3D/CapturedMouseRay")
@@ -174,10 +176,13 @@ layers = 524288
 mesh = SubResource("CapsuleMesh_0nu4v")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=652950801]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0697947, 0.65)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0697947, 0.5461663)
 cull_mask = 524287
 current = true
-near = 0.4
+near = 0.3
+script = ExtResource("4_60w1x")
+_yaw_limit_degrees = 60.0
+_pitch_limit_degrees = 60.0
 
 [node name="CapturedMouseRay" type="RayCast3D" parent="Camera3D" unique_id=694970535 node_paths=PackedStringArray("_camera")]
 target_position = Vector3(0, 0, -20)
