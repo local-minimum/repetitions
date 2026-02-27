@@ -55,17 +55,8 @@ func _process(delta: float) -> void:
             Track.ConnectionMode.TRACK:
                 var next_track: Track = current_track.get_next_track(_position.at_start)
                 if next_track != null:
-                    if next_track != current_track && current_track.is_mirrored_connection_direction(next_track, _position.at_start):
-                        moving_in_track_forwards_direction = !moving_in_track_forwards_direction
-                    off = current_track.get_offset_overshoot(_position.offset_distance)
-                    if !moving_in_track_forwards_direction:
-                        off = next_track.get_offset_from_end(off)
-
-                    print_debug("Engine swapping tracks from %s to %s" % [
-                        current_track, next_track
-                    ])
+                    _position = manage_track_transition(next_track, _position)
                     current_track = next_track
-                    _position = current_track.get_offset_position_global(off, true)
                 else:
                     # We should have had a track continuing here but there's nothing yet
                     _running = false
@@ -83,7 +74,7 @@ func _process(delta: float) -> void:
         if moving_in_track_forwards_direction != reversing:
             next_track_off_distance *= -1
 
-        print_debug("Engine on %s @ %s, asking %s to be @ %s" % [current_track, off, downstream_carriage, off + next_track_off_distance])
+        #print_debug("Engine on %s @ %s, asking %s to be @ %s" % [current_track, off, downstream_carriage, off + next_track_off_distance])
 
         downstream_carriage.calculate_position_and_rotation(
             current_track,

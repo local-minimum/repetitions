@@ -44,19 +44,20 @@ func snap_to_track() -> void:
 func _sync_position(track_data: Track.PointData) -> void:
     global_position = track_data.point + global_basis.y * vertical_offset
 
-    #if !track_data.at_edge:
     var gb: Basis = Basis.looking_at(
         track_data.forward,
         track_data.up,
     )
+
     gb = gb.rotated(track_data.up, 0.0 if moving_in_track_forwards_direction != reversing else PI).orthonormalized()
 
     global_basis = gb
 
 func manage_track_transition(next_track: Track, track_point: Track.PointData) -> Track.PointData:
-    var off: float = current_track.get_offset_overshoot(track_point.offset_distance)
+    var overshoot: float = current_track.get_offset_overshoot(track_point.offset_distance)
+    var off: float = overshoot
 
-    if next_track != current_track && current_track.is_mirrored_connection_direction(next_track, track_point.at_start):
+    if current_track.is_mirrored_connection_direction(next_track, track_point.at_start):
         # We are inverted in directionality
         if track_point.at_start:
             moving_in_track_forwards_direction = true
@@ -67,9 +68,11 @@ func manage_track_transition(next_track: Track, track_point: Track.PointData) ->
     elif track_point.at_start:
         off = next_track.get_offset_from_end(off)
 
-    print_debug("Updated offset switching %s -> %s from %s to %s" % [
-        current_track, next_track, track_point.offset_distance,
-        off,
-    ])
+    #print_debug("Updated %s offset switching %s (at start %s) -> %s (mirrored %s) from %s (over: %s) to %s" % [
+    #    name, current_track, track_point.at_start, next_track,
+    #    current_track.is_mirrored_connection_direction(next_track, track_point.at_start),
+    #    track_point.offset_distance, overshoot,
+    #    off,
+    #])
     current_track = next_track
     return next_track.get_offset_position_global(off, true)

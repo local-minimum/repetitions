@@ -32,8 +32,8 @@ func calculate_position_and_rotation(
                 if next_track != null:
                     position = manage_track_transition(next_track, position)
                 else:
-                    # TODO: Ease towards upstreams rotation and position
-                    pass
+                    _engine.stop_engine()
+
             Track.ConnectionMode.STOP:
                 var e: TrackEngine = _engine
                 e.stop_engine()
@@ -56,10 +56,10 @@ func calculate_position_and_rotation(
                     #print_debug("To align our connectors %s needs to move %s" % [self, transl])
                     global_position += transl
                     sync_position = false
-                    print_debug("Carriage is moving outside the track")
+                    #print_debug("Carriage is moving outside the track")
 
     if sync_position:
-        print_debug("Synking position of %s to %s @ %s" % [self, current_track, position.offset_distance])
+        #print_debug("Synking position of %s to %s @ %s" % [self, current_track, position.offset_distance])
         _sync_position(position)
 
         # This fucks everything up when switching tracks
@@ -80,7 +80,7 @@ func calculate_position_and_rotation(
         var next_track_off_distance: float = global_distance_to_downstream_connector + downstream_carriage.global_distance_to_upstream_connector
         if moving_in_track_forwards_direction != reversing:
             next_track_off_distance *= -1
-        print_debug("Asking %s to place itself at off %s (delta %s)" % [downstream_carriage, off + next_track_off_distance, next_track_off_distance])
+        #print_debug("Asking %s to place itself at off %s (delta %s)" % [downstream_carriage, off + next_track_off_distance, next_track_off_distance])
         downstream_carriage.calculate_position_and_rotation(
             track,
             off + next_track_off_distance,

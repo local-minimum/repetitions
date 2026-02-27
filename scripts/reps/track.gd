@@ -74,7 +74,7 @@ func is_mirrored_connection_direction(connected_track: Track, at_start: bool) ->
         return self_start.distance_squared_to(other_start) < self_start.distance_squared_to(other_end)
     else:
         var self_end: Vector3 = to_global(curve.get_point_position(curve.point_count - 1))
-        return self_end.distance_squared_to(other_start) < self_end.distance_squared_to(other_end)
+        return self_end.distance_squared_to(other_end) < self_end.distance_squared_to(other_start)
 
 func get_offset_overshoot(offset: float) -> float:
     if offset < 0:
