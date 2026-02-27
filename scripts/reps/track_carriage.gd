@@ -18,19 +18,19 @@ func calculate_position_and_rotation(
         off: float,
         upstream_moving_in_track_forwards_direction: bool,
         upstream_reversing: bool) -> void:
-    var position: Track.PointData = track.get_offset_position_global(off, true)
+    var track_point: Track.PointData = track.get_offset_position_global(off, true)
 
     var sync_position: bool = true
     reversing = upstream_reversing
     moving_in_track_forwards_direction = upstream_moving_in_track_forwards_direction
     current_track = track
 
-    if position.at_edge:
-        match track.get_connection_mode(position):
+    if track_point.at_edge:
+        match track.get_connection_mode(track_point):
             Track.ConnectionMode.TRACK:
-                var next_track: Track = track.get_next_track(position.at_start)
+                var next_track: Track = track.get_next_track(track_point.at_start)
                 if next_track != null:
-                    position = manage_track_transition(next_track, position)
+                    track_point = manage_track_transition(next_track, track_point)
                 else:
                     _engine.stop_engine()
 
@@ -60,7 +60,7 @@ func calculate_position_and_rotation(
 
     if sync_position:
         #print_debug("Synking position of %s to %s @ %s" % [self, current_track, position.offset_distance])
-        _sync_position(position)
+        _sync_position(track_point)
 
         # This fucks everything up when switching tracks
         # var d_engine_connector: Vector3 = upstream_follow.downstream_connector.global_position - global_position
