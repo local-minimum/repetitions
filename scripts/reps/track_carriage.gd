@@ -24,9 +24,9 @@ func calculate_position_and_rotation(track: Track, off: float) -> void:
                 var next_track: Track = track.get_next_track(_position.at_start)
                 if next_track != null:
                     if next_track != current_track && current_track.is_mirrored_connection_direction(next_track, _position.at_start):
-                        travel_forward = !travel_forward
+                        moving_in_track_forwards_direction = !moving_in_track_forwards_direction
                     off = track.get_offset_overshoot(_position.offset_distance)
-                    if !travel_forward:
+                    if !moving_in_track_forwards_direction:
                         off = next_track.get_offset_from_end(off)
 
                     track = next_track
@@ -77,7 +77,7 @@ func calculate_position_and_rotation(track: Track, off: float) -> void:
 
     if downstream_carriage != null:
         var next_track_off_distance: float = global_distance_to_downstream_connector + downstream_carriage.global_distance_to_upstream_connector
-        if travel_forward != travel_in_reverse:
+        if moving_in_track_forwards_direction != reversing:
             next_track_off_distance *= -1
         print_debug("Asking %s to place itself at off %s (delta %s)" % [downstream_carriage, off + next_track_off_distance, next_track_off_distance])
         downstream_carriage.calculate_position_and_rotation(

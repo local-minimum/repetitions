@@ -10,15 +10,15 @@ class_name TrackFollow
 
 @export var offset_tolerance: float = 0.1
 ## If the thing is moving forwards along the track direction or not
-@export var travel_forward: bool = true:
+@export var moving_in_track_forwards_direction: bool = true:
     set(value):
-        travel_forward = value
+        moving_in_track_forwards_direction = value
         snap_to_track()
 
-## If the thing is backing or going forward relative to its own direction
-@export var travel_in_reverse: bool = false:
+## If the thing is looking in the direction it is traveling
+@export var reversing: bool = false:
     set(value):
-        travel_in_reverse = value
+        reversing = value
         snap_to_track()
 
 @export var upstream_connector: Node3D
@@ -68,6 +68,6 @@ func _sync_position(force: bool) -> void:
             _position.forward,
             _position.up,
         )
-        gb = gb.rotated(_position.up, 0.0 if travel_forward == !travel_in_reverse else PI).orthonormalized()
+        gb = gb.rotated(_position.up, 0.0 if moving_in_track_forwards_direction != reversing else PI).orthonormalized()
 
         global_basis = gb

@@ -27,8 +27,9 @@ func _handle_interaction() -> void:
         current_track.get_connection_mode(_position) == Track.ConnectionMode.TRACK &&
         current_track.get_next_track(_position.at_start) == null
     ):
-        travel_in_reverse = !travel_in_reverse
-        travel_forward = !travel_forward
+        reversing = !reversing
+        _update_reversing_downstream()
+        moving_in_track_forwards_direction = !moving_in_track_forwards_direction
 
     __SignalBus.on_train_interaction.emit(self)
 
@@ -44,7 +45,7 @@ func _process(delta: float) -> void:
         return
 
     #var prev: float = _position.offset_distance
-    var off: float = _position.offset_distance + (delta * (1.0 if travel_forward else -1.0) * speed)
+    var off: float = _position.offset_distance + (delta * (1.0 if moving_in_track_forwards_direction else -1.0) * speed)
     _position = current_track.get_offset_position_global(off, true)
     #print_debug("%s: %s -> %s == %s" % [prev, delta, _position.offset_distance, off])
 
@@ -54,9 +55,9 @@ func _process(delta: float) -> void:
                 var next_track: Track = current_track.get_next_track(_position.at_start)
                 if next_track != null:
                     if next_track != current_track && current_track.is_mirrored_connection_direction(next_track, _position.at_start):
-                        travel_forward = !travel_forward
+                        moving_in_track_forwards_direction = !moving_in_track_forwards_direction
                     off = current_track.get_offset_overshoot(_position.offset_distance)
-                    if !travel_forward:
+                    if !moving_in_track_forwards_direction:
                         off = next_track.get_offset_from_end(off)
 
                     current_track = next_track
@@ -75,10 +76,10 @@ func _process(delta: float) -> void:
 
     if downstream_carriage != null:
         var next_track_off_distance: float = global_distance_to_downstream_connector + downstream_carriage.global_distance_to_upstream_connector
-        if travel_forward != travel_in_reverse:
+        if moving_in_track_forwards_direction != reversing:
             next_track_off_distance *= -1
 
-        print_debug("Asking %s to place itself at off %s (delta %s)" % [downstream_carriage, off + next_track_off_distance, next_track_off_distance])
+        #print_debug("Asking %s to place itself at off %s (delta %s)" % [downstream_carriage, off + next_track_off_distance, next_track_off_distance])
 
         downstream_carriage.calculate_position_and_rotation(
             current_track,
@@ -87,8 +88,17 @@ func _process(delta: float) -> void:
 
 func stop_engine() -> void:
     _running = false
-    travel_in_reverse = !travel_in_reverse
-    travel_forward = !travel_forward
+    reversing = !reversing
+    moving_in_track_forwards_direction = !moving_in_track_forwards_direction
+    _update_reversing_downstream()
+
+func _update_reversing_downstream() -> void:
+    var next: TrackCarriage = downstream_carriage
+    var panic: int = 100
+    while next != null && panic > 0:
+        next.reversing = reversing
+        next = next.downstream_carriage
+        panic -= 1
 
 static func find_in_parent(node: Node) -> TrackEngine:
     if node == null:
