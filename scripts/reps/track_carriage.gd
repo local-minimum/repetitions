@@ -13,24 +13,24 @@ var _engine: TrackEngine:
             return (upstream_follow as TrackCarriage)._engine
         return null
 
-func calculate_position_and_rotation(track: Track, off: float) -> void:
-    _position = track.get_offset_position_global(off, true)
-    #print_debug("%s: %s -> %s == %s" % [prev, delta, _position.offset_distance, off])
+func calculate_position_and_rotation(
+        track: Track,
+        off: float,
+        upstream_moving_in_track_forwards_direction: bool,
+        upstream_reversing: bool) -> void:
+    var position: Track.PointData = track.get_offset_position_global(off, true)
+
     var sync_position: bool = true
+    reversing = upstream_reversing
+    moving_in_track_forwards_direction = upstream_moving_in_track_forwards_direction
+    current_track = track
 
-    if _position.at_edge:
-        match track.get_connection_mode(_position):
+    if position.at_edge:
+        match track.get_connection_mode(position):
             Track.ConnectionMode.TRACK:
-                var next_track: Track = track.get_next_track(_position.at_start)
+                var next_track: Track = track.get_next_track(position.at_start)
                 if next_track != null:
-                    if next_track != current_track && current_track.is_mirrored_connection_direction(next_track, _position.at_start):
-                        moving_in_track_forwards_direction = !moving_in_track_forwards_direction
-                    off = track.get_offset_overshoot(_position.offset_distance)
-                    if !moving_in_track_forwards_direction:
-                        off = next_track.get_offset_from_end(off)
-
-                    track = next_track
-                    _position = track.get_offset_position_global(off, true)
+                    position = manage_track_transition(next_track, position)
                 else:
                     # TODO: Ease towards upstreams rotation and position
                     pass
@@ -56,10 +56,11 @@ func calculate_position_and_rotation(track: Track, off: float) -> void:
                     #print_debug("To align our connectors %s needs to move %s" % [self, transl])
                     global_position += transl
                     sync_position = false
+                    print_debug("Carriage is moving outside the track")
 
-    current_track = track
     if sync_position:
-        _sync_position(true)
+        print_debug("Synking position of %s to %s @ %s" % [self, current_track, position.offset_distance])
+        _sync_position(position)
 
         # This fucks everything up when switching tracks
         # var d_engine_connector: Vector3 = upstream_follow.downstream_connector.global_position - global_position
@@ -82,5 +83,7 @@ func calculate_position_and_rotation(track: Track, off: float) -> void:
         print_debug("Asking %s to place itself at off %s (delta %s)" % [downstream_carriage, off + next_track_off_distance, next_track_off_distance])
         downstream_carriage.calculate_position_and_rotation(
             track,
-            off + next_track_off_distance
+            off + next_track_off_distance,
+            moving_in_track_forwards_direction,
+            reversing,
         )

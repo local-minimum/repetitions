@@ -17,7 +17,6 @@ upstream_connector = NodePath("TrainCartBody/Neg Connector Center2")
 downstream_connector = NodePath("TrainCartBody/Connector Center2")
 
 [node name="TrainCartBody" parent="." unique_id=756743578 instance=ExtResource("1_kskkp")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 script = null
 
 [node name="TrainCartWheel5" type="MeshInstance3D" parent="TrainCartBody" unique_id=610372563]

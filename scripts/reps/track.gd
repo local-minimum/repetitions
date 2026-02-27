@@ -80,8 +80,20 @@ func get_offset_overshoot(offset: float) -> float:
     if offset < 0:
         return abs(offset)
 
-    return maxf(0, offset - curve.get_baked_length())
+    if offset < handover_margin:
+        return 0
 
+    var curve_length: float = curve.get_baked_length()
+
+    if offset >= curve_length - handover_margin && offset <= curve_length:
+        return 0
+
+    if offset < curve_length - handover_margin:
+        push_warning("Asking for an offset overshoot offset %s is less than then track length %s of %s" % [
+            offset, curve.get_baked_length(), self,
+        ])
+
+    return maxf(0, offset - curve_length)
 
 func get_offset_from_end(offset: float) -> float:
     return curve.get_baked_length() - offset

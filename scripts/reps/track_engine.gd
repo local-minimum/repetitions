@@ -8,6 +8,8 @@ class_name TrackEngine
 
 @export var downstream_carriage: TrackCarriage
 
+var _position: Track.PointData
+
 var _running: bool = false
 var running: bool:
     get():
@@ -41,8 +43,7 @@ func _process(delta: float) -> void:
         return
 
     if _position == null:
-        snap_to_track(true)
-        return
+        _position = current_track.get_track_point_global(ref_position)
 
     #var prev: float = _position.offset_distance
     var off: float = _position.offset_distance + (delta * (1.0 if moving_in_track_forwards_direction else -1.0) * speed)
@@ -60,6 +61,9 @@ func _process(delta: float) -> void:
                     if !moving_in_track_forwards_direction:
                         off = next_track.get_offset_from_end(off)
 
+                    print_debug("Engine swapping tracks from %s to %s" % [
+                        current_track, next_track
+                    ])
                     current_track = next_track
                     _position = current_track.get_offset_position_global(off, true)
                 else:
@@ -72,18 +76,20 @@ func _process(delta: float) -> void:
                 # We left the track, don't know what more to do
                 stop_engine()
 
-    _sync_position(true)
+    _sync_position(_position)
 
     if downstream_carriage != null:
         var next_track_off_distance: float = global_distance_to_downstream_connector + downstream_carriage.global_distance_to_upstream_connector
         if moving_in_track_forwards_direction != reversing:
             next_track_off_distance *= -1
 
-        #print_debug("Asking %s to place itself at off %s (delta %s)" % [downstream_carriage, off + next_track_off_distance, next_track_off_distance])
+        print_debug("Engine on %s @ %s, asking %s to be @ %s" % [current_track, off, downstream_carriage, off + next_track_off_distance])
 
         downstream_carriage.calculate_position_and_rotation(
             current_track,
-            off + next_track_off_distance
+            off + next_track_off_distance,
+            moving_in_track_forwards_direction,
+            reversing,
         )
 
 func stop_engine() -> void:

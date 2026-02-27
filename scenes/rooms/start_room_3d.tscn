@@ -430,7 +430,7 @@ vertical_offset = -0.05
 moving_in_track_forwards_direction = false
 
 [node name="Train Cart" parent="Geometry" unique_id=231170509 node_paths=PackedStringArray("upstream_follow") instance=ExtResource("19_nx0y2")]
-transform = Transform3D(0.81013376, 0, -0.5862452, 0, 1, 0, 0.5862452, 0, 0.81013376, -3.2301478, 0.17703226, 1.2057796)
+transform = Transform3D(-0.8133344, 0, 0.58179647, 0, 1, 0, -0.58179647, 0, -0.8133344, -3.2301478, 0.17703226, 1.2057796)
 upstream_follow = NodePath("../Train Engine")
 vertical_offset = 0.11
 
