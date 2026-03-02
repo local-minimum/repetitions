@@ -88,6 +88,9 @@ var _allow_continious_translation: bool = true
 
 var gridless: bool:
     set(value):
+        if cinematic:
+            push_warning("Updating gridlessness during cinematics may have unwanted effects")
+
         if gridless != value:
             # _translation_stack.clear()
             # _translation_pressed.clear()
@@ -278,8 +281,14 @@ func defocus_on(obj: Node3D, ease_duration: float = 0.2) -> void:
     if _focus_obj != obj:
         return
 
+    print_debug("Defocusing %s" % obj)
+
     if _cam_slide_tween != null && _cam_slide_tween.is_running():
         _cam_slide_tween.kill()
+
+    _restore_camera_position(ease_duration)
+
+func _restore_camera_position(ease_duration: float = 0.2) -> void:
 
     var expected_near: float = _gridless_controller.camera_near if gridless else _gridded_controller.cam_near
     var expected_fov: float = _gridless_controller.camera_fov if gridless else _gridded_controller.cam_fov

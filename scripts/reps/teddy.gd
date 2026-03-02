@@ -86,6 +86,8 @@ func _setup_dialogic(label: String, player: PhysicsGridPlayerController) -> void
         push_error("Failed to start dialog")
         player.remove_cinematic_blocker(self)
 
+var _looking_at_teddy: bool
+
 func _handle_signal_event(evt: Variant) -> void:
     if evt is String:
         match evt:
@@ -93,9 +95,11 @@ func _handle_signal_event(evt: Variant) -> void:
                 PhysicsGridPlayerController.last_connected_player.focus_on(self, 0.7, look_ease_duration)
                 Dialogic.paused = true
                 await get_tree().create_timer(look_ease_duration).timeout
+                _looking_at_teddy = true
                 Dialogic.paused = false
             "look_away":
                 PhysicsGridPlayerController.last_connected_player.defocus_on(self, look_away_ease_duration)
+                _looking_at_teddy = false
             "grounded":
                 _show_demo_end = true
             "sleep":
@@ -120,7 +124,8 @@ var _show_demo_end: bool = false
 
 func _end_conversation() -> void:
     var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
-    player.defocus_on(self, look_away_ease_duration)
+    if _looking_at_teddy:
+        player.defocus_on(self, look_away_ease_duration)
     player.remove_cinematic_blocker(self)
     Dialogic.signal_event.disconnect(_handle_signal_event)
 
