@@ -18,6 +18,14 @@ var running: bool:
 func _enter_tree() -> void:
     if _interaction_body.execute_interaction.connect(_handle_interaction) != OK:
         push_error("Failed to connect interaction")
+    if __SignalBus.on_request_train_start.connect(_handle_request_train_run) != OK:
+        push_error("Failed to connect request train run")
+
+
+func _handle_request_train_run(carriage: TrackCarriage) -> void:
+    if running || !is_my_carriage(carriage):
+        return
+    _handle_interaction()
 
 func _handle_interaction() -> void:
     _running = !_running
@@ -82,6 +90,17 @@ func _process(delta: float) -> void:
             moving_in_track_forwards_direction,
             reversing,
         )
+
+func is_my_carriage(carriage: TrackCarriage) -> bool:
+    var c: TrackCarriage = downstream_carriage
+
+    while c != null:
+        if c == carriage:
+            return true
+
+        c = c.downstream_carriage
+
+    return false
 
 func stop_engine() -> void:
     _running = false
