@@ -5,7 +5,8 @@ class_name TrackFollow
 @export var current_track: Track
 @export var vertical_offset: float = 0
 
-@export var offset_tolerance: float = 0.1
+#@export var offset_tolerance: float = 0.1
+
 ## If the thing is moving forwards along the track direction or not
 @export var moving_in_track_forwards_direction: bool = true
 
@@ -44,25 +45,27 @@ func snap_to_track() -> void:
 func _sync_position(track_data: Track.PointData) -> void:
     global_position = track_data.point + global_basis.y * vertical_offset
 
-    var gb: Basis = Basis.looking_at(
+    global_basis = Basis.looking_at(
         track_data.forward,
         track_data.up,
     )
 
-    gb = gb.rotated(track_data.up, 0.0 if moving_in_track_forwards_direction != reversing else PI).orthonormalized()
-
-    global_basis = gb
-
-func manage_track_transition(next_track: Track, track_point: Track.PointData) -> Track.PointData:
-    var overshoot: float = current_track.get_offset_overshoot(track_point.offset_distance)
+func manage_track_transition(
+    track: Track,
+    next_track: Track,
+    track_point: Track.PointData,
+    invert_directions: bool,
+) -> Track.PointData:
+    var overshoot: float = track.get_offset_overshoot(track_point.offset_distance)
+    #var transition_progress: float = track.get_transition_progress(track_point.offset_distance, next_track)
     var off: float = overshoot
 
-    if current_track.is_mirrored_connection_direction(next_track, track_point.at_start):
+    if track.is_mirrored_connection_direction(next_track, track_point.at_start):
         # We are inverted in directionality
         if track_point.at_start:
-            moving_in_track_forwards_direction = true
+            moving_in_track_forwards_direction = !invert_directions
         else:
-            moving_in_track_forwards_direction = false
+            moving_in_track_forwards_direction = invert_directions
             off = next_track.get_offset_from_end(off)
 
     elif track_point.at_start:
@@ -74,5 +77,18 @@ func manage_track_transition(next_track: Track, track_point: Track.PointData) ->
     #    track_point.offset_distance, overshoot,
     #    off,
     #])
+
+    #print_debug("%s is easing from %s to %s with progress %s" % [self, track, next_track, transition_progress])
+
+    var next_track_point: Track.PointData = next_track.get_offset_position_global(
+        off,
+        moving_in_track_forwards_direction == reversing,
+        true,
+)
+
+    #if transition_progress > 0.5:
     current_track = next_track
-    return next_track.get_offset_position_global(off, true)
+
+
+    #return track_point.lerp(next_track_point, transition_progress)
+    return next_track_point

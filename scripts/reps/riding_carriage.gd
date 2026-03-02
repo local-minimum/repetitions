@@ -73,4 +73,3 @@ func _process(_delta: float) -> void:
 
     player.global_position = _riding_position.global_position
     player.global_rotation = _riding_position.global_rotation
-    print_debug(player.camera.position)

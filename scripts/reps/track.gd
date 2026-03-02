@@ -29,6 +29,15 @@ class PointData:
         self.up = up
         self.at_edge = at_edge
 
+    func lerp(other: PointData, weight: float) -> PointData:
+        return PointData.new(
+            point.lerp(other.point, weight),
+            lerpf(offset_distance, other.offset_distance, weight),
+            at_edge && other.at_edge,
+            forward.slerp(other.forward, weight),
+            up.slerp(other.up, weight),
+        )
+
 func get_track_point_global(global_point: Vector3) -> PointData:
     var local: Vector3 = to_local(global_point)
     var offset: float = curve.get_closest_offset(local)
@@ -44,9 +53,9 @@ func get_track_point_global(global_point: Vector3) -> PointData:
         (to_global(up) - global_position).normalized(),
     )
 
-func get_offset_position_global(offset: float, cubic: bool = false) -> PointData:
+func get_offset_position_global(offset: float, invert_direction: bool, cubic: bool) -> PointData:
     var trans: Transform3D = curve.sample_baked_with_rotation(offset, cubic)
-    var forward: Vector3 = trans.basis.z
+    var forward: Vector3 = -trans.basis.z if invert_direction else trans.basis.z
     var up: Vector3 = trans.basis.y
 
     return PointData.new(
@@ -94,6 +103,26 @@ func get_offset_overshoot(offset: float) -> float:
         ])
 
     return maxf(0, offset - curve_length)
+
+func get_transition_progress(offset: float, to: Track) -> float:
+    var trans_length: float = (handover_margin + to.handover_margin)
+
+    if offset <= handover_margin:
+        return clampf((handover_margin - offset) / trans_length, 0.0, 1.0)
+
+    var upper_handover_threshold: float = curve.get_baked_length() - handover_margin
+    if offset >= upper_handover_threshold:
+        return clampf((offset - upper_handover_threshold) / trans_length, 0.0, 1.0)
+
+    push_warning("Offset %s is not in the progression of transitioning from %s yet (< %s or > %s)" % [
+        offset,
+        self,
+        handover_margin,
+        upper_handover_threshold,
+    ])
+
+    return 0.0
+
 
 func get_offset_from_end(offset: float) -> float:
     return curve.get_baked_length() - offset

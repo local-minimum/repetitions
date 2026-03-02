@@ -55,7 +55,11 @@ func _process(delta: float) -> void:
 
     #var prev: float = _position.offset_distance
     var off: float = _position.offset_distance + (delta * (1.0 if moving_in_track_forwards_direction else -1.0) * speed)
-    _position = current_track.get_offset_position_global(off, true)
+    _position = current_track.get_offset_position_global(
+        off,
+        moving_in_track_forwards_direction == reversing,
+        true,
+    )
     #print_debug("%s: %s -> %s == %s" % [prev, delta, _position.offset_distance, off])
 
     if _position.at_edge:
@@ -63,7 +67,7 @@ func _process(delta: float) -> void:
             Track.ConnectionMode.TRACK:
                 var next_track: Track = current_track.get_next_track(_position.at_start)
                 if next_track != null:
-                    _position = manage_track_transition(next_track, _position)
+                    _position = manage_track_transition(current_track, next_track, _position, false)
                     current_track = next_track
                 else:
                     # We should have had a track continuing here but there's nothing yet

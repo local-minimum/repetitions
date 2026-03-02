@@ -17,8 +17,14 @@ func calculate_position_and_rotation(
         track: Track,
         off: float,
         upstream_moving_in_track_forwards_direction: bool,
-        upstream_reversing: bool) -> void:
-    var track_point: Track.PointData = track.get_offset_position_global(off, true)
+        upstream_reversing: bool,
+) -> void:
+
+    var track_point: Track.PointData = track.get_offset_position_global(
+        off,
+        upstream_moving_in_track_forwards_direction == upstream_reversing,
+        true,
+    )
 
     var sync_position: bool = true
     reversing = upstream_reversing
@@ -30,7 +36,7 @@ func calculate_position_and_rotation(
             Track.ConnectionMode.TRACK:
                 var next_track: Track = track.get_next_track(track_point.at_start)
                 if next_track != null:
-                    track_point = manage_track_transition(next_track, track_point)
+                    track_point = manage_track_transition(track, next_track, track_point, true)
                 else:
                     _engine.stop_engine()
 
