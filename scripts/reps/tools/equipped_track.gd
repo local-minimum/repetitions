@@ -1,0 +1,2 @@
+extends EquippedTool
+class_name EquippedTrack

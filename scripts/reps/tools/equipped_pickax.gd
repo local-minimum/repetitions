@@ -1,47 +1,5 @@
 extends EquippedTool
 
-@export var _anim: AnimationPlayer
-@export var _anim_name: String = "Wack"
-@export var _caster: ShapeCast3D
-@export var _player: PhysicsGridPlayerController:
-    get():
-        if _player == null:
-            _player = NodeUtils.find_parent_type(self, "PhysicsGridPlayerController")
-        return _player
-
-var _busy: bool
-
-# We process tool usage/pickax in unhandled to let other things take prio
-func _unhandled_input(event: InputEvent) -> void:
-    if !enabled || event.is_echo():
-        return
-
-    if event.is_action_pressed(&"crawl_search"):
-        get_viewport().set_input_as_handled()
-        print_debug("Consuming 'search' event to pickax")
-        _ax()
-
-func _ax() -> void:
-    if _busy:
-        return
-
-    if _anim != null && !_anim_name.is_empty():
-        _player.add_cinematic_blocker(self)
-        _anim.play(_anim_name)
-
-        _busy = true
-
-        if _anim.animation_finished.connect(_ready_next_ax, CONNECT_ONE_SHOT) != OK:
-            push_error("Failed to connect animation finished")
-            _ready_next_ax(_anim_name)
-
-func _ready_next_ax(anim_name: String) -> void:
-    if _anim_name == anim_name:
-        _busy = false
-        _player.remove_cinematic_blocker(self)
-
-        if _caster.is_colliding():
-            var col: Object = _caster.get_collider(0)
-            if col is Node3D:
-                var dir: CardinalDirections.CardinalDirection = CardinalDirections.node_planar_rotation_to_direction(_player)
-                __SignalBus.on_use_pickax.emit(col, dir, _caster.get_collision_point(0))
+func execute_action(target: Node3D, caster: ShapeCast3D) -> void:
+    var dir: CardinalDirections.CardinalDirection = CardinalDirections.node_planar_rotation_to_direction(_player)
+    __SignalBus.on_use_pickax.emit(target, dir, caster.get_collision_point(0))

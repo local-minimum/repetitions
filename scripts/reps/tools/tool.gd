@@ -1,6 +1,6 @@
 extends Node3D
 class_name Tool
-enum ToolType { NONE, PICKAX, TROPHY, BLUEPRINT, KEY, LOOSE_TRACK }
+enum ToolType { NONE, PICKAX, TROPHY, BLUEPRINT, KEY, TRACK }
 
 @export var _type: ToolType = ToolType.NONE
 @export var _interaction_body: InteractionBody3D
