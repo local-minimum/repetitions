@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="TilemapDoorDirectionConfig" load_steps=2 format=3 uid="uid://dmhfnjqm6ww3d"]
+[gd_resource type="Resource" script_class="TilemapDoorDirectionConfig" format=3 uid="uid://dmhfnjqm6ww3d"]
 
 [ext_resource type="Script" uid="uid://dyg3ey1xq16y1" path="res://scripts/reps/tilemap_door_direction_config.gd" id="1_amnco"]
 
 [resource]
 script = ExtResource("1_amnco")
-_north = Array[Vector2i]([Vector2i(5, 7), Vector2i(3, 8)])
-_south = Array[Vector2i]([Vector2i(3, 7), Vector2i(3, 8)])
-_west = Array[Vector2i]([Vector2i(2, 7), Vector2i(2, 8)])
-_east = Array[Vector2i]([Vector2i(4, 7), Vector2i(2, 8)])
+_north = Array[Vector2i]([Vector2i(5, 7), Vector2i(3, 8), Vector2i(4, 8), Vector2i(7, 8)])
+_south = Array[Vector2i]([Vector2i(3, 7), Vector2i(3, 8), Vector2i(5, 8), Vector2i(6, 8)])
+_west = Array[Vector2i]([Vector2i(2, 7), Vector2i(2, 8), Vector2i(4, 8), Vector2i(5, 8)])
+_east = Array[Vector2i]([Vector2i(4, 7), Vector2i(2, 8), Vector2i(6, 8), Vector2i(7, 8)])
 metadata/_custom_type_script = "uid://dyg3ey1xq16y1"

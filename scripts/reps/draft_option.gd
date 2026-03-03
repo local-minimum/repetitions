@@ -17,10 +17,12 @@ enum RoomId {
     CELL_1 = 300,
     CELL_2 = 301,
     CELL_3 = 302,
+
     ROOM_CORNER = 310,
     ROOM_REACTOR = 320,
     ROOM_SHIFTING_WALLS = 330,
     ROOM_BACKROOM = 331,
+    ROOM_UNKNOWN = 340,
 }
 
 enum DraftProbability { FREQUENT, DEFAULT, UNCOMMON, RARE }

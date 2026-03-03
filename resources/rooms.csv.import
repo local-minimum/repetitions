@@ -15,3 +15,5 @@ dest_files=["res://resources/rooms.en.translation", "res://resources/rooms.sv.tr
 
 compress=true
 delimiter=0
+unescape_keys=false
+unescape_translations=true

@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://qohy6ektieft" path="res://scenes/rooms/hall_2_3d.tscn" id="6_h7ses"]
 [ext_resource type="PackedScene" uid="uid://ckoe4bi03k0e1" path="res://scenes/rooms/hall_1_3d.tscn" id="7_oi23a"]
 [ext_resource type="PackedScene" uid="uid://b7hwxdxx78shu" path="res://scenes/rooms/cell_2_3d.tscn" id="8_oi23a"]
+[ext_resource type="PackedScene" uid="uid://s0qnae2lmuip" path="res://scenes/rooms/room_unknown_3d.tscn" id="9_v7euy"]
 
 [node name="Node3D" type="Node3D" unique_id=1848198409]
 
@@ -34,3 +35,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -22,
 
 [node name="Cell23d" parent="." unique_id=105179798 instance=ExtResource("8_oi23a")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -26, 0, -3)
+
+[node name="RoomCorner3d2" parent="." unique_id=1837852875 node_paths=PackedStringArray("_managed_door_configs") instance=ExtResource("9_v7euy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 21)
+_managed_door_configs = [NodePath("Geometry/Door Config Options"), null]

@@ -26,7 +26,7 @@ func has_door(atlas_coords: Vector2i, direction: CardinalDirections.CardinalDire
 
 func get_directions(atlas_coords: Vector2i) -> Array[CardinalDirections.CardinalDirection]:
     var ret: Array[CardinalDirections.CardinalDirection]
-    
+
     if _north.has(atlas_coords):
         ret.append(CardinalDirections.CardinalDirection.NORTH)
     if _south.has(atlas_coords):
@@ -35,5 +35,5 @@ func get_directions(atlas_coords: Vector2i) -> Array[CardinalDirections.Cardinal
         ret.append(CardinalDirections.CardinalDirection.WEST)
     if _east.has(atlas_coords):
         ret.append(CardinalDirections.CardinalDirection.EAST)
-        
+
     return ret
