@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://dghtpf5yu3ogc"]
+
+[ext_resource type="Material" uid="uid://c07yxcnw5ahtq" path="res://textures/wood-textures/track-wood.tres" id="1_a5t50"]
+[ext_resource type="ArrayMesh" uid="uid://bu3rtrk45k8qd" path="res://scenes/rooms/meshes/props/train_track_turn_right_short.obj" id="2_t0rfp"]
+[ext_resource type="Script" uid="uid://cfiu5ok0cmhx" path="res://scripts/reps/track.gd" id="3_la8t8"]
+[ext_resource type="Script" uid="uid://g3ceed76t0c0" path="res://scripts/reps/tracks_auto_connector.gd" id="4_drvb2"]
+
+[sub_resource type="Curve3D" id="Curve3D_t72u6"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.22518027, 0.10999999, 0.5743084, -0.031, 0, 0.673, 0.0313769, 0.0833627, -0.67329264, -0.1257863, 0.10999999, -0.6236787),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6cds5"]
+size = Vector3(0.3, 0.2, 0.3)
+
+[node name="LooseTrack" type="MeshInstance3D" unique_id=1131536829]
+transform = Transform3D(0.17258243, 0, 0.98499507, 0, 1, 0, -0.98499507, 0, 0.17258243, 0, 0, 0)
+material_override = ExtResource("1_a5t50")
+mesh = ExtResource("2_t0rfp")
+
+[node name="Track" type="Path3D" parent="." unique_id=2030095865]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
+curve = SubResource("Curve3D_t72u6")
+script = ExtResource("3_la8t8")
+start_mode = 2
+end_mode = 2
+metadata/_custom_type_script = "uid://cfiu5ok0cmhx"
+
+[node name="Start Connector" type="Area3D" parent="." unique_id=657869223 node_paths=PackedStringArray("track")]
+transform = Transform3D(0.75916964, 0, 0.65089387, 0, 1, 0, -0.65089387, 0, 0.75916964, 0.18047822, 5.9604645e-08, 0.48040485)
+collision_layer = 8
+collision_mask = 8
+input_ray_pickable = false
+script = ExtResource("4_drvb2")
+connection_id = "loose-start"
+track = NodePath("../Track")
+track_start_connection = true
+metadata/_custom_type_script = "uid://g3ceed76t0c0"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Start Connector" unique_id=669472874]
+transform = Transform3D(0.98790586, 0, -0.1550552, 0, 1, 0, 0.1550552, 0, 0.98790586, 0, 0, 0)
+shape = SubResource("BoxShape3D_6cds5")
+
+[node name="End Connector" type="Area3D" parent="." unique_id=927913247 node_paths=PackedStringArray("track")]
+transform = Transform3D(0.9842615, 0, 0.17672417, 0, 1, 0, -0.17672417, 0, 0.9842615, -0.1298666, 8.940697e-08, -0.5958686)
+collision_layer = 8
+collision_mask = 8
+input_ray_pickable = false
+script = ExtResource("4_drvb2")
+connection_id = "loose-end"
+track = NodePath("../Track")
+metadata/_custom_type_script = "uid://g3ceed76t0c0"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="End Connector" unique_id=642168003]
+transform = Transform3D(0.98790586, 0, -0.1550552, 0, 1, 0, 0.1550552, 0, 0.98790586, 0, 0, 0)
+shape = SubResource("BoxShape3D_6cds5")

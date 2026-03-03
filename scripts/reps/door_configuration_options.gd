@@ -55,12 +55,12 @@ func _handle_enter_outside_area(body3d: Node3D) -> void:
     if PhysicsGridPlayerController.find_player_in_tree(body3d) != null && __GlobalGameState.current_player_room == room:
         __GlobalGameState.current_player_room = null
 
-func force_door_version(state: DoorState, finalize: bool = true):
+func force_door_version(state: DoorState, finalize: bool = true) -> void:
     if finalized:
         push_error("Cannot force door since it was finalized")
         return
 
-    _implement_doorage(_state_to_door(state), true)
+    _implement_doorage(_state_to_door(state), finalize)
 
 func resolve_connected_doors(
     own_room: Room3D,

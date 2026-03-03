@@ -20,7 +20,15 @@ func _enter_tree() -> void:
         push_error("Failed to connect interaction")
     if __SignalBus.on_request_train_start.connect(_handle_request_train_run) != OK:
         push_error("Failed to connect request train run")
+    if __SignalBus.on_request_train_stop.connect(_handle_request_train_stop) != OK:
+        push_error("Failed to connect request train stop")
 
+
+func _handle_request_train_stop(carriage: TrackCarriage) -> void:
+    if !running || !is_my_carriage(carriage):
+        return
+
+    _handle_interaction()
 
 func _handle_request_train_run(carriage: TrackCarriage) -> void:
     if running || !is_my_carriage(carriage):
@@ -89,8 +97,8 @@ func _process(delta: float) -> void:
         #print_debug("Engine on %s @ %s, asking %s to be @ %s" % [current_track, off, downstream_carriage, off + next_track_off_distance])
 
         downstream_carriage.calculate_position_and_rotation(
-            current_track,
-            off + next_track_off_distance,
+            _position.track,
+            _position.offset_distance + next_track_off_distance,
             moving_in_track_forwards_direction,
             reversing,
         )

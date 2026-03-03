@@ -29,14 +29,13 @@ func calculate_position_and_rotation(
     var sync_position: bool = true
     reversing = upstream_reversing
     moving_in_track_forwards_direction = upstream_moving_in_track_forwards_direction
-    current_track = track
 
     if track_point.at_edge:
         match track.get_connection_mode(track_point):
             Track.ConnectionMode.TRACK:
                 var next_track: Track = track.get_next_track(track_point.at_start)
                 if next_track != null:
-                    track_point = manage_track_transition(track, next_track, track_point, true)
+                    track_point = manage_track_transition(track, next_track, track_point, !_engine.reversing)
                 else:
                     _engine.stop_engine()
 
@@ -65,22 +64,7 @@ func calculate_position_and_rotation(
                     #print_debug("Carriage is moving outside the track")
 
     if sync_position:
-        #print_debug("Synking position of %s to %s @ %s" % [self, current_track, position.offset_distance])
         _sync_position(track_point)
-
-        # This fucks everything up when switching tracks
-        # var d_engine_connector: Vector3 = upstream_follow.downstream_connector.global_position - global_position
-        # var d_connector: Vector3 = upstream_connector.global_position - global_position
-        # var a: float = d_connector.signed_angle_to(d_engine_connector, global_basis.y)
-        # print_debug("%s needs rotate %s" % [self, a])
-        # global_basis = global_basis.rotated(global_basis.y, a * 0.1)
-
-        # d_engine_connector = upstream_follow.downstream_connector.global_position - global_position
-        # d_connector= upstream_connector.global_position - global_position
-        # a = d_connector.signed_angle_to(d_engine_connector, global_basis.x)
-        # print_debug("%s needs rotate %s" % [self, a])
-        # global_basis = global_basis.rotated(global_basis.x, a * 0.25)
-
 
     if downstream_carriage != null:
         var next_track_off_distance: float = global_distance_to_downstream_connector + downstream_carriage.global_distance_to_upstream_connector

@@ -34,6 +34,7 @@ signal on_trophy_stolen_from_terminal(terminal: PlannerTerminal)
 signal on_blocked_door_interaction(interaction_body: InteractionBody3D)
 signal on_train_interaction(engine: TrackEngine)
 signal on_request_train_start(carriage: TrackCarriage)
+signal on_request_train_stop(carriage: TrackCarriage)
 
 signal on_demo_end()
 @warning_ignore_restore("unused_signal")

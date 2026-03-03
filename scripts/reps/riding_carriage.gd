@@ -26,7 +26,7 @@ func _handle_interaction() -> void:
     if player == null || player.cinematic:
         return
 
-    set_process_input(true)
+    set_process_unhandled_input(true)
     set_process(true)
 
     player.add_cinematic_blocker(self)
@@ -65,7 +65,28 @@ func _start_train() -> void:
     __SignalBus.on_request_train_start.emit(_cart)
 
 func _unhandled_input(event: InputEvent) -> void:
-    pass
+    if (
+        event.is_action_pressed(&"crawl_forward") ||
+        event.is_action_pressed(&"crawl_strafe_left") ||
+        event.is_action_pressed(&"crawl_strafe_right") ||
+        event.is_action_pressed(&"crawl_backward")
+    ):
+        if _tween != null && _tween.is_running():
+            _tween.kill()
+
+        _riding = false
+
+        player.restore_camera_position()
+        player.remove_cinematic_blocker(self)
+        player.resume_control()
+
+        player = null
+
+        __SignalBus.on_request_train_stop.emit(_cart)
+
+        set_process_unhandled_input(false)
+        set_process(false)
+
 
 func _process(_delta: float) -> void:
     if player == null || !_riding || (_tween != null && _tween.is_running()):

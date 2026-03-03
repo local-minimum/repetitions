@@ -10,6 +10,7 @@ enum ConnectionMode { NONE, STOP, TRACK }
 @export var handover_margin: float = 0.05
 
 class PointData:
+    var track: Track
     var point: Vector3
     var offset_distance: float
     var forward: Vector3
@@ -21,8 +22,9 @@ class PointData:
             return at_edge && offset_distance <= 0
 
     @warning_ignore_start("shadowed_variable")
-    func _init(point: Vector3, offset_distance: float, at_edge: bool, forward: Vector3, up: Vector3) -> void:
+    func _init(track: Track, point: Vector3, offset_distance: float, at_edge: bool, forward: Vector3, up: Vector3) -> void:
         @warning_ignore_restore("shadowed_variable")
+        self.track = track
         self.point = point
         self.offset_distance = offset_distance
         self.forward = forward
@@ -31,6 +33,7 @@ class PointData:
 
     func lerp(other: PointData, weight: float) -> PointData:
         return PointData.new(
+            track if weight < 0.5 else other.track,
             point.lerp(other.point, weight),
             lerpf(offset_distance, other.offset_distance, weight),
             at_edge && other.at_edge,
@@ -46,6 +49,7 @@ func get_track_point_global(global_point: Vector3) -> PointData:
     var up: Vector3 = trans.basis.y
 
     return PointData.new(
+        self,
         to_global(trans.origin),
         offset,
         offset <= 0 || offset >= curve.get_baked_length(),
@@ -59,6 +63,7 @@ func get_offset_position_global(offset: float, invert_direction: bool, cubic: bo
     var up: Vector3 = trans.basis.y
 
     return PointData.new(
+        self,
         to_global(trans.origin),
         offset,
         offset <= 0 || offset >= curve.get_baked_length(),

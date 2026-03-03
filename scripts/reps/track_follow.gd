@@ -50,6 +50,9 @@ func _sync_position(track_data: Track.PointData) -> void:
         track_data.up,
     )
 
+    if track_data.track != current_track:
+        current_track = track_data.track
+
 func manage_track_transition(
     track: Track,
     next_track: Track,
@@ -71,24 +74,13 @@ func manage_track_transition(
     elif track_point.at_start:
         off = next_track.get_offset_from_end(off)
 
-    #print_debug("Updated %s offset switching %s (at start %s) -> %s (mirrored %s) from %s (over: %s) to %s" % [
-    #    name, current_track, track_point.at_start, next_track,
-    #    current_track.is_mirrored_connection_direction(next_track, track_point.at_start),
-    #    track_point.offset_distance, overshoot,
-    #    off,
-    #])
-
     #print_debug("%s is easing from %s to %s with progress %s" % [self, track, next_track, transition_progress])
 
     var next_track_point: Track.PointData = next_track.get_offset_position_global(
         off,
         moving_in_track_forwards_direction == reversing,
         true,
-)
-
-    #if transition_progress > 0.5:
-    current_track = next_track
-
+    )
 
     #return track_point.lerp(next_track_point, transition_progress)
     return next_track_point

@@ -19,6 +19,8 @@ size = Vector3(0.325, 0.4731836, 0.52)
 [sub_resource type="BoxShape3D" id="BoxShape3D_txkpk"]
 size = Vector3(0.34814453, 0.24975586, 0.65185547)
 
+[sub_resource type="BoxMesh" id="BoxMesh_k3ynm"]
+
 [node name="Train Cart" type="Node3D" unique_id=231170509 node_paths=PackedStringArray("upstream_connector", "downstream_connector")]
 script = ExtResource("1_k5ok2")
 upstream_connector = NodePath("Carriage/Neg Connector Center2")
@@ -81,6 +83,10 @@ shape = SubResource("BoxShape3D_txkpk")
 
 [node name="Riding Position" type="Node3D" parent="Carriage" unique_id=163395957]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.05227697, -0.135)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Carriage" unique_id=1831056413]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.1227684, 0.1830759)
+mesh = SubResource("BoxMesh_k3ynm")
 
 [node name="Riding Carriage" type="Node" parent="." unique_id=2020054123 node_paths=PackedStringArray("_cart", "_interaction_body", "_riding_position")]
 script = ExtResource("3_k3ynm")
