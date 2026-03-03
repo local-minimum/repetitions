@@ -4,6 +4,8 @@ class_name DoorConfigurationOptions
 enum DoorState { UNDECIDED, LOCKED_DOOR, OPEN_DOOR, NO_DOOR }
 enum SpecialState { NONE, ONE, TWO }
 
+signal on_connect_doors(own_state: DoorState, other_state: DoorState, own_special: SpecialState, other_special: SpecialState)
+
 @export var _door_open_root: Node3D
 @export var _door_locked_root: Node3D
 @export var _door_no_door_root: Node3D
@@ -98,6 +100,9 @@ func resolve_connected_doors(
         reactor.handle_connection(other_room, other_conf)
     for reactor: ConnectionReaction in other_conf._to_door_reactors:
         reactor.handle_connection(own_room, self)
+
+    on_connect_doors.emit(own_state, other_state, own_special, other_special)
+    other_conf.on_connect_doors.emit(other_state, own_state, other_special, own_special)
 
 func _resolve_own_to_door_state(other_state: DoorState, other_option: DraftOption) -> DoorState:
     if _to_door_overrides.has(other_option):

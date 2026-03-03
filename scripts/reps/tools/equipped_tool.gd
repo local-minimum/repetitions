@@ -63,6 +63,10 @@ func _complete_use(anim_name: String) -> void:
             var col: Object = _caster.get_collider(0)
             if col is Node3D:
                 execute_action(col as Node3D, _caster)
+            else:
+                print_debug("Collided with %s, which is not a node3d" % [col])
+        else:
+            print_debug("Caster %s hits nothing" % [_caster])
 
 func execute_action(target: Node3D, caster: ShapeCast3D) -> void:
     push_warning("%s does not have an execute action relating to hitting %s with %s" % [self, target, caster])

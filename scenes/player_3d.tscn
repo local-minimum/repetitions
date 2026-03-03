@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://x6uxf7lr5f1b" path="res://scripts/reps/physics_controller_steps_caster.gd" id="7_460ac"]
 [ext_resource type="Script" uid="uid://d2esmf774s04y" path="res://scripts/reps/tools/equipped_track.gd" id="9_ooxxp"]
 [ext_resource type="Material" uid="uid://c07yxcnw5ahtq" path="res://textures/wood-textures/track-wood.tres" id="10_a83gf"]
+[ext_resource type="PackedScene" uid="uid://dghtpf5yu3ogc" path="res://scenes/loot/loose_track.tscn" id="10_jrod8"]
 [ext_resource type="ArrayMesh" uid="uid://bu3rtrk45k8qd" path="res://scenes/rooms/meshes/props/train_track_turn_right_short.obj" id="11_jrod8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_reoop"]
@@ -132,6 +133,96 @@ _data = {
 [sub_resource type="SphereShape3D" id="SphereShape3D_yevqy"]
 radius = 0.2
 
+[sub_resource type="Animation" id="Animation_ooxxp"]
+resource_name = "Lay"
+length = 0.48
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TrainTrackTurnRightShort:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.46),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.026686788, 0.028018653, 0.01541996), Vector3(0.042304993, 0.012309939, -0.0031610727)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TrainTrackTurnRightShort:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.46),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-5.960465e-08, 2.9802319e-08, 4.4703484e-08), Vector3(-0.104132116, -0.16068313, 0.23018833)]
+}
+
+[sub_resource type="Animation" id="Animation_a83gf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TrainTrackTurnRightShort:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.026686788, 0.028018653, 0.01541996)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TrainTrackTurnRightShort:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-5.960465e-08, 2.9802319e-08, 4.4703484e-08)]
+}
+
+[sub_resource type="Animation" id="Animation_jrod8"]
+resource_name = "Return"
+length = 0.48
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TrainTrackTurnRightShort:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.48),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.026686788, 0.028018653, 0.01541996)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TrainTrackTurnRightShort:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.48),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-5.960465e-08, 2.9802319e-08, 4.4703484e-08)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ucsik"]
+_data = {
+&"Lay": SubResource("Animation_ooxxp"),
+&"RESET": SubResource("Animation_a83gf"),
+&"Return": SubResource("Animation_jrod8")
+}
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_460ac"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_460ac"]
@@ -229,28 +320,32 @@ shape = SubResource("SphereShape3D_yevqy")
 target_position = Vector3(0, -0.4, -2.5)
 collision_mask = 7
 
-[node name="EquippedTrack" type="Node3D" parent="Toolbelt" unique_id=1201472581 node_paths=PackedStringArray("_player", "_anim", "_caster")]
-transform = Transform3D(0.82135886, 0.5563226, 0.12599598, -0.37760776, 0.6958588, -0.6108956, -0.42753035, 0.45418724, 0.7816211, -0.4264388, 0.83924216, 0.057290047)
+[node name="EquippedTrack" type="Node3D" parent="Toolbelt" unique_id=1201472581 node_paths=PackedStringArray("_held_track_piece", "_player", "_anim", "_caster")]
+transform = Transform3D(0.92586756, 0.2741339, -0.26003847, -0.37121233, 0.53151613, -0.7613753, -0.0705042, 0.80146205, 0.59387505, -0.33830643, 0.83924216, 0.038350314)
 script = ExtResource("9_ooxxp")
+_held_track_piece = NodePath("TrainTrackTurnRightShort")
+_placed_track = ExtResource("10_jrod8")
 _player = NodePath("../..")
 _anim = NodePath("AnimationPlayer")
 _anim_name = "Lay"
-_caster = NodePath("TrackCast")
+_caster = NodePath("../TrackCast")
 metadata/_custom_type_script = "uid://d2esmf774s04y"
 
 [node name="TrainTrackTurnRightShort" type="MeshInstance3D" parent="Toolbelt/EquippedTrack" unique_id=680579624]
-transform = Transform3D(1, 1.4901161e-08, 5.9604645e-08, 4.4703484e-08, 0.9999999, -5.9604645e-08, -2.9802322e-08, -5.9604645e-08, 1.0000001, 0.026686788, 0.028018653, 0.01541996)
+transform = Transform3D(1, -4.4703473e-08, 2.9802326e-08, 4.4703484e-08, 0.99999976, 5.9604666e-08, -2.9802322e-08, -5.9604638e-08, 1.0000002, 0.026686788, 0.028018653, 0.01541996)
 material_override = ExtResource("10_a83gf")
 mesh = ExtResource("11_jrod8")
 skeleton = NodePath("../..")
 
-[node name="TrackCast" type="ShapeCast3D" parent="Toolbelt/EquippedTrack" unique_id=707821064]
-transform = Transform3D(0.82135874, -0.3776076, -0.42753032, 0.55632246, 0.69585836, 0.4541873, 0.1259961, -0.6108954, 0.78162134, 0.42023528, 0.21414337, -0.30046928)
-shape = SubResource("SphereShape3D_yevqy")
-target_position = Vector3(0, -1.2, -1.5)
-collision_mask = 8
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Toolbelt/EquippedTrack" unique_id=870180080]
+libraries/ = SubResource("AnimationLibrary_ucsik")
+next/Lay = &"Return"
+
+[node name="TrackCast" type="ShapeCast3D" parent="Toolbelt" unique_id=707821064]
+transform = Transform3D(1, 0, 0, 0, 0.9999999, 0, 0, 0, 1.0000001, -0.0009204447, 1.0258362, 0.0019085854)
+shape = SubResource("SphereShape3D_yevqy")
+target_position = Vector3(0, -1.5, -2.5)
+collision_mask = 8
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=2027711003]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1028626, 0.86164474)

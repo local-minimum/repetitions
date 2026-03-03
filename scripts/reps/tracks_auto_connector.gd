@@ -18,6 +18,10 @@ func handle_connection(other: TracksAutoConnector) -> void:
     if connection_id != other.connection_id:
         return
 
+    if track == null:
+        push_error("No track configured")
+        return
+
     var a_connections: Array[Track] = (
         track.start_connections if track_start_connection else track.end_connections
     )

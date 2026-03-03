@@ -114,8 +114,8 @@ _data = {
 }
 point_count = 3
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_nx0y2"]
-radius = 0.60506004
+[sub_resource type="BoxShape3D" id="BoxShape3D_hxc6q"]
+size = Vector3(1, 0.553772, 1.3215332)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_skexp"]
 albedo_color = Color(0.78941363, 0.87597615, 0.9298817, 1)
@@ -443,17 +443,19 @@ start_connections = [NodePath("../Track To Ramp")]
 end_mode = 1
 metadata/_custom_type_script = "uid://cfiu5ok0cmhx"
 
-[node name="Loose Track Position" type="Node3D" parent="Geometry/TrainTracks" unique_id=674098152]
+[node name="Loose Track Position" type="Node3D" parent="Geometry/TrainTracks" unique_id=674098152 node_paths=PackedStringArray("_door")]
 transform = Transform3D(0.17258248, 0, 0.984995, 0, 1, 0, -0.984995, 0, 0.17258248, -6.1314387, 0.0639221, -1.0804498)
 script = ExtResource("18_2tl6c")
+_door = NodePath("../../Door ConfigOptions4")
 
-[node name="Area3D" type="Area3D" parent="Geometry/TrainTracks/Loose Track Position" unique_id=670821961]
+[node name="Body" type="StaticBody3D" parent="Geometry/TrainTracks/Loose Track Position" unique_id=201319766]
 collision_layer = 8
 collision_mask = 8
+input_ray_pickable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/Loose Track Position/Area3D" unique_id=1015511801]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22695011, 0)
-shape = SubResource("SphereShape3D_nx0y2")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTracks/Loose Track Position/Body" unique_id=1015511801]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18749088, 0.045774937)
+shape = SubResource("BoxShape3D_hxc6q")
 
 [node name="Train Engine" parent="Geometry" unique_id=2130841054 node_paths=PackedStringArray("downstream_carriage", "current_track") instance=ExtResource("21_yaq8p")]
 transform = Transform3D(-0.6744017, 4.091661e-05, 0.73836493, 3.2025957e-05, 1.0000101, -2.6162606e-05, -0.73836493, 6.0025386e-06, -0.6744017, -2.8156369, 0.02117848, 0.7368947)

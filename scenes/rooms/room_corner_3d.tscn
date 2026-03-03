@@ -204,7 +204,7 @@ collision_mask = 8
 input_ray_pickable = false
 script = ExtResource("11_57el1")
 connection_id = "loose-end"
-track = NodePath("")
+track = NodePath("../../Track")
 track_start_connection = true
 metadata/_custom_type_script = "uid://g3ceed76t0c0"
 
