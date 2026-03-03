@@ -194,6 +194,19 @@ skeleton = NodePath("../../../..")
 transform = Transform3D(1.000006, 0, -2.3841858e-07, 0, 1, 0, 2.3841858e-07, 0, 1.000006, -0.0028524399, 0.0074157678, 0.006225586)
 shape = SubResource("BoxShape3D_oso3n")
 
+[node name="TracksAutoConnector" type="Area3D" parent="Geometry/Train Tracks/TrainTrackStraight8" unique_id=179784785 node_paths=PackedStringArray("track")]
+transform = Transform3D(0.99999994, 0, 1.4901161e-08, 0, 1, 0, -1.4901161e-08, 0, 0.99999994, 0.0067200065, 0, -0.53251815)
+collision_layer = 8
+collision_mask = 8
+input_ray_pickable = false
+script = ExtResource("11_uu7ng")
+connection_id = "cell1 door"
+track = NodePath("../../Track Through Door")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Train Tracks/TrainTrackStraight8/TracksAutoConnector" unique_id=1042669186]
+transform = Transform3D(1.000001, 0, -1.4901161e-08, 0, 1, 0, 1.4901161e-08, 0, 1.000001, -0.00042712688, 0.026123043, 0.019621372)
+shape = SubResource("BoxShape3D_75ae4")
+
 [node name="TrainTrackStraight7" type="MeshInstance3D" parent="Geometry/Train Tracks" unique_id=1868702409]
 transform = Transform3D(-0.90231454, 0, -0.4310782, 0, 1, 0, 0.4310782, 0, -0.90231454, 0.76658374, 0.05, -0.16297638)
 material_override = ExtResource("9_oao8w")
@@ -281,9 +294,6 @@ start_connections = [NodePath("../Track To Door")]
 end_mode = 2
 metadata/_custom_type_script = "uid://cfiu5ok0cmhx"
 
-[node name="roughwall_train_tunnel" parent="Geometry" unique_id=16475190 instance=ExtResource("15_1gpvm")]
-transform = Transform3D(-1.5893256e-08, 0, -1, 0, 1, 0, 1, 0, -1.5893256e-08, 2.3841858e-07, 0, -4)
-
 [node name="Base" type="Node3D" parent="Geometry" unique_id=218450862]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
 
@@ -350,3 +360,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2.8, 3)
 
 [node name="roughwall_alcove" parent="Geometry/Base" unique_id=1855935187 instance=ExtResource("6_ea4pd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 1)
+
+[node name="roughwall_train_tunnel" parent="Geometry/Base" unique_id=16475190 instance=ExtResource("15_1gpvm")]
+transform = Transform3D(-1.5893256e-08, 0, -1, 0, 1, 0, 1, 0, -1.5893256e-08, -0.99999976, 0, -3)

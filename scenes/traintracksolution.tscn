@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ckoe4bi03k0e1" path="res://scenes/rooms/hall_1_3d.tscn" id="7_oi23a"]
 [ext_resource type="PackedScene" uid="uid://b7hwxdxx78shu" path="res://scenes/rooms/cell_2_3d.tscn" id="8_oi23a"]
 [ext_resource type="PackedScene" uid="uid://s0qnae2lmuip" path="res://scenes/rooms/room_unknown_3d.tscn" id="9_v7euy"]
+[ext_resource type="PackedScene" uid="uid://chkw5q3yhwuml" path="res://scenes/rooms/room_with_backroom_3d.tscn" id="10_3rqk3"]
 
 [node name="Node3D" type="Node3D" unique_id=1848198409]
 
@@ -19,7 +20,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -1)
 
 [node name="LooseTrack" parent="." unique_id=1131536829 instance=ExtResource("3_oi23a")]
-transform = Transform3D(0.17258248, 0, 0.984995, 0, 1, 0, -0.984995, 0, 0.17258248, -7.1314387, 0.0639221, -1.0804498)
+transform = Transform3D(0.17258248, 0, 0.984995, 0, 1, 0, -0.984995, 0, 0.17258248, -7.1314387, 0.07766455, -1.0804498)
 
 [node name="Cell13d" parent="." unique_id=1771311022 instance=ExtResource("4_5mrjm")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -18, 0, -1)
@@ -39,3 +40,6 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -26,
 [node name="RoomCorner3d2" parent="." unique_id=1837852875 node_paths=PackedStringArray("_managed_door_configs") instance=ExtResource("9_v7euy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 21)
 _managed_door_configs = [NodePath("Geometry/Door Config Options"), null]
+
+[node name="RoomCorner3d3" parent="." unique_id=1305958560 instance=ExtResource("10_3rqk3")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 9)

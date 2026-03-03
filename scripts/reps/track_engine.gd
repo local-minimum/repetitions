@@ -16,6 +16,9 @@ var running: bool:
         return _running
 
 func _enter_tree() -> void:
+    if Engine.is_editor_hint():
+        return
+
     if _interaction_body.execute_interaction.connect(_handle_interaction) != OK:
         push_error("Failed to connect interaction")
     if __SignalBus.on_request_train_start.connect(_handle_request_train_run) != OK:

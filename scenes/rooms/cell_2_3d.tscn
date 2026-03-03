@@ -10,6 +10,9 @@
 [ext_resource type="Material" uid="uid://c07yxcnw5ahtq" path="res://textures/wood-textures/track-wood.tres" id="8_ggd3p"]
 [ext_resource type="ArrayMesh" uid="uid://cjoy3pfwroyr" path="res://scenes/rooms/meshes/props/train_track_turn_right.obj" id="9_1s2i6"]
 [ext_resource type="ArrayMesh" uid="uid://dxbrmfbvxsvvu" path="res://scenes/rooms/meshes/props/train_track_turn_left_short.obj" id="10_1s2i6"]
+[ext_resource type="Script" uid="uid://g3ceed76t0c0" path="res://scripts/reps/tracks_auto_connector.gd" id="11_2rq2a"]
+[ext_resource type="PackedScene" uid="uid://c7os4bawqoemp" path="res://scenes/rooms/meshes/roughwall_train_tunnel_side.blend" id="11_m3pdk"]
+[ext_resource type="Script" uid="uid://cfiu5ok0cmhx" path="res://scripts/reps/track.gd" id="12_wvko5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_co0dn"]
 size = Vector3(0.13061523, 2.3056946, 0.15673828)
@@ -17,8 +20,18 @@ size = Vector3(0.13061523, 2.3056946, 0.15673828)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_m3pdk"]
 data = PackedVector3Array(-0.1704, 0.048699997, 0.1704, -0.1704, -0.048699997, 0.1704, -0.0931, 0.048699997, -0.4279, -0.0931, 0.048699997, -0.4279, -0.1704, -0.048699997, 0.1704, -0.0931, -0.048699997, -0.4279, -0.0931, 0.048699997, -0.4279, -0.0931, -0.048699997, -0.4279, 0.1099, 0.048699997, -0.9104, 0.1099, 0.048699997, -0.9104, -0.0931, -0.048699997, -0.4279, 0.1099, -0.048699997, -0.9104, 0.23189999, 0.048699997, -0.3256, 0.23189999, -0.048699997, -0.3256, 0.1704, 0.048699997, 0.1704, 0.1704, 0.048699997, 0.1704, 0.23189999, -0.048699997, -0.3256, 0.1704, -0.048699997, 0.1704, 0.1704, 0.048699997, 0.1704, 0.1704, -0.048699997, 0.1704, -0.1704, 0.048699997, 0.1704, -0.1704, 0.048699997, 0.1704, 0.1704, -0.048699997, 0.1704, -0.1704, -0.048699997, 0.1704, 0.23189999, -0.048699997, -0.3256, -0.0931, -0.048699997, -0.4279, 0.1704, -0.048699997, 0.1704, 0.1704, -0.048699997, 0.1704, -0.0931, -0.048699997, -0.4279, -0.1704, -0.048699997, 0.1704, -0.0931, -0.048699997, -0.4279, 0.23189999, -0.048699997, -0.3256, 0.1099, -0.048699997, -0.9104, 0.1099, -0.048699997, -0.9104, 0.23189999, -0.048699997, -0.3256, 0.3987, -0.048699997, -0.72959995, 0.1099, -0.048699997, -0.9104, 0.3987, -0.048699997, -0.72959995, 0.3317, -0.048699997, -1.2174, 0.3317, -0.048699997, -1.2174, 0.3987, -0.048699997, -0.72959995, 0.5974, -0.048699997, -1.0041, -0.0931, 0.048699997, -0.4279, 0.23189999, 0.048699997, -0.3256, -0.1704, 0.048699997, 0.1704, -0.1704, 0.048699997, 0.1704, 0.23189999, 0.048699997, -0.3256, 0.1704, 0.048699997, 0.1704, 0.23189999, 0.048699997, -0.3256, -0.0931, 0.048699997, -0.4279, 0.3987, 0.048699997, -0.72959995, 0.3987, 0.048699997, -0.72959995, -0.0931, 0.048699997, -0.4279, 0.1099, 0.048699997, -0.9104, 0.3987, 0.048699997, -0.72959995, 0.1099, 0.048699997, -0.9104, 0.5974, 0.048699997, -1.0041, 0.5974, 0.048699997, -1.0041, 0.1099, 0.048699997, -0.9104, 0.3317, 0.048699997, -1.2174, 0.23189999, -0.048699997, -0.3256, 0.23189999, 0.048699997, -0.3256, 0.3987, -0.048699997, -0.72959995, 0.3987, -0.048699997, -0.72959995, 0.23189999, 0.048699997, -0.3256, 0.3987, 0.048699997, -0.72959995, 0.3317, 0.048699997, -1.2174, 0.3317, -0.048699997, -1.2174, 0.5974, 0.048699997, -1.0041, 0.5974, 0.048699997, -1.0041, 0.3317, -0.048699997, -1.2174, 0.5974, -0.048699997, -1.0041, 0.1099, 0.048699997, -0.9104, 0.1099, -0.048699997, -0.9104, 0.3317, 0.048699997, -1.2174, 0.3317, 0.048699997, -1.2174, 0.1099, -0.048699997, -0.9104, 0.3317, -0.048699997, -1.2174, 0.3987, -0.048699997, -0.72959995, 0.3987, 0.048699997, -0.72959995, 0.5974, -0.048699997, -1.0041, 0.5974, -0.048699997, -1.0041, 0.3987, 0.048699997, -0.72959995, 0.5974, 0.048699997, -1.0041)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_75ae4"]
+size = Vector3(0.36730957, 0.14111328, 0.24420166)
+
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_wvko5"]
 data = PackedVector3Array(-0.0396, 0.048699997, 0.2377, -0.0396, -0.048699997, 0.2377, -0.3023, 0.048699997, -0.3015, -0.3023, 0.048699997, -0.3015, -0.0396, -0.048699997, 0.2377, -0.3023, -0.048699997, -0.3015, -0.3023, 0.048699997, -0.3015, -0.3023, -0.048699997, -0.3015, -0.3909, 0.048699997, -0.6935, -0.3909, 0.048699997, -0.6935, -0.3023, -0.048699997, -0.3015, -0.3909, -0.048699997, -0.6935, 0.021699999, 0.048699997, -0.40719998, 0.021699999, -0.048699997, -0.40719998, 0.2377, 0.048699997, 0.0396, 0.2377, 0.048699997, 0.0396, 0.021699999, -0.048699997, -0.40719998, 0.2377, -0.048699997, 0.0396, 0.2377, 0.048699997, 0.0396, 0.2377, -0.048699997, 0.0396, -0.0396, 0.048699997, 0.2377, -0.0396, 0.048699997, 0.2377, 0.2377, -0.048699997, 0.0396, -0.0396, -0.048699997, 0.2377, 0.021699999, -0.048699997, -0.40719998, -0.3023, -0.048699997, -0.3015, 0.2377, -0.048699997, 0.0396, 0.2377, -0.048699997, 0.0396, -0.3023, -0.048699997, -0.3015, -0.0396, -0.048699997, 0.2377, -0.3023, -0.048699997, -0.3015, 0.021699999, -0.048699997, -0.40719998, -0.3909, -0.048699997, -0.6935, -0.3909, -0.048699997, -0.6935, 0.021699999, -0.048699997, -0.40719998, -0.050699998, -0.048699997, -0.7143, -0.3909, -0.048699997, -0.6935, -0.050699998, -0.048699997, -0.7143, -0.4173, -0.048699997, -0.9906, -0.4173, -0.048699997, -0.9906, -0.050699998, -0.048699997, -0.7143, -0.0766, -0.048699997, -0.9895, -0.3023, 0.048699997, -0.3015, 0.021699999, 0.048699997, -0.40719998, -0.0396, 0.048699997, 0.2377, -0.0396, 0.048699997, 0.2377, 0.021699999, 0.048699997, -0.40719998, 0.2377, 0.048699997, 0.0396, 0.021699999, 0.048699997, -0.40719998, -0.3023, 0.048699997, -0.3015, -0.050699998, 0.048699997, -0.7143, -0.050699998, 0.048699997, -0.7143, -0.3023, 0.048699997, -0.3015, -0.3909, 0.048699997, -0.6935, -0.050699998, 0.048699997, -0.7143, -0.3909, 0.048699997, -0.6935, -0.0766, 0.048699997, -0.9895, -0.0766, 0.048699997, -0.9895, -0.3909, 0.048699997, -0.6935, -0.4173, 0.048699997, -0.9906, 0.021699999, -0.048699997, -0.40719998, 0.021699999, 0.048699997, -0.40719998, -0.050699998, -0.048699997, -0.7143, -0.050699998, -0.048699997, -0.7143, 0.021699999, 0.048699997, -0.40719998, -0.050699998, 0.048699997, -0.7143, -0.4173, 0.048699997, -0.9906, -0.4173, -0.048699997, -0.9906, -0.0766, 0.048699997, -0.9895, -0.0766, 0.048699997, -0.9895, -0.4173, -0.048699997, -0.9906, -0.0766, -0.048699997, -0.9895, -0.3909, 0.048699997, -0.6935, -0.3909, -0.048699997, -0.6935, -0.4173, 0.048699997, -0.9906, -0.4173, 0.048699997, -0.9906, -0.3909, -0.048699997, -0.6935, -0.4173, -0.048699997, -0.9906, -0.050699998, -0.048699997, -0.7143, -0.050699998, 0.048699997, -0.7143, -0.0766, -0.048699997, -0.9895, -0.0766, -0.048699997, -0.9895, -0.050699998, 0.048699997, -0.7143, -0.0766, 0.048699997, -0.9895)
+
+[sub_resource type="Curve3D" id="Curve3D_2rq2a"]
+_data = {
+"points": PackedVector3Array(-0.117824435, -5.0082803e-05, 0.6071607, 0.117824435, 5.0082803e-05, -0.6071607, -0.7756715, 0.11, 1.3733785, -0.34984374, -0.0004774779, 0.37229943, 0.34984374, 0.0004774779, -0.37229943, -0.15898168, 0.11, 0.16712976, -0.153, 0, 0.478, 0.153, 0, -0.478, 0.409, 0.11, -0.847, 0.11791122, 2.7909875e-05, 0.2941779, -0.11791122, -2.7909875e-05, -0.2941779, 0.28370476, 0.11, -2.0107312, 0.34341013, -0.00030206144, 0.21076083, -0.34341013, 0.00030206144, -0.21076083, -0.4730667, 0.11, -2.9110265, 0.54120183, -0.00013886392, 0.049514532, -0.54120183, 0.00013886392, -0.049514532, -1.5954356, 0.11, -3.2802892),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0)
+}
+point_count = 6
 
 [node name="Cell23d" type="Node3D" unique_id=1781031080 node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_8u76k")
@@ -93,9 +106,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
 [node name="roughwall2" parent="Geometry/Base" unique_id=692763439 instance=ExtResource("1_15f1x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
 
-[node name="roughwall3" parent="Geometry/Base" unique_id=282499203 instance=ExtResource("1_15f1x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
-
 [node name="roughwall4" parent="Geometry/Base" unique_id=309031933 instance=ExtResource("1_15f1x")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2, 0, -4)
 
@@ -114,62 +124,86 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 2, 0
 [node name="roughwall9" parent="Geometry/Base" unique_id=1904991996 instance=ExtResource("1_15f1x")]
 transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 2, 0, 2)
 
-[node name="TrainTrackTurnRight" type="MeshInstance3D" parent="Geometry" unique_id=1447639251]
+[node name="roughwall_train_tunnel_side" parent="Geometry/Base" unique_id=854714277 instance=ExtResource("11_m3pdk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+
+[node name="Tracks" type="Node3D" parent="Geometry" unique_id=400510566]
+
+[node name="TrainTrackTurnRight" type="MeshInstance3D" parent="Geometry/Tracks" unique_id=1447639251]
 transform = Transform3D(0.9917116, 0, -0.12848406, 0, 1, 0, 0.12848406, 0, 0.9917116, -0.5118158, 0.064468, 0.7277504)
 material_override = ExtResource("8_ggd3p")
 mesh = ExtResource("9_1s2i6")
-skeleton = NodePath("../../..")
+skeleton = NodePath("../../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTrackTurnRight" unique_id=1444918430]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/Tracks/TrainTrackTurnRight" unique_id=1444918430]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTrackTurnRight/StaticBody3D" unique_id=1072566351]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Tracks/TrainTrackTurnRight/StaticBody3D" unique_id=1072566351]
 transform = Transform3D(0.9999876, 0, -0.0049565732, 0, 1, 0, 0.0049565732, 0, 0.9999876, -0.18663049, -0.015752997, 0.51686645)
 shape = SubResource("ConcavePolygonShape3D_m3pdk")
 
-[node name="TrainTrackTurnLeftShort" type="MeshInstance3D" parent="Geometry" unique_id=1057061392]
+[node name="TracksAutoConnector" type="Area3D" parent="Geometry/Tracks/TrainTrackTurnRight" unique_id=828207814 node_paths=PackedStringArray("track")]
+transform = Transform3D(0.99999994, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 0.99999994, -0.17779708, 0, 0.6341927)
+collision_layer = 8
+collision_mask = 8
+input_ray_pickable = false
+script = ExtResource("11_2rq2a")
+connection_id = "cell2 door"
+track = NodePath("../../Track")
+track_start_connection = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Tracks/TrainTrackTurnRight/TracksAutoConnector" unique_id=2020149826]
+transform = Transform3D(1.000001, 0, -1.4901161e-08, 0, 1, 0, 1.4901161e-08, 0, 1.000001, -0.00042712688, 0.026123043, 0.019621372)
+shape = SubResource("BoxShape3D_75ae4")
+
+[node name="TrainTrackTurnLeftShort" type="MeshInstance3D" parent="Geometry/Tracks" unique_id=1057061392]
 transform = Transform3D(0.9749517, 0, -0.22241642, 0, 1, 0, 0.22241642, 0, 0.9749517, 0.16456932, 0.0668345, -0.31139487)
 material_override = ExtResource("8_ggd3p")
 mesh = ExtResource("10_1s2i6")
-skeleton = NodePath("../../..")
+skeleton = NodePath("../../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTrackTurnLeftShort" unique_id=2006164226]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/Tracks/TrainTrackTurnLeftShort" unique_id=2006164226]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTrackTurnLeftShort/StaticBody3D" unique_id=1981372249]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Tracks/TrainTrackTurnLeftShort/StaticBody3D" unique_id=1981372249]
 transform = Transform3D(-0.8230673, 0, 0.56794435, 0, 1, 0, -0.56794435, 0, -0.8230673, 0.13069257, -0.018119503, -0.4090225)
 shape = SubResource("ConcavePolygonShape3D_wvko5")
 
-[node name="TrainTrackTurnLeftShort2" type="MeshInstance3D" parent="Geometry" unique_id=303881084]
+[node name="TrainTrackTurnLeftShort2" type="MeshInstance3D" parent="Geometry/Tracks" unique_id=303881084]
 transform = Transform3D(0.9170604, 0, 0.3987492, 0, 1, 0, -0.3987492, 0, 0.9170604, 0.39816296, 0.0668345, -1.4324117)
 material_override = ExtResource("8_ggd3p")
 mesh = ExtResource("10_1s2i6")
-skeleton = NodePath("../../..")
+skeleton = NodePath("../../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTrackTurnLeftShort2" unique_id=1012464492]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/Tracks/TrainTrackTurnLeftShort2" unique_id=1012464492]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTrackTurnLeftShort2/StaticBody3D" unique_id=854415960]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Tracks/TrainTrackTurnLeftShort2/StaticBody3D" unique_id=854415960]
 transform = Transform3D(-0.8230673, 0, 0.56794435, 0, 1, 0, -0.56794435, 0, -0.8230673, 0.13069257, -0.018119503, -0.4090225)
 shape = SubResource("ConcavePolygonShape3D_wvko5")
 
-[node name="TrainTrackTurnLeftShort3" type="MeshInstance3D" parent="Geometry" unique_id=1721396306]
+[node name="TrainTrackTurnLeftShort3" type="MeshInstance3D" parent="Geometry/Tracks" unique_id=1721396306]
 transform = Transform3D(0.5434969, 0, 0.83941144, 0, 1, 0, -0.83941144, 0, 0.5434969, -0.061484337, 0.0668345, -2.4929526)
 material_override = ExtResource("8_ggd3p")
 mesh = ExtResource("10_1s2i6")
-skeleton = NodePath("../../..")
+skeleton = NodePath("../../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTrackTurnLeftShort3" unique_id=767921370]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/Tracks/TrainTrackTurnLeftShort3" unique_id=767921370]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTrackTurnLeftShort3/StaticBody3D" unique_id=1149683540]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Tracks/TrainTrackTurnLeftShort3/StaticBody3D" unique_id=1149683540]
 transform = Transform3D(-0.8230673, 0, 0.56794435, 0, 1, 0, -0.56794435, 0, -0.8230673, 0.13069257, -0.018119503, -0.4090225)
 shape = SubResource("ConcavePolygonShape3D_wvko5")
 
-[node name="TrainTrackTurnLeftShort4" type="MeshInstance3D" parent="Geometry" unique_id=1004129834]
+[node name="TrainTrackTurnLeftShort4" type="MeshInstance3D" parent="Geometry/Tracks" unique_id=1004129834]
 transform = Transform3D(0.019040417, 0, 0.9998188, 0, 1, 0, -0.9998188, 0, 0.019040417, -1.0211172, 0.0668345, -3.142163)
 material_override = ExtResource("8_ggd3p")
 mesh = ExtResource("10_1s2i6")
-skeleton = NodePath("../../..")
+skeleton = NodePath("../../../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/TrainTrackTurnLeftShort4" unique_id=360632414]
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/Tracks/TrainTrackTurnLeftShort4" unique_id=360632414]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/TrainTrackTurnLeftShort4/StaticBody3D" unique_id=1458445479]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Tracks/TrainTrackTurnLeftShort4/StaticBody3D" unique_id=1458445479]
 transform = Transform3D(-0.8230673, 0, 0.56794435, 0, 1, 0, -0.56794435, 0, -0.8230673, 0.13069257, -0.018119503, -0.4090225)
 shape = SubResource("ConcavePolygonShape3D_wvko5")
+
+[node name="Track" type="Path3D" parent="Geometry/Tracks" unique_id=480539281]
+curve = SubResource("Curve3D_2rq2a")
+script = ExtResource("12_wvko5")
+metadata/_custom_type_script = "uid://cfiu5ok0cmhx"

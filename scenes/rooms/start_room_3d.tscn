@@ -444,7 +444,7 @@ end_mode = 1
 metadata/_custom_type_script = "uid://cfiu5ok0cmhx"
 
 [node name="Loose Track Position" type="Node3D" parent="Geometry/TrainTracks" unique_id=674098152 node_paths=PackedStringArray("_door")]
-transform = Transform3D(0.17258248, 0, 0.984995, 0, 1, 0, -0.984995, 0, 0.17258248, -6.1314387, 0.0639221, -1.0804498)
+transform = Transform3D(0.17258248, 0, 0.984995, 0, 1, 0, -0.984995, 0, 0.17258248, -6.1314387, 0.08830684, -1.0804498)
 script = ExtResource("18_2tl6c")
 _door = NodePath("../../Door ConfigOptions4")
 
