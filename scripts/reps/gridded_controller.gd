@@ -66,16 +66,16 @@ func _calculate_estimated_gridded_translation_target(
 
 func _normalize_gridded_translation_direction(movement: Movement.MovementType, direction: Vector3) -> Vector3:
     if !_allow_vertical_movement && direction.y != 0.0:
-        print_debug("Removing y component of %s" % [direction])
+        # print_debug("Removing y component of %s" % [direction])
         direction.y = 0
 
     if direction.length_squared() != 1.0:
-        print_debug("Direction %s needs normalization" % [direction])
+        # print_debug("Direction %s needs normalization" % [direction])
         if Movement.is_cardinal_translation(movement):
             direction = VectorUtils.primary_directionf(direction)
         else:
             direction = direction.normalized()
-        print_debug("Normalized direction %s " % [direction])
+        # print_debug("Normalized direction %s " % [direction])
 
     return direction
 
@@ -130,7 +130,7 @@ func _attempt_gridded_translation(movement: Movement.MovementType, direction: Ve
     var planar_delta: Vector3 = Vector3(direction)
     direction = direction.normalized()
 
-    print_debug("Attempting %s -> %s" % [_player.global_position, target])
+    # print_debug("Attempting %s -> %s" % [_player.global_position, target])
     var prev_data: Dictionary[PhysicsControllerStepCaster.StepData, Vector3] = {
             PhysicsControllerStepCaster.StepData.POINT: _player.global_position,
             PhysicsControllerStepCaster.StepData.CENTER_POINT: _player.global_position,
@@ -205,7 +205,7 @@ func _attempt_gridded_translation(movement: Movement.MovementType, direction: Ve
     var prev_pt: Vector3 = _player.global_position
     var idx: int = 0
     @warning_ignore_start("return_value_discarded")
-    print_debug("Transition in %s steps: %s" % [steps.size(), steps])
+    # print_debug("Transition in %s steps: %s" % [steps.size(), steps])
 
     for step: Dictionary in steps:
         var pt: Vector3 = step[PhysicsControllerStepCaster.StepData.CENTER_POINT]

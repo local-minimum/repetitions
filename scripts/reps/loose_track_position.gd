@@ -33,5 +33,5 @@ static func find_in_tree(node: Node) -> LooseTrackPosition:
     if node is LooseTrackPosition:
         return node
 
-    print_debug("%s not a loose track position" % [node])
+    #print_debug("%s not a loose track position" % [node])
     return find_in_tree(node.get_parent())
