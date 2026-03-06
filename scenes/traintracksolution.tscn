@@ -45,5 +45,5 @@ _managed_door_configs = [NodePath("Geometry/Door Config Options"), null]
 [node name="RoomCorner3d3" parent="." unique_id=1305958560 instance=ExtResource("10_3rqk3")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 9)
 
-[node name="fish" parent="." unique_id=1545892752 instance=ExtResource("11_t72u6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.875931, 0.8943222, 1.081704)
+[node name="fish" parent="." unique_id=1827144953 instance=ExtResource("11_t72u6")]
+transform = Transform3D(0.9635231, 0, -0.26762518, 0, 1, 0, 0.26762518, 0, 0.9635231, -13.414247, 0.8943222, 1.081704)
