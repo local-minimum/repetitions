@@ -45,5 +45,35 @@ _managed_door_configs = [NodePath("Geometry/Door Config Options"), null]
 [node name="RoomCorner3d3" parent="." unique_id=1305958560 instance=ExtResource("10_3rqk3")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 9)
 
-[node name="fish" parent="." unique_id=1827144953 instance=ExtResource("11_t72u6")]
+[node name="fish" parent="." unique_id=1633750576 instance=ExtResource("11_t72u6")]
 transform = Transform3D(0.9635231, 0, -0.26762518, 0, 1, 0, 0.26762518, 0, 0.9635231, -13.414247, 0.8943222, 1.081704)
+
+[node name="Skeleton3D" parent="fish/Armature" parent_id_path=PackedInt32Array(1633750576, 1700019150) index="0" unique_id=982673283]
+bones/0/rotation = Quaternion(0.7071068, 5.3385087e-08, 5.3385087e-08, 0.7071068)
+bones/2/rotation = Quaternion(0, 0, 2.86e-43, 1)
+bones/3/rotation = Quaternion(0, 0, 2.86e-43, 1)
+bones/4/rotation = Quaternion(0, 0, 2.86e-43, 1)
+bones/7/rotation = Quaternion(-0.7071068, 0, 0, 0.7071068)
+bones/10/position = Vector3(-1.4009786e-16, 0.5364755, -0.63094467)
+bones/10/rotation = Quaternion(0.34604114, 3.488276e-24, -7.6836575e-17, 0.9382194)
+bones/11/position = Vector3(1.9598392e-16, 0.8950453, 0.4413165)
+bones/11/rotation = Quaternion(-0.3535016, -1.1151242e-07, 4.214067e-08, 0.93543404)
+bones/12/position = Vector3(2.6832137e-08, -0.14394924, 0.11254214)
+bones/12/rotation = Quaternion(0.9574907, 3.4387657e-08, -3.4242544e-07, -0.28846437)
+bones/13/rotation = Quaternion(0.93849045, 0.039175946, 0.30942747, 0.14817412)
+bones/14/rotation = Quaternion(0.93935716, 0.05623368, 0.30678627, 0.14257665)
+
+[node name="AnimationPlayer" parent="fish" index="1" unique_id=152541304]
+autoplay = &"Idle"
+next/Bite = &"Idle"
+"next/Bite Left" = &"Idle Left"
+"next/Bite Right" = &"Idle Right"
+"next/Idle Left" = &"Idle Left"
+"next/Idle Right" = &"Idle Right"
+next/Spit = &"Idle"
+"next/Spit Left" = &"Idle Left"
+"next/Spit Right" = &"Idle Right"
+"next/Turn Left" = &"Idle Left"
+"next/Turn Right" = &"Idle Right"
+
+[editable path="fish"]
