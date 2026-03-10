@@ -23,7 +23,7 @@ func handle_connection(other: TracksAutoConnector) -> void:
         return
 
     if connection_id != other.connection_id:
-        push_warning("%s touched %s but %s != %s" % [self, other, connection_id, other.connection_id])
+        push_warning("%s touched %s but '%s' != '%s'" % [self, other, connection_id, other.connection_id])
         return
 
     if track == null:

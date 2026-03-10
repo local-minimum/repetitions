@@ -1,0 +1,212 @@
+[gd_scene format=3 uid="uid://balxpkjvdg37o"]
+
+[ext_resource type="Script" uid="uid://ckshyx2pstjn7" path="res://scripts/reps/oversized_enemy.gd" id="1_omeex"]
+[ext_resource type="Script" uid="uid://dw3nrvpmml00b" path="res://scripts/reps/oversized_enemy_anim_config.gd" id="2_a2dlv"]
+[ext_resource type="PackedScene" uid="uid://dv8x7xqo0igmc" path="res://scenes/entities/fish.blend" id="2_dskgf"]
+[ext_resource type="Script" uid="uid://dy41mksgydi8e" path="res://scripts/reps/animated_body_collisions.gd" id="3_a2dlv"]
+
+[sub_resource type="Resource" id="Resource_fgx1k"]
+script = ExtResource("2_a2dlv")
+prev_looking = 0
+anim_name = "Idle"
+custom_next_anim_blend = 0.0
+metadata/_custom_type_script = "uid://dw3nrvpmml00b"
+
+[sub_resource type="Resource" id="Resource_ux2u6"]
+script = ExtResource("2_a2dlv")
+prev_looking = 1
+looking = 1
+anim_name = "Idle Left"
+custom_next_anim_blend = 0.0
+metadata/_custom_type_script = "uid://dw3nrvpmml00b"
+
+[sub_resource type="Resource" id="Resource_h8jrd"]
+script = ExtResource("2_a2dlv")
+prev_looking = 2
+looking = 2
+anim_name = "Idle Right"
+custom_next_anim_blend = 0.0
+metadata/_custom_type_script = "uid://dw3nrvpmml00b"
+
+[sub_resource type="Resource" id="Resource_cjlqp"]
+script = ExtResource("2_a2dlv")
+prev_looking = 0
+looking = 2
+mode = 4
+anim_name = "Turn Right"
+next_mode = 4
+custom_next_anim_blend = 0.1
+metadata/_custom_type_script = "uid://dw3nrvpmml00b"
+
+[sub_resource type="Resource" id="Resource_dskgf"]
+script = ExtResource("2_a2dlv")
+prev_looking = 2
+mode = 4
+anim_name = "Idle"
+custom_next_anim_blend = 1.0
+metadata/_custom_type_script = "uid://dw3nrvpmml00b"
+
+[sub_resource type="Resource" id="Resource_a2dlv"]
+script = ExtResource("2_a2dlv")
+prev_looking = 0
+looking = 1
+mode = 4
+anim_name = "Turn Left"
+next_mode = 4
+custom_next_anim_blend = 0.1
+metadata/_custom_type_script = "uid://dw3nrvpmml00b"
+
+[sub_resource type="Resource" id="Resource_nnq38"]
+script = ExtResource("2_a2dlv")
+prev_looking = 1
+mode = 4
+anim_name = "Idle"
+custom_next_anim_blend = 1.0
+metadata/_custom_type_script = "uid://dw3nrvpmml00b"
+
+[sub_resource type="Resource" id="Resource_vfxvv"]
+script = ExtResource("2_a2dlv")
+mode = 1
+anim_name = "Swimming"
+next_mode = 1
+custom_next_anim_blend = 0.2
+metadata/_custom_type_script = "uid://dw3nrvpmml00b"
+
+[sub_resource type="Resource" id="Resource_agyb1"]
+script = ExtResource("2_a2dlv")
+prev_looking = 0
+mode = 2
+anim_name = "Bite"
+custom_next_anim_blend = 0.1
+metadata/_custom_type_script = "uid://dw3nrvpmml00b"
+
+[sub_resource type="Resource" id="Resource_kefjf"]
+script = ExtResource("2_a2dlv")
+prev_looking = 1
+looking = 1
+mode = 2
+anim_name = "Bite Left"
+custom_next_anim_blend = 0.1
+metadata/_custom_type_script = "uid://dw3nrvpmml00b"
+
+[sub_resource type="Resource" id="Resource_4fb0g"]
+script = ExtResource("2_a2dlv")
+prev_looking = 2
+looking = 2
+mode = 2
+anim_name = "Bite Right"
+custom_next_anim_blend = 0.1
+metadata/_custom_type_script = "uid://dw3nrvpmml00b"
+
+[sub_resource type="Resource" id="Resource_r3c8p"]
+script = ExtResource("2_a2dlv")
+prev_looking = 0
+mode = 3
+anim_name = "Spit"
+custom_next_anim_blend = 0.1
+metadata/_custom_type_script = "uid://dw3nrvpmml00b"
+
+[sub_resource type="Resource" id="Resource_y3m3q"]
+script = ExtResource("2_a2dlv")
+prev_looking = 1
+looking = 1
+mode = 3
+anim_name = "Spit Left"
+custom_next_anim_blend = 0.1
+metadata/_custom_type_script = "uid://dw3nrvpmml00b"
+
+[sub_resource type="Resource" id="Resource_nufu5"]
+script = ExtResource("2_a2dlv")
+prev_looking = 2
+looking = 2
+mode = 3
+anim_name = "Spit Right"
+custom_next_anim_blend = 0.1
+metadata/_custom_type_script = "uid://dw3nrvpmml00b"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t72u6"]
+size = Vector3(0.37150574, 1.2352905, 0.9605789)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6cds5"]
+size = Vector3(0.6937256, 1.0558777, 1.045414)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6gink"]
+size = Vector3(0.7939224, 0.90166473, 1.3798715)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qnthh"]
+size = Vector3(1.1617813, 1.3970642, 0.9801316)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bjp7t"]
+size = Vector3(0.57433057, 1.1981049, 0.9120861)
+
+[node name="FishEnemy" type="Node3D" unique_id=1878890554 node_paths=PackedStringArray("_anim")]
+script = ExtResource("1_omeex")
+_anim = NodePath("fish/AnimationPlayer")
+_configs = Array[ExtResource("2_a2dlv")]([SubResource("Resource_fgx1k"), SubResource("Resource_ux2u6"), SubResource("Resource_h8jrd"), SubResource("Resource_cjlqp"), SubResource("Resource_dskgf"), SubResource("Resource_a2dlv"), SubResource("Resource_nnq38"), SubResource("Resource_vfxvv"), SubResource("Resource_agyb1"), SubResource("Resource_kefjf"), SubResource("Resource_4fb0g"), SubResource("Resource_r3c8p"), SubResource("Resource_y3m3q"), SubResource("Resource_nufu5")])
+
+[node name="fish" parent="." unique_id=1633750576 instance=ExtResource("2_dskgf")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0.90900254, 1)
+
+[node name="Skeleton3D" parent="fish/Armature" parent_id_path=PackedInt32Array(1633750576, 1700019150) index="0" unique_id=982673283]
+bones/0/rotation = Quaternion(0.7071068, 5.3385087e-08, 5.3385087e-08, 0.7071068)
+bones/2/rotation = Quaternion(0, 0, 2.86e-43, 1)
+bones/3/rotation = Quaternion(0, 0, 2.86e-43, 1)
+bones/3/bone_meta/body_ref_pos = 2
+bones/4/rotation = Quaternion(0, 0, 2.86e-43, 1)
+bones/7/rotation = Quaternion(-0.7071068, 0, 0, 0.7071068)
+bones/9/bone_meta/body_ref_pos = 1
+bones/10/position = Vector3(-1.4009786e-16, 0.5364755, -0.63094467)
+bones/10/rotation = Quaternion(0.34604114, 3.488276e-24, -7.6836575e-17, 0.9382194)
+bones/10/bone_meta/bite_ref_bone = 1
+bones/11/position = Vector3(1.9598392e-16, 0.8950453, 0.4413165)
+bones/11/rotation = Quaternion(-0.3535016, -1.1151242e-07, 4.214067e-08, 0.93543404)
+bones/11/bone_meta/bite_ref_bone = 2
+bones/12/position = Vector3(2.6832137e-08, -0.14394924, 0.11254214)
+bones/12/rotation = Quaternion(0.9574907, 3.4387657e-08, -3.4242544e-07, -0.28846437)
+bones/13/rotation = Quaternion(0.93849045, 0.039175946, 0.30942747, 0.14817412)
+bones/14/rotation = Quaternion(0.93935716, 0.05623368, 0.30678627, 0.14257665)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="fish/Armature/Skeleton3D" index="2" unique_id=1373226460 node_paths=PackedStringArray("_skeleton", "_shapes")]
+script = ExtResource("3_a2dlv")
+enabled = false
+_skeleton = NodePath("..")
+_bone_names = Array[String](["Tail Fin", "Back 2", "Center Back", "Forward", "Jaw Lower"])
+_shapes = [NodePath("Col Fin"), NodePath("Col Back"), NodePath("Col Mid"), NodePath("Col Forward"), NodePath("Col Head")]
+_rotation_bone_names = Dictionary[String, String]({
+"Jaw Lower": "Head"
+})
+
+[node name="Col Fin" type="CollisionShape3D" parent="fish/Armature/Skeleton3D/StaticBody3D" unique_id=659714862]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0028028488, 0.08547974, 1.8269467)
+shape = SubResource("BoxShape3D_t72u6")
+
+[node name="Col Back" type="CollisionShape3D" parent="fish/Armature/Skeleton3D/StaticBody3D" unique_id=1865653591]
+transform = Transform3D(1, -5.72e-43, 0, 5.72e-43, 1, 0, 0, 0, 1, -0.02443695, 0.012434721, 0.8690362)
+shape = SubResource("BoxShape3D_6cds5")
+
+[node name="Col Mid" type="CollisionShape3D" parent="fish/Armature/Skeleton3D/StaticBody3D" unique_id=13389832]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.027401924, -0.00021493435, -0.03095005)
+shape = SubResource("BoxShape3D_6gink")
+
+[node name="Col Forward" type="CollisionShape3D" parent="fish/Armature/Skeleton3D/StaticBody3D" unique_id=155246858]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.019060135, 0.01648891, -0.9718802)
+shape = SubResource("BoxShape3D_qnthh")
+
+[node name="Col Head" type="CollisionShape3D" parent="fish/Armature/Skeleton3D/StaticBody3D" unique_id=1831993128]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.005449891, 0.19091165, -1.9993818)
+shape = SubResource("BoxShape3D_bjp7t")
+
+[node name="AnimationPlayer" parent="fish" index="1" unique_id=152541304]
+autoplay = &"Idle"
+next/Bite = &"Idle"
+"next/Bite Left" = &"Idle Left"
+"next/Bite Right" = &"Idle Right"
+"next/Idle Left" = &"Idle Left"
+"next/Idle Right" = &"Idle Right"
+next/Spit = &"Idle"
+"next/Spit Left" = &"Idle Left"
+"next/Spit Right" = &"Idle Right"
+"next/Turn Left" = &"Idle Left"
+"next/Turn Right" = &"Idle Right"
+
+[editable path="fish"]

@@ -3,6 +3,7 @@ class_name DungeonBuilder
 
 static var active_builder: DungeonBuilder
 
+@export var _invoke_cinematic_on_ready: bool = true
 @export var grid_size: Vector3 = Vector3(2.5, 2.5, 2.5)
 @export var player: PhysicsGridPlayerController
 @export var dirt_mag: DirtMagazine
@@ -28,7 +29,8 @@ func _exit_tree() -> void:
     __SignalBus.on_use_pickax.disconnect(_handle_use_pickax)
 
 func _ready() -> void:
-    player.add_cinematic_blocker(self)
+    if _invoke_cinematic_on_ready:
+        player.add_cinematic_blocker(self)
     player.global_position = get_closest_global_grid_position(player.global_position)
     player.builder = self
 

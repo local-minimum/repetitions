@@ -65,7 +65,7 @@ func _start_train() -> void:
     __SignalBus.on_request_train_start.emit(_cart)
 
 func _unhandled_input(event: InputEvent) -> void:
-    if (
+    if _riding && (
         event.is_action_pressed(&"crawl_forward") ||
         event.is_action_pressed(&"crawl_strafe_left") ||
         event.is_action_pressed(&"crawl_strafe_right") ||

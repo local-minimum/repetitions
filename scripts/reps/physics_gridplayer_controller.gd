@@ -35,12 +35,14 @@ func _update_cinematic(old_value: bool) -> void:
 
 func add_cinematic_blocker(node: Node) -> void:
     if !_cinematic_blockers.has(node):
+        print_debug("%s causes %s to be cinematic" % [node, self])
         var old_value: bool = cinematic
         _cinematic_blockers.append(node)
         _update_cinematic(old_value)
 
 func remove_cinematic_blocker(node: Node) -> void:
     var old_value: bool = cinematic
+    print_debug("%s no longer causes %s to be cinematic" % [node, self])
     _cinematic_blockers.erase(node)
     if _cinematic_blockers.is_empty():
         cinematic = false

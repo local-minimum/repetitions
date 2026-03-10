@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://8hu6pcjxtnhp"]
 
+[ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_qnthh"]
 [ext_resource type="PackedScene" uid="uid://cjduvtbggfby1" path="res://scenes/rooms/start_room_3d.tscn" id="1_va7fd"]
 [ext_resource type="PackedScene" uid="uid://hpel2to4u6wx" path="res://scenes/rooms/room_corner_3d.tscn" id="2_va7fd"]
 [ext_resource type="PackedScene" uid="uid://dghtpf5yu3ogc" path="res://scenes/loot/loose_track.tscn" id="3_oi23a"]
@@ -10,9 +11,14 @@
 [ext_resource type="PackedScene" uid="uid://b7hwxdxx78shu" path="res://scenes/rooms/cell_2_3d.tscn" id="8_oi23a"]
 [ext_resource type="PackedScene" uid="uid://s0qnae2lmuip" path="res://scenes/rooms/room_unknown_3d.tscn" id="9_v7euy"]
 [ext_resource type="PackedScene" uid="uid://chkw5q3yhwuml" path="res://scenes/rooms/room_with_backroom_3d.tscn" id="10_3rqk3"]
-[ext_resource type="PackedScene" uid="uid://dv8x7xqo0igmc" path="res://scenes/entities/fish.blend" id="11_t72u6"]
+[ext_resource type="PackedScene" uid="uid://balxpkjvdg37o" path="res://scenes/entities/fish_enemy.tscn" id="12_6gink"]
+[ext_resource type="PackedScene" uid="uid://b8lqj7rv80ssv" path="res://scenes/player_3d.tscn" id="13_6gink"]
 
-[node name="Node3D" type="Node3D" unique_id=1848198409]
+[node name="Node3D" type="Node3D" unique_id=1848198409 node_paths=PackedStringArray("player")]
+script = ExtResource("1_qnthh")
+_invoke_cinematic_on_ready = false
+grid_size = Vector3(2, 3, 2)
+player = NodePath("Player3d")
 
 [node name="StartRoom3d" parent="." unique_id=1982129123 instance=ExtResource("1_va7fd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
@@ -45,35 +51,8 @@ _managed_door_configs = [NodePath("Geometry/Door Config Options"), null]
 [node name="RoomCorner3d3" parent="." unique_id=1305958560 instance=ExtResource("10_3rqk3")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 9)
 
-[node name="fish" parent="." unique_id=1633750576 instance=ExtResource("11_t72u6")]
-transform = Transform3D(0.9635231, 0, -0.26762518, 0, 1, 0, 0.26762518, 0, 0.9635231, -13.414247, 0.8943222, 1.081704)
+[node name="FishEnemy" parent="." unique_id=1878890554 instance=ExtResource("12_6gink")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1)
 
-[node name="Skeleton3D" parent="fish/Armature" parent_id_path=PackedInt32Array(1633750576, 1700019150) index="0" unique_id=982673283]
-bones/0/rotation = Quaternion(0.7071068, 5.3385087e-08, 5.3385087e-08, 0.7071068)
-bones/2/rotation = Quaternion(0, 0, 2.86e-43, 1)
-bones/3/rotation = Quaternion(0, 0, 2.86e-43, 1)
-bones/4/rotation = Quaternion(0, 0, 2.86e-43, 1)
-bones/7/rotation = Quaternion(-0.7071068, 0, 0, 0.7071068)
-bones/10/position = Vector3(-1.4009786e-16, 0.5364755, -0.63094467)
-bones/10/rotation = Quaternion(0.34604114, 3.488276e-24, -7.6836575e-17, 0.9382194)
-bones/11/position = Vector3(1.9598392e-16, 0.8950453, 0.4413165)
-bones/11/rotation = Quaternion(-0.3535016, -1.1151242e-07, 4.214067e-08, 0.93543404)
-bones/12/position = Vector3(2.6832137e-08, -0.14394924, 0.11254214)
-bones/12/rotation = Quaternion(0.9574907, 3.4387657e-08, -3.4242544e-07, -0.28846437)
-bones/13/rotation = Quaternion(0.93849045, 0.039175946, 0.30942747, 0.14817412)
-bones/14/rotation = Quaternion(0.93935716, 0.05623368, 0.30678627, 0.14257665)
-
-[node name="AnimationPlayer" parent="fish" index="1" unique_id=152541304]
-autoplay = &"Idle"
-next/Bite = &"Idle"
-"next/Bite Left" = &"Idle Left"
-"next/Bite Right" = &"Idle Right"
-"next/Idle Left" = &"Idle Left"
-"next/Idle Right" = &"Idle Right"
-next/Spit = &"Idle"
-"next/Spit Left" = &"Idle Left"
-"next/Spit Right" = &"Idle Right"
-"next/Turn Left" = &"Idle Left"
-"next/Turn Right" = &"Idle Right"
-
-[editable path="fish"]
+[node name="Player3d" parent="." unique_id=942295760 instance=ExtResource("13_6gink")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 1)
