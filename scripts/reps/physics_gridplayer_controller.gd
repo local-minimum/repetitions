@@ -59,6 +59,12 @@ var camera: Camera3D:
 @export var _gridless_controller: GridlessController
 @export var _gridded_controller: GriddedController
 
+@export var look_target: Node3D:
+    get():
+        if look_target == null:
+            return self
+        return look_target
+
 @export var _captured_pointer_eventer: CapturedMouseEventer
 
 @export var stepper: PhysicsControllerStepCaster

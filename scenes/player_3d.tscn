@@ -233,15 +233,16 @@ height = 0.2
 [sub_resource type="BoxShape3D" id="BoxShape3D_aoiyr"]
 size = Vector3(0.1, 0.1, 0.1)
 
-[node name="Player3d" type="CharacterBody3D" unique_id=942295760 node_paths=PackedStringArray("_camera", "_freelook_cam", "_gridless_controller", "_gridded_controller", "_captured_pointer_eventer", "stepper", "_forward", "_left", "_right", "_backward", "_debug_shapes")]
-collision_layer = 2
-collision_mask = 7
+[node name="Player3d" type="CharacterBody3D" unique_id=942295760 node_paths=PackedStringArray("_camera", "_freelook_cam", "_gridless_controller", "_gridded_controller", "look_target", "_captured_pointer_eventer", "stepper", "_forward", "_left", "_right", "_backward", "_debug_shapes")]
+collision_layer = 512
+collision_mask = 1029
 input_ray_pickable = false
 script = ExtResource("1_reoop")
 _camera = NodePath("Camera3D")
 _freelook_cam = NodePath("Camera3D")
 _gridless_controller = NodePath("GridlessController")
 _gridded_controller = NodePath("GriddedController")
+look_target = NodePath("Look Target")
 _captured_pointer_eventer = NodePath("Camera3D/CapturedMouseRay")
 stepper = NodePath("Casting Origin/Step Caster")
 _forward = NodePath("Casting Origin/Cast Forward")
@@ -365,29 +366,37 @@ skeleton = NodePath("../Casting Origin/Step Caster")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8477182, -0.4)
 shape = ExtResource("1_52vux")
 target_position = Vector3(0, 0, -1.4)
+collision_mask = 1025
 
 [node name="Cast Left" type="ShapeCast3D" parent="Casting Origin" unique_id=220809817]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.8477182, 0)
 shape = ExtResource("1_52vux")
 target_position = Vector3(-1.4, 0, 0)
+collision_mask = 1025
 
 [node name="Cast Backward" type="ShapeCast3D" parent="Casting Origin" unique_id=1919981056]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8477182, 0.4)
 shape = ExtResource("1_52vux")
 target_position = Vector3(0, 0, 1.4)
+collision_mask = 1025
 
 [node name="Cast Right" type="ShapeCast3D" parent="Casting Origin" unique_id=1454541202]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.8477182, 0)
 shape = ExtResource("1_52vux")
 target_position = Vector3(1.4, 0, 0)
+collision_mask = 1025
 
 [node name="Step Caster" type="ShapeCast3D" parent="Casting Origin" unique_id=2081488253 node_paths=PackedStringArray("_debug_shape")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 enabled = false
 shape = SubResource("BoxShape3D_aoiyr")
 target_position = Vector3(0, -1.4, 0)
+collision_mask = 1025
 script = ExtResource("7_460ac")
 step_height_max = 0.45
 step_down_max = 0.5
 min_clearing_above = 0.15
 _debug_shape = NodePath("../../Debug Step CollisionPt")
+
+[node name="Look Target" type="Node3D" parent="." unique_id=368639951]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8004148, 0)

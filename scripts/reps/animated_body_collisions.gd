@@ -39,7 +39,7 @@ func _calc_offsets() -> void:
         var pose: Transform3D = _skeleton.get_bone_global_rest(bone)
 
         var shape: Node3D = _shapes[idx]
-        _skeleton_offsets.append(_skeleton.to_local(shape.global_position) - _skeleton.to_local(pose.origin))
+        _skeleton_offsets.append(_skeleton.to_local(shape.global_position) - pose.origin)
 
 func _physics_process(_delta: float) -> void:
     if _skeleton == null || !enabled:
@@ -58,9 +58,7 @@ func _physics_process(_delta: float) -> void:
         var pose: Transform3D = _skeleton.get_bone_global_pose(bone)
 
         var shape: Node3D = _shapes[idx]
-        shape.global_position = pose.origin + (
-            _skeleton.to_global(_skeleton_offsets[idx]) - _skeleton.global_position
-        )
+        shape.global_position = _skeleton.to_global(pose.origin + _skeleton_offsets[idx])
 
         if _rotation_bone_names.has(bone_name):
             bone = _skeleton.find_bone(_rotation_bone_names[bone_name])

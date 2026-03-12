@@ -1,6 +1,6 @@
 @tool
-extends Area3D
-class_name AnimatedBodyArea
+extends Node3D
+class_name AnimatedBodyAvgPosition
 
 @export var enabled: bool = true:
     set(value):
@@ -9,6 +9,7 @@ class_name AnimatedBodyArea
 
 @export var _skeleton: Skeleton3D
 @export var _ref_bone_names: Array[String]
+@export var _use_rotation: bool
 
 @export_tool_button("Sync") var sync: Callable = _sync
 
@@ -37,6 +38,10 @@ func _sync() -> void:
 
         #print_debug("Bone %s located at %s" % [bone_name, trans.origin])
         pt += trans.origin
+
+        if _use_rotation && n < 1.0:
+            global_rotation = trans.basis.get_euler()
+
         n += 1
 
     pt /= n

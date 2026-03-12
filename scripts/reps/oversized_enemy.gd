@@ -15,6 +15,8 @@ enum Mode { IDLE, MOVING, MELEE, RANGED, ANY }
 @export var _side_looking_forward_offset: float = 0.25
 @export var _side_looking_tween_duration: float = 0.25
 
+@export var _eyes: LookRayCast
+
 var looking_global_direction: Vector3:
     get():
         match looking:
@@ -56,14 +58,16 @@ func _process(_delta: float) -> void:
     if player == null:
         return
 
+    var sees_player: bool = _eyes.sees_player(player)
+
     if _check_melee_player(player):
         mode = Mode.MELEE
         var conf: OversizedEnemyAnimConfig = current_anim_conf
         _update_anim(conf, conf.custom_next_anim_blend)
 
-    elif _check_ranged_player(player):
+    elif sees_player && _check_ranged_player(player):
         pass
-    elif _check_and_track_player(player):
+    elif sees_player && _check_and_track_player(player):
         pass
     elif _hunt_player(player):
         pass
@@ -96,8 +100,9 @@ func _hunt_player(player: PhysicsGridPlayerController) -> bool:
     # I.e. last seen duration, stuff like that. Have been hurt...
     return ((player.global_position - global_position).abs() / DungeonBuilder.active_builder.grid_size).length() < 10
 
-func _check_ranged_player(_player: PhysicsGridPlayerController) -> bool:
-    return false
+func _check_ranged_player(player: PhysicsGridPlayerController) -> bool:
+    var delta: float = ((player.global_position - global_position).abs() / DungeonBuilder.active_builder.grid_size).length()
+    return delta > 1.5 && delta < 5
 
 func _check_melee_player(player: PhysicsGridPlayerController) -> bool:
     var d_player: Vector3 = player.global_position - global_position
