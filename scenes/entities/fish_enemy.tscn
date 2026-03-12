@@ -139,10 +139,12 @@ size = Vector3(1.1617813, 1.3970642, 0.9801316)
 [sub_resource type="BoxShape3D" id="BoxShape3D_bjp7t"]
 size = Vector3(0.57433057, 1.1981049, 0.9120861)
 
-[node name="FishEnemy" type="Node3D" unique_id=1878890554 node_paths=PackedStringArray("_anim")]
+[node name="FishEnemy" type="Node3D" unique_id=1878890554 node_paths=PackedStringArray("_anim", "_fish_root")]
 script = ExtResource("1_omeex")
 _anim = NodePath("fish/AnimationPlayer")
 _configs = Array[ExtResource("2_a2dlv")]([SubResource("Resource_fgx1k"), SubResource("Resource_ux2u6"), SubResource("Resource_h8jrd"), SubResource("Resource_cjlqp"), SubResource("Resource_dskgf"), SubResource("Resource_a2dlv"), SubResource("Resource_nnq38"), SubResource("Resource_vfxvv"), SubResource("Resource_agyb1"), SubResource("Resource_kefjf"), SubResource("Resource_4fb0g"), SubResource("Resource_r3c8p"), SubResource("Resource_y3m3q"), SubResource("Resource_nufu5")])
+_fish_root = NodePath("fish")
+_side_looking_forward_offset = 0.225
 
 [node name="fish" parent="." unique_id=1633750576 instance=ExtResource("2_dskgf")]
 transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0.90900254, 1)

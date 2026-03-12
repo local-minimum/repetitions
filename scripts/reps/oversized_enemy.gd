@@ -11,6 +11,12 @@ enum Mode { IDLE, MOVING, MELEE, RANGED, ANY }
 @export var _configs: Array[OversizedEnemyAnimConfig]
 
 @export var _track_player_angle_hysteresis: float = PI / 8
+@export var _fish_root: Node3D
+@export var _side_looking_forward_offset: float = 0.25
+@export var _side_looking_tween_duration: float = 0.25
+
+var _fish_root_tween: Tween
+var _fish_root_origin: Vector3
 
 var busy: bool:
     get():
@@ -22,6 +28,8 @@ func _enter_tree() -> void:
     elif _anim.current_animation_changed.connect(_handle_animation_changed) != OK:
         push_error("Failed to connect animation changed")
 
+    _fish_root_origin = _fish_root.position
+
 func _ready() -> void:
     _update_anim(current_anim_conf, 0.0)
     _demo()
@@ -30,14 +38,14 @@ func _demo() -> void:
     while true:
         await get_tree().create_timer(2.0).timeout
         if randf() < 0.8:
-            _check_track_player()
+            var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
 
-func _check_track_player() -> void:
+            _check_track_player(player)
+
+func _check_track_player(player: PhysicsGridPlayerController) -> void:
     if busy:
         #print_debug("We are busy, no looking update")
         return
-
-    var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
 
     if player == null:
         push_warning("%s has no player to track, no looking update" % [self])
@@ -52,8 +60,25 @@ func _check_track_player() -> void:
     #print_debug("Resulting looking %s has conf %s" % [Looking.find_key(new_looking), conf])
 
     if conf != null:
+        _handle_looking_transition(new_looking)
         looking = new_looking
         _update_anim(conf, conf.custom_next_anim_blend)
+
+func _handle_looking_transition(new_looking: Looking) -> void:
+    if new_looking == looking:
+        return
+
+    if _fish_root_tween != null && _fish_root_tween.is_running():
+        _fish_root_tween.kill()
+
+    var target_position: Vector3 = _fish_root_origin
+    if new_looking != Looking.FORWARD:
+        target_position += -_fish_root.basis.z * _side_looking_forward_offset
+
+    _fish_root_tween = create_tween()
+    @warning_ignore_start("return_value_discarded")
+    _fish_root_tween.tween_property(_fish_root, "position", target_position, _side_looking_tween_duration)
+    @warning_ignore_restore("return_value_discarded")
 
 func _get_wanted_looking(angle: float) -> Looking:
     #print_debug("Calculating looking from %s based on angle %s to player" % [Looking.find_key(looking), angle])

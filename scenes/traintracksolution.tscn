@@ -21,38 +21,37 @@ grid_size = Vector3(2, 3, 2)
 player = NodePath("Player3d")
 
 [node name="StartRoom3d" parent="." unique_id=1982129123 instance=ExtResource("1_va7fd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="RoomCorner3d" parent="." unique_id=1643020392 instance=ExtResource("2_va7fd")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, -1)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12, 0, 0)
 
 [node name="LooseTrack" parent="." unique_id=1131536829 instance=ExtResource("3_oi23a")]
-transform = Transform3D(0.17258248, 0, 0.984995, 0, 1, 0, -0.984995, 0, 0.17258248, -7.1314387, 0.07766455, -1.0804498)
+transform = Transform3D(0.17258248, 0, 0.984995, 0, 1, 0, -0.984995, 0, 0.17258248, -7.1314387, 0.07766455, -0.08044982)
 
 [node name="Cell13d" parent="." unique_id=1771311022 instance=ExtResource("4_5mrjm")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -18, 0, -1)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -18, 0, 0)
 
 [node name="Hall53d" parent="." unique_id=1095174193 instance=ExtResource("5_l5ix7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 6)
 
 [node name="Hall23d" parent="." unique_id=967008272 instance=ExtResource("6_h7ses")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -14, 0, 11)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -14, 0, 12)
 
 [node name="Hall13d" parent="." unique_id=2047678079 instance=ExtResource("7_oi23a")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -22, 0, 19)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -22, 0, 20)
 
 [node name="Cell23d" parent="." unique_id=105179798 instance=ExtResource("8_oi23a")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -26, 0, -3)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -26, 0, -2)
 
 [node name="RoomCorner3d2" parent="." unique_id=1837852875 node_paths=PackedStringArray("_managed_door_configs") instance=ExtResource("9_v7euy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 21)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 22)
 _managed_door_configs = [NodePath("Geometry/Door Config Options"), null]
 
 [node name="RoomCorner3d3" parent="." unique_id=1305958560 instance=ExtResource("10_3rqk3")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 9)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 10)
 
 [node name="FishEnemy" parent="." unique_id=1878890554 instance=ExtResource("12_6gink")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
 
 [node name="Player3d" parent="." unique_id=942295760 instance=ExtResource("13_6gink")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
