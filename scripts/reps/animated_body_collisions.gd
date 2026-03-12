@@ -4,6 +4,7 @@ class_name AnimatedBodyCollisions
 @export var enabled: bool = true:
     set(value):
         set_physics_process(value)
+        enabled = value
 
 @export var _skeleton: Skeleton3D
 @export var _bone_names: Array[String]

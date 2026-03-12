@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dw3nrvpmml00b" path="res://scripts/reps/oversized_enemy_anim_config.gd" id="2_a2dlv"]
 [ext_resource type="PackedScene" uid="uid://dv8x7xqo0igmc" path="res://scenes/entities/fish.blend" id="2_dskgf"]
 [ext_resource type="Script" uid="uid://dy41mksgydi8e" path="res://scripts/reps/animated_body_collisions.gd" id="3_a2dlv"]
+[ext_resource type="Script" uid="uid://b7lfxql2wop3p" path="res://scripts/reps/animated_body_area.gd" id="5_a2dlv"]
 
 [sub_resource type="Resource" id="Resource_fgx1k"]
 script = ExtResource("2_a2dlv")
@@ -142,6 +143,9 @@ size = Vector3(1.1617813, 1.3970642, 0.9801316)
 [sub_resource type="BoxShape3D" id="BoxShape3D_bjp7t"]
 size = Vector3(0.57433057, 1.1981049, 0.9120861)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_dskgf"]
+radius = 0.7326689
+
 [node name="FishEnemy" type="Node3D" unique_id=1878890554 node_paths=PackedStringArray("_anim", "_fish_root")]
 script = ExtResource("1_omeex")
 _anim = NodePath("fish/AnimationPlayer")
@@ -172,6 +176,8 @@ bones/13/rotation = Quaternion(0.93849045, 0.039175946, 0.30942747, 0.14817412)
 bones/14/rotation = Quaternion(0.93935716, 0.05623368, 0.30678627, 0.14257665)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="fish/Armature/Skeleton3D" index="2" unique_id=1373226460 node_paths=PackedStringArray("_skeleton", "_shapes")]
+collision_layer = 2
+collision_mask = 3
 script = ExtResource("3_a2dlv")
 enabled = false
 _skeleton = NodePath("..")
@@ -200,6 +206,18 @@ shape = SubResource("BoxShape3D_qnthh")
 [node name="Col Head" type="CollisionShape3D" parent="fish/Armature/Skeleton3D/StaticBody3D" unique_id=1831993128]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.005449891, 0.19091165, -1.9993818)
 shape = SubResource("BoxShape3D_bjp7t")
+
+[node name="Mouth Area" type="Area3D" parent="fish/Armature/Skeleton3D" index="3" unique_id=1883903660 node_paths=PackedStringArray("_skeleton")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7943028e-17, -0.09481406, -2.023161)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("5_a2dlv")
+_skeleton = NodePath("..")
+_ref_bone_names = Array[String](["Jaw Lower", "Jaw Upper"])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="fish/Armature/Skeleton3D/Mouth Area" unique_id=173444490]
+shape = SubResource("SphereShape3D_dskgf")
+debug_color = Color(0.9254902, 0.3137255, 0.047058824, 0.41960785)
 
 [node name="AnimationPlayer" parent="fish" index="1" unique_id=152541304]
 autoplay = &"Idle"

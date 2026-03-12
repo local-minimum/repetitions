@@ -30,10 +30,11 @@ var looking_global_direction: Vector3:
 
 var _fish_root_tween: Tween
 var _fish_root_origin: Vector3
+var _busy_until_change_anim: bool
 
 var busy: bool:
     get():
-        return mode != Mode.IDLE
+        return _busy_until_change_anim || mode != Mode.IDLE
 
 func _enter_tree() -> void:
     if _anim == null:
@@ -45,30 +46,64 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
     _update_anim(current_anim_conf, 0.0)
-    _demo()
+    _busy_until_change_anim = true
 
-func _demo() -> void:
-    while true:
-        await get_tree().create_timer(1.5).timeout
-        if !busy:
-            var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
+func _process(_delta: float) -> void:
+    if busy:
+        return
 
-            if _check_melee_player(player):
-                mode = Mode.MELEE
-                var conf: OversizedEnemyAnimConfig = current_anim_conf
-                _update_anim(conf, conf.custom_next_anim_blend)
+    var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
+    if player == null:
+        return
 
-            elif _check_and_track_player(player):
-                pass
+    if _check_melee_player(player):
+        mode = Mode.MELEE
+        var conf: OversizedEnemyAnimConfig = current_anim_conf
+        _update_anim(conf, conf.custom_next_anim_blend)
 
-            else:
-                pass
+    elif _check_ranged_player(player):
+        pass
+    elif _check_and_track_player(player):
+        pass
+    elif _hunt_player(player):
+        pass
+    else:
+        _idle()
+
+func _idle() -> void:
+    # TODO: Improve flipping around by avoiding looking into walls if possible
+    var new_look: Looking = Looking.FORWARD
+    var conf: OversizedEnemyAnimConfig
+    if randf() < 0.5:
+        match looking:
+            Looking.FORWARD:
+                new_look = Looking.LEFT if randf() < 0.5 else Looking.RIGHT
+                conf = get_looking_transition_conf(new_look)
+            Looking.LEFT:
+                conf = get_looking_transition_conf(Looking.FORWARD)
+            Looking.RIGHT:
+                conf = get_looking_transition_conf(Looking.FORWARD)
+
+        if conf != null:
+            _busy_until_change_anim = true
+            looking = new_look
+            _update_anim(conf, conf.custom_next_anim_blend)
+
+    _busy_until_change_anim = true
+
+func _hunt_player(player: PhysicsGridPlayerController) -> bool:
+    # TODO: Improve metric for hunting to be a little smarter perhaps...
+    # I.e. last seen duration, stuff like that. Have been hurt...
+    return ((player.global_position - global_position).abs() / DungeonBuilder.active_builder.grid_size).length() < 10
+
+func _check_ranged_player(_player: PhysicsGridPlayerController) -> bool:
+    return false
 
 func _check_melee_player(player: PhysicsGridPlayerController) -> bool:
     var d_player: Vector3 = player.global_position - global_position
     d_player /= DungeonBuilder.active_builder.grid_size
     var look: Vector3 = looking_global_direction
-    print_debug("Delta %s vs look %s" % [d_player, look])
+    # print_debug("Delta %s vs look %s" % [d_player, look])
     if absf(d_player.y) < 1.0 && absf(d_player.x) + absf(d_player.z) <= 1.1:
         if absf(d_player.x) > absf(d_player.z):
             return signf(d_player.x) == signf(look.x)
@@ -77,10 +112,6 @@ func _check_melee_player(player: PhysicsGridPlayerController) -> bool:
     return false
 
 func _check_and_track_player(player: PhysicsGridPlayerController) -> bool:
-    if busy:
-        #print_debug("We are busy, no looking update")
-        return false
-
     if player == null:
         push_warning("%s has no player to track, no looking update" % [self])
         return false
@@ -96,6 +127,7 @@ func _check_and_track_player(player: PhysicsGridPlayerController) -> bool:
     if conf != null:
         _handle_looking_transition(new_looking)
         looking = new_looking
+        _busy_until_change_anim = true
         _update_anim(conf, conf.custom_next_anim_blend)
         return true
 
@@ -177,8 +209,11 @@ func get_conf_by_animation_name_and_current_looking(anim_name: String) -> Oversi
     return null
 
 func _handle_animation_changed(anim_name: String) -> void:
+    _busy_until_change_anim = false
+
+    var conf: OversizedEnemyAnimConfig = null
     if !anim_name.is_empty():
-        var conf: OversizedEnemyAnimConfig = get_conf_by_animation_name_and_current_looking(anim_name)
+        conf = get_conf_by_animation_name_and_current_looking(anim_name)
         if conf != null:
             if conf.mode != Mode.ANY:
                 mode = conf.mode
@@ -187,7 +222,7 @@ func _handle_animation_changed(anim_name: String) -> void:
         return
 
     var blend: float = -1.0
-    var conf: OversizedEnemyAnimConfig = current_anim_conf
+    conf = current_anim_conf
 
     if conf != null:
         blend = conf.custom_next_anim_blend
