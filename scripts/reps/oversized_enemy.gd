@@ -66,11 +66,13 @@ func _process(_delta: float) -> void:
         _update_anim(conf, conf.custom_next_anim_blend)
 
     elif sees_player && _check_ranged_player(player):
-        pass
-    elif sees_player && _check_and_track_player(player):
-        pass
+        print_debug("Ranged attack")
+
     elif _hunt_player(player):
-        pass
+        print_debug("Hunt")
+
+    elif _check_and_track_player(player):
+        print_debug("Track")
     else:
         _idle()
 
@@ -89,7 +91,6 @@ func _idle() -> void:
                 conf = get_looking_transition_conf(Looking.FORWARD)
 
         if conf != null:
-            _busy_until_change_anim = true
             looking = new_look
             _update_anim(conf, conf.custom_next_anim_blend)
 
@@ -98,11 +99,12 @@ func _idle() -> void:
 func _hunt_player(player: PhysicsGridPlayerController) -> bool:
     # TODO: Improve metric for hunting to be a little smarter perhaps...
     # I.e. last seen duration, stuff like that. Have been hurt...
-    return ((player.global_position - global_position).abs() / DungeonBuilder.active_builder.grid_size).length() < 10
+    var delta: float = ((player.global_position - global_position).abs() / DungeonBuilder.active_builder.grid_size).length()
+    return delta < 10.0 && delta >= 5.5
 
 func _check_ranged_player(player: PhysicsGridPlayerController) -> bool:
     var delta: float = ((player.global_position - global_position).abs() / DungeonBuilder.active_builder.grid_size).length()
-    return delta > 1.5 && delta < 5
+    return delta > 1.5 && delta < 5.5
 
 func _check_melee_player(player: PhysicsGridPlayerController) -> bool:
     var d_player: Vector3 = player.global_position - global_position

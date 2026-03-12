@@ -3,7 +3,7 @@ class_name LookRayCast
 
 @export var _near: float = 1.0
 @export var _far: float = -1.0
-@export var _max_angle: float = PI / 2
+@export var _max_angle: float = PI / 3
 
 func sees_player(player: PhysicsGridPlayerController) -> bool:
     return sees(player.look_target, player)
@@ -13,7 +13,7 @@ func sees(target: Node3D, root: Node) -> bool:
 
     target_position = to_local(target.global_position)
 
-    if target_position.angle_to(-basis.z) > _max_angle:
+    if target_position.angle_to(Vector3.FORWARD) > _max_angle:
         return false
 
     if _far > 0.0:

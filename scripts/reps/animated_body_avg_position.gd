@@ -9,6 +9,7 @@ class_name AnimatedBodyAvgPosition
 
 @export var _skeleton: Skeleton3D
 @export var _ref_bone_names: Array[String]
+## Uses the rotation of the first bone
 @export var _use_rotation: bool
 
 @export_tool_button("Sync") var sync: Callable = _sync
