@@ -15,6 +15,19 @@ enum Mode { IDLE, MOVING, MELEE, RANGED, ANY }
 @export var _side_looking_forward_offset: float = 0.25
 @export var _side_looking_tween_duration: float = 0.25
 
+var looking_global_direction: Vector3:
+    get():
+        match looking:
+            Looking.FORWARD:
+                return -global_basis.z
+            Looking.LEFT:
+                return -global_basis.x
+            Looking.RIGHT:
+                return global_basis.x
+            _:
+                push_error("Unhandled looking %s" % [Looking.find_key(looking)])
+                return -global_basis.z
+
 var _fish_root_tween: Tween
 var _fish_root_origin: Vector3
 
@@ -36,20 +49,41 @@ func _ready() -> void:
 
 func _demo() -> void:
     while true:
-        await get_tree().create_timer(2.0).timeout
-        if randf() < 0.8:
+        await get_tree().create_timer(1.5).timeout
+        if !busy:
             var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
 
-            _check_track_player(player)
+            if _check_melee_player(player):
+                mode = Mode.MELEE
+                var conf: OversizedEnemyAnimConfig = current_anim_conf
+                _update_anim(conf, conf.custom_next_anim_blend)
 
-func _check_track_player(player: PhysicsGridPlayerController) -> void:
+            elif _check_and_track_player(player):
+                pass
+
+            else:
+                pass
+
+func _check_melee_player(player: PhysicsGridPlayerController) -> bool:
+    var d_player: Vector3 = player.global_position - global_position
+    d_player /= DungeonBuilder.active_builder.grid_size
+    var look: Vector3 = looking_global_direction
+    print_debug("Delta %s vs look %s" % [d_player, look])
+    if absf(d_player.y) < 1.0 && absf(d_player.x) + absf(d_player.z) <= 1.1:
+        if absf(d_player.x) > absf(d_player.z):
+            return signf(d_player.x) == signf(look.x)
+        else:
+            return signf(d_player.z) == signf(look.z)
+    return false
+
+func _check_and_track_player(player: PhysicsGridPlayerController) -> bool:
     if busy:
         #print_debug("We are busy, no looking update")
-        return
+        return false
 
     if player == null:
         push_warning("%s has no player to track, no looking update" % [self])
-        return
+        return false
 
     var d_player: Vector3 = player.global_position - global_position
     var forward: Vector3 = -global_basis.z
@@ -63,6 +97,9 @@ func _check_track_player(player: PhysicsGridPlayerController) -> void:
         _handle_looking_transition(new_looking)
         looking = new_looking
         _update_anim(conf, conf.custom_next_anim_blend)
+        return true
+
+    return false
 
 func _handle_looking_transition(new_looking: Looking) -> void:
     if new_looking == looking:
@@ -133,8 +170,20 @@ func get_looking_transition_conf(to_look: Looking) -> OversizedEnemyAnimConfig:
     ])
     return null
 
-func _handle_animation_changed(_anim_name: String) -> void:
-    if !_anim_name.is_empty():
+func get_conf_by_animation_name_and_current_looking(anim_name: String) -> OversizedEnemyAnimConfig:
+    for conf: OversizedEnemyAnimConfig in _configs:
+        if conf.looking == looking && conf.anim_name == anim_name:
+            return conf
+    return null
+
+func _handle_animation_changed(anim_name: String) -> void:
+    if !anim_name.is_empty():
+        var conf: OversizedEnemyAnimConfig = get_conf_by_animation_name_and_current_looking(anim_name)
+        if conf != null:
+            if conf.mode != Mode.ANY:
+                mode = conf.mode
+            elif conf.next_mode != Mode.ANY:
+                mode = conf.next_mode
         return
 
     var blend: float = -1.0
@@ -149,7 +198,7 @@ func _handle_animation_changed(_anim_name: String) -> void:
 
 func _update_anim(conf: OversizedEnemyAnimConfig, blend: float = -1) -> void:
     if conf != null:
-        _anim.play(conf.anim_name, blend, 1.0, conf.anim_from_end)
+        _anim.play(conf.anim_name, blend, conf.anim_speed, conf.anim_from_end)
         print_debug("Executing animation %s" % [conf])
     else:
         push_warning("Found no animation for %s %s" % [Looking.find_key(looking), Mode.find_key(mode)])
