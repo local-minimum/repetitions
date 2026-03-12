@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://bramsbvj0hj26"]
+
+[ext_resource type="PackedScene" uid="uid://wt5r26dq7xyi" path="res://scenes/entities/fish_spit.blend" id="1_jpsoq"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_grqqc"]
+radius = 0.15942515
+
+[sub_resource type="Animation" id="Animation_grqqc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:blend_shapes/Key 1")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.12613]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:blend_shapes/Key 2")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.09009]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:blend_shapes/Key 3")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.12613]
+}
+
+[sub_resource type="Animation" id="Animation_jpsoq"]
+resource_name = "spit"
+length = 2.51
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:blend_shapes/Key 1")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6666667, 0.9266666, 1.1999999, 1.5, 1.7566671, 2.003334, 2.3, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.12613, -0.18018, -0.6858, 0.33591, -0.13349, 0.31845, -0.34064, 0.21157, -0.49424, 0.12613]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:blend_shapes/Key 2")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8666667, 1.4333333, 2.1, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-0.09009, 0.36937, -0.50568, 0.50908, -0.66049, -0.09009]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:blend_shapes/Key 3")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.74666655, 1.4, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.12613, -0.2072, 0.3441, 0.12613]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_grqqc"]
+_data = {
+&"RESET": SubResource("Animation_grqqc"),
+&"spit": SubResource("Animation_jpsoq")
+}
+
+[node name="fish_spit" unique_id=930590371 instance=ExtResource("1_jpsoq")]
+
+[node name="SpitBlob" parent="." index="0" unique_id=500422275]
+"blend_shapes/Key 1" = 0.12613
+"blend_shapes/Key 2" = -0.09009
+"blend_shapes/Key 3" = 0.12613
+
+[node name="Area3D" type="Area3D" parent="." index="1" unique_id=1849686353]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0" unique_id=1316745185]
+shape = SubResource("SphereShape3D_grqqc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2" unique_id=1104395376]
+root_node = NodePath("../SpitBlob")
+libraries/ = SubResource("AnimationLibrary_grqqc")
+autoplay = &"spit"
