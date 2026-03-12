@@ -10,6 +10,12 @@ enum Mode { IDLE, MOVING, MELEE, RANGED, ANY }
 @export var _anim: AnimationPlayer
 @export var _configs: Array[OversizedEnemyAnimConfig]
 
+@export var _track_player_angle_hysteresis: float = PI / 8
+
+var busy: bool:
+    get():
+        return mode != Mode.IDLE
+
 func _enter_tree() -> void:
     if _anim == null:
         push_error("No animator connected to %s" % [self])
@@ -23,22 +29,56 @@ func _ready() -> void:
 func _demo() -> void:
     while true:
         await get_tree().create_timer(2.0).timeout
-        if randf() < 0.5:
-            var new_looking: Looking
-            if looking == Looking.LEFT || looking == Looking.RIGHT:
-                new_looking = Looking.FORWARD
-            else:
-                new_looking = Looking.LEFT if randf() < 0.5 else Looking.RIGHT
+        if randf() < 0.8:
+            _check_track_player()
 
-            var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(new_looking)
-            print_debug("Change animation: %s -> %s => %s" % [
-                Looking.find_key(looking),
-                Looking.find_key(new_looking),
-                conf,
-            ])
-            if conf != null:
-                looking = new_looking
-                _update_anim(conf, conf.custom_next_anim_blend)
+func _check_track_player() -> void:
+    if busy:
+        #print_debug("We are busy, no looking update")
+        return
+
+    var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
+
+    if player == null:
+        push_warning("%s has no player to track, no looking update" % [self])
+        return
+
+    var d_player: Vector3 = player.global_position - global_position
+    var forward: Vector3 = -global_basis.z
+    var up: Vector3 = global_basis.y
+    var angle: float = forward.signed_angle_to(d_player, up)
+    var new_looking: Looking = _get_wanted_looking(angle)
+    var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(new_looking)
+    #print_debug("Resulting looking %s has conf %s" % [Looking.find_key(new_looking), conf])
+
+    if conf != null:
+        looking = new_looking
+        _update_anim(conf, conf.custom_next_anim_blend)
+
+func _get_wanted_looking(angle: float) -> Looking:
+    #print_debug("Calculating looking from %s based on angle %s to player" % [Looking.find_key(looking), angle])
+    var quartpi: float = PI / 4
+    match looking:
+        Looking.FORWARD:
+            if angle > - quartpi - _track_player_angle_hysteresis && angle < quartpi + _track_player_angle_hysteresis:
+                return Looking.FORWARD
+            elif angle < 0:
+                return Looking.RIGHT
+            else:
+                return Looking.LEFT
+        Looking.RIGHT:
+            if angle > -PI && angle < -quartpi + _track_player_angle_hysteresis || angle > PI - _track_player_angle_hysteresis:
+                return Looking.RIGHT
+            else:
+                return Looking.FORWARD
+        Looking.LEFT:
+            if angle < PI && angle > quartpi - _track_player_angle_hysteresis || angle < -PI + _track_player_angle_hysteresis:
+                return Looking.LEFT
+            else:
+                return Looking.FORWARD
+        _:
+            push_error("Unhandled looking direction %s" % [Looking.find_key(looking)])
+            return Looking.FORWARD
 
 var current_anim_conf: OversizedEnemyAnimConfig:
     get():
