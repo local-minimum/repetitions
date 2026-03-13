@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bramsbvj0hj26"]
 
 [ext_resource type="PackedScene" uid="uid://wt5r26dq7xyi" path="res://scenes/entities/fish_spit.blend" id="1_jpsoq"]
+[ext_resource type="Script" uid="uid://bfklwjls3imnw" path="res://scripts/reps/projectile.gd" id="2_grqqc"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_grqqc"]
 radius = 0.15942515
@@ -91,9 +92,11 @@ _data = {
 &"spit": SubResource("Animation_jpsoq")
 }
 
-[node name="fish_spit" unique_id=930590371 instance=ExtResource("1_jpsoq")]
+[node name="fish_spit" unique_id=930590371 node_paths=PackedStringArray("_area") instance=ExtResource("1_jpsoq")]
+script = ExtResource("2_grqqc")
+_area = NodePath("Area3D")
 
-[node name="SpitBlob" parent="." index="0" unique_id=500422275]
+[node name="SpitBlob" parent="." index="0" unique_id=2050071740]
 "blend_shapes/Key 1" = 0.12613
 "blend_shapes/Key 2" = -0.09009
 "blend_shapes/Key 3" = 0.12613
