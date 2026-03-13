@@ -40,7 +40,7 @@ var looking_global_direction: Vector3:
 
 var _fish_root_tween: Tween
 var _fish_root_origin: Vector3
-var _busy_until_change_anim: bool
+var _busy_until_msec: int
 var _next_melee_time: int
 var _next_ranged_time: int
 var _translation_tween: Tween
@@ -48,7 +48,8 @@ var _translation_tween: Tween
 var busy: bool:
     get():
         return (
-            _busy_until_change_anim ||
+            PhysicsGridPlayerController.last_connected_player_cinematic ||
+            Time.get_ticks_msec() < _busy_until_msec ||
             mode != Mode.IDLE ||
             _translation_tween != null && _translation_tween.is_running()
         )
@@ -62,8 +63,7 @@ func _enter_tree() -> void:
     _fish_root_origin = _fish_root.position
 
 func _ready() -> void:
-    _update_anim(current_anim_conf, 0.0)
-    _busy_until_change_anim = true
+    _update_anim(current_anim_conf, 0.0, true)
 
 func _process(_delta: float) -> void:
     if busy:
@@ -82,13 +82,13 @@ func _eval_behaviours() ->  void:
         mode = Mode.MELEE
         _next_melee_time = Time.get_ticks_msec() + _melee_cooldown_msec
         var conf: OversizedEnemyAnimConfig = current_anim_conf
-        _update_anim(conf, conf.custom_next_anim_blend)
+        _update_anim(conf, conf.custom_next_anim_blend, true)
 
     elif sees_player && _check_ranged_player(player):
         mode = Mode.RANGED
         _next_ranged_time = Time.get_ticks_msec() + _ranged_cooldown_msec
         var conf: OversizedEnemyAnimConfig = current_anim_conf
-        _update_anim(conf, conf.custom_next_anim_blend)
+        _update_anim(conf, conf.custom_next_anim_blend, true)
         await get_tree().create_timer(_projectile_delay).timeout
         var projectile: Projectile = _projectile_scene.instantiate()
         DungeonBuilder.active_builder.add_child(projectile)
@@ -117,10 +117,11 @@ func _eval_behaviours() ->  void:
                 _tile_translation_duration,
             )
             if looking != Looking.FORWARD:
+                direction = looking_global_direction
                 var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(Looking.FORWARD)
                 if conf != null:
                     looking = Looking.FORWARD
-                    _update_anim(conf, conf.custom_next_anim_blend)
+                    _update_anim(conf, conf.custom_next_anim_blend, true)
 
                 _translation_tween.parallel().tween_method(
                     QuaternionUtils.create_tween_rotation_method(self),
@@ -128,18 +129,19 @@ func _eval_behaviours() ->  void:
                     Basis.looking_at(direction, Vector3.UP).get_rotation_quaternion(),
                     _tile_translation_duration * 0.5,
                 )
-
             @warning_ignore_restore("return_value_discarded")
+
             var was_moving: bool = mode == Mode.MOVING
-            mode = Mode.MOVING
             if looking == Looking.FORWARD:
+                mode = Mode.MOVING
                 if !was_moving:
-                    _update_anim(current_anim_conf)
+                    _update_anim(current_anim_conf, -1.0, true)
             else:
                 var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(Looking.FORWARD)
                 if conf != null:
                     looking = Looking.FORWARD
-                    _update_anim(conf, conf.custom_next_anim_blend)
+                    mode = Mode.MOVING
+                    _update_anim(conf, conf.custom_next_anim_blend, true)
 
             if _translation_tween.finished.connect(
                 func () -> void:
@@ -153,9 +155,7 @@ func _eval_behaviours() ->  void:
             var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(new_look)
             if conf != null:
                 looking = new_look
-                _update_anim(conf, conf.custom_next_anim_blend)
-
-        _busy_until_change_anim = true
+                _update_anim(conf, conf.custom_next_anim_blend, true)
 
     elif _check_and_track_player(player):
         pass
@@ -163,27 +163,32 @@ func _eval_behaviours() ->  void:
     else:
         _idle()
 
+const _EPSILON: float = 0.001
+
 func _looking_in_direction(direction: Vector3) -> bool:
     match looking:
         Looking.FORWARD:
-            return -global_basis.z == direction
+            #print_debug("Looking %s, angle between %s and %s is %s < %s" % [Looking.find_key(looking), direction, -global_basis.z])
+            return (-global_basis.z).angle_to(direction) < _EPSILON
         Looking.LEFT:
-            return -global_basis.x == direction
+            return (-global_basis.x).angle_to(direction) < _EPSILON
         Looking.RIGHT:
-            return global_basis.x == direction
+            return global_basis.x.angle_to(direction) < _EPSILON
         _:
             push_error("Unhandled looking direction %s" % [Looking.find_key(looking)])
             return false
 
 func _global_direction_to_looking(direction: Vector3) -> Looking:
-    if direction == -global_basis.z:
+    print_debug("Want do look %s, forward is %s, %s" % [direction, -global_basis.z, direction == -global_basis.z])
+    if direction.angle_to(-global_basis.z) < _EPSILON:
         return Looking.FORWARD
-    elif direction == -global_basis.x:
-        return Looking.LEFT
-    elif direction == global_basis.x:
-        return Looking.RIGHT
-
-    return Looking.LEFT if randf() < 0.5 else Looking.RIGHT
+    elif direction.angle_to(-global_basis.x) < _EPSILON:
+        return Looking.LEFT if looking != Looking.RIGHT else Looking.FORWARD
+    elif direction.angle_to(global_basis.x) < _EPSILON:
+        return Looking.RIGHT if looking != Looking.LEFT else Looking.FORWARD
+    elif looking == Looking.FORWARD:
+        return Looking.LEFT if randf() < 0.5 else Looking.RIGHT
+    return looking
 
 func _get_wanted_hunt_direction(player: PhysicsGridPlayerController) -> Vector3:
     return VectorUtils.primary_directionf(player.global_position - global_position)
@@ -227,9 +232,10 @@ func _idle() -> void:
 
         if conf != null:
             looking = new_look
-            _update_anim(conf, conf.custom_next_anim_blend)
+            _update_anim(conf, conf.custom_next_anim_blend, true)
 
-    _busy_until_change_anim = true
+    else:
+        _busy_until_msec = Time.get_ticks_msec() + floori(_anim.current_animation_length)
 
 func _check_hunt_player(player: PhysicsGridPlayerController) -> bool:
     # TODO: Improve metric for hunting to be a little smarter perhaps...
@@ -275,8 +281,7 @@ func _check_and_track_player(player: PhysicsGridPlayerController) -> bool:
     if conf != null:
         _handle_looking_transition(new_looking)
         looking = new_looking
-        _busy_until_change_anim = true
-        _update_anim(conf, conf.custom_next_anim_blend)
+        _update_anim(conf, conf.custom_next_anim_blend, true)
         return true
 
     return false
@@ -357,8 +362,6 @@ func get_conf_by_animation_name_and_current_looking(anim_name: String) -> Oversi
     return null
 
 func _handle_animation_changed(anim_name: String) -> void:
-    _busy_until_change_anim = false
-
     var conf: OversizedEnemyAnimConfig = null
     if !anim_name.is_empty():
         conf = get_conf_by_animation_name_and_current_looking(anim_name)
@@ -379,9 +382,13 @@ func _handle_animation_changed(anim_name: String) -> void:
 
     _update_anim(current_anim_conf, blend)
 
-func _update_anim(conf: OversizedEnemyAnimConfig, blend: float = -1) -> void:
+func _update_anim(conf: OversizedEnemyAnimConfig, blend: float = -1, make_busy: bool = false) -> void:
     if conf != null:
         _anim.play(conf.anim_name, blend, conf.anim_speed, conf.anim_from_end)
+
+        if make_busy:
+            _busy_until_msec = Time.get_ticks_msec() + floori(_anim.current_animation_length * 1000)
+
         print_debug("Executing animation %s" % [conf])
     else:
         push_warning("Found no animation for %s %s" % [Looking.find_key(looking), Mode.find_key(mode)])
