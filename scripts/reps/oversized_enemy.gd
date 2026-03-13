@@ -15,7 +15,14 @@ enum Mode { IDLE, MOVING, MELEE, RANGED, ANY }
 @export var _side_looking_forward_offset: float = 0.25
 @export var _side_looking_tween_duration: float = 0.25
 
+@export var _ranged_cooldown_msec: int = 1500
+@export var _melee_cooldown_msec: int = 500
+
 @export var _eyes: LookRayCast
+@export var _mouth: Node3D
+
+@export var _projectile_delay: float = 0.2
+@export var _projectile_scene: PackedScene
 
 var looking_global_direction: Vector3:
     get():
@@ -33,6 +40,8 @@ var looking_global_direction: Vector3:
 var _fish_root_tween: Tween
 var _fish_root_origin: Vector3
 var _busy_until_change_anim: bool
+var _next_melee_time: int
+var _next_ranged_time: int
 
 var busy: bool:
     get():
@@ -62,11 +71,27 @@ func _process(_delta: float) -> void:
 
     if _check_melee_player(player):
         mode = Mode.MELEE
+        _next_melee_time = Time.get_ticks_msec() + _melee_cooldown_msec
         var conf: OversizedEnemyAnimConfig = current_anim_conf
         _update_anim(conf, conf.custom_next_anim_blend)
 
     elif sees_player && _check_ranged_player(player):
-        print_debug("Ranged attack")
+        mode = Mode.RANGED
+        _next_ranged_time = Time.get_ticks_msec() + _ranged_cooldown_msec
+        var conf: OversizedEnemyAnimConfig = current_anim_conf
+        _update_anim(conf, conf.custom_next_anim_blend)
+        await get_tree().create_timer(_projectile_delay).timeout
+        var projectile: Projectile = _projectile_scene.instantiate()
+        DungeonBuilder.active_builder.add_child(projectile)
+
+        if projectile.on_hit.connect(_record_projectile_hit.bind(global_position, player), CONNECT_ONE_SHOT) != OK:
+            push_error("Failed to connect projectile hit")
+
+        if projectile.on_miss.connect(_record_projectile_miss.bind(global_position, player), CONNECT_ONE_SHOT) != OK:
+            push_error("Failed to connect projectile miss")
+
+        projectile.launch(_mouth.global_position, player.look_target.global_position)
+
 
     elif _hunt_player(player):
         print_debug("Hunt")
@@ -75,6 +100,19 @@ func _process(_delta: float) -> void:
         print_debug("Track")
     else:
         _idle()
+
+func _record_projectile_hit(body: Node3D, projectile: Projectile, my_position: Vector3, player: PhysicsGridPlayerController) -> void:
+    projectile.on_miss.disconnect(_record_projectile_miss)
+
+    if !NodeUtils.is_parent(player, body):
+        _record_projectile_miss(player, projectile, my_position)
+        return
+
+    print_debug("Hurt player based on %s hit" % [projectile])
+
+func _record_projectile_miss(player: PhysicsGridPlayerController, projectile: Projectile, my_position: Vector3) -> void:
+    if projectile.on_hit.is_connected(_record_projectile_hit):
+        projectile.on_hit.disconnect(_record_projectile_hit)
 
 func _idle() -> void:
     # TODO: Improve flipping around by avoiding looking into walls if possible
@@ -103,10 +141,16 @@ func _hunt_player(player: PhysicsGridPlayerController) -> bool:
     return delta < 10.0 && delta >= 5.5
 
 func _check_ranged_player(player: PhysicsGridPlayerController) -> bool:
+    if Time.get_ticks_msec() < _next_ranged_time:
+        return false
+
     var delta: float = ((player.global_position - global_position).abs() / DungeonBuilder.active_builder.grid_size).length()
     return delta > 1.5 && delta < 5.5
 
 func _check_melee_player(player: PhysicsGridPlayerController) -> bool:
+    if Time.get_ticks_msec() < _next_melee_time:
+        return false
+
     var d_player: Vector3 = player.global_position - global_position
     d_player /= DungeonBuilder.active_builder.grid_size
     var look: Vector3 = looking_global_direction

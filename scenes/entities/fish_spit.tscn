@@ -95,6 +95,8 @@ _data = {
 [node name="fish_spit" unique_id=930590371 node_paths=PackedStringArray("_area") instance=ExtResource("1_jpsoq")]
 script = ExtResource("2_grqqc")
 _area = NodePath("Area3D")
+velocity = 4.0
+max_velocity = 6.0
 
 [node name="SpitBlob" parent="." index="0" unique_id=2050071740]
 "blend_shapes/Key 1" = 0.12613
@@ -102,6 +104,7 @@ _area = NodePath("Area3D")
 "blend_shapes/Key 3" = 0.12613
 
 [node name="Area3D" type="Area3D" parent="." index="1" unique_id=1849686353]
+collision_mask = 1541
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0" unique_id=1316745185]
 shape = SubResource("SphereShape3D_grqqc")

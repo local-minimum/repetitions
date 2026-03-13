@@ -13,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://chkw5q3yhwuml" path="res://scenes/rooms/room_with_backroom_3d.tscn" id="10_3rqk3"]
 [ext_resource type="PackedScene" uid="uid://balxpkjvdg37o" path="res://scenes/entities/fish_enemy.tscn" id="12_6gink"]
 [ext_resource type="PackedScene" uid="uid://b8lqj7rv80ssv" path="res://scenes/player_3d.tscn" id="13_6gink"]
-[ext_resource type="PackedScene" uid="uid://bramsbvj0hj26" path="res://scenes/entities/fish_spit.tscn" id="14_qnthh"]
 
 [node name="Node3D" type="Node3D" unique_id=1848198409 node_paths=PackedStringArray("player")]
 script = ExtResource("1_qnthh")
@@ -56,6 +55,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
 
 [node name="Player3d" parent="." unique_id=942295760 instance=ExtResource("13_6gink")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
-
-[node name="fish_spit" parent="." unique_id=930590371 instance=ExtResource("14_qnthh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.2425249, 1.061964, -1.9896376)
