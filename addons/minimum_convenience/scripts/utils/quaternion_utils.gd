@@ -18,7 +18,7 @@ static func create_tween_rotation_method(node: Node3D, global_space: bool = true
     return func (value: Quaternion) -> void:
         node.rotation = value.get_euler()
 
-## Creates a tweener method taking quaternions as input
+## Creates a tweener method taking a progress float (0 - 1) as input
 static func create_tween_rotation_progress_method(
     node: Node3D,
     from: Quaternion,

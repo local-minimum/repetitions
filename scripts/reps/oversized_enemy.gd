@@ -14,6 +14,7 @@ enum Mode { IDLE, MOVING, MELEE, RANGED, ANY }
 @export var _fish_root: Node3D
 @export var _side_looking_forward_offset: float = 0.25
 @export var _side_looking_tween_duration: float = 0.25
+@export var _tile_translation_duration: float = 1.0
 
 @export var _ranged_cooldown_msec: int = 1500
 @export var _melee_cooldown_msec: int = 500
@@ -42,10 +43,15 @@ var _fish_root_origin: Vector3
 var _busy_until_change_anim: bool
 var _next_melee_time: int
 var _next_ranged_time: int
+var _translation_tween: Tween
 
 var busy: bool:
     get():
-        return _busy_until_change_anim || mode != Mode.IDLE
+        return (
+            _busy_until_change_anim ||
+            mode != Mode.IDLE ||
+            _translation_tween != null && _translation_tween.is_running()
+        )
 
 func _enter_tree() -> void:
     if _anim == null:
@@ -63,6 +69,9 @@ func _process(_delta: float) -> void:
     if busy:
         return
 
+    _eval_behaviours()
+
+func _eval_behaviours() ->  void:
     var player: PhysicsGridPlayerController = PhysicsGridPlayerController.last_connected_player
     if player == null:
         return
@@ -93,26 +102,114 @@ func _process(_delta: float) -> void:
         projectile.launch(_mouth.global_position, player.look_target.global_position)
 
 
-    elif _hunt_player(player):
-        print_debug("Hunt")
+    elif _check_hunt_player(player):
+        var direction: Vector3 = _get_wanted_hunt_direction(player)
+        if _looking_in_direction(direction):
+            _translation_tween = create_tween()
+            @warning_ignore_start("return_value_discarded")
+            _translation_tween.tween_property(
+                self,
+                "global_position",
+
+                DungeonBuilder.active_builder.get_closest_global_grid_position(
+                    global_position + direction * DungeonBuilder.active_builder.grid_size
+                ),
+                _tile_translation_duration,
+            )
+            if looking != Looking.FORWARD:
+                var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(Looking.FORWARD)
+                if conf != null:
+                    looking = Looking.FORWARD
+                    _update_anim(conf, conf.custom_next_anim_blend)
+
+                _translation_tween.parallel().tween_method(
+                    QuaternionUtils.create_tween_rotation_method(self),
+                    global_basis.get_rotation_quaternion(),
+                    Basis.looking_at(direction, Vector3.UP).get_rotation_quaternion(),
+                    _tile_translation_duration * 0.5,
+                )
+
+            @warning_ignore_restore("return_value_discarded")
+            var was_moving: bool = mode == Mode.MOVING
+            mode = Mode.MOVING
+            if looking == Looking.FORWARD:
+                if !was_moving:
+                    _update_anim(current_anim_conf)
+            else:
+                var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(Looking.FORWARD)
+                if conf != null:
+                    looking = Looking.FORWARD
+                    _update_anim(conf, conf.custom_next_anim_blend)
+
+            if _translation_tween.finished.connect(
+                func () -> void:
+                    _eval_behaviours()
+            ) != OK:
+                push_error("Failed to connect translation tween finished")
+
+        else:
+            var new_look: Looking = _global_direction_to_looking(direction)
+            # Turn into direction
+            var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(new_look)
+            if conf != null:
+                looking = new_look
+                _update_anim(conf, conf.custom_next_anim_blend)
+
+        _busy_until_change_anim = true
 
     elif _check_and_track_player(player):
-        print_debug("Track")
+        pass
+
     else:
         _idle()
+
+func _looking_in_direction(direction: Vector3) -> bool:
+    match looking:
+        Looking.FORWARD:
+            return -global_basis.z == direction
+        Looking.LEFT:
+            return -global_basis.x == direction
+        Looking.RIGHT:
+            return global_basis.x == direction
+        _:
+            push_error("Unhandled looking direction %s" % [Looking.find_key(looking)])
+            return false
+
+func _global_direction_to_looking(direction: Vector3) -> Looking:
+    if direction == -global_basis.z:
+        return Looking.FORWARD
+    elif direction == -global_basis.x:
+        return Looking.LEFT
+    elif direction == global_basis.x:
+        return Looking.RIGHT
+
+    return Looking.LEFT if randf() < 0.5 else Looking.RIGHT
+
+func _get_wanted_hunt_direction(player: PhysicsGridPlayerController) -> Vector3:
+    return VectorUtils.primary_directionf(player.global_position - global_position)
 
 func _record_projectile_hit(body: Node3D, projectile: Projectile, my_position: Vector3, player: PhysicsGridPlayerController) -> void:
     projectile.on_miss.disconnect(_record_projectile_miss)
 
+    # TODO: Make spalsh effect
+
     if !NodeUtils.is_parent(player, body):
-        _record_projectile_miss(player, projectile, my_position)
+        _record_projectile_miss(player, projectile, my_position, false)
         return
 
+    # TODO: Hurt player
+    # TODO: Record success
     print_debug("Hurt player based on %s hit" % [projectile])
 
-func _record_projectile_miss(player: PhysicsGridPlayerController, projectile: Projectile, my_position: Vector3) -> void:
+func _record_projectile_miss(_player: PhysicsGridPlayerController, projectile: Projectile, _my_position: Vector3, make_effect: bool = true) -> void:
     if projectile.on_hit.is_connected(_record_projectile_hit):
         projectile.on_hit.disconnect(_record_projectile_hit)
+
+    if make_effect:
+        # TODO: Make peeter out effect, but only if
+        pass
+
+    # TODO: Record fail
 
 func _idle() -> void:
     # TODO: Improve flipping around by avoiding looking into walls if possible
@@ -134,11 +231,11 @@ func _idle() -> void:
 
     _busy_until_change_anim = true
 
-func _hunt_player(player: PhysicsGridPlayerController) -> bool:
+func _check_hunt_player(player: PhysicsGridPlayerController) -> bool:
     # TODO: Improve metric for hunting to be a little smarter perhaps...
     # I.e. last seen duration, stuff like that. Have been hurt...
     var delta: float = ((player.global_position - global_position).abs() / DungeonBuilder.active_builder.grid_size).length()
-    return delta < 10.0 && delta >= 5.5
+    return delta < 10.0
 
 func _check_ranged_player(player: PhysicsGridPlayerController) -> bool:
     if Time.get_ticks_msec() < _next_ranged_time:

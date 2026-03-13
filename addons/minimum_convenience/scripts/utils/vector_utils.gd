@@ -64,6 +64,7 @@ static func count_differing_axis(a: Vector3i, b: Vector3i) -> int:
         n += 1
     return n
 
+## Returns the unit vector of the primary direction
 static func primary_direction(v: Vector3i) -> Vector3i:
     var abs_x: int = abs(v.x)
     var abs_y: int = abs(v.y)
