@@ -41,7 +41,7 @@ func _sync() -> void:
         pt += trans.origin
 
         if _use_rotation && n < 1.0:
-            global_rotation = trans.basis.get_euler()
+            global_rotation = (_skeleton.global_transform.basis * trans.basis).get_euler()
 
         n += 1
 
