@@ -105,63 +105,69 @@ func _eval_behaviours() ->  void:
     elif _check_hunt_player(player):
         var direction: Vector3 = _get_wanted_hunt_direction(player)
         if _looking_in_direction(direction):
-            _translation_tween = create_tween()
-            @warning_ignore_start("return_value_discarded")
-            _translation_tween.tween_property(
-                self,
-                "global_position",
-
-                DungeonBuilder.active_builder.get_closest_global_grid_position(
-                    global_position + direction * DungeonBuilder.active_builder.grid_size
-                ),
-                _tile_translation_duration,
-            )
-            if looking != Looking.FORWARD:
-                direction = looking_global_direction
-                var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(Looking.FORWARD)
-                if conf != null:
-                    looking = Looking.FORWARD
-                    _update_anim(conf, conf.custom_next_anim_blend, true)
-
-                _translation_tween.parallel().tween_method(
-                    QuaternionUtils.create_tween_rotation_method(self),
-                    global_basis.get_rotation_quaternion(),
-                    Basis.looking_at(direction, Vector3.UP).get_rotation_quaternion(),
-                    _tile_translation_duration * 0.5,
-                )
-            @warning_ignore_restore("return_value_discarded")
-
-            var was_moving: bool = mode == Mode.MOVING
-            if looking == Looking.FORWARD:
-                mode = Mode.MOVING
-                if !was_moving:
-                    _update_anim(current_anim_conf, -1.0, true)
-            else:
-                var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(Looking.FORWARD)
-                if conf != null:
-                    looking = Looking.FORWARD
-                    mode = Mode.MOVING
-                    _update_anim(conf, conf.custom_next_anim_blend, true)
-
-            if _translation_tween.finished.connect(
-                func () -> void:
-                    _eval_behaviours()
-            ) != OK:
-                push_error("Failed to connect translation tween finished")
+            _swim_translate(direction)
 
         else:
             var new_look: Looking = _global_direction_to_looking(direction)
-            # Turn into direction
-            var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(new_look)
-            if conf != null:
-                looking = new_look
-                _update_anim(conf, conf.custom_next_anim_blend, true)
+            if new_look == looking:
+                _swim_translate(looking_global_direction)
+            else:
+                # Turn into direction
+                var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(new_look)
+                if conf != null:
+                    looking = new_look
+                    _update_anim(conf, conf.custom_next_anim_blend, true)
 
     elif _check_and_track_player(player):
         pass
 
     else:
         _idle()
+
+func _swim_translate(direction: Vector3) -> void:
+    _translation_tween = create_tween()
+    @warning_ignore_start("return_value_discarded")
+    _translation_tween.tween_property(
+        self,
+        "global_position",
+
+        DungeonBuilder.active_builder.get_closest_global_grid_position(
+            global_position + direction * DungeonBuilder.active_builder.grid_size
+        ),
+        _tile_translation_duration,
+    )
+    if looking != Looking.FORWARD:
+        direction = looking_global_direction
+        var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(Looking.FORWARD)
+        if conf != null:
+            looking = Looking.FORWARD
+            _update_anim(conf, conf.custom_next_anim_blend, true)
+
+        _translation_tween.parallel().tween_method(
+            QuaternionUtils.create_tween_rotation_method(self),
+            global_basis.get_rotation_quaternion(),
+            Basis.looking_at(direction, Vector3.UP).get_rotation_quaternion(),
+            _tile_translation_duration * 0.5,
+        )
+    @warning_ignore_restore("return_value_discarded")
+
+    var was_moving: bool = mode == Mode.MOVING
+    if looking == Looking.FORWARD:
+        mode = Mode.MOVING
+        if !was_moving:
+            _update_anim(current_anim_conf, -1.0, true)
+    else:
+        var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(Looking.FORWARD)
+        if conf != null:
+            looking = Looking.FORWARD
+            mode = Mode.MOVING
+            _update_anim(conf, conf.custom_next_anim_blend, true)
+
+    if _translation_tween.finished.connect(
+        func () -> void:
+            _eval_behaviours()
+    ) != OK:
+        push_error("Failed to connect translation tween finished")
 
 const _EPSILON: float = 0.001
 
@@ -179,7 +185,7 @@ func _looking_in_direction(direction: Vector3) -> bool:
             return false
 
 func _global_direction_to_looking(direction: Vector3) -> Looking:
-    print_debug("Want do look %s, forward is %s, %s" % [direction, -global_basis.z, direction == -global_basis.z])
+    #print_debug("Want do look %s, forward is %s, %s" % [direction, -global_basis.z, direction == -global_basis.z])
     if direction.angle_to(-global_basis.z) < _EPSILON:
         return Looking.FORWARD
     elif direction.angle_to(-global_basis.x) < _EPSILON:
@@ -218,6 +224,7 @@ func _record_projectile_miss(_player: PhysicsGridPlayerController, projectile: P
 
 func _idle() -> void:
     # TODO: Improve flipping around by avoiding looking into walls if possible
+    mode = Mode.IDLE
     var new_look: Looking = Looking.FORWARD
     var conf: OversizedEnemyAnimConfig
     if randf() < 0.5:
@@ -241,7 +248,7 @@ func _check_hunt_player(player: PhysicsGridPlayerController) -> bool:
     # TODO: Improve metric for hunting to be a little smarter perhaps...
     # I.e. last seen duration, stuff like that. Have been hurt...
     var delta: float = ((player.global_position - global_position).abs() / DungeonBuilder.active_builder.grid_size).length()
-    return delta < 10.0
+    return delta < 10.0 && delta > 1.1
 
 func _check_ranged_player(player: PhysicsGridPlayerController) -> bool:
     if Time.get_ticks_msec() < _next_ranged_time:
@@ -257,8 +264,10 @@ func _check_melee_player(player: PhysicsGridPlayerController) -> bool:
     var d_player: Vector3 = player.global_position - global_position
     d_player /= DungeonBuilder.active_builder.grid_size
     var look: Vector3 = looking_global_direction
+
+    var planar_delta: float = absf(d_player.x) + absf(d_player.z)
     # print_debug("Delta %s vs look %s" % [d_player, look])
-    if absf(d_player.y) < 1.0 && absf(d_player.x) + absf(d_player.z) <= 1.1:
+    if absf(d_player.y) < 1.0 && planar_delta <= 1.1 && planar_delta > 0.9:
         if absf(d_player.x) > absf(d_player.z):
             return signf(d_player.x) == signf(look.x)
         else:
@@ -279,6 +288,7 @@ func _check_and_track_player(player: PhysicsGridPlayerController) -> bool:
     #print_debug("Resulting looking %s has conf %s" % [Looking.find_key(new_looking), conf])
 
     if conf != null:
+        mode = Mode.IDLE
         _handle_looking_transition(new_looking)
         looking = new_looking
         _update_anim(conf, conf.custom_next_anim_blend, true)
