@@ -2,21 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://borrc177cvlox"
-path.s3tc="res://.godot/imported/painting_square_uv.png-3ae7188b65f429491054c0c653246025.s3tc.ctex"
+uid="uid://cenhnb0o720x0"
+path="res://.godot/imported/painting_rhombus_uv.png-8f5e0db33bea21ab1d7bee59684a80b1.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/rooms/meshes/props/paintings/painting_square_uv.png"
-dest_files=["res://.godot/imported/painting_square_uv.png-3ae7188b65f429491054c0c653246025.s3tc.ctex"]
+source_file="res://scenes/rooms/meshes/props/paintings/painting_rhombus_uv.png"
+dest_files=["res://.godot/imported/painting_rhombus_uv.png-8f5e0db33bea21ab1d7bee59684a80b1.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -24,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -38,4 +37,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

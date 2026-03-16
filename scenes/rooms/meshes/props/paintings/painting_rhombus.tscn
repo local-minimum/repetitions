@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bldwyhh2i43pl"]
+
+[ext_resource type="ArrayMesh" uid="uid://dj44taxejek8t" path="res://scenes/rooms/meshes/props/paintings/painting_rhombus.obj" id="1_nl6i6"]
+[ext_resource type="Texture2D" uid="uid://cjxccop5wj7tk" path="res://scenes/rooms/meshes/props/paintings/painting_rhombus_albedo.png" id="2_4rrcc"]
+[ext_resource type="Texture2D" uid="uid://txclv41n7l75" path="res://scenes/rooms/meshes/props/paintings/painting_rhombus_occlusion.png" id="2_6es3t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4rrcc"]
+albedo_texture = ExtResource("2_4rrcc")
+ao_enabled = true
+ao_texture = ExtResource("2_6es3t")
+
+[node name="PaintingRhombus" type="Node3D" unique_id=301145547]
+
+[node name="PaintingRhombus" type="MeshInstance3D" parent="." unique_id=185973209]
+mesh = ExtResource("1_nl6i6")
+surface_material_override/0 = SubResource("StandardMaterial3D_4rrcc")

@@ -7,10 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="5_blbkk"]
 [ext_resource type="PackedScene" uid="uid://b8p8rq2akjh17" path="res://scenes/rooms/meshes/roomwall_twosided_window.blend" id="7_1do23"]
 [ext_resource type="PackedScene" uid="uid://byswj0ob7y5no" path="res://scenes/rooms/parts/door_config_block_to_dirt.tscn" id="7_7qnvl"]
+[ext_resource type="PackedScene" uid="uid://bldwyhh2i43pl" path="res://scenes/rooms/meshes/props/paintings/painting_rhombus.tscn" id="8_b3unn"]
+[ext_resource type="PackedScene" uid="uid://nl1dfs3d45oj" path="res://scenes/rooms/meshes/props/paintings/painting_square.tscn" id="9_wujcv"]
+[ext_resource type="PackedScene" uid="uid://s264cc7x7qxw" path="res://scenes/rooms/meshes/props/paintings/painting_trianglish.tscn" id="10_ejta0"]
 
 [node name="RoomCorner3d" type="Node3D" unique_id=1643020392 node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_y3fl0")
-_managed_door_configs = [NodePath("Geometry/Door Config Options"), NodePath("")]
+_managed_door_configs = [NodePath("Geometry/Door Config Options"), null]
 metadata/_custom_type_script = "uid://b4o2hlt1k23lm"
 
 [node name="Geometry" type="Node3D" parent="." unique_id=224837286]
@@ -181,3 +184,12 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4, 
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -3, 1, -4)
 
 [node name="roomwall_twosided_window" parent="Geometry" unique_id=1540346307 instance=ExtResource("7_1do23")]
+
+[node name="PaintingRhombus" parent="Geometry" unique_id=301145547 instance=ExtResource("8_b3unn")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.0036125, 1.1776215, -2.17)
+
+[node name="PaintingSquare" parent="Geometry" unique_id=720112772 instance=ExtResource("9_wujcv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4770522, 1.3050884, -3.83)
+
+[node name="PaintingTrianglish" parent="Geometry" unique_id=1514852435 instance=ExtResource("10_ejta0")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 3.8274312, 1.335941, -2.4753656)

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://borrc177cvlox"
-path.s3tc="res://.godot/imported/painting_square_uv.png-3ae7188b65f429491054c0c653246025.s3tc.ctex"
+uid="uid://tuxk6qbfwjkw"
+path.s3tc="res://.godot/imported/painting_trianglish_occlusion.png-cbc52d2cfb185941e324601800255a22.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://scenes/rooms/meshes/props/paintings/painting_square_uv.png"
-dest_files=["res://.godot/imported/painting_square_uv.png-3ae7188b65f429491054c0c653246025.s3tc.ctex"]
+source_file="res://scenes/rooms/meshes/props/paintings/painting_trianglish_occlusion.png"
+dest_files=["res://.godot/imported/painting_trianglish_occlusion.png-cbc52d2cfb185941e324601800255a22.s3tc.ctex"]
 
 [params]
 

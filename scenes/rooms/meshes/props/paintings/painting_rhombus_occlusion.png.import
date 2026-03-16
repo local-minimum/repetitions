@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://borrc177cvlox"
-path.s3tc="res://.godot/imported/painting_square_uv.png-3ae7188b65f429491054c0c653246025.s3tc.ctex"
+uid="uid://txclv41n7l75"
+path.s3tc="res://.godot/imported/painting_rhombus_occlusion.png-aac5ccfee8ef35113f10e2c0addf5e4f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://scenes/rooms/meshes/props/paintings/painting_square_uv.png"
-dest_files=["res://.godot/imported/painting_square_uv.png-3ae7188b65f429491054c0c653246025.s3tc.ctex"]
+source_file="res://scenes/rooms/meshes/props/paintings/painting_rhombus_occlusion.png"
+dest_files=["res://.godot/imported/painting_rhombus_occlusion.png-aac5ccfee8ef35113f10e2c0addf5e4f.s3tc.ctex"]
 
 [params]
 

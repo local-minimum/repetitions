@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://s264cc7x7qxw"]
+
+[ext_resource type="ArrayMesh" uid="uid://b6v02i3w8vnwf" path="res://scenes/rooms/meshes/props/paintings/painting_trianglish.obj" id="1_emrq6"]
+[ext_resource type="Texture2D" uid="uid://cguj5vnktqs5s" path="res://scenes/rooms/meshes/props/paintings/painting_trianglish_albedo.png" id="2_aebh3"]
+[ext_resource type="Texture2D" uid="uid://tuxk6qbfwjkw" path="res://scenes/rooms/meshes/props/paintings/painting_trianglish_occlusion.png" id="2_mbgtu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aebh3"]
+albedo_texture = ExtResource("2_aebh3")
+ao_enabled = true
+ao_texture = ExtResource("2_mbgtu")
+
+[node name="PaintingTrianglish" type="Node3D" unique_id=1514852435]
+
+[node name="PaintingTrianglish" type="MeshInstance3D" parent="." unique_id=1453233845]
+mesh = ExtResource("1_emrq6")
+surface_material_override/0 = SubResource("StandardMaterial3D_aebh3")
