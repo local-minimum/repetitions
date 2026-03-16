@@ -125,17 +125,15 @@ func _eval_behaviours() ->  void:
         _idle()
 
 func _swim_translate(direction: Vector3) -> void:
+    var target: Vector3 = DungeonBuilder.active_builder.get_closest_global_grid_position(
+        global_position + direction * DungeonBuilder.active_builder.grid_size
+    )
+
+    TileBlocker.block(self, DungeonBuilder.active_builder.get_closest_coordinates(target))
+
     _translation_tween = create_tween()
     @warning_ignore_start("return_value_discarded")
-    _translation_tween.tween_property(
-        self,
-        "global_position",
-
-        DungeonBuilder.active_builder.get_closest_global_grid_position(
-            global_position + direction * DungeonBuilder.active_builder.grid_size
-        ),
-        _tile_translation_duration,
-    )
+    _translation_tween.tween_property(self, "global_position", target, _tile_translation_duration)
     if looking != Looking.FORWARD:
         direction = looking_global_direction
         var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(Looking.FORWARD)
@@ -165,6 +163,7 @@ func _swim_translate(direction: Vector3) -> void:
 
     if _translation_tween.finished.connect(
         func () -> void:
+            TileBlocker.remove_blocks(self)
             _eval_behaviours()
     ) != OK:
         push_error("Failed to connect translation tween finished")

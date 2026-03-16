@@ -13,8 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://chkw5q3yhwuml" path="res://scenes/rooms/room_with_backroom_3d.tscn" id="10_3rqk3"]
 [ext_resource type="PackedScene" uid="uid://balxpkjvdg37o" path="res://scenes/entities/fish_enemy.tscn" id="12_6gink"]
 [ext_resource type="PackedScene" uid="uid://b8lqj7rv80ssv" path="res://scenes/player_3d.tscn" id="13_6gink"]
+[ext_resource type="Script" uid="uid://c746wntg074vx" path="res://scripts/reps/tile_blocker.gd" id="14_qnthh"]
 
-[node name="Node3D" type="Node3D" unique_id=1848198409 node_paths=PackedStringArray("player")]
+[node name="Builder" type="Node3D" unique_id=1848198409 node_paths=PackedStringArray("player")]
 script = ExtResource("1_qnthh")
 _invoke_cinematic_on_ready = false
 grid_size = Vector3(2, 3, 2)
@@ -56,3 +57,7 @@ _tile_translation_duration = 0.75
 
 [node name="Player3d" parent="." unique_id=942295760 instance=ExtResource("13_6gink")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="TileBlocker" type="Node" parent="." unique_id=1739443832]
+script = ExtResource("14_qnthh")
+metadata/_custom_type_script = "uid://c746wntg074vx"

@@ -366,32 +366,32 @@ skeleton = NodePath("../Casting Origin/Step Caster")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8477182, -0.4)
 shape = ExtResource("1_52vux")
 target_position = Vector3(0, 0, -1.4)
-collision_mask = 1025
+collision_mask = 3073
 
 [node name="Cast Left" type="ShapeCast3D" parent="Casting Origin" unique_id=220809817]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.8477182, 0)
 shape = ExtResource("1_52vux")
 target_position = Vector3(-1.4, 0, 0)
-collision_mask = 1025
+collision_mask = 3073
 
 [node name="Cast Backward" type="ShapeCast3D" parent="Casting Origin" unique_id=1919981056]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8477182, 0.4)
 shape = ExtResource("1_52vux")
 target_position = Vector3(0, 0, 1.4)
-collision_mask = 1025
+collision_mask = 3073
 
 [node name="Cast Right" type="ShapeCast3D" parent="Casting Origin" unique_id=1454541202]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.8477182, 0)
 shape = ExtResource("1_52vux")
 target_position = Vector3(1.4, 0, 0)
-collision_mask = 1025
+collision_mask = 3073
 
 [node name="Step Caster" type="ShapeCast3D" parent="Casting Origin" unique_id=2081488253 node_paths=PackedStringArray("_debug_shape")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 enabled = false
 shape = SubResource("BoxShape3D_aoiyr")
 target_position = Vector3(0, -1.4, 0)
-collision_mask = 1025
+collision_mask = 3073
 script = ExtResource("7_460ac")
 step_height_max = 0.45
 step_down_max = 0.5

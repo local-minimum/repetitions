@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://b1copejyl8ot1" path="res://scripts/reps/complete_slice_dialog.gd" id="12_aumn5"]
 [ext_resource type="Script" uid="uid://cq13k5jqrlqw5" path="res://addons/minimum_convenience/scripts/crosshair/circ_lines_crosshair_config.gd" id="13_3afjq"]
 [ext_resource type="Script" uid="uid://cufotv8ogf1gx" path="res://addons/minimum_convenience/scripts/crosshair/combined_crosshair_config.gd" id="14_6nb7m"]
+[ext_resource type="Script" uid="uid://c746wntg074vx" path="res://scripts/reps/tile_blocker.gd" id="21_iin4u"]
 
 [sub_resource type="Resource" id="Resource_3afjq"]
 script = ExtResource("12_7a5bf")
@@ -303,6 +304,10 @@ _configs = Dictionary[int, ExtResource("11_7wjui")]({
 2: SubResource("Resource_1o5ds")
 })
 metadata/_custom_type_script = "uid://bu7vo1xyipwpf"
+
+[node name="TileBlocker" type="Node" parent="." unique_id=1007897237]
+script = ExtResource("21_iin4u")
+metadata/_custom_type_script = "uid://c746wntg074vx"
 
 [connection signal="pressed" from="Dungeon Planning UI/MarginContainer/HBoxContainer/Redraw Rooms Btn" to="Dungeon Planning UI" method="_on_redraw_rooms_btn_pressed"]
 [connection signal="pressed" from="Dungeon Planning UI/MarginContainer/HBoxContainer/Layout Done Btn" to="Dungeon Planning UI" method="_on_layout_done_btn_pressed"]

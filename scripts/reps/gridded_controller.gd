@@ -206,6 +206,8 @@ func _attempt_gridded_translation(movement: Movement.MovementType, direction: Ve
     var idx: int = 0
     @warning_ignore_start("return_value_discarded")
     # print_debug("Transition in %s steps: %s" % [steps.size(), steps])
+    var end_pt: Vector3 = steps[-1][PhysicsControllerStepCaster.StepData.CENTER_POINT]
+    TileBlocker.block(self, DungeonBuilder.active_builder.get_closest_coordinates(end_pt))
 
     for step: Dictionary in steps:
         var pt: Vector3 = step[PhysicsControllerStepCaster.StepData.CENTER_POINT]
@@ -252,9 +254,14 @@ func _attempt_gridded_translation(movement: Movement.MovementType, direction: Ve
         idx += 1
 
     @warning_ignore_restore("return_value_discarded")
-    if _translation_tween.finished.connect(_player.handle_translation_end.bind(movement)) != OK:
+    if _translation_tween.finished.connect(
+        func () -> void:
+            TileBlocker.remove_blocks(self)
+            _player.handle_translation_end(movement)
+    ) != OK:
         push_warning("Failed to connect end of movement")
         _player.handle_translation_end(movement)
+        TileBlocker.remove_blocks(self)
 
 func _attempt_transition_to_gridded_translation() -> void:
     if _translation_tween && _translation_tween.is_running() || _rotation_tween && _rotation_tween.is_running():
