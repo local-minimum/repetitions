@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://buxpcajo4810j"]
+
+[ext_resource type="ArrayMesh" uid="uid://cou7p478msjst" path="res://scenes/rooms/meshes/props/paintings/painting_pentagon.obj" id="1_lbbxb"]
+[ext_resource type="Texture2D" uid="uid://bb5bcthiweqmd" path="res://scenes/rooms/meshes/props/paintings/painting_pentagon_occlusion.png" id="2_1sw8y"]
+[ext_resource type="Texture2D" uid="uid://dwo0b00a764sf" path="res://scenes/rooms/meshes/props/paintings/painting_pentagon_albedo.png" id="2_81j5l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_81j5l"]
+albedo_texture = ExtResource("2_81j5l")
+ao_enabled = true
+ao_texture = ExtResource("2_1sw8y")
+
+[node name="PaintingPentagon" type="Node3D" unique_id=2060039052]
+
+[node name="PaintingPentagon" type="MeshInstance3D" parent="." unique_id=1941091685]
+mesh = ExtResource("1_lbbxb")
+surface_material_override/0 = SubResource("StandardMaterial3D_81j5l")
