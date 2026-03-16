@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cea7w4shibj5a"]
+
+[ext_resource type="ArrayMesh" uid="uid://dkpxoutqbkoav" path="res://scenes/rooms/meshes/props/paintings/painting_hexagon.obj" id="1_0r5wv"]
+[ext_resource type="Texture2D" uid="uid://do0os2rvcu0e0" path="res://scenes/rooms/meshes/props/paintings/painting_hexagon_albedo.png" id="2_i40c8"]
+[ext_resource type="Texture2D" uid="uid://qf4sihvyawvd" path="res://scenes/rooms/meshes/props/paintings/painting_hexagon_occlusion.png" id="3_wc5yg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qy14r"]
+albedo_texture = ExtResource("2_i40c8")
+ao_enabled = true
+ao_texture = ExtResource("3_wc5yg")
+
+[node name="PaintingHexagon" type="Node3D" unique_id=1267743742]
+
+[node name="PaintingHexagon" type="MeshInstance3D" parent="." unique_id=1707944537]
+mesh = ExtResource("1_0r5wv")
+surface_material_override/0 = SubResource("StandardMaterial3D_qy14r")
