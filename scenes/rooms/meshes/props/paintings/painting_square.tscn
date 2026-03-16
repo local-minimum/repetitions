@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://nl1dfs3d45oj"]
+
+[ext_resource type="ArrayMesh" uid="uid://cpbqqj8ccwurf" path="res://scenes/rooms/meshes/props/paintings/painting_square.obj" id="1_pum1l"]
+[ext_resource type="Texture2D" uid="uid://5rcfyu7lf562" path="res://scenes/rooms/meshes/props/paintings/painting_square_albedo.png" id="2_wsq7y"]
+[ext_resource type="Texture2D" uid="uid://du8qmbx2i8ec5" path="res://scenes/rooms/meshes/props/paintings/painting_square_occlusion.png" id="3_piase"]
+[ext_resource type="Texture2D" uid="uid://b5yinetudod5o" path="res://scenes/rooms/meshes/props/paintings/painting_square_normals.png" id="4_k3aho"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4eliy"]
+albedo_texture = ExtResource("2_wsq7y")
+normal_texture = ExtResource("4_k3aho")
+ao_enabled = true
+ao_texture = ExtResource("3_piase")
+
+[node name="Node3D" type="Node3D" unique_id=720112772]
+
+[node name="PaintingSquare" type="MeshInstance3D" parent="." unique_id=23047625]
+mesh = ExtResource("1_pum1l")
+surface_material_override/0 = SubResource("StandardMaterial3D_4eliy")
