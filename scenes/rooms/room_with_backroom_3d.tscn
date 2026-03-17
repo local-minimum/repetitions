@@ -16,10 +16,20 @@
 [ext_resource type="PackedScene" uid="uid://bspov4aqnnmii" path="res://scenes/rooms/meshes/props/neon_text_of.tscn" id="14_js4ot"]
 [ext_resource type="PackedScene" uid="uid://chu1gu8rxkp8x" path="res://scenes/rooms/meshes/props/neon_arrow.tscn" id="14_mhrwk"]
 [ext_resource type="PackedScene" uid="uid://cdnaup6tm4ub2" path="res://scenes/rooms/meshes/props/neon_text_work.tscn" id="15_mhrwk"]
+[ext_resource type="PackedScene" uid="uid://p64aj6qlk4o1" path="res://scenes/rooms/meshes/props/paintings/frame_outline_square_cut_corners.tscn" id="17_y0g0h"]
 [ext_resource type="Material" uid="uid://c07yxcnw5ahtq" path="res://textures/wood-textures/track-wood.tres" id="17_yhbjh"]
 [ext_resource type="ArrayMesh" uid="uid://bu3rtrk45k8qd" path="res://scenes/rooms/meshes/props/train_track_turn_right_short.obj" id="18_4ohb6"]
 [ext_resource type="Script" uid="uid://3jm6iguafd34" path="res://scripts/reps/tools/tool.gd" id="19_4ohb6"]
 [ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="20_tow2i"]
+[ext_resource type="PackedScene" uid="uid://w4bu0icxmkb5" path="res://scenes/rooms/meshes/props/paintings/frame_outline_diamond.tscn" id="21_5edac"]
+[ext_resource type="PackedScene" uid="uid://cs808x8erq1p" path="res://scenes/rooms/meshes/props/paintings/frame_outline_hexagon.tscn" id="22_y0g0h"]
+[ext_resource type="PackedScene" uid="uid://bfsildvxaix42" path="res://scenes/rooms/meshes/props/paintings/frame_outline_pentagon.tscn" id="23_rfgxy"]
+[ext_resource type="PackedScene" uid="uid://bx8p4ccytuyq3" path="res://scenes/rooms/meshes/props/paintings/frame_outline_rect_landscape.tscn" id="24_x8tv8"]
+[ext_resource type="PackedScene" uid="uid://dh3cepeni6fbc" path="res://scenes/rooms/meshes/props/paintings/frame_outline_rect_portrait.tscn" id="25_injqu"]
+[ext_resource type="PackedScene" uid="uid://b4gjvcqlqqwyn" path="res://scenes/rooms/meshes/props/paintings/frame_outline_rhombus.tscn" id="26_vplpi"]
+[ext_resource type="PackedScene" uid="uid://ghe67a6fntua" path="res://scenes/rooms/meshes/props/paintings/frame_outline_square.tscn" id="27_vjgds"]
+[ext_resource type="PackedScene" uid="uid://b026au558qlx4" path="res://scenes/rooms/meshes/props/paintings/frame_outline_trianglish.tscn" id="28_a6tbd"]
+[ext_resource type="PackedScene" uid="uid://bi6fdtyq07mtk" path="res://scenes/rooms/meshes/props/paintings/frame_outline_trianglish_2.tscn" id="29_w80se"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_imnvc"]
 size = Vector3(0.5718994, 0.3251953, 1.4872437)
@@ -220,6 +230,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2.9)
 [node name="roomwall_twosided_endcap2" parent="Geometry/Basic" unique_id=338452849 instance=ExtResource("8_bnp8r")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2.1, 0, 2)
 
+[node name="FrameOutlineSquareCutCorners" parent="Geometry/Basic" unique_id=668847884 instance=ExtResource("17_y0g0h")]
+transform = Transform3D(-0.99999994, 0, -8.742278e-08, 0, 0.99999994, 0, 8.742277e-08, 0, -1, -1.812742, 1.4965446, 1.8400006)
+
 [node name="Pickup Track" type="MeshInstance3D" parent="Geometry" unique_id=1291606564 node_paths=PackedStringArray("_interaction_body")]
 transform = Transform3D(-0.719759, 0.45597407, 0.5234832, -0.10094385, 0.6773015, -0.7287476, -0.6868459, -0.57736504, -0.44146597, -3.5298762, 0.5182386, 1.3654854)
 material_override = ExtResource("17_yhbjh")
@@ -237,3 +250,30 @@ metadata/_custom_type_script = "uid://dpwsunra0mkvn"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Pickup Track/InteractionBody3D" unique_id=152410397]
 transform = Transform3D(0.8455252, 0.3802634, 0.37481594, -0.4016035, 0.9155278, -0.022879899, -0.35185486, -0.13118175, 0.92681694, -0.058550358, -0.0049328804, -0.08875728)
 shape = SubResource("BoxShape3D_imnvc")
+
+[node name="FrameOutlineDiamond" parent="." unique_id=146114731 instance=ExtResource("21_5edac")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.7914164, 1.7353778, 2.8400006)
+
+[node name="FrameOutlineHexagon" parent="." unique_id=298466386 instance=ExtResource("22_y0g0h")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.042378, 1.7391602, 2.8400006)
+
+[node name="FrameOutlinePentagon" parent="." unique_id=903589126 instance=ExtResource("23_rfgxy")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.290176, 1.739228, 2.8400006)
+
+[node name="FrameOutlineRectLandscape" parent="." unique_id=279030819 instance=ExtResource("24_x8tv8")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.5519629, 1.7374339, 2.8400006)
+
+[node name="FrameOutlineRectPorttrait" parent="." unique_id=1692628688 instance=ExtResource("25_injqu")]
+transform = Transform3D(-0.99999994, 0, -8.742278e-08, 0, 0.99999994, 0, 8.742277e-08, 0, -1, -2.8071172, 1.7375007, 2.8400006)
+
+[node name="FrameOutlineRhombus" parent="." unique_id=1698488418 instance=ExtResource("26_vplpi")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.7885457, 1.497591, 2.8400004)
+
+[node name="FrameOutlineSquare" parent="." unique_id=1192097370 instance=ExtResource("27_vjgds")]
+transform = Transform3D(-0.99999994, 0, -8.742278e-08, 0, 0.99999994, 0, 8.742277e-08, 0, -1, -2.0453775, 1.4991783, 2.8400006)
+
+[node name="FrameOutlineTrianglish" parent="." unique_id=686393297 instance=ExtResource("28_a6tbd")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.2951636, 1.4930844, 2.8400006)
+
+[node name="FrameOutlineTrianglish2" parent="." unique_id=1040503855 instance=ExtResource("29_w80se")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.5460582, 1.4985344, 2.8400004)

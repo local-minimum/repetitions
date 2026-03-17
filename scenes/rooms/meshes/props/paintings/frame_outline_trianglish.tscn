@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b026au558qlx4"]
+
+[ext_resource type="ArrayMesh" uid="uid://cp4vm8owfwknt" path="res://scenes/rooms/meshes/props/paintings/frame_outline_brick.obj" id="1_pyptj"]
+[ext_resource type="Texture2D" uid="uid://cvlyaoja3vnt8" path="res://scenes/rooms/meshes/props/paintings/frame_outline_albedo.png" id="2_fxqlh"]
+[ext_resource type="Texture2D" uid="uid://cljda3p01gn11" path="res://scenes/rooms/meshes/props/paintings/frame_outline_trianglish_occlusion.png" id="3_pyptj"]
+[ext_resource type="Texture2D" uid="uid://dpjnj5jxvpj35" path="res://scenes/rooms/meshes/props/paintings/frame_outline_trianglish_norm.png" id="4_fxqlh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ayoi"]
+albedo_texture = ExtResource("2_fxqlh")
+metallic = 0.3
+normal_enabled = true
+normal_texture = ExtResource("4_fxqlh")
+ao_enabled = true
+ao_texture = ExtResource("3_pyptj")
+ao_texture_channel = 4
+
+[node name="FrameOutlineTrianglish" type="MeshInstance3D" unique_id=146114731]
+mesh = ExtResource("1_pyptj")
+surface_material_override/0 = SubResource("StandardMaterial3D_7ayoi")
