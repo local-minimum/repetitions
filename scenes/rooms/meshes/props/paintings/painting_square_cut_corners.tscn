@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c20aanamcgsa3"]
+
+[ext_resource type="ArrayMesh" uid="uid://cglgj3q6m5ne0" path="res://scenes/rooms/meshes/props/paintings/painting_square_cut_corners.obj" id="1_k1l73"]
+[ext_resource type="Texture2D" uid="uid://dybkrqx02j5ph" path="res://scenes/rooms/meshes/props/paintings/painting_square_cut_corners_albedo.png" id="2_j48m6"]
+[ext_resource type="Texture2D" uid="uid://blowjg3l2ft4m" path="res://scenes/rooms/meshes/props/paintings/painting_square_cut_corners_occlusion.png" id="3_he5c3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0nm4i"]
+albedo_texture = ExtResource("2_j48m6")
+ao_enabled = true
+ao_texture = ExtResource("3_he5c3")
+
+[node name="PaintingSquareCutCorners" type="Node3D" unique_id=139300141]
+
+[node name="PaintingSquareCutCorners" type="MeshInstance3D" parent="." unique_id=1275617863]
+mesh = ExtResource("1_k1l73")
+surface_material_override/0 = SubResource("StandardMaterial3D_0nm4i")

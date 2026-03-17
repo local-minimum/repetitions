@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://cybea3lw117rd" path="res://scenes/rooms/meshes/props/paintings/painting_rect_landscape.tscn" id="14_y3fl0"]
 [ext_resource type="PackedScene" uid="uid://batltt1n5i0fv" path="res://scenes/rooms/meshes/props/paintings/painting_trianglish2.tscn" id="15_gv8ge"]
 [ext_resource type="PackedScene" uid="uid://dpxoblvwr6kjg" path="res://scenes/rooms/meshes/props/paintings/painting_diamond.tscn" id="16_r7fax"]
+[ext_resource type="PackedScene" uid="uid://c20aanamcgsa3" path="res://scenes/rooms/meshes/props/paintings/painting_square_cut_corners.tscn" id="17_5fr1y"]
 
 [node name="RoomCorner3d" type="Node3D" unique_id=1643020392 node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_y3fl0")
@@ -192,28 +193,31 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -3, 
 [node name="roomwall_twosided_window" parent="Geometry" unique_id=1540346307 instance=ExtResource("7_1do23")]
 
 [node name="PaintingRhombus" parent="Geometry" unique_id=301145547 instance=ExtResource("8_b3unn")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.0036125, 1.1776215, -2.17)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1.0036125, 1.2, -2.17)
 
 [node name="PaintingSquare" parent="Geometry" unique_id=720112772 instance=ExtResource("9_wujcv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4770522, 1.3050884, -3.83)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4770522, 1.2, -3.83)
 
 [node name="PaintingTrianglish" parent="Geometry" unique_id=1514852435 instance=ExtResource("10_ejta0")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 3.8274312, 1.335941, -2.4753656)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 3.8274312, 1.2, -2.4753656)
 
 [node name="PaintingPentagon" parent="Geometry" unique_id=2060039052 instance=ExtResource("11_vabp3")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.8263302, 1.376786, 0.9994309)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.8263302, 1.2, 2.6864817)
+
+[node name="PaintingRectPortrait" parent="Geometry" unique_id=681799424 instance=ExtResource("13_anhhk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0621603, 1.2, 0.16999996)
+
+[node name="PaintingRectLandscape" parent="Geometry" unique_id=588026085 instance=ExtResource("14_y3fl0")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -2.8603287, 1.2, 3.8300004)
+
+[node name="PaintingTrianglish2" parent="Geometry" unique_id=1423069146 instance=ExtResource("15_gv8ge")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2.244772, 1.2, 3.83)
+
+[node name="PaintingDiamond" parent="Geometry" unique_id=1505625383 instance=ExtResource("16_r7fax")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 3.826464, 1.2, -0.111472845)
 
 [node name="PaintingHexagon" parent="Geometry" unique_id=1267743742 instance=ExtResource("12_ya8ya")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 3.8254821, 1.2933335, 2.7076578)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 3.8254821, 1.2, 2.7076578)
 
-[node name="PaintingRectPortrait" parent="." unique_id=681799424 instance=ExtResource("13_anhhk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0621603, 1.3463471, 1.17)
-
-[node name="PaintingRectLandscape" parent="." unique_id=588026085 instance=ExtResource("14_y3fl0")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -3.8603287, 1.3195773, 4.8300004)
-
-[node name="PaintingTrianglish2" parent="." unique_id=1423069146 instance=ExtResource("15_gv8ge")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.3347969, 1.2314312, 4.83)
-
-[node name="PaintingDiamond" parent="." unique_id=1505625383 instance=ExtResource("16_r7fax")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.826464, 1.370766, 0.88852715)
+[node name="PaintingSquareCutCorners" parent="Geometry" unique_id=139300141 instance=ExtResource("17_5fr1y")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.172, 1.2, 3.83)
