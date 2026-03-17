@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://s264cc7x7qxw" path="res://scenes/rooms/meshes/props/paintings/painting_trianglish.tscn" id="10_ejta0"]
 [ext_resource type="PackedScene" uid="uid://buxpcajo4810j" path="res://scenes/rooms/meshes/props/paintings/painting_pentagon.tscn" id="11_vabp3"]
 [ext_resource type="PackedScene" uid="uid://cea7w4shibj5a" path="res://scenes/rooms/meshes/props/paintings/painting_hexagon.tscn" id="12_ya8ya"]
+[ext_resource type="PackedScene" uid="uid://mrkiyow0tt8y" path="res://scenes/rooms/meshes/props/paintings/painting_rect_portrait.tscn" id="13_anhhk"]
 
 [node name="RoomCorner3d" type="Node3D" unique_id=1643020392 node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_y3fl0")
@@ -201,3 +202,6 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.8
 
 [node name="PaintingHexagon" parent="Geometry" unique_id=1267743742 instance=ExtResource("12_ya8ya")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 3.8254821, 1.2933335, 2.7076578)
+
+[node name="PaintingRectPortrait" parent="." unique_id=681799424 instance=ExtResource("13_anhhk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0621603, 1.3463471, 1.17)

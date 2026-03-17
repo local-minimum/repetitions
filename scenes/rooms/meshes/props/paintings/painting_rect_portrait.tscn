@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://mrkiyow0tt8y"]
+
+[ext_resource type="ArrayMesh" uid="uid://b4euv5nr4el8b" path="res://scenes/rooms/meshes/props/paintings/painting_rect_portrait.obj" id="1_7ogx5"]
+[ext_resource type="Texture2D" uid="uid://bineqebt3qjnl" path="res://scenes/rooms/meshes/props/paintings/painting_rect_portrait_albedo.png" id="2_h5j2v"]
+[ext_resource type="Texture2D" uid="uid://1654ppoidyxa" path="res://scenes/rooms/meshes/props/paintings/painting_rect_portrait_occlusion.png" id="3_bluit"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_71toe"]
+albedo_texture = ExtResource("2_h5j2v")
+ao_enabled = true
+ao_texture = ExtResource("3_bluit")
+
+[node name="PaintingRectPortrait" type="Node3D" unique_id=681799424]
+
+[node name="PaintingRectPortrait" type="MeshInstance3D" parent="." unique_id=88077050]
+mesh = ExtResource("1_7ogx5")
+surface_material_override/0 = SubResource("StandardMaterial3D_71toe")
