@@ -14,6 +14,6 @@ ao_enabled = true
 ao_texture = ExtResource("3_3xcli")
 ao_texture_channel = 4
 
-[node name="FrameOutlineHexagon" type="MeshInstance3D" unique_id=668847884]
+[node name="FrameOutlinePentagon" type="MeshInstance3D" unique_id=668847884]
 mesh = ExtResource("1_3xcli")
 surface_material_override/0 = SubResource("StandardMaterial3D_hofyp")

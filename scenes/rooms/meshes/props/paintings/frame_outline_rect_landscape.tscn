@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bx8p4ccytuyq3"]
+
+[ext_resource type="ArrayMesh" uid="uid://cp4vm8owfwknt" path="res://scenes/rooms/meshes/props/paintings/frame_outline_brick.obj" id="1_gujne"]
+[ext_resource type="Texture2D" uid="uid://cvlyaoja3vnt8" path="res://scenes/rooms/meshes/props/paintings/frame_outline_albedo.png" id="2_j30ud"]
+[ext_resource type="Texture2D" uid="uid://dprc6niwj7cry" path="res://scenes/rooms/meshes/props/paintings/frame_outline_rect_landscape.png" id="3_gujne"]
+[ext_resource type="Texture2D" uid="uid://c1omlo24let8o" path="res://scenes/rooms/meshes/props/paintings/frame_outline_rect_landscape_norm.png" id="4_j30ud"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5rr0v"]
+albedo_texture = ExtResource("2_j30ud")
+metallic = 0.3
+normal_enabled = true
+normal_texture = ExtResource("4_j30ud")
+ao_enabled = true
+ao_texture = ExtResource("3_gujne")
+ao_texture_channel = 4
+
+[node name="FrameOutlineRectLandscape" type="MeshInstance3D" unique_id=668847884]
+mesh = ExtResource("1_gujne")
+surface_material_override/0 = SubResource("StandardMaterial3D_5rr0v")

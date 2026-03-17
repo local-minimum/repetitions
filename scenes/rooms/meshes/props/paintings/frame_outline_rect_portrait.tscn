@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dh3cepeni6fbc"]
+
+[ext_resource type="ArrayMesh" uid="uid://cp4vm8owfwknt" path="res://scenes/rooms/meshes/props/paintings/frame_outline_brick.obj" id="1_qn516"]
+[ext_resource type="Texture2D" uid="uid://cvlyaoja3vnt8" path="res://scenes/rooms/meshes/props/paintings/frame_outline_albedo.png" id="2_2nw5a"]
+[ext_resource type="Texture2D" uid="uid://b1fp1lq3b67tg" path="res://scenes/rooms/meshes/props/paintings/frame_outline_rect_portrait_occlusion.png" id="3_qn516"]
+[ext_resource type="Texture2D" uid="uid://cfhrkp46xjfie" path="res://scenes/rooms/meshes/props/paintings/frame_outline_rect_portrait_norm.png" id="4_2nw5a"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a4vwh"]
+albedo_texture = ExtResource("2_2nw5a")
+metallic = 0.3
+normal_enabled = true
+normal_texture = ExtResource("4_2nw5a")
+ao_enabled = true
+ao_texture = ExtResource("3_qn516")
+ao_texture_channel = 4
+
+[node name="FrameOutlineRectPorttrait" type="MeshInstance3D" unique_id=668847884]
+transform = Transform3D(0.029491752, -0.999565, 0, 0.999565, 0.029491752, 0, 0, 0, 1, 0, 0, 0)
+mesh = ExtResource("1_qn516")
+surface_material_override/0 = SubResource("StandardMaterial3D_a4vwh")
