@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dpxoblvwr6kjg"]
+
+[ext_resource type="ArrayMesh" uid="uid://dilk36pwxabrd" path="res://scenes/rooms/meshes/props/paintings/painting_diamond.obj" id="1_8frvv"]
+[ext_resource type="Texture2D" uid="uid://b5kvyo7wbr58u" path="res://scenes/rooms/meshes/props/paintings/painting_diamond_albedo.png" id="2_f6f8m"]
+[ext_resource type="Texture2D" uid="uid://cpsu4woadyot5" path="res://scenes/rooms/meshes/props/paintings/painting_diamond_occlusion.png" id="3_pbhig"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cx5q0"]
+albedo_texture = ExtResource("2_f6f8m")
+ao_enabled = true
+ao_texture = ExtResource("3_pbhig")
+
+[node name="PaintingDiamond" type="Node3D" unique_id=1505625383]
+
+[node name="PaintingDiamond" type="MeshInstance3D" parent="." unique_id=963725063]
+mesh = ExtResource("1_8frvv")
+surface_material_override/0 = SubResource("StandardMaterial3D_cx5q0")

@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://mrkiyow0tt8y" path="res://scenes/rooms/meshes/props/paintings/painting_rect_portrait.tscn" id="13_anhhk"]
 [ext_resource type="PackedScene" uid="uid://cybea3lw117rd" path="res://scenes/rooms/meshes/props/paintings/painting_rect_landscape.tscn" id="14_y3fl0"]
 [ext_resource type="PackedScene" uid="uid://batltt1n5i0fv" path="res://scenes/rooms/meshes/props/paintings/painting_trianglish2.tscn" id="15_gv8ge"]
+[ext_resource type="PackedScene" uid="uid://dpxoblvwr6kjg" path="res://scenes/rooms/meshes/props/paintings/painting_diamond.tscn" id="16_r7fax"]
 
 [node name="RoomCorner3d" type="Node3D" unique_id=1643020392 node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_y3fl0")
@@ -212,4 +213,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0621603, 1.3463471, 1.17)
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -3.8603287, 1.3195773, 4.8300004)
 
 [node name="PaintingTrianglish2" parent="." unique_id=1423069146 instance=ExtResource("15_gv8ge")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.3347969, 1.398769, 4.83)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 1.3347969, 1.2314312, 4.83)
+
+[node name="PaintingDiamond" parent="." unique_id=1505625383 instance=ExtResource("16_r7fax")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.826464, 1.370766, 0.88852715)
