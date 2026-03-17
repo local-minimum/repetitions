@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://w4bu0icxmkb5"]
+
+[ext_resource type="ArrayMesh" uid="uid://cp4vm8owfwknt" path="res://scenes/rooms/meshes/props/paintings/frame_outline_brick.obj" id="1_aecsp"]
+[ext_resource type="Texture2D" uid="uid://cvlyaoja3vnt8" path="res://scenes/rooms/meshes/props/paintings/frame_outline_albedo.png" id="2_vqab3"]
+[ext_resource type="Texture2D" uid="uid://dwrjl1jdr2j0" path="res://scenes/rooms/meshes/props/paintings/frame_outline_diamond_occlusion.png" id="3_a2k2d"]
+[ext_resource type="Texture2D" uid="uid://ssjbsb3opu72" path="res://scenes/rooms/meshes/props/paintings/frame_outline_diamond_norm.png" id="4_j82sn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5hj7c"]
+albedo_texture = ExtResource("2_vqab3")
+metallic = 0.3
+normal_enabled = true
+normal_texture = ExtResource("4_j82sn")
+ao_enabled = true
+ao_texture = ExtResource("3_a2k2d")
+ao_texture_channel = 4
+
+[node name="FrameOutlineDiamond" type="MeshInstance3D" unique_id=146114731]
+mesh = ExtResource("1_aecsp")
+surface_material_override/0 = SubResource("StandardMaterial3D_5hj7c")
