@@ -238,10 +238,10 @@ locale/translations=PackedStringArray("res://resources/ui.en.translation", "res:
 3d_physics/layer_1="Default"
 3d_physics/layer_3="Passable Decorations"
 3d_physics/layer_4="Train Track Areas"
+3d_physics/layer_8="Pointer Only"
 3d_physics/layer_10="Player"
 3d_physics/layer_11="Enemies"
 3d_physics/layer_12="Space Reservations"
-3d_physics/layer_31="s"
 3d_physics/layer_32="Debug"
 
 [physics]

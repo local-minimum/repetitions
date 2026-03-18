@@ -30,6 +30,7 @@
 [ext_resource type="PackedScene" uid="uid://ghe67a6fntua" path="res://scenes/rooms/meshes/props/paintings/frame_outline_square.tscn" id="27_vjgds"]
 [ext_resource type="PackedScene" uid="uid://b026au558qlx4" path="res://scenes/rooms/meshes/props/paintings/frame_outline_trianglish.tscn" id="28_a6tbd"]
 [ext_resource type="PackedScene" uid="uid://bi6fdtyq07mtk" path="res://scenes/rooms/meshes/props/paintings/frame_outline_trianglish_2.tscn" id="29_w80se"]
+[ext_resource type="PackedScene" uid="uid://cm4c3j0q4bwdt" path="res://scenes/rooms/meshes/props/paintings/paint_tracer.tscn" id="31_rfgxy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_imnvc"]
 size = Vector3(0.5718994, 0.3251953, 1.4872437)
@@ -277,3 +278,6 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.2
 
 [node name="FrameOutlineTrianglish2" parent="." unique_id=1040503855 instance=ExtResource("29_w80se")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.5460582, 1.4985344, 2.8400004)
+
+[node name="PaintTracer" parent="." unique_id=581504205 instance=ExtResource("31_rfgxy")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.6785975, 0.9933957, 2.8165967)

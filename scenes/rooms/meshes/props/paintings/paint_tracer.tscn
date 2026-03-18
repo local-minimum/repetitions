@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://cm4c3j0q4bwdt"]
+
+[ext_resource type="ArrayMesh" uid="uid://dyh5jansf774k" path="res://scenes/rooms/meshes/props/paintings/paint_tracer.obj" id="1_j0ykq"]
+[ext_resource type="Texture2D" uid="uid://byq3pt5qv0mug" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_occlusion.png" id="2_0whfk"]
+[ext_resource type="Texture2D" uid="uid://ctii286hgjgf8" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_normals.png" id="3_j53bi"]
+[ext_resource type="ArrayMesh" uid="uid://rcdd7o3xmgic" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_horizontal.obj" id="4_wyigd"]
+[ext_resource type="ArrayMesh" uid="uid://bohd3bqhir0o7" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_lower_left.obj" id="5_mrghi"]
+[ext_resource type="ArrayMesh" uid="uid://c28qmusi00sbh" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_lower_right.obj" id="6_4ywof"]
+[ext_resource type="ArrayMesh" uid="uid://byaniy8qh62b1" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_upper_left.obj" id="7_cmxvr"]
+[ext_resource type="ArrayMesh" uid="uid://ccrgs2rpk0gma" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_upper_right.obj" id="8_qnvop"]
+[ext_resource type="ArrayMesh" uid="uid://dq5a7ww10ii4r" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_vertical.obj" id="9_7i4lf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6tbd"]
+albedo_color = Color(0.93, 0.84769505, 0.38130003, 1)
+metallic = 0.3
+roughness = 0.7
+normal_enabled = true
+normal_texture = ExtResource("3_j53bi")
+ao_enabled = true
+ao_texture = ExtResource("2_0whfk")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pdfb6"]
+albedo_color = Color(0.017380321, 0.04606182, 0.16358525, 1)
+metallic = 0.3
+roughness = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wyigd"]
+radius = 0.03325808
+
+[node name="PaintTracer" type="MeshInstance3D" unique_id=581504205]
+mesh = ExtResource("1_j0ykq")
+surface_material_override/0 = SubResource("StandardMaterial3D_a6tbd")
+
+[node name="PaintTracerHorizontal" type="MeshInstance3D" parent="." unique_id=327140910]
+visible = false
+mesh = ExtResource("4_wyigd")
+surface_material_override/0 = SubResource("StandardMaterial3D_pdfb6")
+metadata/LINE = 6
+
+[node name="PaintTracerLowerLeft" type="MeshInstance3D" parent="." unique_id=1905103642]
+visible = false
+mesh = ExtResource("5_mrghi")
+surface_material_override/0 = SubResource("StandardMaterial3D_pdfb6")
+metadata/LINE = 10
+
+[node name="PaintTracerLowerRight" type="MeshInstance3D" parent="." unique_id=2135750657]
+visible = false
+mesh = ExtResource("6_4ywof")
+surface_material_override/0 = SubResource("StandardMaterial3D_pdfb6")
+metadata/LINE = 12
+
+[node name="PaintTracerUpperLeft" type="MeshInstance3D" parent="." unique_id=1183337651]
+visible = false
+mesh = ExtResource("7_cmxvr")
+surface_material_override/0 = SubResource("StandardMaterial3D_pdfb6")
+metadata/LINE = 3
+
+[node name="PaintTracerUpperRight" type="MeshInstance3D" parent="." unique_id=1596289096]
+visible = false
+mesh = ExtResource("8_qnvop")
+surface_material_override/0 = SubResource("StandardMaterial3D_pdfb6")
+metadata/LINE = 5
+
+[node name="PaintTracerVertical" type="MeshInstance3D" parent="." unique_id=1068288376]
+visible = false
+mesh = ExtResource("9_7i4lf")
+surface_material_override/0 = SubResource("StandardMaterial3D_pdfb6")
+metadata/LINE = 9
+
+[node name="Point 1" type="Area3D" parent="." unique_id=1275525906]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.058724806, 0.13822484, 0)
+collision_layer = 128
+collision_mask = 0
+metadata/POINT = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Point 1" unique_id=235073432]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026996627, 0, 0)
+shape = SubResource("SphereShape3D_wyigd")
+
+[node name="Point 2" type="Area3D" parent="." unique_id=1230313146]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.058724806, 0.046354413, 0.12892736)
+collision_layer = 128
+collision_mask = 0
+metadata/POINT = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Point 2" unique_id=1949499394]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026996627, 0, 0)
+shape = SubResource("SphereShape3D_wyigd")
+
+[node name="Point 4" type="Area3D" parent="." unique_id=270860268]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.058724806, 0.046354413, -0.12712602)
+collision_layer = 128
+collision_mask = 0
+metadata/POINT = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Point 4" unique_id=535954857]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026996627, 0, 0)
+shape = SubResource("SphereShape3D_wyigd")
+
+[node name="Point 8" type="Area3D" parent="." unique_id=448171030]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.058724806, -0.14381993, 0)
+collision_layer = 128
+collision_mask = 0
+metadata/POINT = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Point 8" unique_id=875092135]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026996627, -0.003272608, 0)
+shape = SubResource("SphereShape3D_wyigd")

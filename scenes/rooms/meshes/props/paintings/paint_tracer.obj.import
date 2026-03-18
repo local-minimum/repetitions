@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dyh5jansf774k"
+path="res://.godot/imported/paint_tracer.obj-de692431ccc6e767a47e6cc5082b1f1f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/paint_tracer.obj-de692431ccc6e767a47e6cc5082b1f1f.mesh"]
+
+source_file="res://scenes/rooms/meshes/props/paintings/paint_tracer.obj"
+dest_files=["res://.godot/imported/paint_tracer.obj-de692431ccc6e767a47e6cc5082b1f1f.mesh", "res://.godot/imported/paint_tracer.obj-de692431ccc6e767a47e6cc5082b1f1f.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
