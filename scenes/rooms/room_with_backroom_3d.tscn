@@ -281,3 +281,9 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.5
 
 [node name="PaintTracer" parent="." unique_id=581504205 instance=ExtResource("31_rfgxy")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.6785975, 0.9933957, 2.8165967)
+
+[node name="PaintTracer2" parent="." unique_id=576258521 instance=ExtResource("31_rfgxy")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.2406077, 0.9933957, 2.8165967)
+
+[node name="PaintTracer3" parent="." unique_id=758096538 instance=ExtResource("31_rfgxy")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1.7899133, 0.9933957, 2.8165967)

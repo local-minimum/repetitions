@@ -3,6 +3,7 @@
 [ext_resource type="ArrayMesh" uid="uid://dyh5jansf774k" path="res://scenes/rooms/meshes/props/paintings/paint_tracer.obj" id="1_j0ykq"]
 [ext_resource type="Texture2D" uid="uid://byq3pt5qv0mug" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_occlusion.png" id="2_0whfk"]
 [ext_resource type="Texture2D" uid="uid://ctii286hgjgf8" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_normals.png" id="3_j53bi"]
+[ext_resource type="Script" uid="uid://bxs6srx3crojj" path="res://scripts/reps/paint_tracer.gd" id="4_mrghi"]
 [ext_resource type="ArrayMesh" uid="uid://rcdd7o3xmgic" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_horizontal.obj" id="4_wyigd"]
 [ext_resource type="ArrayMesh" uid="uid://bohd3bqhir0o7" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_lower_left.obj" id="5_mrghi"]
 [ext_resource type="ArrayMesh" uid="uid://c28qmusi00sbh" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_lower_right.obj" id="6_4ywof"]
@@ -27,9 +28,12 @@ roughness = 0.2
 [sub_resource type="SphereShape3D" id="SphereShape3D_wyigd"]
 radius = 0.03325808
 
-[node name="PaintTracer" type="MeshInstance3D" unique_id=581504205]
+[node name="PaintTracer" type="MeshInstance3D" unique_id=581504205 node_paths=PackedStringArray("_points", "_lines")]
 mesh = ExtResource("1_j0ykq")
 surface_material_override/0 = SubResource("StandardMaterial3D_a6tbd")
+script = ExtResource("4_mrghi")
+_points = [NodePath("Point 1"), NodePath("Point 2"), NodePath("Point 4"), NodePath("Point 8")]
+_lines = [NodePath("PaintTracerHorizontal"), NodePath("PaintTracerLowerLeft"), NodePath("PaintTracerLowerRight"), NodePath("PaintTracerUpperLeft"), NodePath("PaintTracerUpperRight"), NodePath("PaintTracerVertical")]
 
 [node name="PaintTracerHorizontal" type="MeshInstance3D" parent="." unique_id=327140910]
 visible = false
