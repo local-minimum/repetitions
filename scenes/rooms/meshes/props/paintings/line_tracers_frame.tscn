@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://bw8b2k1a5w7f7"]
+
+[ext_resource type="PackedScene" uid="uid://dme3hey0e50by" path="res://scenes/rooms/meshes/props/paintings/line_tracers_frame.blend" id="1_k0l3t"]
+[ext_resource type="Script" uid="uid://dfailtfhssc73" path="res://scripts/reps/paint_tracing/line_tracers_frame.gd" id="2_tylvv"]
+[ext_resource type="Texture2D" uid="uid://brrromldd38n4" path="res://scenes/rooms/meshes/props/paintings/line_tracers_frame_occlusion.png" id="2_vvq0l"]
+[ext_resource type="PackedScene" uid="uid://cm4c3j0q4bwdt" path="res://scenes/rooms/meshes/props/paintings/paint_tracer.tscn" id="3_vvq0l"]
+[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="5_gw7l4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tylvv"]
+albedo_color = Color(0.5233545, 0.60605514, 0.6250408, 1)
+ao_enabled = true
+ao_texture = ExtResource("2_vvq0l")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gw7l4"]
+albedo_color = Color(0.22819778, 0.690527, 0.48238277, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vvq0l"]
+size = Vector3(0.1, 0.25, 0.25)
+
+[node name="Line Tracers Frame" unique_id=311467674 node_paths=PackedStringArray("tracers", "button", "button_animator") instance=ExtResource("1_k0l3t")]
+script = ExtResource("2_tylvv")
+tracers = [NodePath("PaintTracer 1"), NodePath("PaintTracer 2"), NodePath("PaintTracer 3")]
+button = NodePath("Button Click Area")
+button_animator = NodePath("AnimationPlayer")
+button_animation = "Press"
+
+[node name="Blocks Frame" parent="." index="0" unique_id=208616147]
+surface_material_override/0 = SubResource("StandardMaterial3D_tylvv")
+
+[node name="Button" parent="." index="1" unique_id=1238257320]
+surface_material_override/0 = SubResource("StandardMaterial3D_gw7l4")
+
+[node name="PaintTracer 1" parent="." index="3" unique_id=581504205 instance=ExtResource("3_vvq0l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.406)
+
+[node name="PaintTracer 2" parent="." index="4" unique_id=2111513760 instance=ExtResource("3_vvq0l")]
+
+[node name="PaintTracer 3" parent="." index="5" unique_id=826419975 instance=ExtResource("3_vvq0l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.406)
+
+[node name="Button Click Area" type="Area3D" parent="." index="6" unique_id=1091063608 node_paths=PackedStringArray("_root")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07658386, 0, -0.78747797)
+collision_layer = 0
+collision_mask = 128
+monitoring = false
+monitorable = false
+script = ExtResource("5_gw7l4")
+_root = NodePath("../Button")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Button Click Area" index="0" unique_id=1044132440]
+shape = SubResource("BoxShape3D_vvq0l")
+
+[connection signal="execute_interaction" from="Button Click Area" to="." method="_on_click_button"]

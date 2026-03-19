@@ -45,8 +45,12 @@ point_count = 2
 curve = SubResource("Curve_7i4lf")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_weym7"]
-emission_shape = 1
-emission_sphere_radius = 0.03
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.02
+emission_ring_radius = 0.04
+emission_ring_inner_radius = 0.03
+emission_ring_cone_angle = 90.0
 gravity = Vector3(0, 0, 0)
 scale_min = 0.02
 scale_max = 1.5
@@ -111,6 +115,8 @@ metadata/LINE = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.058724806, 0.13822484, 0)
 collision_layer = 128
 collision_mask = 0
+monitoring = false
+monitorable = false
 script = ExtResource("11_cmxvr")
 tracer = NodePath("..")
 point = NodePath(".")
@@ -123,8 +129,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026996627, 0, 0)
 shape = SubResource("SphereShape3D_wyigd")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Point 0" unique_id=246762331]
-emitting = false
-amount = 42
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+amount = 64
 preprocess = 1.0
 explosiveness = 0.2
 local_coords = true
@@ -135,6 +141,8 @@ draw_pass_1 = SubResource("QuadMesh_1vyvn")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.058724806, 0.046354413, 0.12892736)
 collision_layer = 128
 collision_mask = 0
+monitoring = false
+monitorable = false
 script = ExtResource("11_cmxvr")
 tracer = NodePath("..")
 point = NodePath(".")
@@ -147,8 +155,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026996627, 0, 0)
 shape = SubResource("SphereShape3D_wyigd")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Point 1" unique_id=1399237267]
-emitting = false
-amount = 42
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+amount = 64
 preprocess = 1.0
 explosiveness = 0.2
 local_coords = true
@@ -159,6 +167,8 @@ draw_pass_1 = SubResource("QuadMesh_1vyvn")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.058724806, 0.046354413, -0.12712602)
 collision_layer = 128
 collision_mask = 0
+monitoring = false
+monitorable = false
 script = ExtResource("11_cmxvr")
 tracer = NodePath("..")
 point = NodePath(".")
@@ -171,8 +181,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026996627, 0, 0)
 shape = SubResource("SphereShape3D_wyigd")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Point 2" unique_id=979697566]
-emitting = false
-amount = 42
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+amount = 64
 preprocess = 1.0
 explosiveness = 0.2
 local_coords = true
@@ -183,6 +193,8 @@ draw_pass_1 = SubResource("QuadMesh_1vyvn")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.058724806, -0.14381993, 0)
 collision_layer = 128
 collision_mask = 0
+monitoring = false
+monitorable = false
 script = ExtResource("11_cmxvr")
 tracer = NodePath("..")
 point = NodePath(".")
@@ -195,8 +207,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026996627, -0.003272608, 0
 shape = SubResource("SphereShape3D_wyigd")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Point 4" unique_id=642309915]
-emitting = false
-amount = 42
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+amount = 64
 preprocess = 1.0
 explosiveness = 0.2
 local_coords = true

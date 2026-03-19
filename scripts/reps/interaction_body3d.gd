@@ -12,6 +12,7 @@ signal change_interaction_hover(hovered: bool)
         interactable = value
         if update_hoved_signal:
             change_interaction_hover.emit(interactable)
+            _update_pointer()
 
     get():
         if !_readied:
@@ -100,9 +101,11 @@ var _hovered: bool:
 
 func _handle_mouse_entered() -> void:
     _hovered = true
-    if interactable && valid_player_position():
+    # print_debug("Hover %s, interactable %s valid_position %s" % [self, valid_player_position(), interactable])
+    if valid_player_position():
         _valid = true
-        InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
+        if interactable:
+            InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
     else:
         _valid = false
 
@@ -139,8 +142,10 @@ func _handle_input_event(_cam: Node, event: InputEvent, _event_position: Vector3
         return
 
     if interactable && valid_player_position():
+        #print_debug("Interacting with valid position")
         if _is_interaction(event):
             get_viewport().set_input_as_handled()
+            print_debug("Execute interaction %s" % [self])
             _execute_interaction()
             execute_interaction.emit()
         elif _is_released_interaction(event):
@@ -153,11 +158,10 @@ func _update_pointer() -> void:
 
     var valid: bool = valid_player_position()
     if _valid != valid:
-        if valid:
-            _valid = true
+        _valid = valid
+        if valid && _hovered:
             InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
         else:
-            _valid = false
             InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
 
 ## Implement this function to have a direct effect, or use the signal with the same name

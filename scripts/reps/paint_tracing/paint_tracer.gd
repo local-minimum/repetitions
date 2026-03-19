@@ -44,6 +44,10 @@ func set_point_hints(hint: bool) -> void:
     for pt: PaintTracerPoint in _points:
         pt.show_particles = hint
 
+func set_interactiable(interactable: bool) -> void:
+    for pt: PaintTracerPoint in _points:
+        pt.interactable = interactable
+
 func set_solution(point_sequence: Array[int]) -> void:
     _solution_hash = 0
     var last_pt: int = -1
@@ -128,3 +132,8 @@ func _clear_drawing() -> void:
     _drawing_hash = 0
     for line: Node3D in _lines:
         line.hide()
+
+func clear() -> void:
+    _drawing = false
+    _active_point = -1
+    _clear_drawing()

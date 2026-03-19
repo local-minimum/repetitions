@@ -31,7 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://ghe67a6fntua" path="res://scenes/rooms/meshes/props/paintings/frame_outline_square.tscn" id="27_vjgds"]
 [ext_resource type="PackedScene" uid="uid://b026au558qlx4" path="res://scenes/rooms/meshes/props/paintings/frame_outline_trianglish.tscn" id="28_a6tbd"]
 [ext_resource type="PackedScene" uid="uid://bi6fdtyq07mtk" path="res://scenes/rooms/meshes/props/paintings/frame_outline_trianglish_2.tscn" id="29_w80se"]
-[ext_resource type="PackedScene" uid="uid://cm4c3j0q4bwdt" path="res://scenes/rooms/meshes/props/paintings/paint_tracer.tscn" id="31_rfgxy"]
+[ext_resource type="PackedScene" uid="uid://bw8b2k1a5w7f7" path="res://scenes/rooms/meshes/props/paintings/line_tracers_frame.tscn" id="32_x8tv8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rfgxy"]
 size = Vector3(1, 1, 1.6870117)
@@ -242,8 +242,9 @@ transform = Transform3D(-0.99999994, 0, -8.742278e-08, 0, 0.99999994, 0, 8.74227
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2898779, 0, 1.1264884)
 collision_layer = 0
 collision_mask = 512
+input_ray_pickable = false
 script = ExtResource("18_x8tv8")
-tracers = [NodePath("../../../PaintTracer"), NodePath("../../../PaintTracer2"), NodePath("../../../PaintTracer3")]
+tracers = [NodePath("../../../line_tracers_frame/PaintTracer 1"), NodePath("../../../line_tracers_frame/PaintTracer 2"), NodePath("../../../line_tracers_frame/PaintTracer 3")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Basic/Trigger Paint Tracers" unique_id=471879450]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.80060005, -0.12133789)
@@ -294,14 +295,10 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.2
 [node name="FrameOutlineTrianglish2" parent="." unique_id=1040503855 instance=ExtResource("29_w80se")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.5460582, 1.4985344, 2.8400004)
 
-[node name="PaintTracer" parent="." unique_id=581504205 instance=ExtResource("31_rfgxy")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.6785975, 0.9933957, 2.8165967)
-
-[node name="PaintTracer2" parent="." unique_id=576258521 instance=ExtResource("31_rfgxy")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.2406077, 0.9933957, 2.8165967)
-
-[node name="PaintTracer3" parent="." unique_id=758096538 instance=ExtResource("31_rfgxy")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1.7899133, 0.9933957, 2.8165967)
+[node name="line_tracers_frame" parent="." unique_id=311467674 instance=ExtResource("32_x8tv8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.2842402, 0.86653066, 2.7905009)
 
 [connection signal="body_entered" from="Geometry/Basic/Trigger Paint Tracers" to="Geometry/Basic/Trigger Paint Tracers" method="_on_body_entered"]
 [connection signal="body_exited" from="Geometry/Basic/Trigger Paint Tracers" to="Geometry/Basic/Trigger Paint Tracers" method="_on_body_exited"]
+
+[editable path="line_tracers_frame"]
