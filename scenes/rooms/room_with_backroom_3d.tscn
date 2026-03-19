@@ -296,7 +296,7 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.2
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.5460582, 1.4985344, 2.8400004)
 
 [node name="line_tracers_frame" parent="." unique_id=311467674 instance=ExtResource("32_x8tv8")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.2842402, 0.86653066, 2.7905009)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1.8494542, 0.86653066, 2.7905009)
 
 [connection signal="body_entered" from="Geometry/Basic/Trigger Paint Tracers" to="Geometry/Basic/Trigger Paint Tracers" method="_on_body_entered"]
 [connection signal="body_exited" from="Geometry/Basic/Trigger Paint Tracers" to="Geometry/Basic/Trigger Paint Tracers" method="_on_body_exited"]

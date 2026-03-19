@@ -15,7 +15,7 @@ ao_texture = ExtResource("2_vvq0l")
 albedo_color = Color(0.22819778, 0.690527, 0.48238277, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vvq0l"]
-size = Vector3(0.1, 0.25, 0.25)
+size = Vector3(0.07333984, 0.23033142, 0.22811127)
 
 [node name="Line Tracers Frame" unique_id=311467674 node_paths=PackedStringArray("tracers", "button", "button_animator") instance=ExtResource("1_k0l3t")]
 script = ExtResource("2_tylvv")
@@ -48,6 +48,7 @@ script = ExtResource("5_gw7l4")
 _root = NodePath("../Button")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Button Click Area" index="0" unique_id=1044132440]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013330072, 0.002281189, 0.0005455017)
 shape = SubResource("BoxShape3D_vvq0l")
 
 [connection signal="execute_interaction" from="Button Click Area" to="." method="_on_click_button"]

@@ -28,7 +28,7 @@ metallic = 0.3
 roughness = 0.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wyigd"]
-radius = 0.03325808
+radius = 0.04
 
 [sub_resource type="Gradient" id="Gradient_cmxvr"]
 offsets = PackedFloat32Array(0, 0.14105794, 0.929471, 0.98740554)
