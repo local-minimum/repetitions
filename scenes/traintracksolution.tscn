@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://8hu6pcjxtnhp"]
 
-[ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_qnthh"]
+[ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_building/dungeon_builder.gd" id="1_qnthh"]
 [ext_resource type="PackedScene" uid="uid://cjduvtbggfby1" path="res://scenes/rooms/start_room_3d.tscn" id="1_va7fd"]
 [ext_resource type="PackedScene" uid="uid://hpel2to4u6wx" path="res://scenes/rooms/room_corner_3d.tscn" id="2_va7fd"]
 [ext_resource type="PackedScene" uid="uid://dghtpf5yu3ogc" path="res://scenes/loot/loose_track.tscn" id="3_oi23a"]
@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://chkw5q3yhwuml" path="res://scenes/rooms/room_with_backroom_3d.tscn" id="10_3rqk3"]
 [ext_resource type="PackedScene" uid="uid://balxpkjvdg37o" path="res://scenes/entities/fish_enemy.tscn" id="12_6gink"]
 [ext_resource type="PackedScene" uid="uid://b8lqj7rv80ssv" path="res://scenes/player_3d.tscn" id="13_6gink"]
-[ext_resource type="Script" uid="uid://c746wntg074vx" path="res://scripts/reps/tile_blocker.gd" id="14_qnthh"]
+[ext_resource type="Script" uid="uid://c746wntg074vx" path="res://scripts/reps/entities/tile_blocker.gd" id="14_qnthh"]
 
 [node name="Builder" type="Node3D" unique_id=1848198409 node_paths=PackedStringArray("player")]
 script = ExtResource("1_qnthh")

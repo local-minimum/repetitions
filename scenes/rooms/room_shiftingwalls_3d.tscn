@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c2jmhy2eyq361"]
+[gd_scene format=3 uid="uid://c2jmhy2eyq361"]
 
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_8aa6e"]
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_joiea"]
@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://ipk7tlufbxkm" path="res://scenes/rooms/meshes/roughwall_cell_door.blend" id="7_ij7n1"]
 [ext_resource type="Script" uid="uid://dkuc2goe2m1h" path="res://scripts/reps/shifting_walls_puzzle.gd" id="8_ij7n1"]
 [ext_resource type="PackedScene" uid="uid://y1ffxoreajkp" path="res://scenes/rooms/meshes/roomwall_door_with_door.tscn" id="10_06beb"]
-[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="11_ra50r"]
+[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/dungeon_building/doors/door_configuration_options.gd" id="11_ra50r"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v8raw"]
 size = Vector3(1.8, 2, 1.8)

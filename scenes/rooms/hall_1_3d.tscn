@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cc5747aqrge5g" path="res://scenes/rooms/meshes/simplefloor.blend" id="3_jcwbn"]
 [ext_resource type="PackedScene" uid="uid://dm1qptotoe08" path="res://scenes/rooms/meshes/hallceiling.blend" id="4_2hxh2"]
 [ext_resource type="PackedScene" uid="uid://uwl325qn0fde" path="res://scenes/rooms/meshes/hallceiling_blocker.blend" id="5_2hxh2"]
-[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="7_jktde"]
+[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/dungeon_building/doors/door_configuration_options.gd" id="7_jktde"]
 
 [node name="Hall13d" type="Node3D" unique_id=2047678079 node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_qw17r")

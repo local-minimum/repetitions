@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bgtg6k43ekxbg"]
+[gd_scene format=3 uid="uid://bgtg6k43ekxbg"]
 
 [ext_resource type="PackedScene" uid="uid://kf6tycunr25q" path="res://scenes/rooms/meshes/roomwall.blend" id="1_cq5sr"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_weq4u"]
@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://yhe2m0onfh4t" path="res://scenes/rooms/meshes/simpleceiling.glb" id="5_ueo3t"]
 [ext_resource type="Script" uid="uid://bykwxkovlaqog" path="res://scripts/reps/reactor.gd" id="6_b1fcn"]
 [ext_resource type="PackedScene" uid="uid://y1ffxoreajkp" path="res://scenes/rooms/meshes/roomwall_door_with_door.tscn" id="6_weq4u"]
-[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="7_6dfi5"]
+[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/dungeon_building/doors/door_configuration_options.gd" id="7_6dfi5"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_cq5sr"]
 height = 8.0

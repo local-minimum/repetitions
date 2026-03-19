@@ -9,9 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://dm1qptotoe08" path="res://scenes/rooms/meshes/hallceiling.blend" id="4_lrage"]
 [ext_resource type="ArrayMesh" uid="uid://d2jl4wr7f23pl" path="res://scenes/rooms/meshes/props/train_track_straight.obj" id="5_gwg1b"]
 [ext_resource type="PackedScene" uid="uid://uwl325qn0fde" path="res://scenes/rooms/meshes/hallceiling_blocker.blend" id="5_sx2bb"]
-[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="6_palvg"]
-[ext_resource type="Script" uid="uid://cfiu5ok0cmhx" path="res://scripts/reps/track.gd" id="11_gwg1b"]
-[ext_resource type="Script" uid="uid://g3ceed76t0c0" path="res://scripts/reps/tracks_auto_connector.gd" id="11_l0mhd"]
+[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/dungeon_building/doors/door_configuration_options.gd" id="6_palvg"]
+[ext_resource type="Script" uid="uid://cfiu5ok0cmhx" path="res://scripts/reps/train/track.gd" id="11_gwg1b"]
+[ext_resource type="Script" uid="uid://g3ceed76t0c0" path="res://scripts/reps/train/tracks_auto_connector.gd" id="11_l0mhd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l0mhd"]
 size = Vector3(0.34762573, 0.10650635, 0.982666)

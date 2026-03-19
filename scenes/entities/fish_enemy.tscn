@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://balxpkjvdg37o"]
 
-[ext_resource type="Script" uid="uid://ckshyx2pstjn7" path="res://scripts/reps/oversized_enemy.gd" id="1_omeex"]
-[ext_resource type="Script" uid="uid://dw3nrvpmml00b" path="res://scripts/reps/oversized_enemy_anim_config.gd" id="2_a2dlv"]
+[ext_resource type="Script" uid="uid://ckshyx2pstjn7" path="res://scripts/reps/entities/oversized_enemy.gd" id="1_omeex"]
+[ext_resource type="Script" uid="uid://dw3nrvpmml00b" path="res://scripts/reps/entities/oversized_enemy_anim_config.gd" id="2_a2dlv"]
 [ext_resource type="PackedScene" uid="uid://dv8x7xqo0igmc" path="res://scenes/entities/fish.blend" id="2_dskgf"]
-[ext_resource type="Script" uid="uid://dy41mksgydi8e" path="res://scripts/reps/animated_body_collisions.gd" id="3_a2dlv"]
+[ext_resource type="Script" uid="uid://dy41mksgydi8e" path="res://scripts/reps/entities/animated_body_collisions.gd" id="3_a2dlv"]
 [ext_resource type="PackedScene" uid="uid://bramsbvj0hj26" path="res://scenes/entities/fish_spit.tscn" id="3_ux2u6"]
-[ext_resource type="Script" uid="uid://b7lfxql2wop3p" path="res://scripts/reps/animated_body_avg_position.gd" id="5_a2dlv"]
-[ext_resource type="Script" uid="uid://b6h481h1w1e63" path="res://scripts/reps/look_ray_cast.gd" id="6_fgx1k"]
+[ext_resource type="Script" uid="uid://b7lfxql2wop3p" path="res://scripts/reps/entities/animated_body_avg_position.gd" id="5_a2dlv"]
+[ext_resource type="Script" uid="uid://b6h481h1w1e63" path="res://scripts/reps/entities/look_ray_cast.gd" id="6_fgx1k"]
 
 [sub_resource type="Resource" id="Resource_fgx1k"]
 script = ExtResource("2_a2dlv")

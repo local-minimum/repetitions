@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://y1ffxoreajkp"]
+[gd_scene format=3 uid="uid://y1ffxoreajkp"]
 
 [ext_resource type="PackedScene" uid="uid://4c4xlnfkrmmd" path="res://scenes/rooms/meshes/roomwall_door_with_door.blend" id="1_vka4u"]
-[ext_resource type="Script" uid="uid://bvkevtj83moe3" path="res://scripts/reps/swinging_door.gd" id="2_tcvdb"]
+[ext_resource type="Script" uid="uid://bvkevtj83moe3" path="res://scripts/reps/dungeon_building/doors/swinging_door.gd" id="2_tcvdb"]
 [ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="3_w4wn1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w4wn1"]

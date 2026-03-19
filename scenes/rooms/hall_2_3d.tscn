@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bhppd8cxmo4ig" path="res://scenes/dugneonbuilderterminal.tscn" id="7_k8ayc"]
 [ext_resource type="Script" uid="uid://cnyr016a0ixa8" path="res://scripts/probability_despawner.gd" id="8_u8775"]
 [ext_resource type="Script" uid="uid://cno413aixewp1" path="res://scripts/probability_despawner_configuration.gd" id="9_k8ayc"]
-[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="11_cji5a"]
+[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/dungeon_building/doors/door_configuration_options.gd" id="11_cji5a"]
 
 [sub_resource type="Resource" id="Resource_u8775"]
 script = ExtResource("9_k8ayc")

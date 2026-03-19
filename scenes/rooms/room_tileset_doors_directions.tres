@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="TilemapDoorDirectionConfig" format=3 uid="uid://dmhfnjqm6ww3d"]
 
-[ext_resource type="Script" uid="uid://dyg3ey1xq16y1" path="res://scripts/reps/tilemap_door_direction_config.gd" id="1_amnco"]
+[ext_resource type="Script" uid="uid://dyg3ey1xq16y1" path="res://scripts/reps/dungeon_building/doors/tilemap_door_direction_config.gd" id="1_amnco"]
 
 [resource]
 script = ExtResource("1_amnco")

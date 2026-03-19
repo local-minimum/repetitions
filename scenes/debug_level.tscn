@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c06htcj4rgjof"]
 
-[ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_8d50e"]
+[ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_building/dungeon_builder.gd" id="1_8d50e"]
 [ext_resource type="PackedScene" uid="uid://cc5747aqrge5g" path="res://scenes/rooms/meshes/simplefloor.blend" id="1_ln2x5"]
 [ext_resource type="PackedScene" uid="uid://b8lqj7rv80ssv" path="res://scenes/player_3d.tscn" id="3_iwus7"]
 [ext_resource type="Script" uid="uid://bh3fwijpdw24i" path="res://scripts/reps/debug_controls.gd" id="4_iwus7"]

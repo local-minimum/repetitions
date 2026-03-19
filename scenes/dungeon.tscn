@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://ck4qilcv3pmw3"]
 
-[ext_resource type="Script" uid="uid://crh0uqgb4ags6" path="res://scripts/reps/dungeon_planner_ui.gd" id="1_c4wp1"]
-[ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_builder.gd" id="1_fpimf"]
+[ext_resource type="Script" uid="uid://crh0uqgb4ags6" path="res://scripts/reps/dungeon_building/dungeon_planner_ui.gd" id="1_c4wp1"]
+[ext_resource type="Script" uid="uid://xhlgkhgkyrkc" path="res://scripts/reps/dungeon_building/dungeon_builder.gd" id="1_fpimf"]
 [ext_resource type="PackedScene" uid="uid://dh68rjdc2w0vf" path="res://scenes/dungeon_plan.tscn" id="2_fpimf"]
 [ext_resource type="PackedScene" uid="uid://b8lqj7rv80ssv" path="res://scenes/player_3d.tscn" id="4_0wj4k"]
-[ext_resource type="Script" uid="uid://rcdrc4gcc8ry" path="res://scripts/reps/room_tooltip_manager.gd" id="4_hsn05"]
+[ext_resource type="Script" uid="uid://rcdrc4gcc8ry" path="res://scripts/reps/dungeon_building/room_tooltip_manager.gd" id="4_hsn05"]
 [ext_resource type="PackedScene" uid="uid://gxpyj72pt8s6" path="res://scenes/room_tooltip.tscn" id="5_etlrv"]
-[ext_resource type="Script" uid="uid://dq7lbhrdci5ob" path="res://scripts/reps/dirt_magazine.gd" id="5_fvacq"]
+[ext_resource type="Script" uid="uid://dq7lbhrdci5ob" path="res://scripts/reps/dungeon_building/dirt_magazine.gd" id="5_fvacq"]
 [ext_resource type="Script" uid="uid://ey6peb5lfj3o" path="res://scripts/reps/exploration_ui.gd" id="6_tkjml"]
 [ext_resource type="PackedScene" uid="uid://cgryxgwcumo58" path="res://scenes/trophy_ui.tscn" id="7_5hkx1"]
 [ext_resource type="Environment" uid="uid://dyvjkwni31khi" path="res://scenes/dungeon_environment.tres" id="8_6nb7m"]
@@ -20,7 +20,7 @@
 [ext_resource type="Script" uid="uid://b1copejyl8ot1" path="res://scripts/reps/complete_slice_dialog.gd" id="12_aumn5"]
 [ext_resource type="Script" uid="uid://cq13k5jqrlqw5" path="res://addons/minimum_convenience/scripts/crosshair/circ_lines_crosshair_config.gd" id="13_3afjq"]
 [ext_resource type="Script" uid="uid://cufotv8ogf1gx" path="res://addons/minimum_convenience/scripts/crosshair/combined_crosshair_config.gd" id="14_6nb7m"]
-[ext_resource type="Script" uid="uid://c746wntg074vx" path="res://scripts/reps/tile_blocker.gd" id="21_iin4u"]
+[ext_resource type="Script" uid="uid://c746wntg074vx" path="res://scripts/reps/entities/tile_blocker.gd" id="21_iin4u"]
 
 [sub_resource type="Resource" id="Resource_3afjq"]
 script = ExtResource("12_7a5bf")

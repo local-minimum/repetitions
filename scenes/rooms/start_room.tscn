@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://ctcvff10ujxfr"]
 
 [ext_resource type="TileSet" uid="uid://b3kjmbfkqhmld" path="res://scenes/rooms/room_tileset.tres" id="1_f8a4q"]
-[ext_resource type="Script" uid="uid://7ob51r0hj6yw" path="res://scripts/reps/blueprint_room.gd" id="1_kbl62"]
+[ext_resource type="Script" uid="uid://7ob51r0hj6yw" path="res://scripts/reps/dungeon_building/blueprint_room.gd" id="1_kbl62"]
 [ext_resource type="Resource" uid="uid://dmhfnjqm6ww3d" path="res://scenes/rooms/room_tileset_doors_directions.tres" id="2_qr66m"]
 [ext_resource type="Script" uid="uid://8gfxxyx4bmsv" path="res://scripts/2d/draggable.gd" id="3_86g8l"]
 

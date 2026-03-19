@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cydmlq8hfh5mo" path="res://scenes/rooms/meshes/roomwall_twosided_truncated.blend" id="7_47r7j"]
 [ext_resource type="PackedScene" uid="uid://y1ffxoreajkp" path="res://scenes/rooms/meshes/roomwall_door_with_door.tscn" id="8_41tem"]
 [ext_resource type="PackedScene" uid="uid://bb1kovci4qgku" path="res://scenes/rooms/meshes/roomwall_twosided_endcap.blend" id="8_bnp8r"]
-[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="9_47r7j"]
+[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/dungeon_building/doors/door_configuration_options.gd" id="9_47r7j"]
 [ext_resource type="PackedScene" uid="uid://88tejawrtsl3" path="res://scenes/rooms/meshes/props/storagebox.tscn" id="11_hnk0c"]
 [ext_resource type="PackedScene" uid="uid://d4c40ocodslaq" path="res://scenes/loot/floppy.tscn" id="12_o1vui"]
 [ext_resource type="PackedScene" uid="uid://bqpyr1rh42my1" path="res://scenes/rooms/meshes/props/neon_text_proof.tscn" id="13_ubbn1"]

@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="DraftOption" load_steps=2 format=3 uid="uid://bhvvm6hnhr1qu"]
+[gd_resource type="Resource" script_class="DraftOption" format=3 uid="uid://bhvvm6hnhr1qu"]
 
-[ext_resource type="Script" uid="uid://dgfi04hnjvm2r" path="res://scripts/reps/draft_option.gd" id="1_apnsu"]
+[ext_resource type="Script" uid="uid://dgfi04hnjvm2r" path="res://scripts/reps/dungeon_building/draft_option.gd" id="1_apnsu"]
 
 [resource]
 script = ExtResource("1_apnsu")

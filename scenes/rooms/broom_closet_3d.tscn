@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c1hhf0e0486eq"]
+[gd_scene format=3 uid="uid://c1hhf0e0486eq"]
 
 [ext_resource type="PackedScene" uid="uid://dckwsfoqyd7yd" path="res://scenes/rooms/meshes/simplefloor.glb" id="1_hhqpo"]
 [ext_resource type="Script" uid="uid://b4o2hlt1k23lm" path="res://scripts/reps/room3d.gd" id="1_orhin"]
@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://3bjnpsn4435m" path="res://scenes/rooms/meshes/props/overhead.blend" id="6_orhin"]
 [ext_resource type="PackedScene" uid="uid://k56m4iovfwcu" path="res://scenes/rooms/meshes/props/paperbasket.blend" id="7_aghwm"]
 [ext_resource type="PackedScene" uid="uid://bhep5i568osx4" path="res://scenes/rooms/meshes/props/toiletroll.blend" id="8_s0ryh"]
-[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/door_configuration_options.gd" id="10_aghwm"]
+[ext_resource type="Script" uid="uid://cxnqlqwyj3fbf" path="res://scripts/reps/dungeon_building/doors/door_configuration_options.gd" id="10_aghwm"]
 
 [node name="Broom Closet" type="Node3D" node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_orhin")
