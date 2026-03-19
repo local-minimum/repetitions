@@ -1,14 +1,17 @@
-extends StaticBody3D
+extends CollisionObject3D
 class_name InteractionBody3D
 
-## Emitted when a valid interaction happens
-signal execute_interaction
+## Emitted when a valid interaction/click happens
+signal execute_interaction()
+signal release_interaction()
+signal change_interaction_hover(hovered: bool)
 
 @export var interactable: bool = true:
     set(value):
-        if !value && _hovered:
-            _hovered = false
+        var update_hoved_signal: bool = value != interactable && _hovered && _valid
         interactable = value
+        if update_hoved_signal:
+            change_interaction_hover.emit(interactable)
 
     get():
         if !_readied:
@@ -81,6 +84,8 @@ func valid_player_position() -> bool:
     return false
 
 var _valid: bool
+
+## Hovered doesn't say if hover is valid or not
 var _hovered: bool:
     set(value):
         if value:
@@ -90,12 +95,12 @@ var _hovered: bool:
             InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
         _hovered = value
 
-func _handle_mouse_entered() -> void:
-    if !interactable:
-        return
+        if interactable:
+            change_interaction_hover.emit(value && _valid)
 
+func _handle_mouse_entered() -> void:
     _hovered = true
-    if valid_player_position():
+    if interactable && valid_player_position():
         _valid = true
         InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
     else:
@@ -108,7 +113,6 @@ func _physics_process(_delta: float) -> void:
 func _handle_mouse_exited() -> void:
     _hovered = false
 
-
 func _is_interaction(event: InputEvent) -> bool:
     if event.is_action_pressed(&"crawl_search"):
         return true
@@ -116,7 +120,16 @@ func _is_interaction(event: InputEvent) -> bool:
         return false
 
     var mbtn: InputEventMouseButton = event
-    return !mbtn.is_echo() && mbtn.button_index == MOUSE_BUTTON_LEFT && mbtn.pressed
+    return !mbtn.is_echo() && mbtn.button_index == MOUSE_BUTTON_LEFT && mbtn.is_pressed()
+
+func _is_released_interaction(event: InputEvent) -> bool:
+    if event.is_action_released(&"crawl_search"):
+        return true
+    if event is not InputEventMouseButton:
+        return false
+
+    var mbtn: InputEventMouseButton = event
+    return !mbtn.is_echo() && mbtn.button_index == MOUSE_BUTTON_LEFT && mbtn.is_released()
 
 func _handle_input_event(_cam: Node, event: InputEvent, _event_position: Vector3, _event_normal: Vector3, _shape_idx: int) -> void:
     if PhysicsGridPlayerController.last_connected_player_cinematic:
@@ -125,10 +138,14 @@ func _handle_input_event(_cam: Node, event: InputEvent, _event_position: Vector3
             InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
         return
 
-    if interactable && _is_interaction(event) && valid_player_position():
-        get_viewport().set_input_as_handled()
-        _execute_interaction()
-        execute_interaction.emit()
+    if interactable && valid_player_position():
+        if _is_interaction(event):
+            get_viewport().set_input_as_handled()
+            _execute_interaction()
+            execute_interaction.emit()
+        elif _is_released_interaction(event):
+            get_viewport().set_input_as_handled()
+            release_interaction.emit()
 
 func _update_pointer() -> void:
     if PhysicsGridPlayerController.last_connected_player_cinematic:

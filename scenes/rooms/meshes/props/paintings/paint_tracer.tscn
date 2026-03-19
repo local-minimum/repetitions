@@ -10,6 +10,8 @@
 [ext_resource type="ArrayMesh" uid="uid://byaniy8qh62b1" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_upper_left.obj" id="7_cmxvr"]
 [ext_resource type="ArrayMesh" uid="uid://ccrgs2rpk0gma" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_upper_right.obj" id="8_qnvop"]
 [ext_resource type="ArrayMesh" uid="uid://dq5a7ww10ii4r" path="res://scenes/rooms/meshes/props/paintings/paint_tracer_vertical.obj" id="9_7i4lf"]
+[ext_resource type="Texture2D" uid="uid://c1wgtuvtwyvu6" path="res://textures/particle1.png" id="11_4ywof"]
+[ext_resource type="Script" uid="uid://bxfed6knebjhi" path="res://scripts/reps/paint_tracer_point.gd" id="11_cmxvr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6tbd"]
 albedo_color = Color(0.93, 0.84769505, 0.38130003, 1)
@@ -27,6 +29,40 @@ roughness = 0.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_wyigd"]
 radius = 0.03325808
+
+[sub_resource type="Gradient" id="Gradient_cmxvr"]
+offsets = PackedFloat32Array(0, 0.14105794, 0.929471, 0.98740554)
+colors = PackedColorArray(0, 0, 0, 0, 0.14, 0.14, 0.14, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qnvop"]
+gradient = SubResource("Gradient_cmxvr")
+
+[sub_resource type="Curve" id="Curve_7i4lf"]
+_data = [Vector2(0, 0.28830808), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_pdfb6"]
+curve = SubResource("Curve_7i4lf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_weym7"]
+emission_shape = 1
+emission_sphere_radius = 0.03
+gravity = Vector3(0, 0, 0)
+scale_min = 0.02
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_pdfb6")
+color_ramp = SubResource("GradientTexture1D_qnvop")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ybtkb"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.31, 0.5859999, 1, 0.5882353)
+albedo_texture = ExtResource("11_4ywof")
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_1vyvn"]
+material = SubResource("StandardMaterial3D_ybtkb")
+size = Vector2(0.02, 0.02)
 
 [node name="PaintTracer" type="MeshInstance3D" unique_id=581504205 node_paths=PackedStringArray("_points", "_lines")]
 mesh = ExtResource("1_j0ykq")
@@ -71,42 +107,98 @@ mesh = ExtResource("9_7i4lf")
 surface_material_override/0 = SubResource("StandardMaterial3D_pdfb6")
 metadata/LINE = 4
 
-[node name="Point 0" type="Area3D" parent="." unique_id=1275525906]
+[node name="Point 0" type="Area3D" parent="." unique_id=1275525906 node_paths=PackedStringArray("tracer", "point", "particles", "_root")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.058724806, 0.13822484, 0)
 collision_layer = 128
 collision_mask = 0
+script = ExtResource("11_cmxvr")
+tracer = NodePath("..")
+point = NodePath(".")
+particles = NodePath("GPUParticles3D")
+_root = NodePath("..")
 metadata/POINT = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Point 0" unique_id=235073432]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026996627, 0, 0)
 shape = SubResource("SphereShape3D_wyigd")
 
-[node name="Point 1" type="Area3D" parent="." unique_id=1230313146]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Point 0" unique_id=246762331]
+emitting = false
+amount = 42
+preprocess = 1.0
+explosiveness = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_weym7")
+draw_pass_1 = SubResource("QuadMesh_1vyvn")
+
+[node name="Point 1" type="Area3D" parent="." unique_id=1230313146 node_paths=PackedStringArray("tracer", "point", "particles", "_root")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.058724806, 0.046354413, 0.12892736)
 collision_layer = 128
 collision_mask = 0
+script = ExtResource("11_cmxvr")
+tracer = NodePath("..")
+point = NodePath(".")
+particles = NodePath("GPUParticles3D")
+_root = NodePath("..")
 metadata/POINT = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Point 1" unique_id=1949499394]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026996627, 0, 0)
 shape = SubResource("SphereShape3D_wyigd")
 
-[node name="Point 2" type="Area3D" parent="." unique_id=270860268]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Point 1" unique_id=1399237267]
+emitting = false
+amount = 42
+preprocess = 1.0
+explosiveness = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_weym7")
+draw_pass_1 = SubResource("QuadMesh_1vyvn")
+
+[node name="Point 2" type="Area3D" parent="." unique_id=270860268 node_paths=PackedStringArray("tracer", "point", "particles", "_root")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.058724806, 0.046354413, -0.12712602)
 collision_layer = 128
 collision_mask = 0
+script = ExtResource("11_cmxvr")
+tracer = NodePath("..")
+point = NodePath(".")
+particles = NodePath("GPUParticles3D")
+_root = NodePath("..")
 metadata/POINT = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Point 2" unique_id=535954857]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026996627, 0, 0)
 shape = SubResource("SphereShape3D_wyigd")
 
-[node name="Point 4" type="Area3D" parent="." unique_id=448171030]
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Point 2" unique_id=979697566]
+emitting = false
+amount = 42
+preprocess = 1.0
+explosiveness = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_weym7")
+draw_pass_1 = SubResource("QuadMesh_1vyvn")
+
+[node name="Point 4" type="Area3D" parent="." unique_id=448171030 node_paths=PackedStringArray("tracer", "point", "particles", "_root")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.058724806, -0.14381993, 0)
 collision_layer = 128
 collision_mask = 0
+script = ExtResource("11_cmxvr")
+tracer = NodePath("..")
+point = NodePath(".")
+particles = NodePath("GPUParticles3D")
+_root = NodePath("..")
 metadata/POINT = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Point 4" unique_id=875092135]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026996627, -0.003272608, 0)
 shape = SubResource("SphereShape3D_wyigd")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Point 4" unique_id=642309915]
+emitting = false
+amount = 42
+preprocess = 1.0
+explosiveness = 0.2
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_weym7")
+draw_pass_1 = SubResource("QuadMesh_1vyvn")
