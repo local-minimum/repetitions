@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://p64aj6qlk4o1"]
 
-[ext_resource type="ArrayMesh" uid="uid://cp4vm8owfwknt" path="res://scenes/rooms/meshes/props/paintings/frame_outline_brick.obj" id="1_g21yn"]
+[ext_resource type="ArrayMesh" uid="uid://6lke5x6hcfpa" path="res://scenes/rooms/meshes/props/paintings/frame_outline_square_cut_corners.obj" id="1_g21yn"]
 [ext_resource type="Texture2D" uid="uid://cvlyaoja3vnt8" path="res://scenes/rooms/meshes/props/paintings/frame_outline_albedo.png" id="2_2e1nq"]
 [ext_resource type="Texture2D" uid="uid://dahh5ys6tqi7a" path="res://scenes/rooms/meshes/props/paintings/frame_outline_square_cut_corners_occlusion.png" id="3_g21yn"]
 [ext_resource type="Texture2D" uid="uid://xafcoipr0ymt" path="res://scenes/rooms/meshes/props/paintings/frame_outline_square_cut_corners_norm.png" id="4_2e1nq"]
@@ -8,7 +8,6 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_shaeo"]
 albedo_texture = ExtResource("2_2e1nq")
 metallic = 0.3
-normal_enabled = true
 normal_texture = ExtResource("4_2e1nq")
 ao_enabled = true
 ao_texture = ExtResource("3_g21yn")

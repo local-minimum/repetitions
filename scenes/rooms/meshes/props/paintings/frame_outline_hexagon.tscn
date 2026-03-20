@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cs808x8erq1p"]
 
-[ext_resource type="ArrayMesh" uid="uid://cp4vm8owfwknt" path="res://scenes/rooms/meshes/props/paintings/frame_outline_brick.obj" id="1_dmfj8"]
+[ext_resource type="ArrayMesh" uid="uid://hgh2l3xo2unh" path="res://scenes/rooms/meshes/props/paintings/frame_outline_hexagon.obj" id="1_fog56"]
 [ext_resource type="Texture2D" uid="uid://cvlyaoja3vnt8" path="res://scenes/rooms/meshes/props/paintings/frame_outline_albedo.png" id="2_fog56"]
 [ext_resource type="Texture2D" uid="uid://cnka88tep0ifi" path="res://scenes/rooms/meshes/props/paintings/frame_outline_hexagon_occlusion.png" id="3_pw6td"]
 [ext_resource type="Texture2D" uid="uid://bt2xu4bcvqdew" path="res://scenes/rooms/meshes/props/paintings/frame_outline_hexagon_norm.png" id="4_7qvvr"]
@@ -14,5 +14,5 @@ ao_texture = ExtResource("3_pw6td")
 ao_texture_channel = 4
 
 [node name="FrameOutlineHexagon" type="MeshInstance3D" unique_id=668847884]
-mesh = ExtResource("1_dmfj8")
+mesh = ExtResource("1_fog56")
 surface_material_override/0 = SubResource("StandardMaterial3D_ke4yw")
