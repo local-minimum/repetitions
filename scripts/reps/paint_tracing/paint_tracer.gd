@@ -32,6 +32,10 @@ func _enter_tree() -> void:
         if pt.change_interaction_hover.connect(_handle_draw_line.bind(pt_id)) != OK:
             push_error("Failed to connect %s change interaction hover" % [pt])
 
+    if _all_lines == 0:
+        _calc_all_lines()
+
+func _calc_all_lines() -> void:
     _all_lines = 0
     for line: Node3D in _lines:
         var line_id: int = line.get_meta(LINE_META, -1)
@@ -49,6 +53,9 @@ func set_interactiable(interactable: bool) -> void:
         pt.interactable = interactable
 
 func set_solution(point_sequence: Array[int]) -> void:
+    if _all_lines == 0:
+        _calc_all_lines()
+
     _solution_hash = 0
     var last_pt: int = -1
     for pt: int in point_sequence:

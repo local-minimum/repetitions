@@ -1,0 +1,198 @@
+[gd_scene format=3 uid="uid://d0pvdhv0yak1x"]
+
+[ext_resource type="PackedScene" uid="uid://bei86cjaf885c" path="res://scenes/rooms/meshes/props/cabinett.blend" id="1_l8t1p"]
+[ext_resource type="PackedScene" uid="uid://w4bu0icxmkb5" path="res://scenes/rooms/meshes/props/paintings/frame_outline_diamond.tscn" id="2_bjt6l"]
+[ext_resource type="Script" uid="uid://cwmrrgk6t8d2n" path="res://scripts/reps/paint_tracing/puzzle_solution_cabinett.gd" id="2_ecjhd"]
+[ext_resource type="Texture2D" uid="uid://b3mjupo0xyr4d" path="res://scenes/rooms/meshes/cabinett_occlusion.png" id="2_w5dj0"]
+[ext_resource type="Script" uid="uid://d25al6sq53w7p" path="res://scripts/reps/paint_tracing/painting_solution.gd" id="3_532t4"]
+[ext_resource type="PackedScene" uid="uid://ghe67a6fntua" path="res://scenes/rooms/meshes/props/paintings/frame_outline_square.tscn" id="4_j55vj"]
+[ext_resource type="PackedScene" uid="uid://b4gjvcqlqqwyn" path="res://scenes/rooms/meshes/props/paintings/frame_outline_rhombus.tscn" id="5_j55vj"]
+[ext_resource type="PackedScene" uid="uid://b026au558qlx4" path="res://scenes/rooms/meshes/props/paintings/frame_outline_trianglish.tscn" id="6_peve3"]
+[ext_resource type="PackedScene" uid="uid://cs808x8erq1p" path="res://scenes/rooms/meshes/props/paintings/frame_outline_hexagon.tscn" id="8_4ol1v"]
+[ext_resource type="PackedScene" uid="uid://bi6fdtyq07mtk" path="res://scenes/rooms/meshes/props/paintings/frame_outline_trianglish_2.tscn" id="9_twxlq"]
+[ext_resource type="PackedScene" uid="uid://p64aj6qlk4o1" path="res://scenes/rooms/meshes/props/paintings/frame_outline_square_cut_corners.tscn" id="10_fn0oa"]
+[ext_resource type="PackedScene" uid="uid://bx8p4ccytuyq3" path="res://scenes/rooms/meshes/props/paintings/frame_outline_rect_landscape.tscn" id="11_21ryi"]
+[ext_resource type="PackedScene" uid="uid://bfsildvxaix42" path="res://scenes/rooms/meshes/props/paintings/frame_outline_pentagon.tscn" id="12_1k17u"]
+[ext_resource type="PackedScene" uid="uid://dh3cepeni6fbc" path="res://scenes/rooms/meshes/props/paintings/frame_outline_rect_portrait.tscn" id="13_w6p3i"]
+
+[sub_resource type="Resource" id="Resource_peve3"]
+script = ExtResource("3_532t4")
+_frame_outline_scene = ExtResource("4_j55vj")
+point_sequence = Array[int]([0, 4, 2, 1, 0])
+metadata/_custom_type_script = "uid://d25al6sq53w7p"
+
+[sub_resource type="Resource" id="Resource_4ol1v"]
+script = ExtResource("3_532t4")
+_frame_outline_scene = ExtResource("5_j55vj")
+point_sequence = Array[int]([0, 1, 2, 0, 4])
+metadata/_custom_type_script = "uid://d25al6sq53w7p"
+
+[sub_resource type="Resource" id="Resource_twxlq"]
+script = ExtResource("3_532t4")
+_frame_outline_scene = ExtResource("6_peve3")
+point_sequence = Array[int]([4, 0, 1, 4, 2, 1])
+metadata/_custom_type_script = "uid://d25al6sq53w7p"
+
+[sub_resource type="Resource" id="Resource_fn0oa"]
+script = ExtResource("3_532t4")
+_frame_outline_scene = ExtResource("2_bjt6l")
+point_sequence = Array[int]([1, 0, 2, 4, 0])
+metadata/_custom_type_script = "uid://d25al6sq53w7p"
+
+[sub_resource type="Resource" id="Resource_21ryi"]
+script = ExtResource("3_532t4")
+_frame_outline_scene = ExtResource("8_4ol1v")
+point_sequence = Array[int]([1, 4, 0, 2])
+metadata/_custom_type_script = "uid://d25al6sq53w7p"
+
+[sub_resource type="Resource" id="Resource_1k17u"]
+script = ExtResource("3_532t4")
+_frame_outline_scene = ExtResource("9_twxlq")
+point_sequence = Array[int]([1, 2, 4, 0])
+metadata/_custom_type_script = "uid://d25al6sq53w7p"
+
+[sub_resource type="Resource" id="Resource_w6p3i"]
+script = ExtResource("3_532t4")
+_frame_outline_scene = ExtResource("10_fn0oa")
+point_sequence = Array[int]([1, 2, 4, 1, 0])
+metadata/_custom_type_script = "uid://d25al6sq53w7p"
+
+[sub_resource type="Resource" id="Resource_l65si"]
+script = ExtResource("3_532t4")
+_frame_outline_scene = ExtResource("11_21ryi")
+point_sequence = Array[int]([0, 1, 4, 2, 0])
+metadata/_custom_type_script = "uid://d25al6sq53w7p"
+
+[sub_resource type="Resource" id="Resource_w45nd"]
+script = ExtResource("3_532t4")
+_frame_outline_scene = ExtResource("12_1k17u")
+point_sequence = Array[int]([1, 2, 0, 1, 4])
+metadata/_custom_type_script = "uid://d25al6sq53w7p"
+
+[sub_resource type="Resource" id="Resource_r8xtn"]
+script = ExtResource("3_532t4")
+_frame_outline_scene = ExtResource("13_w6p3i")
+point_sequence = Array[int]([0, 1, 2, 4])
+metadata/_custom_type_script = "uid://d25al6sq53w7p"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ecjhd"]
+albedo_color = Color(0.21950102, 0.21950102, 0.21950102, 1)
+metallic = 0.2
+roughness = 0.5
+ao_enabled = true
+ao_texture = ExtResource("2_w5dj0")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bjt6l"]
+size = Vector3(0.7976074, 1.6898804, 0.10083008)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w5dj0"]
+size = Vector3(0.80670166, 0.2290039, 0.80981445)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ecjhd"]
+size = Vector3(0.055419922, 1.5640259, 0.6862793)
+
+[sub_resource type="Animation" id="Animation_bfwsn"]
+resource_name = "Open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Door:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 1.7714568, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_184ij"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Door:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_532t4"]
+_data = {
+&"Open": SubResource("Animation_bfwsn"),
+&"RESET": SubResource("Animation_184ij")
+}
+
+[node name="PaintingPuzzleCabinett" unique_id=1994470153 node_paths=PackedStringArray("animator", "slots") instance=ExtResource("1_l8t1p")]
+script = ExtResource("2_ecjhd")
+animator = NodePath("AnimationPlayer")
+open_anim = "Open"
+slots = [NodePath("Door/Frame Slot 1"), NodePath("Door/Frame Slot 2"), NodePath("Door/Frame Slot 3")]
+solutions = Array[ExtResource("3_532t4")]([SubResource("Resource_peve3"), SubResource("Resource_4ol1v"), SubResource("Resource_twxlq"), SubResource("Resource_fn0oa"), SubResource("Resource_21ryi"), SubResource("Resource_1k17u"), SubResource("Resource_w6p3i"), SubResource("Resource_l65si"), SubResource("Resource_w45nd"), SubResource("Resource_r8xtn")])
+
+[node name="Cabinett" parent="." index="0" unique_id=1962486842]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.023836307, 0.003968984, -0.02038695)
+surface_material_override/0 = SubResource("StandardMaterial3D_ecjhd")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Cabinett" index="0" unique_id=1538004262]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cabinett/StaticBody3D" index="0" unique_id=456187782]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00012207031, 0.9967346, -0.35949707)
+shape = SubResource("BoxShape3D_bjt6l")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Cabinett/StaticBody3D" index="1" unique_id=73337316]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00012207031, 0.9967346, 0.35172683)
+shape = SubResource("BoxShape3D_bjt6l")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Cabinett/StaticBody3D" index="2" unique_id=444834582]
+transform = Transform3D(-4.371139e-08, -4.371139e-08, -1, 4.371139e-08, 1, -4.371139e-08, 1, -4.371139e-08, -4.3711385e-08, -0.3443544, 0.9967346, -0.0038850158)
+shape = SubResource("BoxShape3D_bjt6l")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Cabinett/StaticBody3D" index="3" unique_id=894543017]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11694336, -0.004760742)
+shape = SubResource("BoxShape3D_w5dj0")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Cabinett/StaticBody3D" index="4" unique_id=1833892516]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0030212402, 1.875635, -0.004760742)
+shape = SubResource("BoxShape3D_w5dj0")
+
+[node name="Door" parent="." index="1" unique_id=942635986]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0.40521726, 1.0042804, -0.34657815)
+surface_material_override/0 = SubResource("StandardMaterial3D_ecjhd")
+
+[node name="FrameOutlineDiamond" parent="Door" index="0" unique_id=146114731 instance=ExtResource("2_bjt6l")]
+transform = Transform3D(-2.9802319e-08, 0, 1, 0, 1, 0, -1, 0, -2.9802319e-08, 0.03249091, 0, 0.33340862)
+visible = false
+skeleton = NodePath("../../../..")
+
+[node name="FrameOutlineDiamond2" parent="Door" index="1" unique_id=280171332 instance=ExtResource("2_bjt6l")]
+transform = Transform3D(-2.9802319e-08, 0, 1.0000002, 0, 1, 0, -1.0000002, 0, -2.9802319e-08, 0.03249091, 0.29999995, 0.33340862)
+visible = false
+skeleton = NodePath("../../../..")
+
+[node name="FrameOutlineDiamond3" parent="Door" index="2" unique_id=224870139 instance=ExtResource("2_bjt6l")]
+transform = Transform3D(-2.9802319e-08, 0, 1.0000004, 0, 1, 0, -1.0000004, 0, -2.9802319e-08, 0.03249091, -0.3, 0.33340862)
+visible = false
+skeleton = NodePath("../../../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Door" index="3" unique_id=1118702009]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door/StaticBody3D" index="0" unique_id=903728461]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.009886265, -0.006500244, 0.3282458)
+shape = SubResource("BoxShape3D_ecjhd")
+
+[node name="Frame Slot 1" type="Node3D" parent="Door" index="4" unique_id=1224416771]
+transform = Transform3D(-2.9802317e-08, 0, 1.0000001, 0, 1, 0, -1.0000001, 0, -2.9802317e-08, 0.03249091, 0.29999995, 0.3334086)
+
+[node name="Frame Slot 2" type="Node3D" parent="Door" index="5" unique_id=684193864]
+transform = Transform3D(-2.9802317e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -2.9802317e-08, 0.03249091, 0, 0.3334086)
+
+[node name="Frame Slot 3" type="Node3D" parent="Door" index="6" unique_id=565394249]
+transform = Transform3D(-2.9802317e-08, 0, 1.0000002, 0, 1, 0, -1.0000002, 0, -2.9802317e-08, 0.03249091, -0.3, 0.3334086)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2" unique_id=1931008910]
+libraries/ = SubResource("AnimationLibrary_532t4")

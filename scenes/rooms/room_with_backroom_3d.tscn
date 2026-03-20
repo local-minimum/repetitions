@@ -21,15 +21,14 @@
 [ext_resource type="Script" uid="uid://2jgqxtuw4d7x" path="res://scripts/reps/paint_tracing/trigger_paint_tracers.gd" id="18_x8tv8"]
 [ext_resource type="Script" uid="uid://3jm6iguafd34" path="res://scripts/reps/tools/tool.gd" id="19_4ohb6"]
 [ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="20_tow2i"]
-[ext_resource type="PackedScene" uid="uid://w4bu0icxmkb5" path="res://scenes/rooms/meshes/props/paintings/frame_outline_diamond.tscn" id="21_5edac"]
-[ext_resource type="PackedScene" uid="uid://bei86cjaf885c" path="res://scenes/rooms/meshes/props/cabinett.blend" id="23_injqu"]
+[ext_resource type="PackedScene" uid="uid://d0pvdhv0yak1x" path="res://scenes/rooms/meshes/props/cabinett.tscn" id="22_n6r63"]
 [ext_resource type="PackedScene" uid="uid://bw8b2k1a5w7f7" path="res://scenes/rooms/meshes/props/paintings/line_tracers_frame.tscn" id="32_x8tv8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rfgxy"]
 size = Vector3(1, 1, 1.6870117)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_imnvc"]
-size = Vector3(0.5718994, 0.3251953, 1.4872437)
+size = Vector3(0.4292984, 0.19659424, 1.3720398)
 
 [node name="RoomCorner3d" type="Node3D" unique_id=1305958560 node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_wancy")
@@ -233,53 +232,38 @@ collision_layer = 0
 collision_mask = 512
 input_ray_pickable = false
 script = ExtResource("18_x8tv8")
-tracers = [NodePath("../../../line_tracers_frame/PaintTracer 1"), NodePath("../../../line_tracers_frame/PaintTracer 2"), NodePath("../../../line_tracers_frame/PaintTracer 3")]
+tracers = [NodePath("../../line_tracers_frame/PaintTracer 1"), NodePath("../../line_tracers_frame/PaintTracer 2"), NodePath("../../line_tracers_frame/PaintTracer 3")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Basic/Trigger Paint Tracers" unique_id=471879450]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.80060005, -0.12133789)
 shape = SubResource("BoxShape3D_rfgxy")
 
-[node name="Pickup Track" type="MeshInstance3D" parent="Geometry" unique_id=1291606564 node_paths=PackedStringArray("_interaction_body")]
-transform = Transform3D(-0.7822168, 0.32848382, 0.52937233, -0.44098258, 0.30828837, -0.84290713, -0.4400807, -0.8927805, -0.09629259, -3.2497125, 0.84989136, 1.239285)
+[node name="PaintingPuzzleCabinett" parent="Geometry" unique_id=1994470153 node_paths=PackedStringArray("tracer_frame") instance=ExtResource("22_n6r63")]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, -2.7411885, 0, 0.97633266)
+tracer_frame = NodePath("../line_tracers_frame")
+
+[node name="Pickup Track" type="MeshInstance3D" parent="Geometry/PaintingPuzzleCabinett" unique_id=1291606564 node_paths=PackedStringArray("_interaction_body")]
+transform = Transform3D(-0.3872814, 0.9042366, 0.17991453, -0.2820432, 0.0695897, -0.95687425, -0.87776107, -0.42132357, 0.22808309, -0.038042545, 0.84989136, -0.088663936)
 material_override = ExtResource("17_yhbjh")
 mesh = ExtResource("18_4ohb6")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 script = ExtResource("19_4ohb6")
 _type = 5
 _interaction_body = NodePath("InteractionBody3D")
 
-[node name="InteractionBody3D" type="StaticBody3D" parent="Geometry/Pickup Track" unique_id=719666197 node_paths=PackedStringArray("_root")]
+[node name="InteractionBody3D" type="StaticBody3D" parent="Geometry/PaintingPuzzleCabinett/Pickup Track" unique_id=719666197 node_paths=PackedStringArray("_root")]
 script = ExtResource("20_tow2i")
 _root = NodePath("..")
 metadata/_custom_type_script = "uid://dpwsunra0mkvn"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Pickup Track/InteractionBody3D" unique_id=152410397]
-transform = Transform3D(0.8455252, 0.3802634, 0.37481594, -0.4016035, 0.9155278, -0.022879899, -0.35185486, -0.13118175, 0.92681694, -0.058550358, -0.0049328804, -0.08875728)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/PaintingPuzzleCabinett/Pickup Track/InteractionBody3D" unique_id=152410397]
+transform = Transform3D(0.9528824, 0.10044919, 0.2862274, -0.083415896, 0.99397343, -0.07112493, -0.29164532, 0.043899193, 0.95551896, -0.004132986, -0.007142782, -0.04449606)
 shape = SubResource("BoxShape3D_imnvc")
 
-[node name="cabinett" parent="Geometry" unique_id=1994470153 instance=ExtResource("23_injqu")]
-transform = Transform3D(0.28864744, 0, 0.9574354, 0, 1, 0, -0.9574354, 0, 0.28864744, -3.1937065, 0, 1.2002506)
-
-[node name="Door" parent="Geometry/cabinett" index="1" unique_id=942635986]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.40521717, 1.0628309, -0.34657836)
-
-[node name="FrameOutlineDiamond" parent="Geometry/cabinett/Door" index="0" unique_id=146114731 instance=ExtResource("21_5edac")]
-transform = Transform3D(-2.9802322e-08, 0, 1.0000002, 0, 1, 0, -1.0000002, 0, -2.9802322e-08, 0.033, 0, 0.35)
-skeleton = NodePath("../../../..")
-
-[node name="FrameOutlineDiamond2" parent="Geometry/cabinett/Door" index="1" unique_id=1646008534 instance=ExtResource("21_5edac")]
-transform = Transform3D(-2.9802322e-08, 0, 1.0000005, 0, 1, 0, -1.0000005, 0, -2.9802322e-08, 0.033, 0.3, 0.35)
-skeleton = NodePath("../../../..")
-
-[node name="FrameOutlineDiamond3" parent="Geometry/cabinett/Door" index="2" unique_id=431020479 instance=ExtResource("21_5edac")]
-transform = Transform3D(-2.9802322e-08, 0, 1.0000006, 0, 1, 0, -1.0000006, 0, -2.9802322e-08, 0.033, -0.3, 0.35)
-skeleton = NodePath("../../../..")
-
-[node name="line_tracers_frame" parent="." unique_id=311467674 instance=ExtResource("32_x8tv8")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.15734386, 0.86653066, 2.7905009)
+[node name="line_tracers_frame" parent="Geometry" unique_id=311467674 instance=ExtResource("32_x8tv8")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.1573439, 0.86653066, 1.7905009)
 
 [connection signal="body_entered" from="Geometry/Basic/Trigger Paint Tracers" to="Geometry/Basic/Trigger Paint Tracers" method="_on_body_entered"]
 [connection signal="body_exited" from="Geometry/Basic/Trigger Paint Tracers" to="Geometry/Basic/Trigger Paint Tracers" method="_on_body_exited"]
 
-[editable path="Geometry/cabinett"]
-[editable path="line_tracers_frame"]
+[editable path="Geometry/line_tracers_frame"]
