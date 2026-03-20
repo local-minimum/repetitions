@@ -156,13 +156,12 @@ func _update_pointer() -> void:
     if PhysicsGridPlayerController.last_connected_player_cinematic:
         return
 
-    var valid: bool = valid_player_position()
-    if _valid != valid:
-        _valid = valid
-        if valid && _hovered:
-            InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
-        else:
-            InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
+    _valid = valid_player_position()
+
+    if _valid && _hovered && interactable:
+        InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
+    else:
+        InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
 
 ## Implement this function to have a direct effect, or use the signal with the same name
 func _execute_interaction() -> void:

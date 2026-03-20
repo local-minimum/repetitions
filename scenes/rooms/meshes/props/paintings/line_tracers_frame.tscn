@@ -40,12 +40,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.406)
 
 [node name="Button Click Area" type="Area3D" parent="." index="6" unique_id=1091063608 node_paths=PackedStringArray("_root")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.07658386, 0, -0.78747797)
-collision_layer = 0
-collision_mask = 128
+collision_layer = 128
+collision_mask = 0
 monitoring = false
 monitorable = false
 script = ExtResource("5_gw7l4")
-_root = NodePath("../Button")
+_root = NodePath(".")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Button Click Area" index="0" unique_id=1044132440]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013330072, 0.002281189, 0.0005455017)

@@ -14,7 +14,7 @@ var _statuses: Dictionary[PaintTracer ,TracerStatus]
 var _animating_button: bool
 
 func _enter_tree() -> void:
-    #button.interactable = false
+    button.interactable = false
 
     for tracer: PaintTracer in tracers:
         _statuses[tracer] = TracerStatus.UNSET
@@ -54,10 +54,11 @@ func _on_click_button() -> void:
             tracer.set_interactiable(true)
             _statuses[tracer] = TracerStatus.UNSET
         fail.emit()
+
     else:
         print_debug("Solution was correct")
-        button.interactable = false
         succeed.emit()
 
     await get_tree().create_timer(1.0).timeout
     _animating_button = false
+    button.interactable = false

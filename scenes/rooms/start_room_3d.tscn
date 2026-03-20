@@ -29,6 +29,7 @@
 [ext_resource type="ArrayMesh" uid="uid://m3q05pb8v7wb" path="res://scenes/rooms/meshes/props/teddy.obj" id="24_ig47d"]
 [ext_resource type="Material" uid="uid://p4bi8vyf42b0" path="res://scenes/rooms/meshes/props/teddy.material" id="25_p6dlg"]
 [ext_resource type="Script" uid="uid://yd730fdkgbqd" path="res://scripts/reps/teddy.gd" id="26_qsbhv"]
+[ext_resource type="PackedScene" uid="uid://bw8b2k1a5w7f7" path="res://scenes/rooms/meshes/props/paintings/line_tracers_frame.tscn" id="30_h14bm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2bkd8"]
 size = Vector3(0.35327148, 0.09753418, 0.49414063)
@@ -778,3 +779,12 @@ script = ExtResource("26_qsbhv")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Childbed/Teddy/StaticBody3D" unique_id=46945899]
 transform = Transform3D(1, -1.2517644e-06, 1.6928374e-05, 1.2517461e-06, 1, 1.0822603e-06, -1.6928376e-05, -1.0822391e-06, 1, -0.0061831474, 0.034895062, -0.0020771027)
 shape = SubResource("BoxShape3D_h14bm")
+
+[node name="Line Tracers Frame" parent="." unique_id=311467674 instance=ExtResource("30_h14bm")]
+transform = Transform3D(0, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, 0, -5.74098, 0.9671663, 2.7899733)
+
+[node name="Line Tracers Frame2" parent="." unique_id=1326714767 instance=ExtResource("30_h14bm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.7939715, 1.0720781, 2.01794)
+
+[node name="Line Tracers Frame3" parent="." unique_id=245049913 instance=ExtResource("30_h14bm")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -5.982289, 0.8284898, -0.78972745)
