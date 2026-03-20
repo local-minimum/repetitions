@@ -1,4 +1,5 @@
 extends Node3D
+class_name LineTracersFrame
 
 @export var tracers: Array[PaintTracer]
 @export var button: InteractionBody3D
