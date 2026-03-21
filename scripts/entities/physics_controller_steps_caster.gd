@@ -2,21 +2,13 @@
 extends ShapeCast3D
 class_name PhysicsControllerStepCaster
 
-@export var step_height_max: float = 0.35:
-    set(value):
-        step_height_max = value
+@export var step_height_max: float = 0.35
 
-@export var step_down_max: float = 0.35:
-    set(value):
-        step_down_max = value
+@export var step_down_max: float = 0.35
 
-@export var min_clearing_above: float = 0.8:
-    set(value):
-        min_clearing_above = value
+@export var min_clearing_above: float = 0.8
 
-@export var cast_height_origin: float = 0.8:
-    set(value):
-        cast_height_origin = value
+@export var cast_height_origin: float = 0.8
 
 @export var ignore_step_height: float = 0.05
 
