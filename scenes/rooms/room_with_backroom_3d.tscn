@@ -20,7 +20,7 @@
 [ext_resource type="ArrayMesh" uid="uid://bu3rtrk45k8qd" path="res://scenes/rooms/meshes/props/train_track_turn_right_short.obj" id="18_4ohb6"]
 [ext_resource type="Script" uid="uid://2jgqxtuw4d7x" path="res://scripts/reps/paint_tracing/trigger_paint_tracers.gd" id="18_x8tv8"]
 [ext_resource type="Script" uid="uid://3jm6iguafd34" path="res://scripts/reps/tools/tool.gd" id="19_4ohb6"]
-[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="20_tow2i"]
+[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/interaction_body3d.gd" id="20_tow2i"]
 [ext_resource type="PackedScene" uid="uid://d0pvdhv0yak1x" path="res://scenes/rooms/meshes/props/cabinett.tscn" id="22_n6r63"]
 [ext_resource type="PackedScene" uid="uid://bw8b2k1a5w7f7" path="res://scenes/rooms/meshes/props/paintings/line_tracers_frame.tscn" id="32_x8tv8"]
 

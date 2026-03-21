@@ -65,7 +65,7 @@ func _sync_gate() -> void:
 
 
 func _on_area_out_left_body_entered(body: Node3D) -> void:
-    if state == State.SOLVED || PhysicsGridPlayerController.find_player_in_tree(body) == null:
+    if state == State.SOLVED || PhysicsGridPlayerController.find_in_tree(body) == null:
         return
          
     if state == State.INSIDE_RIGHT:
@@ -75,7 +75,7 @@ func _on_area_out_left_body_entered(body: Node3D) -> void:
     
 
 func _on_area_left_in_body_entered(body: Node3D) -> void:
-    if state == State.SOLVED || PhysicsGridPlayerController.find_player_in_tree(body) == null:
+    if state == State.SOLVED || PhysicsGridPlayerController.find_in_tree(body) == null:
         return
             
     if state == State.INSIDE_RIGHT:
@@ -91,7 +91,7 @@ func _on_area_cross_roads_body_entered(body: Node3D) -> void:
     if state != State.READY:
         return
     
-    var player: PhysicsGridPlayerController = PhysicsGridPlayerController.find_player_in_tree(body)
+    var player: PhysicsGridPlayerController = PhysicsGridPlayerController.find_in_tree(body)
     if player == null:
         return
         
@@ -107,7 +107,7 @@ func _on_area_cross_roads_body_entered(body: Node3D) -> void:
         state = State.DEFAULT
 
 func _on_area_in_right_body_entered(body: Node3D) -> void:
-    if state == State.SOLVED || PhysicsGridPlayerController.find_player_in_tree(body) == null:
+    if state == State.SOLVED || PhysicsGridPlayerController.find_in_tree(body) == null:
         return
            
     if state == State.INSIDE_LEFT:
@@ -119,7 +119,7 @@ func _on_area_out_mid_body_entered(_body: Node3D) -> void:
     pass # Replace with function body.
 
 func _on_area_out_right_body_entered(body: Node3D) -> void:
-    if state == State.SOLVED || PhysicsGridPlayerController.find_player_in_tree(body) == null:
+    if state == State.SOLVED || PhysicsGridPlayerController.find_in_tree(body) == null:
         return
         
     if state == State.INSIDE_LEFT:
@@ -128,7 +128,7 @@ func _on_area_out_right_body_entered(body: Node3D) -> void:
         state = State.ENTERED_RIGHT
 
 func _on_area_goal_body_entered(body: Node3D) -> void:
-    if PhysicsGridPlayerController.find_player_in_tree(body) == null:
+    if PhysicsGridPlayerController.find_in_tree(body) == null:
         return
     state = State.SOLVED
 

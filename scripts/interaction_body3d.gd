@@ -3,7 +3,9 @@ class_name InteractionBody3D
 
 ## Emitted when a valid interaction/click happens
 signal execute_interaction()
+## Emitted when click over button ends
 signal release_interaction()
+## Emitted when hover changes
 signal change_interaction_hover(hovered: bool)
 
 @export var interactable: bool = true:

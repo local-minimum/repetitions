@@ -4,6 +4,9 @@ class_name Dungeon
 static var last_active: Dungeon
 
 @export var grid_size: Vector3 = Vector3(2.5, 2.5, 2.5)
+
+@export var collision_system: EntityCollisionResolutionSystem
+
 @export var player: PhysicsGridPlayerController
 
 ## Makes player input blocked when dungeon is ready for intro cinematics or such

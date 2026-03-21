@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://xyymf0pbjrky" path="res://scenes/rooms/meshes/props/dugneonbuilderterminal.blend" id="1_2jda6"]
 [ext_resource type="Script" uid="uid://be8obqp06jlce" path="res://scripts/reps/dungeon_building/planner_terminal.gd" id="2_qel66"]
 [ext_resource type="Script" uid="uid://b4palw00kotic" path="res://scripts/reps/planner_terminal_cabinet.gd" id="3_guvvp"]
-[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="3_ni8gp"]
+[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/interaction_body3d.gd" id="3_ni8gp"]
 [ext_resource type="PackedScene" uid="uid://dm8ajs68le6fh" path="res://scenes/rooms/meshes/props/trophy.blend" id="4_rrh0w"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ni8gp"]

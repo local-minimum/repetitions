@@ -1,9 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://doeo8ac0nh3yn"]
+[gd_scene format=3 uid="uid://doeo8ac0nh3yn"]
 
 [ext_resource type="PackedScene" uid="uid://e38ols1galif" path="res://scenes/rooms/meshes/props/shapesbox.blend" id="1_7rgud"]
 [ext_resource type="Script" uid="uid://cpg7gwlkjehoc" path="res://scripts/reps/shapesbox.gd" id="2_xbwlp"]
 [ext_resource type="PackedScene" uid="uid://d4c40ocodslaq" path="res://scenes/loot/floppy.tscn" id="3_irpiq"]
-[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="4_5ffa1"]
+[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/interaction_body3d.gd" id="4_5ffa1"]
 
 [sub_resource type="Animation" id="Animation_irpiq"]
 resource_name = "Deposit Floppy"

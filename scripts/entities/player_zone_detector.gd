@@ -12,10 +12,10 @@ func _enter_tree() -> void:
 
 func _handle_enter_inside_area(body3d: Node3D) -> void:
     var zone: Zone = Zone.find_zone(self)
-    if PhysicsGridPlayerController.find_player_in_tree(body3d) != null:
+    if PhysicsGridPlayerController.find_in_tree(body3d) != null:
         __GlobalGameState.current_player_zone = zone
 
 func _handle_enter_outside_area(body3d: Node3D) -> void:
     var zone: Zone = Zone.find_zone(self)
-    if PhysicsGridPlayerController.find_player_in_tree(body3d) != null && __GlobalGameState.current_player_zone == zone:
+    if PhysicsGridPlayerController.find_in_tree(body3d) != null && __GlobalGameState.current_player_zone == zone:
         __GlobalGameState.current_player_zone = null

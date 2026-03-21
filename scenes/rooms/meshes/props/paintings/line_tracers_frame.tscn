@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dfailtfhssc73" path="res://scripts/reps/paint_tracing/line_tracers_frame.gd" id="2_tylvv"]
 [ext_resource type="Texture2D" uid="uid://brrromldd38n4" path="res://scenes/rooms/meshes/props/paintings/line_tracers_frame_occlusion.png" id="2_vvq0l"]
 [ext_resource type="PackedScene" uid="uid://cm4c3j0q4bwdt" path="res://scenes/rooms/meshes/props/paintings/paint_tracer.tscn" id="3_vvq0l"]
-[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="5_gw7l4"]
+[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/interaction_body3d.gd" id="5_gw7l4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tylvv"]
 albedo_color = Color(0.5233545, 0.60605514, 0.6250408, 1)

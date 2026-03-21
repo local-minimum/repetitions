@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cg01phtebwgpd" path="res://scripts/trains_and_tracks/track_engine.gd" id="1_0yx8r"]
 [ext_resource type="ArrayMesh" uid="uid://b3k3fjdw08152" path="res://scenes/rooms/meshes/props/train_engine_body.obj" id="1_ecvkw"]
 [ext_resource type="ArrayMesh" uid="uid://cngehil7v550b" path="res://scenes/rooms/meshes/props/train_engine_wheel.obj" id="2_lhet1"]
-[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="3_dtqq4"]
+[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/interaction_body3d.gd" id="3_dtqq4"]
 [ext_resource type="Material" uid="uid://clle4123a7bt" path="res://scenes/rooms/meshes/props/train_engine_wheel.material" id="3_lhet1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lhet1"]

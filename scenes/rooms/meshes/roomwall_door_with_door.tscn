@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://4c4xlnfkrmmd" path="res://scenes/rooms/meshes/roomwall_door_with_door.blend" id="1_vka4u"]
 [ext_resource type="Script" uid="uid://bvkevtj83moe3" path="res://scripts/doors/swinging_door.gd" id="2_tcvdb"]
-[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="3_w4wn1"]
+[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/interaction_body3d.gd" id="3_w4wn1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w4wn1"]
 size = Vector3(0.057617188, 2.0180054, 0.9751587)

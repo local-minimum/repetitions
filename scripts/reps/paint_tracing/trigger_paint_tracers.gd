@@ -4,7 +4,7 @@ extends Area3D
 
 func _on_body_entered(body: Node3D) -> void:
     if (
-        PhysicsGridPlayerController.find_player_in_tree(body) !=
+        PhysicsGridPlayerController.find_in_tree(body) !=
         PhysicsGridPlayerController.last_connected_player
     ):
         return
@@ -15,7 +15,7 @@ func _on_body_entered(body: Node3D) -> void:
 
 func _on_body_exited(body: Node3D) -> void:
     if (
-        PhysicsGridPlayerController.find_player_in_tree(body) !=
+        PhysicsGridPlayerController.find_in_tree(body) !=
         PhysicsGridPlayerController.last_connected_player
     ):
         return

@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://cq13k5jqrlqw5" path="res://addons/minimum_convenience/scripts/crosshair/circ_lines_crosshair_config.gd" id="13_3afjq"]
 [ext_resource type="Script" uid="uid://cufotv8ogf1gx" path="res://addons/minimum_convenience/scripts/crosshair/combined_crosshair_config.gd" id="14_6nb7m"]
 [ext_resource type="Script" uid="uid://c746wntg074vx" path="res://scripts/entities/tile_blocker.gd" id="21_iin4u"]
+[ext_resource type="Script" uid="uid://bo5xw2ehwkjlq" path="res://scripts/entities/entity_collision_refuse_one.gd" id="22_vmt7k"]
 
 [sub_resource type="Resource" id="Resource_3afjq"]
 script = ExtResource("12_7a5bf")
@@ -49,10 +50,11 @@ metadata/_custom_type_script = "uid://cufotv8ogf1gx"
 
 [node name="Dungeon Level" type="Node3D" unique_id=1917467308]
 
-[node name="3D Builder" type="Node3D" parent="." unique_id=1760216642 node_paths=PackedStringArray("dirt_mag", "player")]
+[node name="3D Builder" type="Node3D" parent="." unique_id=1760216642 node_paths=PackedStringArray("dirt_mag", "collision_system", "player")]
 script = ExtResource("1_fpimf")
 dirt_mag = NodePath("../DirtMagazine")
 grid_size = Vector3(2, 3, 2)
+collision_system = NodePath("../Collision System")
 player = NodePath("Player3d")
 
 [node name="Player3d" parent="3D Builder" unique_id=1355093079 instance=ExtResource("4_0wj4k")]
@@ -308,6 +310,9 @@ metadata/_custom_type_script = "uid://bu7vo1xyipwpf"
 [node name="TileBlocker" type="Node" parent="." unique_id=1007897237]
 script = ExtResource("21_iin4u")
 metadata/_custom_type_script = "uid://c746wntg074vx"
+
+[node name="Collision System" type="Node" parent="." unique_id=951284385]
+script = ExtResource("22_vmt7k")
 
 [connection signal="pressed" from="Dungeon Planning UI/MarginContainer/HBoxContainer/Redraw Rooms Btn" to="Dungeon Planning UI" method="_on_redraw_rooms_btn_pressed"]
 [connection signal="pressed" from="Dungeon Planning UI/MarginContainer/HBoxContainer/Layout Done Btn" to="Dungeon Planning UI" method="_on_layout_done_btn_pressed"]

@@ -14,12 +14,14 @@
 [ext_resource type="PackedScene" uid="uid://balxpkjvdg37o" path="res://scenes/entities/fish_enemy.tscn" id="12_6gink"]
 [ext_resource type="PackedScene" uid="uid://b8lqj7rv80ssv" path="res://scenes/player_3d.tscn" id="13_6gink"]
 [ext_resource type="Script" uid="uid://c746wntg074vx" path="res://scripts/entities/tile_blocker.gd" id="14_qnthh"]
+[ext_resource type="Script" uid="uid://bo5xw2ehwkjlq" path="res://scripts/entities/entity_collision_refuse_one.gd" id="15_bjp7t"]
 
-[node name="Builder" type="Node3D" unique_id=1848198409 node_paths=PackedStringArray("player")]
+[node name="Builder" type="Node3D" unique_id=1848198409 node_paths=PackedStringArray("collision_system", "player")]
 script = ExtResource("1_qnthh")
-_invoke_cinematic_on_ready = false
 grid_size = Vector3(2, 3, 2)
+collision_system = NodePath("CollisionSystem")
 player = NodePath("Player3d")
+_invoke_cinematic_on_ready = false
 
 [node name="StartRoom3d" parent="." unique_id=1982129123 instance=ExtResource("1_va7fd")]
 
@@ -61,3 +63,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
 [node name="TileBlocker" type="Node" parent="." unique_id=1739443832]
 script = ExtResource("14_qnthh")
 metadata/_custom_type_script = "uid://c746wntg074vx"
+
+[node name="CollisionSystem" type="Node" parent="." unique_id=1374426776]
+script = ExtResource("15_bjp7t")

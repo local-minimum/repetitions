@@ -5,7 +5,7 @@
 [ext_resource type="ArrayMesh" uid="uid://es1aoq8pkcro" path="res://scenes/rooms/meshes/props/train_cart_body.obj" id="2_y4nsl"]
 [ext_resource type="Script" uid="uid://brtemelqkre0e" path="res://scripts/trains_and_tracks/riding_carriage.gd" id="3_k3ynm"]
 [ext_resource type="Material" uid="uid://clle4123a7bt" path="res://scenes/rooms/meshes/props/train_engine_wheel.material" id="3_y4nsl"]
-[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="5_y4nsl"]
+[ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/interaction_body3d.gd" id="5_y4nsl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_18neo"]
 albedo_color = Color(0.69409746, 0.39076325, 0.1569525, 1)

@@ -1,4 +1,4 @@
-extends Node3D
+extends MovingEntityBase
 class_name OversizedEnemy
 
 enum Looking { FORWARD, LEFT, RIGHT, ANY }
@@ -135,7 +135,7 @@ func _swim_translate(direction: Vector3) -> void:
         global_position + direction * dungeon.grid_size
     )
 
-    TileBlocker.block(self, dungeon.get_closest_coordinates(target))
+    grid_entity.start_translation(direction, _tile_translation_duration)
 
     _translation_tween = create_tween()
     @warning_ignore_start("return_value_discarded")
@@ -169,8 +169,8 @@ func _swim_translate(direction: Vector3) -> void:
 
     if _translation_tween.finished.connect(
         func () -> void:
-            TileBlocker.remove_blocks(self)
             _eval_behaviours()
+            grid_entity.is_translating = false
     ) != OK:
         push_error("Failed to connect translation tween finished")
 
