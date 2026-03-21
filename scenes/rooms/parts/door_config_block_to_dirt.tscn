@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://m55oio5nm4ps" path="res://scenes/rooms/meshes/props/plank2.blend" id="3_e8rg8"]
 [ext_resource type="PackedScene" uid="uid://b7lslbxgj6psm" path="res://scenes/rooms/meshes/roomwall_door.blend" id="3_i0bdy"]
 [ext_resource type="PackedScene" uid="uid://ck5ureajxc1ch" path="res://scenes/rooms/meshes/props/plank.blend" id="4_iweq6"]
-[ext_resource type="Script" uid="uid://csoftdhs2k5f8" path="res://scripts/reps/dungeon_building/doors/blocked_door_interaction.gd" id="6_e8rg8"]
+[ext_resource type="Script" uid="uid://csoftdhs2k5f8" path="res://scripts/doors/blocked_door_interaction.gd" id="6_e8rg8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iweq6"]
 size = Vector3(1.2468872, 1.4348145, 0.094177246)

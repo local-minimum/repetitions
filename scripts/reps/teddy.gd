@@ -48,15 +48,15 @@ func _inc_teddy_int_variable(variable: String, default_value: int = 0) -> void:
         push_error("Failed to increment Teddy.%s" % variable)
 
 func _handle_train_interaction(engine: TrackEngine) -> void:
-    #print_debug("I spy a train %s in %s" % [__GlobalGameState.current_player_room, Room3D.find_room(self)])
-    if engine.running && __GlobalGameState.current_player_room == Room3D.find_room(self):
+    #print_debug("I spy a train %s in %s" % [__GlobalGameState.current_player_zone, Zone.find_zone(self)])
+    if engine.running && __GlobalGameState.current_player_zone == Zone.find_zone(self):
         _inc_teddy_int_variable("engine_clicks")
         _setup_dialogic("train", PhysicsGridPlayerController.last_connected_player)
 
 func _handle_interact_with_blocked_door(door: InteractionBody3D) -> void:
     if (
-        Room3D.find_room(door) == __GlobalGameState.current_player_room &&
-        __GlobalGameState.current_player_room == Room3D.find_room(self)
+        Zone.find_zone(door) == __GlobalGameState.current_player_zone &&
+        __GlobalGameState.current_player_zone == Room3D.find_zone(self)
     ):
         _inc_teddy_int_variable("attempted_blocked_doors")
         _setup_dialogic("blocked door", PhysicsGridPlayerController.last_connected_player)

@@ -5,6 +5,12 @@ const _BASE_DAY: int = 10244
 const _MONTS_PER_YEAR: int = 10
 const _DAYS_PER_MONTH: int = 24
 
+var current_player_zone: Zone:
+    set(value):
+        if value != current_player_zone:
+            current_player_zone = value
+            print_debug("Player is now in %s" % [value])
+
 #region Credits
 var _credits: int
 

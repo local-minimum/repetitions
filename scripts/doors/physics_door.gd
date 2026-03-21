@@ -19,7 +19,12 @@ class_name PhysicsDoor
 ## If the door is animating and opening
 @abstract func is_opening() -> bool
 
+@export var _interaction_body: InteractionBody3D
+
 func _enter_tree() -> void:
+    if _interaction_body != null && _interaction_body.execute_interaction.connect(_execute_interaction) != OK:
+        push_error("Failed to connect execute interaction")
+
     for _trigger_area: Area3D in _trigger_areas:
         if !_trigger_area.body_entered.is_connected(_handle_body_enter_door_trigger) && _trigger_area.body_entered.connect(_handle_body_enter_door_trigger.bind(_trigger_area)) != OK:
             push_error("Failed to connect body entered trigger area %s" % [_trigger_area])
@@ -45,3 +50,10 @@ func _handle_body_exit_door_trigger(body: Node3D, area: Area3D) -> void:
         return
 
     _blocking_body_removed(area, b)
+
+func _execute_interaction() -> void:
+    var dungeon: Dungeon = Dungeon.find_dungeon_in_tree(self)
+    if dungeon != null && dungeon.player != null:
+        _interact(dungeon.player)
+    else:
+        _interact(PhysicsGridPlayerController.last_connected_player)

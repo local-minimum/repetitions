@@ -1,20 +1,10 @@
-extends Node3D
+extends Zone
 class_name Room3D
-
-var dungeon: Dungeon:
-    get():
-        if dungeon == null:
-            dungeon = Dungeon.find_dungeon_in_tree(self)
-        return dungeon
 
 var blueprint: BlueprintRoom
 var origin: Vector3i
 
 @export var _managed_door_configs: Array[DoorConfigurationOptions]
-
-func _exit_tree() -> void:
-    if __GlobalGameState.current_player_room == self:
-        __GlobalGameState.current_player_room = null
 
 ## When room has already been placed we still have to check if something updated
 ## after new rooms got placed. We don't need to care for new door to door connections
