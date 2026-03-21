@@ -1,38 +1,31 @@
-extends Node3D
+extends Dungeon
 class_name DungeonBuilder
 
 static var active_builder: DungeonBuilder
 
-@export var _invoke_cinematic_on_ready: bool = true
-@export var grid_size: Vector3 = Vector3(2.5, 2.5, 2.5)
-@export var player: PhysicsGridPlayerController
 @export var dirt_mag: DirtMagazine
 
 var placed_rooms: Array[Room3D]
-const _COORDINATES_META: String = "coordinates"
 
 var dirts: Dictionary[Vector3i, Node3D]
 var dirt_digouts: Dictionary[Vector3i, Array]
 var used_tiles: Array[Vector3i]
 
 func _enter_tree() -> void:
+    super._enter_tree()
     active_builder = self
+
     if __SignalBus.on_complete_dungeon_plan.connect(_handle_complete_dungeon_plan) != OK:
         push_error("Failed to connect complete dungeon plan")
     if __SignalBus.on_use_pickax.connect(_handle_use_pickax) != OK:
         push_error("Failed to connect use pickax")
 
 func _exit_tree() -> void:
+    super._exit_tree()
     if active_builder == self:
         active_builder = null
     __SignalBus.on_complete_dungeon_plan.disconnect(_handle_complete_dungeon_plan)
     __SignalBus.on_use_pickax.disconnect(_handle_use_pickax)
-
-func _ready() -> void:
-    if _invoke_cinematic_on_ready:
-        player.add_cinematic_blocker(self)
-    player.global_position = get_closest_global_grid_position(player.global_position)
-    player.builder = self
 
 func _handle_use_pickax(target: Node3D, _hack_direction: CardinalDirections.CardinalDirection, point: Vector3) -> void:
     while !target.has_meta(_COORDINATES_META):
@@ -164,7 +157,6 @@ func _handle_complete_dungeon_plan(elevation: int, rooms: Array[BlueprintRoom]) 
 func _instantiate_3d_room(room: BlueprintRoom, origin: Vector3) -> Room3D:
     var room_3d: Room3D = room.option.instantiate_3d_room()
 
-    room_3d.builder = self
     room_3d.blueprint = room
     room_3d.origin = origin
 
@@ -234,64 +226,11 @@ func _place_dirt(coords: Vector3i, digs: Array[CardinalDirections.CardinalDirect
 
     return d
 
-func get_global_grid_position_from_2d_coordinates(coords: Vector2i, elevation: int) -> Vector3:
-    return Vector3(coords.x * grid_size.x, elevation * grid_size.y, coords.y * grid_size.z)
+static func find_builder_in_tree(node: Node3D) -> DungeonBuilder:
+    while node != null:
+        if node is DungeonBuilder:
+            return node as DungeonBuilder
 
-func get_global_grid_position_from_coordinates(coords: Vector3i) -> Vector3:
-    return Vector3(coords.x * grid_size.x, coords.y * grid_size.y, coords.z * grid_size.z)
-
-func _get_closest_local_grid_position(global_pos: Vector3) -> Vector3:
-    var local: Vector3 = to_local(global_pos)
-    return Vector3(roundi(local.x / grid_size.x) * grid_size.x, roundi(local.y / grid_size.y) * grid_size.y, roundi(local.z / grid_size.z) * grid_size.z)
-
-func get_closest_global_grid_position(global_pos: Vector3) -> Vector3:
-    return to_global(_get_closest_local_grid_position(global_pos))
-
-# Get closest neighbour to a global position in direction of the grid
-func get_closest_global_neighbour_position(global_pos: Vector3, direction: CardinalDirections.CardinalDirection) -> Vector3:
-    return to_global(_get_closest_local_grid_position(global_pos) + CardinalDirections.direction_to_vector(direction) * grid_size)
-
-func get_2d_grid_float_position(global_pos: Vector3) -> Vector2:
-    var pos: Vector3 = to_local(global_pos) / grid_size
-    return Vector2(pos.x, pos.z)
-
-func get_cardial_rotation(global_quat: Quaternion) -> Quaternion:
-    var quats: Array[Quaternion] = [
-        self.global_basis.get_rotation_quaternion(),
-        self.global_basis.rotated(Vector3.UP, PI * 0.5).get_rotation_quaternion(),
-        self.global_basis.rotated(Vector3.UP, PI).get_rotation_quaternion(),
-        self.global_basis.rotated(Vector3.UP, PI * 1.5).get_rotation_quaternion(),
-    ]
-    quats.sort_custom(func (a: Quaternion, b: Quaternion) -> bool: return a.angle_to(global_quat) < b.angle_to(global_quat))
-    return quats[0]
-
-## Determines if n is located between coordinates a and b
-## NOTE: `a` and `b` must be along an axis
-## NOTE: if `n` is exactly on a grid corner, the operation becomes unreliable
-func is_between_coordinates(n: Node3D, a: Vector3i, b: Vector3i) -> bool:
-    if VectorUtils.count_differing_axis(a, b) != 1:
-        push_error("Coordinates must be along an axis. Got %s and %" % [a, b])
-        return false
-
-    var pt_a: Vector3 = get_global_grid_position_from_coordinates(a)
-    var pt_b: Vector3 = get_global_grid_position_from_coordinates(b)
-
-    var ab: Vector3 = pt_b - pt_a
-    var dir_ab: Vector3 = ab.normalized()
-
-    var an: Vector3 = n.global_position - pt_a
-    var dot: float = dir_ab.dot(an)
-    if dot <= 0 || dot > ab.length():
-        return false
-
-    var orth_an: Vector3 = an - an.project(dir_ab)
-    return VectorUtils.all_dimensions_smaller(orth_an.abs(), 0.5 * grid_size)
-
-static func find_builder_in_tree(body: Node3D) -> DungeonBuilder:
-    while body != null:
-        if body is DungeonBuilder:
-            return body as DungeonBuilder
-
-        body = body.get_parent_node_3d()
+        node = node.get_parent_node_3d()
 
     return null

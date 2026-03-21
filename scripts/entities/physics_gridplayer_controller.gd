@@ -6,7 +6,7 @@ static var last_connected_player_cinematic: bool:
     get():
         return last_connected_player != null && last_connected_player.cinematic
 
-var builder: DungeonBuilder
+var dungeon: Dungeon
 
 var cinematic: bool:
     get():

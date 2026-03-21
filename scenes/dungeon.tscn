@@ -49,11 +49,13 @@ metadata/_custom_type_script = "uid://cufotv8ogf1gx"
 
 [node name="Dungeon Level" type="Node3D" unique_id=1917467308]
 
-[node name="3D Builder" type="Node3D" parent="." unique_id=1760216642 node_paths=PackedStringArray("player", "dirt_mag")]
+[node name="3D Builder" type="Node3D" parent="." unique_id=1760216642 node_paths=PackedStringArray("dirt_mag", "player")]
 script = ExtResource("1_fpimf")
-grid_size = Vector3(2, 3, 2)
-player = NodePath("../Player3d")
 dirt_mag = NodePath("../DirtMagazine")
+grid_size = Vector3(2, 3, 2)
+player = NodePath("Player3d")
+
+[node name="Player3d" parent="3D Builder" unique_id=1355093079 instance=ExtResource("4_0wj4k")]
 
 [node name="Dungeon Planning UI" type="CanvasLayer" parent="." unique_id=1098115073 node_paths=PackedStringArray("counter_label", "message_label", "redraw_btn")]
 script = ExtResource("1_c4wp1")
@@ -275,8 +277,6 @@ text = "UI_ACCEPT"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2050674169]
 environment = ExtResource("8_6nb7m")
-
-[node name="Player3d" parent="." unique_id=1355093079 instance=ExtResource("4_0wj4k")]
 
 [node name="DirtMagazine" type="Node" parent="." unique_id=387155804]
 script = ExtResource("5_fvacq")

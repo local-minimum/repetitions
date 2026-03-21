@@ -1,7 +1,12 @@
 extends Node3D
 class_name Room3D
 
-var builder: DungeonBuilder
+var dungeon: Dungeon:
+    get():
+        if dungeon == null:
+            dungeon = Dungeon.find_dungeon_in_tree(self)
+        return dungeon
+
 var blueprint: BlueprintRoom
 var origin: Vector3i
 
@@ -67,7 +72,7 @@ func _translate_2d_coords_to_3d(coords: Vector2i) -> Vector3i:
 
 func _get_config_for_door_data(door: DoorData) -> DoorConfigurationOptions:
     for conf: DoorConfigurationOptions in _managed_door_configs:
-        if builder.is_between_coordinates(
+        if dungeon.is_between_coordinates(
             conf,
             _translate_2d_coords_to_3d(door.global_coordinates),
             _translate_2d_coords_to_3d(door.other_global_coordinates),

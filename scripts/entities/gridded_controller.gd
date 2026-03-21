@@ -59,9 +59,9 @@ func _calculate_estimated_gridded_translation_target(
     direction: Vector3 = Vector3.ZERO,
 ) -> Vector3:
     return(
-        _player.builder.get_closest_global_neighbour_position(_player.global_position, CardinalDirections.vector_to_direction(direction))
+        _player.dungeon.get_closest_global_neighbour_position(_player.global_position, CardinalDirections.vector_to_direction(direction))
         if movement != Movement.MovementType.NONE else
-        _player.builder.get_closest_global_grid_position(_player.global_position)
+        _player.dungeon.get_closest_global_grid_position(_player.global_position)
     )
 
 func _normalize_gridded_translation_direction(movement: Movement.MovementType, direction: Vector3) -> Vector3:
@@ -207,7 +207,7 @@ func _attempt_gridded_translation(movement: Movement.MovementType, direction: Ve
     @warning_ignore_start("return_value_discarded")
     # print_debug("Transition in %s steps: %s" % [steps.size(), steps])
     var end_pt: Vector3 = steps[-1][PhysicsControllerStepCaster.StepData.CENTER_POINT]
-    TileBlocker.block(self, DungeonBuilder.active_builder.get_closest_coordinates(end_pt))
+    TileBlocker.block(self, _player.dungeon.get_closest_coordinates(end_pt))
 
     for step: Dictionary in steps:
         var pt: Vector3 = step[PhysicsControllerStepCaster.StepData.CENTER_POINT]
@@ -283,7 +283,7 @@ func _attempt_turn(angle: float) -> void:
         return
 
     var t: Transform3D = _player.global_transform.rotated(Vector3.UP, angle)
-    var target_global_rotation: Quaternion = _player.builder.get_cardial_rotation(t.basis.get_rotation_quaternion())
+    var target_global_rotation: Quaternion = _player.dungeon.get_cardial_rotation(t.basis.get_rotation_quaternion())
 
     _rotation_tween = create_tween()
     @warning_ignore_start("return_value_discarded")

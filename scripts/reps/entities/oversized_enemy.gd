@@ -54,6 +54,12 @@ var busy: bool:
             _translation_tween != null && _translation_tween.is_running()
         )
 
+var dungeon: Dungeon:
+    get():
+        if dungeon == null:
+             dungeon = Dungeon.find_dungeon_in_tree(self)
+        return dungeon
+
 func _enter_tree() -> void:
     if _anim == null:
         push_error("No animator connected to %s" % [self])
@@ -91,7 +97,7 @@ func _eval_behaviours() ->  void:
         _update_anim(conf, conf.custom_next_anim_blend, true)
         await get_tree().create_timer(_projectile_delay).timeout
         var projectile: Projectile = _projectile_scene.instantiate()
-        DungeonBuilder.active_builder.add_child(projectile)
+        dungeon.add_child(projectile)
 
         if projectile.on_hit.connect(_record_projectile_hit.bind(global_position, player), CONNECT_ONE_SHOT) != OK:
             push_error("Failed to connect projectile hit")
@@ -125,11 +131,11 @@ func _eval_behaviours() ->  void:
         _idle()
 
 func _swim_translate(direction: Vector3) -> void:
-    var target: Vector3 = DungeonBuilder.active_builder.get_closest_global_grid_position(
-        global_position + direction * DungeonBuilder.active_builder.grid_size
+    var target: Vector3 = dungeon.get_closest_global_grid_position(
+        global_position + direction * dungeon.grid_size
     )
 
-    TileBlocker.block(self, DungeonBuilder.active_builder.get_closest_coordinates(target))
+    TileBlocker.block(self, dungeon.get_closest_coordinates(target))
 
     _translation_tween = create_tween()
     @warning_ignore_start("return_value_discarded")
@@ -246,14 +252,14 @@ func _idle() -> void:
 func _check_hunt_player(player: PhysicsGridPlayerController) -> bool:
     # TODO: Improve metric for hunting to be a little smarter perhaps...
     # I.e. last seen duration, stuff like that. Have been hurt...
-    var delta: float = ((player.global_position - global_position).abs() / DungeonBuilder.active_builder.grid_size).length()
+    var delta: float = ((player.global_position - global_position).abs() / dungeon.grid_size).length()
     return delta < 10.0 && delta > 1.1
 
 func _check_ranged_player(player: PhysicsGridPlayerController) -> bool:
     if Time.get_ticks_msec() < _next_ranged_time:
         return false
 
-    var delta: float = ((player.global_position - global_position).abs() / DungeonBuilder.active_builder.grid_size).length()
+    var delta: float = ((player.global_position - global_position).abs() / dungeon.grid_size).length()
     return delta > 1.5 && delta < 5.5
 
 func _check_melee_player(player: PhysicsGridPlayerController) -> bool:
@@ -261,7 +267,7 @@ func _check_melee_player(player: PhysicsGridPlayerController) -> bool:
         return false
 
     var d_player: Vector3 = player.global_position - global_position
-    d_player /= DungeonBuilder.active_builder.grid_size
+    d_player /= dungeon.grid_size
     var look: Vector3 = looking_global_direction
 
     var planar_delta: float = absf(d_player.x) + absf(d_player.z)

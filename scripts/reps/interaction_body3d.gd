@@ -24,17 +24,22 @@ signal change_interaction_hover(hovered: bool)
 @export var _root: Node3D
 @export var _interaction_delay_after_spawn: float = 2.0
 
+var dungeon: Dungeon:
+    get():
+        if dungeon == null:
+            dungeon = Dungeon.find_dungeon_in_tree(self)
+        return dungeon
+
 var coordinates: Vector3i:
     get():
-        var builder: DungeonBuilder = DungeonBuilder.active_builder
-        if builder == null:
-            push_error("Cannot request rest if there's no dungeon builder active")
+        if dungeon == null:
+            push_error("Body isn't inside a dungeon's node tree")
             return Vector3i.ZERO
 
         if _root == null:
-            return builder.get_closest_coordinates(self.global_position)
+            return dungeon.get_closest_coordinates(self.global_position)
 
-        return builder.get_closest_coordinates(_root.global_position)
+        return dungeon.get_closest_coordinates(_root.global_position)
 
 var _readied: bool = false
 

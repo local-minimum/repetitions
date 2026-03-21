@@ -5,8 +5,8 @@ class_name RestInteractable
 @export var _teddy_event: Teddy.TeddySpecialEvent = Teddy.TeddySpecialEvent.NONE
 
 func _execute_interaction() -> void:
-    if DungeonBuilder.active_builder == null:
-        push_error("Cannot request rest if there's no dungeon builder active")
+    if dungeon == null:
+        push_error("Cannot request rest if there's no dungeon")
         return
     var coords: Vector3i = coordinates
     if _teddy != null && _teddy_event != Teddy.TeddySpecialEvent.NONE:

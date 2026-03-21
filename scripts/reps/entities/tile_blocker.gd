@@ -6,8 +6,8 @@ static var _blocks: Dictionary[Node, Array]
 static var _SPACE_RESERVATION_LAYER: int = 12
 
 static func block(entity: Node, coordinates: Vector3i, fill_amount: float = 0.9) -> void:
-    var builder: DungeonBuilder = DungeonBuilder.active_builder
-    var pos: Vector3 = builder.get_global_grid_position_from_coordinates(coordinates)
+    var dungeon: Dungeon = Dungeon.find_dungeon_in_tree(entity)
+    var pos: Vector3 = dungeon.get_global_grid_position_from_coordinates(coordinates)
 
     var body: StaticBody3D = StaticBody3D.new()
     body.name = "Tile Blocker at %s for %s" % [coordinates, entity.name]
@@ -17,12 +17,12 @@ static func block(entity: Node, coordinates: Vector3i, fill_amount: float = 0.9)
     var collider: CollisionShape3D = CollisionShape3D.new()
 
     var box: BoxShape3D = BoxShape3D.new()
-    box.size = fill_amount * builder.grid_size
+    box.size = fill_amount * dungeon.grid_size
     collider.shape = box
 
     body.add_child(collider)
-    builder.add_child(body)
-    body.global_position = pos + 0.5 * Vector3.UP * builder.grid_size
+    dungeon.add_child(body)
+    body.global_position = pos + 0.5 * Vector3.UP * dungeon.grid_size
 
     if !_blocks.has(entity):
         _blocks[entity] = [body] as Array[Node]
