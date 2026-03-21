@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://balxpkjvdg37o"]
 
-[ext_resource type="Script" uid="uid://ckshyx2pstjn7" path="res://scripts/reps/entities/oversized_enemy.gd" id="1_omeex"]
-[ext_resource type="Script" uid="uid://dw3nrvpmml00b" path="res://scripts/reps/entities/oversized_enemy_anim_config.gd" id="2_a2dlv"]
+[ext_resource type="Script" uid="uid://ckshyx2pstjn7" path="res://scripts/entities/oversized_enemy.gd" id="1_omeex"]
+[ext_resource type="Script" uid="uid://dw3nrvpmml00b" path="res://scripts/entities/oversized_enemy_anim_config.gd" id="2_a2dlv"]
 [ext_resource type="PackedScene" uid="uid://dv8x7xqo0igmc" path="res://scenes/entities/fish.blend" id="2_dskgf"]
 [ext_resource type="Script" uid="uid://dy41mksgydi8e" path="res://scripts/entities/animated_body_collisions.gd" id="3_a2dlv"]
 [ext_resource type="PackedScene" uid="uid://bramsbvj0hj26" path="res://scenes/entities/fish_spit.tscn" id="3_ux2u6"]

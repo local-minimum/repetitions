@@ -207,23 +207,27 @@ func _get_wanted_hunt_direction(player: PhysicsGridPlayerController) -> Vector3:
 func _record_projectile_hit(body: Node3D, projectile: Projectile, my_position: Vector3, player: PhysicsGridPlayerController) -> void:
     projectile.on_miss.disconnect(_record_projectile_miss)
 
-    # TODO: Make spalsh effect
-
     if !NodeUtils.is_parent(player, body):
         _record_projectile_miss(player, projectile, my_position, false)
+        projectile.on_hit_terrain.emit()
         return
 
-    # TODO: Hurt player
+    projectile.on_hit_target.emit()
+
+    _apply_projectile_hit_player(player, projectile)
     # TODO: Record success
     print_debug("Hurt player based on %s hit" % [projectile])
+
+## Override this to cause effect when projectile hits player
+func _apply_projectile_hit_player(player: PhysicsGridPlayerController, projectile: Projectile) -> void:
+    push_warning("No implementation for %s hitting %s" % [projectile, player])
 
 func _record_projectile_miss(_player: PhysicsGridPlayerController, projectile: Projectile, _my_position: Vector3, make_effect: bool = true) -> void:
     if projectile.on_hit.is_connected(_record_projectile_hit):
         projectile.on_hit.disconnect(_record_projectile_hit)
 
     if make_effect:
-        # TODO: Make peeter out effect, but only if
-        pass
+        projectile.on_peter_out.emit()
 
     # TODO: Record fail
 

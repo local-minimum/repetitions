@@ -14,6 +14,15 @@ class_name Projectile
 signal on_hit(body: Node3D, projectile: Projectile)
 signal on_miss(projetile: Projectile)
 
+@warning_ignore_start("unused_signal")
+## If projectile hits non-target, managed by entity casting projectile
+signal on_hit_terrain()
+## If projectile hits valid target, managed by entity casting projectile
+signal on_hit_target()
+## If projectile runs out of time
+signal on_peter_out()
+@warning_ignore_restore("unused_signal")
+
 var origin: Vector3
 var target: Vector3
 
@@ -86,7 +95,9 @@ func _process(delta: float) -> void:
     global_position += -global_basis.z * delta * _current_velocity
 
 func _expire() -> void:
+    await get_tree().create_timer(0.25).timeout
     queue_free()
 
 func _collide() -> void:
+    await get_tree().create_timer(0.25).timeout
     queue_free()

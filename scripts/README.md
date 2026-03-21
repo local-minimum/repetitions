@@ -14,4 +14,6 @@ And global `__BindingHints` (`binding_hints.gd` as it is). Then create a `Bindin
 # Bindings
 Expected bindings: `crawl_forward`, `crawl_backward`, `crawl_strafe_left`, `crawl_strafe_right`, `crawl_turn_left`,
 `crawl_turn_right`,`crawl_search`,`hot_key_1`,`hot_key_2`,`hot_key_3`,`crawl_pause`,`toggle_free_look_cam_keyb`
-`toggle_free_look_cam_mouse`
+`toggle_free_look_cam_mouse`.
+
+These can be created by activating the `minimum_convenience` plugin.
