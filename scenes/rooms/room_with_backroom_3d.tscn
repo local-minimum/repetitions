@@ -24,11 +24,11 @@
 [ext_resource type="PackedScene" uid="uid://d0pvdhv0yak1x" path="res://scenes/rooms/meshes/props/cabinett.tscn" id="22_n6r63"]
 [ext_resource type="PackedScene" uid="uid://bw8b2k1a5w7f7" path="res://scenes/rooms/meshes/props/paintings/line_tracers_frame.tscn" id="32_x8tv8"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_rfgxy"]
-size = Vector3(1, 1, 1.6870117)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_imnvc"]
 size = Vector3(0.4292984, 0.19659424, 1.3720398)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rfgxy"]
+size = Vector3(1, 1, 1.6870117)
 
 [node name="RoomCorner3d" type="Node3D" unique_id=1305958560 node_paths=PackedStringArray("_managed_door_configs")]
 script = ExtResource("1_wancy")
@@ -226,18 +226,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2.9)
 [node name="roomwall_twosided_endcap2" parent="Geometry/Basic" unique_id=338452849 instance=ExtResource("8_bnp8r")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2.1, 0, 2)
 
-[node name="Trigger Paint Tracers" type="Area3D" parent="Geometry/Basic" unique_id=262631828 node_paths=PackedStringArray("tracers")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2898779, 0, 1.1264884)
-collision_layer = 0
-collision_mask = 512
-input_ray_pickable = false
-script = ExtResource("18_x8tv8")
-tracers = [NodePath("../../line_tracers_frame/PaintTracer 1"), NodePath("../../line_tracers_frame/PaintTracer 2"), NodePath("../../line_tracers_frame/PaintTracer 3")]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/Basic/Trigger Paint Tracers" unique_id=471879450]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.80060005, -0.12133789)
-shape = SubResource("BoxShape3D_rfgxy")
-
 [node name="PaintingPuzzleCabinett" parent="Geometry" unique_id=1994470153 node_paths=PackedStringArray("tracer_frame") instance=ExtResource("22_n6r63")]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, -2.7411885, 0, 0.97633266)
 tracer_frame = NodePath("../line_tracers_frame")
@@ -263,7 +251,19 @@ shape = SubResource("BoxShape3D_imnvc")
 [node name="line_tracers_frame" parent="Geometry" unique_id=311467674 instance=ExtResource("32_x8tv8")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.1573439, 0.86653066, 1.7905009)
 
-[connection signal="body_entered" from="Geometry/Basic/Trigger Paint Tracers" to="Geometry/Basic/Trigger Paint Tracers" method="_on_body_entered"]
-[connection signal="body_exited" from="Geometry/Basic/Trigger Paint Tracers" to="Geometry/Basic/Trigger Paint Tracers" method="_on_body_exited"]
+[node name="Trigger Paint Tracers" type="Area3D" parent="Geometry/line_tracers_frame" unique_id=262631828 node_paths=PackedStringArray("tracers")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.66401243, -0.86653066, -0.26298735)
+collision_layer = 0
+collision_mask = 512
+input_ray_pickable = false
+script = ExtResource("18_x8tv8")
+tracers = [NodePath("../PaintTracer 1"), NodePath("../PaintTracer 2"), NodePath("../PaintTracer 3")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/line_tracers_frame/Trigger Paint Tracers" unique_id=471879450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.80060005, -0.12133789)
+shape = SubResource("BoxShape3D_rfgxy")
+
+[connection signal="body_entered" from="Geometry/line_tracers_frame/Trigger Paint Tracers" to="Geometry/line_tracers_frame/Trigger Paint Tracers" method="_on_body_entered"]
+[connection signal="body_exited" from="Geometry/line_tracers_frame/Trigger Paint Tracers" to="Geometry/line_tracers_frame/Trigger Paint Tracers" method="_on_body_exited"]
 
 [editable path="Geometry/line_tracers_frame"]
