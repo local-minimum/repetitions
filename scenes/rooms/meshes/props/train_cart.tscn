@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://wevcbdvb3d6h"]
 
-[ext_resource type="Script" uid="uid://bg4keg2kiwosh" path="res://scripts/reps/train/track_carriage.gd" id="1_k5ok2"]
+[ext_resource type="Script" uid="uid://bg4keg2kiwosh" path="res://scripts/trains_and_tracks/track_carriage.gd" id="1_k5ok2"]
 [ext_resource type="ArrayMesh" uid="uid://cngehil7v550b" path="res://scenes/rooms/meshes/props/train_engine_wheel.obj" id="2_k5ok2"]
 [ext_resource type="ArrayMesh" uid="uid://es1aoq8pkcro" path="res://scenes/rooms/meshes/props/train_cart_body.obj" id="2_y4nsl"]
-[ext_resource type="Script" uid="uid://brtemelqkre0e" path="res://scripts/reps/train/riding_carriage.gd" id="3_k3ynm"]
+[ext_resource type="Script" uid="uid://brtemelqkre0e" path="res://scripts/trains_and_tracks/riding_carriage.gd" id="3_k3ynm"]
 [ext_resource type="Material" uid="uid://clle4123a7bt" path="res://scenes/rooms/meshes/props/train_engine_wheel.material" id="3_y4nsl"]
 [ext_resource type="Script" uid="uid://dpwsunra0mkvn" path="res://scripts/reps/interaction_body3d.gd" id="5_y4nsl"]
 

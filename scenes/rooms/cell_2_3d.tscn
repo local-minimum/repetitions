@@ -10,9 +10,9 @@
 [ext_resource type="Material" uid="uid://c07yxcnw5ahtq" path="res://textures/wood-textures/track-wood.tres" id="8_ggd3p"]
 [ext_resource type="ArrayMesh" uid="uid://cjoy3pfwroyr" path="res://scenes/rooms/meshes/props/train_track_turn_right.obj" id="9_1s2i6"]
 [ext_resource type="ArrayMesh" uid="uid://dxbrmfbvxsvvu" path="res://scenes/rooms/meshes/props/train_track_turn_left_short.obj" id="10_1s2i6"]
-[ext_resource type="Script" uid="uid://g3ceed76t0c0" path="res://scripts/reps/train/tracks_auto_connector.gd" id="11_2rq2a"]
+[ext_resource type="Script" uid="uid://g3ceed76t0c0" path="res://scripts/trains_and_tracks/tracks_auto_connector.gd" id="11_2rq2a"]
 [ext_resource type="PackedScene" uid="uid://c7os4bawqoemp" path="res://scenes/rooms/meshes/roughwall_train_tunnel_side.blend" id="11_m3pdk"]
-[ext_resource type="Script" uid="uid://cfiu5ok0cmhx" path="res://scripts/reps/train/track.gd" id="12_wvko5"]
+[ext_resource type="Script" uid="uid://cfiu5ok0cmhx" path="res://scripts/trains_and_tracks/track.gd" id="12_wvko5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_co0dn"]
 size = Vector3(0.13061523, 2.3056946, 0.15673828)
