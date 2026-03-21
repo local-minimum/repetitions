@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://chkw5q3yhwuml" path="res://scenes/rooms/room_with_backroom_3d.tscn" id="10_3rqk3"]
 [ext_resource type="PackedScene" uid="uid://balxpkjvdg37o" path="res://scenes/entities/fish_enemy.tscn" id="12_6gink"]
 [ext_resource type="PackedScene" uid="uid://b8lqj7rv80ssv" path="res://scenes/player_3d.tscn" id="13_6gink"]
-[ext_resource type="Script" uid="uid://c746wntg074vx" path="res://scripts/reps/entities/tile_blocker.gd" id="14_qnthh"]
+[ext_resource type="Script" uid="uid://c746wntg074vx" path="res://scripts/entities/tile_blocker.gd" id="14_qnthh"]
 
 [node name="Builder" type="Node3D" unique_id=1848198409 node_paths=PackedStringArray("player")]
 script = ExtResource("1_qnthh")
