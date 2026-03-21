@@ -20,6 +20,10 @@ signal on_increment_day(day_of_month: int, days_until_end_of_month: int)
 signal on_level_paused(paused: bool)
 
 # Entity
+signal on_physics_player_ready(player: PhysicsGridPlayerController)
+signal on_physics_player_removed(player: PhysicsGridPlayerController)
+
+## DEPRECATED: This is not used with the physics based system (yet)
 signal on_update_entity_orientation(
     entity: Node3D,
     old_down: CardinalDirections.CardinalDirection,
@@ -27,6 +31,9 @@ signal on_update_entity_orientation(
     old_forward: CardinalDirections.CardinalDirection,
     forward: CardinalDirections.CardinalDirection,
 )
+
+# Interaction bodies
+signal on_blocked_door_interaction(interaction_body: InteractionBody3D)
 
 # Credits $$$
 signal on_update_credits(credits: int)

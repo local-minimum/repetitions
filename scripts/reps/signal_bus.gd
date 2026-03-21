@@ -2,8 +2,6 @@ extends SignalBusCore
 class_name SignalBus
 
 @warning_ignore_start("unused_signal")
-signal on_physics_player_ready(player: PhysicsGridPlayerController)
-signal on_physics_player_removed(player: PhysicsGridPlayerController)
 
 signal on_ready_planner(terminal: PlannerTerminal, player: PhysicsGridPlayerController, elevation: int, allowance: int)
 signal on_update_planning(planner: DungeonPlanner, remaining_rooms: int)
@@ -31,7 +29,6 @@ signal on_request_tool(tool: Tool.ToolType, receipient: Node3D)
 signal on_use_pickax(target: Node3D, hack_direction: CardinalDirections.CardinalDirection, point: Vector3)
 signal on_trophy_stolen_from_terminal(terminal: PlannerTerminal)
 
-signal on_blocked_door_interaction(interaction_body: InteractionBody3D)
 signal on_train_interaction(engine: TrackEngine)
 signal on_request_train_start(carriage: TrackCarriage)
 signal on_request_train_stop(carriage: TrackCarriage)
