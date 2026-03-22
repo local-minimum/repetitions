@@ -181,26 +181,36 @@ func _input(event: InputEvent) -> void:
         _release_movement(Movement.MovementType.BACK)
 
     elif event is InputEventJoypadMotion:
-        var v: Vector2 = Vector2(
-            event.get_action_strength(&"crawl_axis_right") - event.get_action_strength(&"crawl_axis_left"),
-            event.get_action_strength(&"crawl_axis_back") - event.get_action_strength(&"crawl_axis_forward")
-        )
-        if v.x < 0 && (_translation_stack.is_empty() || !_translation_stack.has(Movement.MovementType.STRAFE_LEFT)):
-            _push_ontop_of_movement_stack(Movement.MovementType.STRAFE_LEFT)
-        elif v.x > 0 && (_translation_stack.is_empty() || !_translation_stack.has(Movement.MovementType.STRAFE_RIGHT)):
-            _push_ontop_of_movement_stack(Movement.MovementType.STRAFE_RIGHT)
-        else:
-            _release_movement(Movement.MovementType.STRAFE_LEFT)
-            _release_movement(Movement.MovementType.STRAFE_RIGHT)
+        if (
+            event.is_action_pressed(&"crawl_axis_back") ||
+            event.is_action_released(&"crawl_axis_back") ||
+            event.is_action_pressed(&"crawl_axis_forward") ||
+            event.is_action_released(&"crawl_axis_forward")
+        ):
+            var y: float = event.get_action_strength(&"crawl_axis_back") - event.get_action_strength(&"crawl_axis_forward")
 
-        if v.y < 0 && (_translation_stack.is_empty() || !_translation_stack.has(Movement.MovementType.FORWARD)):
-            _push_ontop_of_movement_stack(Movement.MovementType.FORWARD)
-        elif v.y > 0 && (_translation_stack.is_empty() || !_translation_stack.has(Movement.MovementType.BACK)):
-            _push_ontop_of_movement_stack(Movement.MovementType.BACK)
-        else:
-            _release_movement(Movement.MovementType.FORWARD)
-            _release_movement(Movement.MovementType.BACK)
+            if y < 0 && (_translation_stack.is_empty() || !_translation_stack.has(Movement.MovementType.FORWARD)):
+                _push_ontop_of_movement_stack(Movement.MovementType.FORWARD)
+            elif y > 0 && (_translation_stack.is_empty() || !_translation_stack.has(Movement.MovementType.BACK)):
+                _push_ontop_of_movement_stack(Movement.MovementType.BACK)
+            elif y == 0:
+                _release_movement(Movement.MovementType.FORWARD)
+                _release_movement(Movement.MovementType.BACK)
+        elif (
+            event.is_action_pressed(&"crawl_axis_left") ||
+            event.is_action_released(&"crawl_axis_left") ||
+            event.is_action_pressed(&"crawl_axis_right") ||
+            event.is_action_released(&"crawl_axis_right")
+        ):
+            var x: float = event.get_action_strength(&"crawl_axis_right") - event.get_action_strength(&"crawl_axis_left")
 
+            if x < 0 && (_translation_stack.is_empty() || !_translation_stack.has(Movement.MovementType.STRAFE_LEFT)):
+                _push_ontop_of_movement_stack(Movement.MovementType.STRAFE_LEFT)
+            elif x > 0 && (_translation_stack.is_empty() || !_translation_stack.has(Movement.MovementType.STRAFE_RIGHT)):
+                _push_ontop_of_movement_stack(Movement.MovementType.STRAFE_RIGHT)
+            elif x == 0:
+                _release_movement(Movement.MovementType.STRAFE_LEFT)
+                _release_movement(Movement.MovementType.STRAFE_RIGHT)
     else:
         handled = false
 
@@ -209,7 +219,6 @@ func _input(event: InputEvent) -> void:
 
     if gridless && !cinematic:
         _gridless_controller.handle_turn(event)
-
 
 func _sync_debug_shape_visibilities() -> void:
     for shape: Node3D in _debug_shapes:

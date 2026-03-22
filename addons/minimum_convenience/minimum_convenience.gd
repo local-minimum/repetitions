@@ -86,8 +86,8 @@ func add_free_cam_bindings() -> void:
         ProjectSettings.set_setting(key, {"deadzone": 0.2, "events": events})
         print_debug("Minimum Convenience: Added input for %s" % [key])
 
-    updated = _add_joy_axis_event("input/crawl_axis_forward", JoyAxis.JOY_AXIS_LEFT_Y, JoyAxisDirection.NEGATIVE) || updated
-    updated = _add_joy_axis_event("input/crawl_axis_back", JoyAxis.JOY_AXIS_LEFT_Y, JoyAxisDirection.POSITIVE) || updated
+    updated = _add_joy_axis_event("input/crawl_axis_forward", JoyAxis.JOY_AXIS_LEFT_Y, JoyAxisDirection.NEGATIVE, 0.5) || updated
+    updated = _add_joy_axis_event("input/crawl_axis_back", JoyAxis.JOY_AXIS_LEFT_Y, JoyAxisDirection.POSITIVE, 0.5) || updated
 
     key = "input/crawl_strafe_left"
     if !ProjectSettings.has_setting(key):
@@ -105,8 +105,8 @@ func add_free_cam_bindings() -> void:
         ProjectSettings.set_setting(key, {"deadzone": 0.2, "events": events})
         print_debug("Minimum Convenience: Added input for %s" % [key])
 
-    updated = _add_joy_axis_event("input/crawl_axis_left", JoyAxis.JOY_AXIS_LEFT_X, JoyAxisDirection.NEGATIVE) || updated
-    updated = _add_joy_axis_event("input/crawl_axis_right", JoyAxis.JOY_AXIS_LEFT_X, JoyAxisDirection.POSITIVE) || updated
+    updated = _add_joy_axis_event("input/crawl_axis_left", JoyAxis.JOY_AXIS_LEFT_X, JoyAxisDirection.NEGATIVE, 0.5) || updated
+    updated = _add_joy_axis_event("input/crawl_axis_right", JoyAxis.JOY_AXIS_LEFT_X, JoyAxisDirection.POSITIVE, 0.5) || updated
 
     key = "input/crawl_turn_left"
     if !ProjectSettings.has_setting(key):
