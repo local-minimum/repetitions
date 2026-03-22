@@ -70,6 +70,11 @@ func add_free_cam_bindings() -> void:
         ProjectSettings.set_setting(key, {"deadzone": 0.2, "events": [input_right_click]})
         print_debug("Minimum Convenience: Added input for %s" % [key])
 
+    updated = _add_joy_axis_event("input/free_look_axis_forward", JoyAxis.JOY_AXIS_RIGHT_Y, JoyAxisDirection.NEGATIVE, 0.25) || updated
+    updated = _add_joy_axis_event("input/free_look_axis_back", JoyAxis.JOY_AXIS_RIGHT_Y, JoyAxisDirection.POSITIVE, 0.25) || updated
+    updated = _add_joy_axis_event("input/free_look_axis_left", JoyAxis.JOY_AXIS_RIGHT_X, JoyAxisDirection.NEGATIVE, 0.25) || updated
+    updated = _add_joy_axis_event("input/free_look_axis_right", JoyAxis.JOY_AXIS_RIGHT_X, JoyAxisDirection.POSITIVE, 0.25) || updated
+
     key = "input/crawl_forward"
     if !ProjectSettings.has_setting(key):
         updated = true

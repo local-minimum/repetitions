@@ -1,7 +1,7 @@
 extends Node3D
 class_name FreeLookCam
 
-enum ToggleCause { MOVEMENT, KEYBOARD_ACTIVATOR, MOUSE_ACTIVATOR }
+enum ToggleCause { MOVEMENT, KEYBOARD_ACTIVATOR, MOUSE_ACTIVATOR, JOY_ACTIVATOR }
 
 @export var _yaw_limit_degrees: float = 90
 @export var _pitch_limit_degrees: float = 80
@@ -16,7 +16,9 @@ enum ToggleCause { MOVEMENT, KEYBOARD_ACTIVATOR, MOUSE_ACTIVATOR }
 @export_category("Mouse")
 @export var mouse_sensitivity_factor: float = 0.3
 @export var _mouse_activation_toggle: String = "toggle_free_look_cam_mouse"
+@export var joy_sensitivity_factor: float = 0.3
 
+var _joy_direction: Vector2 = Vector2.ZERO
 var _mouse_offset: Vector2 = Vector2.ZERO
 var _keyboard_direction: Vector2 = Vector2.ZERO
 var _total_yaw: float = 0
@@ -81,13 +83,16 @@ func _input(event: InputEvent) -> void:
     _check_toggle(event, _mouse_activation_toggle, ToggleCause.MOUSE_ACTIVATOR)
     _check_toggle(event, _keyboard_activation_toggle, ToggleCause.KEYBOARD_ACTIVATOR)
 
+    if event is InputEventJoypadMotion:
+        _free_look_controller(event)
+        return
+
     if !_looking:
         return
 
     if event is InputEventMouseMotion:
         _mouse_offset = (event as InputEventMouseMotion).relative
         return
-
 
     if event.is_action_pressed(_keyboard_up):
         _keyboard_direction.y -= 1.0
@@ -109,6 +114,33 @@ func _input(event: InputEvent) -> void:
     elif event.is_action_released(_keyboard_right):
         _keyboard_direction.x -= 1.0
 
+func _free_look_controller(event: InputEventJoypadMotion) -> void:
+    var looking_update: bool = false
+
+    if (
+        event.is_action_pressed(&"free_look_axis_back") ||
+        event.is_action_released(&"free_look_axis_back") ||
+        event.is_action_pressed(&"free_look_axis_forward") ||
+        event.is_action_released(&"free_look_axis_forward")
+    ):
+        var y: float = event.get_action_strength(&"free_look_axis_back") - event.get_action_strength(&"free_look_axis_forward")
+        looking_update = (y != 0) != _looking
+        _joy_direction.y = y
+
+    elif (
+        event.is_action_pressed(&"free_look_axis_left") ||
+        event.is_action_released(&"free_look_axis_left") ||
+        event.is_action_pressed(&"free_look_axis_right") ||
+        event.is_action_released(&"free_look_axis_right")
+    ):
+        var x: float = event.get_action_strength(&"free_look_axis_right") - event.get_action_strength(&"free_look_axis_left")
+        looking_update = (x != 0) != _looking
+        _joy_direction.x = x
+
+    if looking_update:
+        _handle_toggle_freelook_camera(_joy_direction.length_squared() > 0, FreeLookCam.ToggleCause.JOY_ACTIVATOR)
+        __SignalBus.on_toggle_freelook_camera.emit(_looking, FreeLookCam.ToggleCause.JOY_ACTIVATOR)
+
 func _easeback() -> void:
     if _easeback_tween != null && _easeback_tween.is_running():
         return
@@ -128,7 +160,14 @@ func _process(delta: float) -> void:
     if !_looking:
         return
 
-    if _mouse_offset != Vector2.ZERO:
+    if _joy_direction != Vector2.ZERO:
+        var offset: Vector2 = _joy_direction * keyboard_sensitivity * delta
+        _set_rotation(Vector2(
+            _total_yaw + offset.x,
+            _total_pitch + offset.y,
+        ))
+
+    elif _mouse_offset != Vector2.ZERO:
         _mouse_offset *= mouse_sensitivity_factor * AccessibilitySettings.mouse_sensitivity
 
         _set_rotation(Vector2(
