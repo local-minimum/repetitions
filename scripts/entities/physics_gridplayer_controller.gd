@@ -33,6 +33,12 @@ func _update_cinematic(old_value: bool) -> void:
     elif cinematic && !old_value && gridless:
         _captured_pointer_eventer.active = false
 
+    if _freelook_cam != null:
+        if cinematic:
+            _freelook_cam.add_blocker(self)
+        else:
+            _freelook_cam.remove_blocker(self)
+
 func add_cinematic_blocker(node: Node) -> void:
     if !_cinematic_blockers.has(node):
         print_debug("%s causes %s to be cinematic" % [node, self])

@@ -31,9 +31,18 @@ var _easeback_tween: Tween
         if _looking && !value:
             _looking = false
 
+var _blockers: Array[Node]
+
+func add_blocker(blocker: Node) -> void:
+    if !_blockers.has(blocker):
+        _blockers.append(blocker)
+
+func remove_blocker(blocker: Node) -> void:
+    _blockers.erase(blocker)
+
 var _allow: bool:
     get():
-        return !_paused && enabled
+        return !_paused && enabled && _blockers.is_empty()
 
 var _paused: bool = false
 var _looking: bool:
