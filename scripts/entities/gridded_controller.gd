@@ -117,6 +117,10 @@ func _test_step(
         return StepOutcome.FLAT
     return StepOutcome.ELEVATION_CHANGE
 
+var steps: Array
+var part_duration: float
+var _active_movement: Movement.MovementType
+
 func _attempt_gridded_translation(movement: Movement.MovementType, direction: Vector3, resolution: int = 6) -> void:
     if _translation_tween && _translation_tween.is_running() || _rotation_tween && _rotation_tween.is_running():
         return
@@ -139,9 +143,7 @@ func _attempt_gridded_translation(movement: Movement.MovementType, direction: Ve
             PhysicsControllerStepCaster.StepData.CLEARING: Vector3.UP * _player.stepper.min_clearing_above,
     }
 
-    var steps: Array = [
-        prev_data,
-    ]
+    steps = [prev_data]
 
     var y: float = _player.global_position.y
     var failed: bool = false
@@ -199,14 +201,15 @@ func _attempt_gridded_translation(movement: Movement.MovementType, direction: Ve
         _animate_refused_movement(movement, mid)
         return
 
-    var part_duration: float = _translation_duration / (steps.size() - 1)
+    _active_movement = movement
+    part_duration = _translation_duration / (steps.size() - 1)
     _translation_tween = create_tween()
     var prev_norm: Vector3 = Vector3.UP
     var prev_pt: Vector3 = _player.global_position
     var idx: int = 0
-    @warning_ignore_start("return_value_discarded")
+
     # print_debug("Transition in %s steps: %s" % [steps.size(), steps])
-    var end_pt: Vector3 = steps[-1][PhysicsControllerStepCaster.StepData.CENTER_POINT]
+    #var end_pt: Vector3 = steps[-1][PhysicsControllerStepCaster.StepData.CENTER_POINT]
 
     _player.grid_entity.start_translation(direction, _translation_duration)
 
@@ -215,59 +218,66 @@ func _attempt_gridded_translation(movement: Movement.MovementType, direction: Ve
         var norm: Vector3 = step[PhysicsControllerStepCaster.StepData.NORMAL]
 
         if idx > 0:
-            if (
-                absf(pt.y - prev_pt.y) < _player.stepper.ignore_step_height ||
-                norm.angle_to(Vector3.UP) > _FLATNESS_THRESHOLD ||
-                prev_norm.angle_to(Vector3.UP) > _FLATNESS_THRESHOLD
-            ):
-                # Flat or slope walk
-                _translation_tween.tween_property(
-                    _player,
-                    "global_position",
-                    pt,
-                    part_duration,
-                )
-            else:
-                # We need stairs animation type
-                _translation_tween.tween_property(
-                    _player,
-                    "global_position:x",
-                    pt.x,
-                    part_duration,
-                )
-                _translation_tween.set_parallel()
-                _translation_tween.tween_property(
-                    _player,
-                    "global_position:z",
-                    pt.z,
-                    part_duration,
-                )
-                _translation_tween.tween_property(
-                    _player,
-                    "global_position:y",
-                    pt.y,
-                    part_duration,
-                ).set_ease(Tween.EASE_OUT if prev_pt.y < pt.y else Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
-                _translation_tween.set_parallel(false)
+            _config_step_tween(pt, prev_pt, norm, prev_norm)
 
         prev_pt = pt
         prev_norm = norm
         idx += 1
 
-    @warning_ignore_restore("return_value_discarded")
     if _translation_tween.finished.connect(
         func () -> void:
             _player.handle_translation_end(movement)
             _player.grid_entity.is_translating = false
+            steps.clear()
     ) != OK:
         push_warning("Failed to connect end of movement")
         _player.handle_translation_end(movement)
         _player.grid_entity.is_translating = false
+        steps.clear()
+
+func _config_step_tween(pt: Vector3, prev_pt: Vector3, norm: Vector3, prev_norm: Vector3) -> void:
+    @warning_ignore_start("return_value_discarded")
+    if (
+        absf(pt.y - prev_pt.y) < _player.stepper.ignore_step_height ||
+        norm.angle_to(Vector3.UP) > _FLATNESS_THRESHOLD ||
+        prev_norm.angle_to(Vector3.UP) > _FLATNESS_THRESHOLD
+    ):
+        # Flat or slope walk
+        _translation_tween.tween_property(
+            _player,
+            "global_position",
+            pt,
+            part_duration,
+        )
+    else:
+        # We need stairs animation type
+        _translation_tween.tween_property(
+            _player,
+            "global_position:x",
+            pt.x,
+            part_duration,
+        )
+        _translation_tween.set_parallel()
+        _translation_tween.tween_property(
+            _player,
+            "global_position:z",
+            pt.z,
+            part_duration,
+        )
+        _translation_tween.tween_property(
+            _player,
+            "global_position:y",
+            pt.y,
+            part_duration,
+        ).set_ease(Tween.EASE_OUT if prev_pt.y < pt.y else Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+        _translation_tween.set_parallel(false)
+    @warning_ignore_restore("return_value_discarded")
 
 func _attempt_transition_to_gridded_translation() -> void:
     if _translation_tween && _translation_tween.is_running() || _rotation_tween && _rotation_tween.is_running():
         return
 
+    steps.clear()
     var target: Vector3 = _calculate_estimated_gridded_translation_target()
 
     _translation_tween = create_tween()
@@ -278,6 +288,43 @@ func _attempt_transition_to_gridded_translation() -> void:
         push_warning("Failed to connect end of movement")
         _player.handle_translation_end(Movement.MovementType.CENTER)
 
+func force_abort_translation() -> void:
+    if steps.is_empty():
+        push_warning("Requesting a retreat when there's no steps here")
+        return
+
+
+    var progress: float = 0.5
+    if _translation_tween != null && _translation_tween.is_running():
+        progress = _translation_tween.get_total_elapsed_time() / _translation_duration
+
+    _player.grid_entity.is_retreating = true
+    var next_step: int = floori(steps.size() * progress)
+    var step: Dictionary = steps[next_step + 1]
+    var prev_pt: Vector3 = step[PhysicsControllerStepCaster.StepData.CENTER_POINT]
+    var prev_norm: Vector3 = step[PhysicsControllerStepCaster.StepData.NORMAL]
+
+    while next_step >= 0:
+        step = steps[next_step]
+        var pt: Vector3 = step[PhysicsControllerStepCaster.StepData.CENTER_POINT]
+        var norm: Vector3 = step[PhysicsControllerStepCaster.StepData.NORMAL]
+
+        _config_step_tween(pt, prev_pt, norm, prev_norm)
+
+        prev_pt = pt
+        prev_norm = norm
+        next_step -= 1
+
+    if _translation_tween.finished.connect(
+        func () -> void:
+            _player.handle_translation_end(_active_movement)
+            _player.grid_entity.is_translating = false
+            steps.clear()
+    ) != OK:
+        push_warning("Failed to connect end of movement")
+        _player.handle_translation_end(_active_movement)
+        _player.grid_entity.is_translating = false
+        steps.clear()
 
 func _attempt_turn(angle: float) -> void:
     if  _rotation_tween && _rotation_tween.is_running():

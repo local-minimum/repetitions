@@ -61,8 +61,12 @@ var dungeon: Dungeon:
         return dungeon
 
 func _enter_tree() -> void:
+    if grid_entity != null && grid_entity.force_abort_translation.connect(_handle_force_abort_translation) != OK:
+        push_error("Could not connedct to force abort translation")
+
     if _anim == null:
         push_error("No animator connected to %s" % [self])
+
     elif _anim.current_animation_changed.connect(_handle_animation_changed) != OK:
         push_error("Failed to connect animation changed")
 
@@ -130,7 +134,15 @@ func _eval_behaviours() ->  void:
     else:
         _idle()
 
+var _before_swim_look: Looking
+var _before_swim_rotation: Quaternion
+var _before_swim_position: Vector3
+
 func _swim_translate(direction: Vector3) -> void:
+    _before_swim_position = global_position
+    _before_swim_rotation = global_basis.get_rotation_quaternion()
+    _before_swim_look = looking
+
     var target: Vector3 = dungeon.get_closest_global_grid_position(
         global_position + direction * dungeon.grid_size
     )
@@ -149,7 +161,7 @@ func _swim_translate(direction: Vector3) -> void:
 
         _translation_tween.parallel().tween_method(
             QuaternionUtils.create_tween_rotation_method(self),
-            global_basis.get_rotation_quaternion(),
+            _before_swim_rotation,
             Basis.looking_at(direction, Vector3.UP).get_rotation_quaternion(),
             _tile_translation_duration * 0.5,
         )
@@ -411,3 +423,44 @@ func _update_anim(conf: OversizedEnemyAnimConfig, blend: float = -1, make_busy: 
         print_debug("Executing animation %s" % [conf])
     else:
         push_warning("Found no animation for %s %s" % [Looking.find_key(looking), Mode.find_key(mode)])
+
+func _handle_force_abort_translation() -> void:
+    var progress: float = 0.5
+    if _translation_tween != null && _translation_tween.is_running():
+        progress = clampf(
+            _translation_tween.get_total_elapsed_time() / _tile_translation_duration,
+            0.2,
+            0.8,
+        )
+        _translation_tween.kill()
+    var duration: float = (1 - progress) * _tile_translation_duration
+
+    if _fish_root_tween != null && _fish_root_tween.is_running():
+        _fish_root_tween.kill()
+
+    grid_entity.is_retreating = true
+
+    _translation_tween = create_tween()
+    @warning_ignore_start("return_value_discarded")
+    _translation_tween.tween_property(self, "global_position", _before_swim_position, duration)
+    if _before_swim_look != Looking.FORWARD:
+        _translation_tween.parallel().tween_method(
+            QuaternionUtils.create_tween_rotation_method(self),
+            global_basis.get_rotation_quaternion(),
+            _before_swim_rotation,
+            duration * 0.75,
+        )
+    @warning_ignore_restore("return_value_discarded")
+
+    if _before_swim_look != Looking.FORWARD:
+        var conf: OversizedEnemyAnimConfig = get_looking_transition_conf(_before_swim_look)
+        if conf != null:
+            looking = _before_swim_look
+            _update_anim(conf, conf.custom_next_anim_blend, true)
+
+    if _translation_tween.finished.connect(
+        func () -> void:
+            _eval_behaviours()
+            grid_entity.is_translating = false
+    ) != OK:
+        push_error("Failed to connect translation tween finished")

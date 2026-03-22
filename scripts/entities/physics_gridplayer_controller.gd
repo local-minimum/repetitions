@@ -135,6 +135,10 @@ var gridless: bool:
 
         gridless = value
 
+func _enter_tree() -> void:
+    if grid_entity != null && grid_entity.force_abort_translation.connect(_handle_force_abort_translation) != OK:
+        push_error("Failed to connect force abort translation")
+
 func _ready() -> void:
     __SignalBus.on_physics_player_ready.emit(self)
     _captured_pointer_eventer.active = gridless
@@ -220,6 +224,13 @@ func _physics_process(delta: float) -> void:
 func handle_translation_end(movement: Movement.MovementType) -> void:
     if !_translation_pressed.get(movement, false):
         _translation_stack.erase(movement)
+
+func _handle_force_abort_translation() -> void:
+    if gridless:
+        push_error("Asking gridless player %s to abort translation isn't possible" % [self])
+        return
+
+    _gridded_controller.force_abort_translation()
 
 ## Attempts to rotate the character so that it has a wall in the back and looking
 ## out over an open area

@@ -4,6 +4,8 @@ class_name GridEntity
 enum EntityType { UNKNOWN, PLAYER, ENEMY, NPC }
 
 @warning_ignore_start("unused_signal")
+## The Entity Collision Resolution System should emit this signal on an entity that
+## needs to abort its translation and move back to whence it came
 signal force_abort_translation
 @warning_ignore_restore("unused_signal")
 
