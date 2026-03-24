@@ -98,9 +98,17 @@ var _hovered: bool:
     set(value):
         if value:
             set_physics_process(true)
+            if valid_player_position():
+                _valid = true
+
+                if interactable:
+                    InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
+            else:
+                _valid = false
         else:
             set_physics_process(false)
             InputCursorHelper.remove_state(self, InputCursorHelper.State.HOVER)
+
         _hovered = value
 
         if interactable:
@@ -108,13 +116,7 @@ var _hovered: bool:
 
 func _handle_mouse_entered() -> void:
     _hovered = true
-    # print_debug("Hover %s, interactable %s valid_position %s" % [self, valid_player_position(), interactable])
-    if valid_player_position():
-        _valid = true
-        if interactable:
-            InputCursorHelper.add_state(self, InputCursorHelper.State.HOVER)
-    else:
-        _valid = false
+    #print_debug("Hover %s, interactable %s valid_position %s" % [self, valid_player_position(), interactable])
 
 func _physics_process(_delta: float) -> void:
     if interactable:

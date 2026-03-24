@@ -1,7 +1,4 @@
-extends Node
 class_name SaveSystemWrapper
-
-# TODO: Why is this not a static class?
 
 static func autosave() -> void:
     if SaveSystem.instance == null:

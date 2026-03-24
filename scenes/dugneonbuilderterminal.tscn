@@ -15,9 +15,12 @@ size = Vector3(0.506897, 0.083740234, 0.5307007)
 [sub_resource type="BoxShape3D" id="BoxShape3D_guvvp"]
 size = Vector3(0.38659668, 0.5405884, 0.23394775)
 
-[node name="dugneonbuilderterminal" node_paths=PackedStringArray("_interaction_body") instance=ExtResource("1_2jda6")]
+[node name="dugneonbuilderterminal" unique_id=1381541830 node_paths=PackedStringArray("_interaction_body") instance=ExtResource("1_2jda6")]
 script = ExtResource("2_qel66")
 _interaction_body = NodePath("Screen Body")
+
+[node name="StaticBody3D" parent="Console " index="0"]
+input_ray_pickable = false
 
 [node name="StaticBody3D" parent="Lid " index="0" node_paths=PackedStringArray("_root")]
 script = ExtResource("3_ni8gp")
@@ -27,20 +30,20 @@ _root = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21398926, 0.0004272461, -0.0019226074)
 shape = SubResource("BoxShape3D_ni8gp")
 
-[node name="Screen Body" type="StaticBody3D" parent="." index="2" node_paths=PackedStringArray("_root")]
+[node name="Screen Body" type="StaticBody3D" parent="." index="2" unique_id=1109185180 node_paths=PackedStringArray("_root")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.149406, 0)
 script = ExtResource("3_ni8gp")
 _look_angle_dot_product_threshold = 0.5
 _root = NodePath("..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Screen Body" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Screen Body" index="0" unique_id=449080354]
 transform = Transform3D(1, 0, 0, 0, 0.8660254, -0.5, 0, 0.5, 0.8660254, 0.0015563965, -0.0134215355, -0.005317509)
 shape = SubResource("BoxShape3D_qel66")
 
-[node name="DirectionNode" type="Node3D" parent="Screen Body" index="1"]
+[node name="DirectionNode" type="Node3D" parent="Screen Body" index="1" unique_id=1328613408]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.4)
 
-[node name="Compartment Body" type="StaticBody3D" parent="." index="3" node_paths=PackedStringArray("_terminal", "_lid", "_trophy", "_root")]
+[node name="Compartment Body" type="StaticBody3D" parent="." index="3" unique_id=1607337235 node_paths=PackedStringArray("_terminal", "_lid", "_trophy", "_root")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.19112676, 0.046694577)
 script = ExtResource("3_guvvp")
 _terminal = NodePath("..")
@@ -48,11 +51,11 @@ _lid = NodePath("../Lid ")
 _trophy = NodePath("../trophy")
 _root = NodePath("..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Compartment Body" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Compartment Body" index="0" unique_id=1627212967]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0017700195, 0.2916565, 0.036468506)
 shape = SubResource("BoxShape3D_guvvp")
 
-[node name="trophy" parent="." index="4" instance=ExtResource("4_rrh0w")]
+[node name="trophy" parent="." index="4" unique_id=1539485313 instance=ExtResource("4_rrh0w")]
 transform = Transform3D(0.49732172, 0, -0.05168271, 0, 0.5, 0, 0.05168271, 0, 0.49732172, -0.0025670975, 0.20441647, 0.027227998)
 
 [connection signal="execute_interaction" from="Lid /StaticBody3D" to="Compartment Body" method="_on_static_body_3d_execute_interaction"]

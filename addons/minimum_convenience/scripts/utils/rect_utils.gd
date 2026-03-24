@@ -35,12 +35,12 @@ static func clamp_pointi(rect: Rect2i, pt: Vector2i) -> Vector2i:
 static func clamp_pointf(rect: Rect2i, pt: Vector2) -> Vector2:
     if rect.size == Vector2i.ZERO:
         return Vector2(rect.position.x, rect.position.y)
-        
-    var out: Vector2 = Vector2(pt)        
+
+    var out: Vector2 = Vector2(pt)
     out.x = clampf(out.x, rect.position.x, rect.end.x - _SMALL_VALUE)
     out.y = clampf(out.y, rect.position.y, rect.end.y - _SMALL_VALUE)
     return out
-    
+
 static func translate_local(r: Rect2, from: Node2D, to: Node2D) -> Rect2:
     var p: Vector2 = to.to_local(from.to_global(r.position))
     var e: Vector2 = to.to_local(from.to_global(r.end))

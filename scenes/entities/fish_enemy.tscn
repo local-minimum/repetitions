@@ -209,6 +209,7 @@ shape = SubResource("BoxShape3D_t72u6")
 [node name="Area3D" type="Area3D" parent="fish/Armature/Skeleton3D/StaticBody3D/Col Fin" unique_id=1679614610]
 collision_layer = 1536
 collision_mask = 1536
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="fish/Armature/Skeleton3D/StaticBody3D/Col Fin/Area3D" unique_id=623602024]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0053710984, 0, 0)
@@ -222,6 +223,7 @@ shape = SubResource("BoxShape3D_6cds5")
 [node name="Area3D" type="Area3D" parent="fish/Armature/Skeleton3D/StaticBody3D/Col Back" unique_id=1630320398]
 collision_layer = 1536
 collision_mask = 1536
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="fish/Armature/Skeleton3D/StaticBody3D/Col Back/Area3D" unique_id=1486197311]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0053710984, 0, 0)
@@ -235,6 +237,7 @@ shape = SubResource("BoxShape3D_6gink")
 [node name="Area3D" type="Area3D" parent="fish/Armature/Skeleton3D/StaticBody3D/Col Mid" unique_id=104375015]
 collision_layer = 1536
 collision_mask = 1536
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="fish/Armature/Skeleton3D/StaticBody3D/Col Mid/Area3D" unique_id=547331947]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0053710984, 0, 0)
@@ -248,6 +251,7 @@ shape = SubResource("BoxShape3D_qnthh")
 [node name="Area3D" type="Area3D" parent="fish/Armature/Skeleton3D/StaticBody3D/Col Forward" unique_id=1366640198]
 collision_layer = 1536
 collision_mask = 1536
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="fish/Armature/Skeleton3D/StaticBody3D/Col Forward/Area3D" unique_id=96154034]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0053710984, 0, 0)
@@ -261,6 +265,7 @@ shape = SubResource("BoxShape3D_bjp7t")
 [node name="Area3D" type="Area3D" parent="fish/Armature/Skeleton3D/StaticBody3D/Col Head" unique_id=589499766]
 collision_layer = 1536
 collision_mask = 1536
+input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="fish/Armature/Skeleton3D/StaticBody3D/Col Head/Area3D" unique_id=723273937]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0053710984, 0, 0)
