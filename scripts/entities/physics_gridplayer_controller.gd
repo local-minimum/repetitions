@@ -113,6 +113,10 @@ var gridless: bool:
             velocity = Vector3.ZERO
 
             if value:
+                if _gridded_controller == null:
+                    push_error("Cannot set %s gridless since there's no controller configured!" % [self])
+                    return
+
                 _captured_pointer_eventer.active = true
                 if _cam_slide_tween && _cam_slide_tween.is_running():
                     _cam_slide_tween.kill()
@@ -125,6 +129,10 @@ var gridless: bool:
                 _freelook_cam.enabled = false
                 grid_entity.active = false
             else:
+                if _gridded_controller == null:
+                    push_error("Cannot set %s gridded because there's no controller" % [self])
+                    return
+
                 _captured_pointer_eventer.active = false
                 if _cam_slide_tween && _cam_slide_tween.is_running():
                     _cam_slide_tween.kill()

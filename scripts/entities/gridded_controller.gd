@@ -299,7 +299,7 @@ func force_abort_translation() -> void:
         progress = _translation_tween.get_total_elapsed_time() / _translation_duration
 
     _player.grid_entity.is_retreating = true
-    var next_step: int = floori(steps.size() * progress)
+    var next_step: int = mini(steps.size() - 1, floori(steps.size() * progress))
     var step: Dictionary = steps[next_step + 1]
     var prev_pt: Vector3 = step[PhysicsControllerStepCaster.StepData.CENTER_POINT]
     var prev_norm: Vector3 = step[PhysicsControllerStepCaster.StepData.NORMAL]

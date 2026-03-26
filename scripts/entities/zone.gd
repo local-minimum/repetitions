@@ -11,7 +11,7 @@ func _exit_tree() -> void:
     if __GlobalGameState.current_player_zone == self:
         __GlobalGameState.current_player_zone = null
 
-static func find_zone(node: Node) -> Room3D:
+static func find_zone(node: Node) -> Zone:
     while node != null:
         if node is Zone:
             return node as Zone

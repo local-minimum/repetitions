@@ -14,6 +14,37 @@
 [ext_resource type="PackedScene" uid="uid://balxpkjvdg37o" path="res://scenes/entities/fish_enemy.tscn" id="12_6gink"]
 [ext_resource type="PackedScene" uid="uid://b8lqj7rv80ssv" path="res://scenes/player_3d.tscn" id="13_6gink"]
 [ext_resource type="Script" uid="uid://bo5xw2ehwkjlq" path="res://scripts/entities/entity_collision_refuse_one.gd" id="15_bjp7t"]
+[ext_resource type="PackedScene" uid="uid://bgtg6k43ekxbg" path="res://scenes/rooms/room_reactor_3d.tscn" id="15_r5fka"]
+[ext_resource type="Script" uid="uid://bu7vo1xyipwpf" path="res://addons/minimum_convenience/scripts/crosshair/adaptive_crosshair.gd" id="16_0nhy6"]
+[ext_resource type="Script" uid="uid://1a438hwonqsq" path="res://addons/minimum_convenience/scripts/crosshair/adaptive_crosshair_config.gd" id="17_icb25"]
+[ext_resource type="Script" uid="uid://613q6o0xpnom" path="res://addons/minimum_convenience/scripts/crosshair/dot_crosshair_config.gd" id="18_qxam4"]
+[ext_resource type="Script" uid="uid://cq13k5jqrlqw5" path="res://addons/minimum_convenience/scripts/crosshair/circ_lines_crosshair_config.gd" id="19_xccth"]
+[ext_resource type="Script" uid="uid://cufotv8ogf1gx" path="res://addons/minimum_convenience/scripts/crosshair/combined_crosshair_config.gd" id="20_mk7tk"]
+
+[sub_resource type="Resource" id="Resource_3afjq"]
+script = ExtResource("18_qxam4")
+_radius = 3.0
+_outline_thickness = 1.0
+_fill_color = Color(0.73300546, 0.7330054, 0.7330054, 1)
+_outline_color = Color(0.21950102, 0.21950102, 0.21950102, 1)
+metadata/_custom_type_script = "uid://613q6o0xpnom"
+
+[sub_resource type="Resource" id="Resource_hh3g7"]
+script = ExtResource("18_qxam4")
+_outline_thickness = 1.0
+_fill_color = Color(0.73333335, 0.73333335, 0.73333335, 1)
+_outline_color = Color(0.21960784, 0.21960784, 0.21960784, 1)
+metadata/_custom_type_script = "uid://613q6o0xpnom"
+
+[sub_resource type="Resource" id="Resource_rfuge"]
+script = ExtResource("19_xccth")
+_line_color = Color(0.73333335, 0.73333335, 0.73333335, 1)
+metadata/_custom_type_script = "uid://cq13k5jqrlqw5"
+
+[sub_resource type="Resource" id="Resource_1o5ds"]
+script = ExtResource("20_mk7tk")
+_configs = Array[ExtResource("17_icb25")]([SubResource("Resource_hh3g7"), SubResource("Resource_rfuge")])
+metadata/_custom_type_script = "uid://cufotv8ogf1gx"
 
 [node name="Builder" type="Node3D" unique_id=1848198409 node_paths=PackedStringArray("collision_system", "player")]
 script = ExtResource("1_qnthh")
@@ -61,3 +92,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
 
 [node name="CollisionSystem" type="Node" parent="." unique_id=1374426776]
 script = ExtResource("15_bjp7t")
+
+[node name="RoomReactor3d" parent="." unique_id=320963525 instance=ExtResource("15_r5fka")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -8)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1405428785]
+layer = 200
+
+[node name="AdaptiveCrosshair" type="Control" parent="CanvasLayer" unique_id=201017629]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("16_0nhy6")
+_configs = Dictionary[int, ExtResource("17_icb25")]({
+0: SubResource("Resource_3afjq"),
+2: SubResource("Resource_1o5ds")
+})
+metadata/_custom_type_script = "uid://bu7vo1xyipwpf"
